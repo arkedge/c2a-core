@@ -1,0 +1,3 @@
+# TlmCmdCodeGenerator
+
+TlmCmdDBからC2Aのコードを生成するためのスクリプト
