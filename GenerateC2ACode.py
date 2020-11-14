@@ -36,8 +36,7 @@ def main():
 
     GenerateCmdDef(settings, cmd_db['sgc'])
     GenerateBctDef(settings, cmd_db['bct'])
-
-
+    GenerateTlmDef(settings, tlm_db)
 
 
 def LoadCmdCSV(settings):
@@ -90,8 +89,6 @@ def GenerateCmdDef(settings, sgc_db):
 
     DATA_SART_ROW = 3
 
-    output_c = ""
-    output_h = ""
     body_c = ""
     body_h = ""
     # "  cmd_table_[Cmd_CODE_NOP].cmd_func = Cmd_NOP;"
@@ -109,7 +106,44 @@ def GenerateCmdDef(settings, sgc_db):
         body_c += "  cmd_table_[" + cmd_code + "].cmd_func = " + cmd_name + ";\n"
         body_h += "  " + cmd_code + " = " + sgc_db[i][3] + ",\n"
 
-    output_c += '''
+    OutputCmdDefC(output_file_path + output_file_name_base + ".c", body_c)
+    OutputCmdDefH(output_file_path + output_file_name_base + ".h", body_h)
+
+def GenerateBctDef(settings, bct_db):
+    output_file_path = settings["c2a_root_dir"] + r"src_user/CmdTlm/"
+    output_file_name = "BlockCommandDefinitions.h"
+
+    DATA_SART_ROW = 2
+
+    body_h = ""
+    # "  cmd_table_[Cmd_CODE_NOP].cmd_func = Cmd_NOP;"
+    # "  Cmd_CODE_NOP = 0x0000,"
+    for i in range(DATA_SART_ROW, len(bct_db)):
+        comment = bct_db[i][0]
+        name    = bct_db[i][1]
+        bc_id   = bct_db[i][3]
+
+        if comment == "" and name == "":                    # CommentもNameも空白なら打ち切り
+            break
+
+        if comment == "**":                                 # New Line Comment
+            body_h += "\n  // " + name + "\n"
+        elif comment != "":                                 # Comment
+            body_h += "  // " + name + "\n"
+        else:
+            # "  BC_SL_INITIAL_TO_INITIAL = 0,"
+            body_h += "  " + name + " = " + bc_id +",\n"
+
+    OutputBctDef(output_file_path + output_file_name, body_h)
+
+
+def GenerateTlmDef(settings, tlm_db):
+    pass
+
+
+def OutputCmdDefC(file_path, body):
+    output = ""
+    output += '''
 #pragma section REPRO
 /**
  * @file   CommandDefinitions.c
@@ -131,9 +165,9 @@ void CA_load_cmd_table(CmdInfo cmd_table_[CMD_MAX_CMDS])
 {
 '''[1:]         # 最初の改行を除く
 
-    output_c += body_c
+    output += body
 
-    output_c += '''
+    output += '''
 }
 
 //##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
@@ -147,7 +181,13 @@ This should not be used in other places.
 '''[1:]         # 最初の改行を除く
 
 
-    output_h += '''
+    with open(file_path, mode='w', encoding='shift_jis') as fh:
+        fh.write(output)
+
+
+def OutputCmdDefH(file_path, body):
+    output = ""
+    output += '''
 /**
  * @file   CommandDefinitions.h
  * @brief  コマンド定義
@@ -170,9 +210,9 @@ This should not be used in other places.
 
 '''[1:]         # 最初の改行を除く
 
-    output_h += body_h
+    output += body
 
-    output_h += '''
+    output += '''
 
 //##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
 /*
@@ -188,39 +228,13 @@ void CA_load_cmd_table(CmdInfo cmd_table_[CMD_MAX_CMDS]);
 #endif
 '''[1:]         # 最初の改行を除く
 
-    with open(output_file_path + output_file_name_base + ".c", mode='w', encoding='shift_jis') as fh:
-        fh.write(output_c)
-    with open(output_file_path + output_file_name_base + ".h", mode='w', encoding='shift_jis') as fh:
-        fh.write(output_h)
+    with open(file_path, mode='w', encoding='shift_jis') as fh:
+        fh.write(output)
 
 
-def GenerateBctDef(settings, bct_db):
-    output_file_path = settings["c2a_root_dir"] + r"src_user/CmdTlm/"
-    output_file_name = "BlockCommandDefinitions.h"
-
-    DATA_SART_ROW = 2
-
-    output_h = ""
-    body_h = ""
-    # "  cmd_table_[Cmd_CODE_NOP].cmd_func = Cmd_NOP;"
-    # "  Cmd_CODE_NOP = 0x0000,"
-    for i in range(DATA_SART_ROW, len(bct_db)):
-        comment = bct_db[i][0]
-        name    = bct_db[i][1]
-        bc_id   = bct_db[i][3]
-
-        if comment == "" and name == "":                    # CommentもNameも空白なら打ち切り
-            break
-
-        if comment == "**":                                 # New Line Comment
-            body_h += "\n  // " + name + "\n"
-        elif comment != "":                                 # Comment
-            body_h += "  // " + name + "\n"
-        else:
-            # "  BC_SL_INITIAL_TO_INITIAL = 0,"
-            body_h += "  " + name + " = " + bc_id +",\n"
-
-    output_h += '''
+def OutputBctDef(file_path, body):
+    output = ""
+    output += '''
 /**
  * @file   BlockCommandDefinitions.h
  * @brief  ブロックコマンド定義
@@ -235,9 +249,9 @@ typedef enum
 {
 '''[1:]         # 最初の改行を除く
 
-    output_h += body_h
+    output += body
 
-    output_h += '''
+    output += '''
 } BC_DEFAULTS;
 
 void BC_load_defaults(void);
@@ -245,8 +259,8 @@ void BC_load_defaults(void);
 #endif // BLOCK_COMMAND_DEFINISIONS_H_
 '''[1:]         # 最初の改行を除く
 
-    with open(output_file_path + output_file_name, mode='w', encoding='shift_jis') as fh:
-        fh.write(output_h)
+    with open(file_path, mode='w', encoding='shift_jis') as fh:
+        fh.write(output)
 
 
 if __name__ == '__main__':
