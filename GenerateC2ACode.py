@@ -126,6 +126,7 @@ def GenerateBctDef(settings, bct_db):
         comment = bct_db[i][0]
         name    = bct_db[i][1]
         bc_id   = bct_db[i][3]
+        description = bct_db[i][10]
 
         if comment == "" and name == "":                    # CommentもNameも空白なら打ち切り
             break
@@ -136,7 +137,10 @@ def GenerateBctDef(settings, bct_db):
             body_h += "  // " + name + "\n"
         else:
             # "  BC_SL_INITIAL_TO_INITIAL = 0,"
-            body_h += "  " + name + " = " + bc_id +",\n"
+            if description == "":
+                body_h += "  " + name + " = " + bc_id +",\n"
+            else:
+                body_h += "  " + name + " = " + bc_id +",    // " + description + "\n"
 
     OutputBctDef(output_file_path + output_file_name, body_h)
 
