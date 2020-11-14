@@ -232,7 +232,6 @@ def GenerateTlmDef(settings, tlm_db):
     OutputTlmDefH(output_file_path + output_file_name_base + ".h", body_h)
 
 
-
 def OutputCmdDefC(file_path, body):
     output = ""
     output += '''
@@ -443,9 +442,6 @@ void TF_load_tlm_table(TlmInfo tlm_table_[TLM_MAX_TLMS]);
         fh.write(output)
 
 
-
 if __name__ == '__main__':
     main()
-
-
 
