@@ -38,6 +38,9 @@ def main():
     GenerateBctDef(settings, cmd_db['bct'])
     GenerateTlmDef(settings, tlm_db)
 
+    print("Completed!")
+    sys.exit(0)
+
 
 def LoadCmdCSV(settings):
     cmd_db_path = settings["c2a_root_dir"] + r"src_user/Settings/CmdTlm/DataBase/CMD_DB/"
