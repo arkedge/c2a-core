@@ -38,6 +38,9 @@ def main():
     GenerateBctDef(settings, cmd_db['bct'])
     GenerateTlmDef(settings, tlm_db)
 
+    print("Completed!")
+    sys.exit(0)
+
 
 def LoadCmdCSV(settings):
     cmd_db_path = settings["c2a_root_dir"] + r"src_user/Settings/CmdTlm/DataBase/CMD_DB/"
@@ -157,15 +160,15 @@ def GenerateTlmDef(settings, tlm_db):
     # "static int OBC_(unsigned char* contents, int max_len);"
     # "  OBC_ID = 0x00,"
     for tlm in tlm_db:
-        body_c += "static int " + tlm['tlm_name'] + "_(unsigned char* contents, int max_len);\n"
-        body_h += "  " + tlm['tlm_name'] + "_ID = " + tlm['tlm_id'] + ",\n"
+        body_c += "static int Tlm_" + tlm['tlm_name'] + "_(unsigned char* contents, int max_len);\n"
+        body_h += "  Tlm_CODE_" + tlm['tlm_name'] + " = " + tlm['tlm_id'] + ",\n"
 
     body_c += "\n"
     body_c += "void TF_load_tlm_table(TlmInfo tlm_table_[TLM_MAX_TLMS])\n"
     body_c += "{\n"
     for tlm in tlm_db:
         # "  tlm_table_[OBC_ID].tlm_func = OBC_;"
-        body_c += "  tlm_table_[" + tlm['tlm_name'] + "_ID].tlm_func = " + tlm['tlm_name'] + "_;\n"
+        body_c += "  tlm_table_[Tlm_CODE_" + tlm['tlm_name'] + "].tlm_func = Tlm_" + tlm['tlm_name'] + "_;\n"
     body_c += "}\n"
 
     for tlm in tlm_db:
@@ -222,7 +225,7 @@ def GenerateTlmDef(settings, tlm_db):
             func_code += "(&contents[" + pos + "], " + code + ");\n"
 
         body_c += "\n"
-        body_c += "static int " + tlm['tlm_name'] + "_(unsigned char* contents, int max_len)\n"
+        body_c += "static int Tlm_" + tlm['tlm_name'] + "_(unsigned char* contents, int max_len)\n"
         body_c += "{\n"
         body_c += "\n"
         body_c += "  if( " + str(max_pos) + " > max_len) { return TLM_TOO_SHORT_LEN; }\n"
@@ -315,8 +318,8 @@ This pattern is a "separator".
 This should not be changed.
 This should not be used in other places.
 */
-  Cmd_ID_MAX
-} CmdCode;
+  Cmd_CODE_MAX
+} CMD_CODE;
 
 void CA_load_cmd_table(CmdInfo cmd_table_[CMD_MAX_CMDS]);
 
@@ -347,7 +350,7 @@ typedef enum
     output += body
 
     output += '''
-} BC_DEFAULTS;
+} BC_DEFAULT_ID;
 
 void BC_load_defaults(void);
 
@@ -433,8 +436,8 @@ This pattern is a "separator".
 This should not be changed.
 This should not be used in other places.
 */
-  TLM_ID_MAX
-} TLMID;
+  TLM_CODE_MAX
+} TLM_CODE;
 
 void TF_load_tlm_table(TlmInfo tlm_table_[TLM_MAX_TLMS]);
 
