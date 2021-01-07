@@ -230,7 +230,7 @@ def GenerateTlmDef(settings, tlm_db):
         body_c += "static int Tlm_" + tlm['tlm_name'] + "_(unsigned char* contents, int max_len)\n"
         body_c += "{\n"
         body_c += "\n"
-        body_c += "  if( " + str(max_pos) + " > max_len) { return TLM_TOO_SHORT_LEN; }\n"
+        body_c += "  if (" + str(max_pos) + " > max_len) { return TLM_TOO_SHORT_LEN; }\n"
         body_c += "\n"
         body_c += func_code
         body_c += "\n"
