@@ -356,7 +356,7 @@ typedef enum
 
 void BC_load_defaults(void);
 
-#endif // BLOCK_COMMAND_DEFINISIONS_H_
+#endif
 '''[1:]         # 最初の改行を除く
 
     with open(file_path, mode='w', encoding='shift_jis') as fh:
@@ -444,7 +444,7 @@ This should not be used in other places.
 void TF_load_tlm_table(TlmInfo tlm_table_[TLM_MAX_TLMS]);
 
 
-#endif // TLM_FRAME_INCLUDE
+#endif
 '''[1:]         # 最初の改行を除く
 
     with open(file_path, mode='w', encoding='shift_jis') as fh:
