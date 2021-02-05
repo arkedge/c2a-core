@@ -378,8 +378,6 @@ def OutputTlmDefC(file_path, body):
 #include "TelemetryDefinitions.h"
 #include "TelemetrySource.h"
 
-// #define FAST_BUILD
-
 /*
 This pattern is a "separator".
 This should not be changed.
