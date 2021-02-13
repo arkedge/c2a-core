@@ -4,6 +4,7 @@ cmd def
 """
 
 import os
+import pprint
 
 def GenerateCmdDef(settings, sgc_db):
     output_file_path = settings["c2a_root_dir"] + r"src_user/CmdTlm/"
@@ -65,6 +66,41 @@ def GenerateBctDef(settings, bct_db):
                 body_h += "  " + name + " = " + bc_id +",    // " + description + "\n"
 
     OutputBctDef(output_file_path + output_file_name, body_h)
+
+
+def GenerateOtherObcCmdDef(settings, other_obc_dbs):
+    # pprint.pprint(other_obc_dbs)
+    DATA_SART_ROW = 3
+    for i in range(len(settings["other_obc_data"])):
+        if not settings["other_obc_data"][i]["is_enable"]:
+            continue
+        obc_name = settings["other_obc_data"][i]["name"]
+        name_upper = obc_name.upper()
+        name_lower = obc_name.lower()
+        name_capit = obc_name.capitalize()
+        # print(name_upper)
+        # print(name_lower)
+        # print(name_capit)
+        sgc_db = other_obc_dbs[obc_name]
+        # pprint.pprint(sgc_db)
+
+        body_h = ""
+        # "  TOBC_Cmd_CODE_NOP = 0x0000,"
+        for j in range(DATA_SART_ROW, len(sgc_db)):
+            comment = sgc_db[j][0]
+            name    = sgc_db[j][1]
+            cmd_id  = sgc_db[j][3]
+            if comment == "" and name == "":                  # CommentもNameも空白なら打ち切り
+                break
+            if comment != "":                                 # Comment
+                continue
+            # print(name)
+            cmd_name = name
+            cmd_code = cmd_name.replace("Cmd_", name_upper+"_Cmd_CODE_")
+            body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
+        # print(body_h)
+        output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"] + name_capit + "CommandDefinitions.h"
+        OutputOtherObcCmdDefH(output_file_path, obc_name, body_h)
 
 
 def OutputCmdDefC(file_path, body):
@@ -181,6 +217,66 @@ typedef enum
 } BC_DEFAULT_ID;
 
 void BC_load_defaults(void);
+
+#endif
+'''[1:]         # 最初の改行を除く
+
+    with open(file_path, mode='w', encoding='shift_jis') as fh:
+        fh.write(output)
+
+
+def OutputOtherObcCmdDefH(file_path, name, body):
+    name_upper = name.upper()
+    name_lower = name.lower()
+    name_capit = name.capitalize()
+
+    output = ""
+    output += '''
+/**
+'''[1:]         # 最初の改行を除く
+
+    output += " * @file   " + name_capit + "CommandDefinitions.h\n"
+
+    output += '''
+ * @brief  コマンド定義
+ * @author 鈴本 遼
+ * @date   2020/08/23
+ */
+/**
+'''[1:]         # 最初の改行を除く
+
+    output += "#ifndef " + name_upper + "_COMMAND_DEFINITIONS_H_\n"
+    output += "#define " + name_upper + "_COMMAND_DEFINITIONS_H_\n"
+
+    output += '''
+
+typedef enum
+{
+/*
+This pattern is a "separator".
+This should not be changed.
+This should not be used in other places.
+*/
+//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
+
+'''[1:]         # 最初の改行を除く
+
+    output += body
+
+    output += '''
+
+//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
+/*
+This pattern is a "separator".
+This should not be changed.
+This should not be used in other places.
+*/
+'''[1:]         # 最初の改行を除く
+
+    output += "  " + name_upper + "_Cmd_CODE_MAX\n"
+    output += "} " + name_upper + "_CMD_CODE;\n"
+
+    output += '''
 
 #endif
 '''[1:]         # 最初の改行を除く

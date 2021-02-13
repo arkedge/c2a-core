@@ -9,6 +9,7 @@
       "is_enable" : 0,
       "db_prefix" : "ISSL6U_AOBC",
       "db_path" : "../../aobc_tlmcmd/",
+      "driver_path" : "ADCS/",
       "tlm_id_range" : ["0x90", "0xc0"]
     },
     {
@@ -16,6 +17,7 @@
       "is_enable" : 1,
       "db_prefix" : "ISSL6U_TOBC",
       "db_path" : "../../tobc_tlmcmd/",
+      "driver_path" : "THERMAL/",
       "tlm_id_range" : ["0xc0", "0xf0"]
     }
   ]

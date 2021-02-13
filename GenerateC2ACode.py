@@ -29,8 +29,8 @@ def main():
         settings = json.load(fh)
     # print(settings["c2a_root_dir"]);
 
-    cmd_db = my_mod.load_db.LoadCmdCSV(settings)
-    tlm_db = my_mod.load_db.LoadTlmCSV(settings)
+    cmd_db = my_mod.load_db.LoadCmdDb(settings)
+    tlm_db = my_mod.load_db.LoadTlmDb(settings)
     # pprint.pprint(cmd_db)
     # pprint.pprint(tlm_db)
     # print(tlm_db)
@@ -38,6 +38,10 @@ def main():
     my_mod.cmd_def.GenerateCmdDef(settings, cmd_db['sgc'])
     my_mod.cmd_def.GenerateBctDef(settings, cmd_db['bct'])
     my_mod.tlm_def.GenerateTlmDef(settings, tlm_db)
+
+    if settings["is_main_obc"]:
+        my_mod.cmd_def.GenerateOtherObcCmdDef(settings, cmd_db['other_obc'])
+
     if settings["is_generated_sib"]:
         my_mod.gstos.GenerateGstosFiles(settings, cmd_db['sgc'], tlm_db)
 
