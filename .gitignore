@@ -12,4 +12,5 @@ Icon
 .Trashes
 
 # others
+*.pyc
 gstos_files/*
