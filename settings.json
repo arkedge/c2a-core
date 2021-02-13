@@ -8,7 +8,7 @@
       "name" : "AOBC",
       "is_enable" : 0,
       "db_prefix" : "ISSL6U_AOBC",
-      "db_path" : "../../aobc_tlmcmd/",
+      "db_path" : "../../c2a_issl6u_aobc//src/src_user/Settings/CmdTlm/DataBase/",
       "driver_path" : "ADCS/",
       "tlm_id_range" : ["0x90", "0xc0"]
     },
