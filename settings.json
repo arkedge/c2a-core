@@ -2,7 +2,7 @@
   "c2a_root_dir" : "../../c2a_user_oss/SH7254R_C2A/",
   "db_prefix" : "ISSL6U_MOBC",
   "is_generated_sib" : 0,
-  "is_main_obc" : 0,
+  "is_main_obc" : 1,
   "other_obc_data" : [
     {
       "name" : "AOBC",
