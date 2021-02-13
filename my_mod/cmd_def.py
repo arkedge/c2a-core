@@ -242,7 +242,6 @@ def OutputOtherObcCmdDefH(file_path, name, body):
  * @author 鈴本 遼
  * @date   2020/08/23
  */
-/**
 '''[1:]         # 最初の改行を除く
 
     output += "#ifndef " + name_upper + "_COMMAND_DEFINITIONS_H_\n"
