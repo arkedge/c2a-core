@@ -9,7 +9,10 @@ $ python GenerateC2ACode.py
 
 ## 設定
 `settings.json` にて記述する．  
-現在 `is_main_obc` は，未だ仕様未確定なため， `0` とすること！
+現在 `is_main_obc` は，未だ仕様未確定なため， `0` とすること！  
+`1` とした場合，現在は以下のみ生成される
+- TobcCommandDefinitions.h
+- TobcTelemetryDefinitions.h
 
 ```
 {
