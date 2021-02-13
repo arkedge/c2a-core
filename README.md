@@ -29,14 +29,16 @@ $ python GenerateC2ACode.py
       "is_enable" : 0,
       "db_prefix" : "ISSL6U_AOBC",
       "db_path" : "../../aobc_tlmcmd/",
-      "tlm_id_range" : ["0x90", "0xc0"],
+      "driver_path" : "ADCS/",
+      "tlm_id_range" : ["0x90", "0xc0"]
     },
     {
       "name" : "TOBC",
       "is_enable" : 1,
       "db_prefix" : "ISSL6U_TOBC",
       "db_path" : "../../tobc_tlmcmd/",
-      "tlm_id_range" : ["0xc0", "0xf0"],
+      "driver_path" : "THERMAL/",
+      "tlm_id_range" : ["0xc0", "0xf0"]
     }
   ]
 }
