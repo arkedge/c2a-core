@@ -9,7 +9,7 @@ $ python GenerateC2ACode.py
 
 ## 設定
 `settings.json` にて記述する．  
-現在ｍ `is_main_obc` は，未だ仕様未確定なため， `0` とすること！
+現在 `is_main_obc` は，未だ仕様未確定なため， `0` とすること！
 
 ```
 {
@@ -21,7 +21,7 @@ $ python GenerateC2ACode.py
   # GSTOS用sibファイルを生成するか？ 0/1
   "is_generated_sib" : 0,
   # MOBCか？（他のOBCのtlm/cmdを取りまとめるか？ 0/1
-  # 0 の場合，以後のパラメタは無効
+  # 0 の場合，以後のパラメタは無効（現在仮おき）
   "is_main_obc" : 0,
   "other_obc_data" : [
     {
