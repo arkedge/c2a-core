@@ -37,13 +37,14 @@ def main():
 
     my_mod.cmd_def.GenerateCmdDef(settings, cmd_db['sgc'])
     my_mod.cmd_def.GenerateBctDef(settings, cmd_db['bct'])
-    my_mod.tlm_def.GenerateTlmDef(settings, tlm_db)
+    my_mod.tlm_def.GenerateTlmDef(settings, tlm_db['tlm'])
 
     if settings["is_main_obc"]:
         my_mod.cmd_def.GenerateOtherObcCmdDef(settings, cmd_db['other_obc'])
+        my_mod.tlm_def.GenerateOtherObcTlmDef(settings, tlm_db['other_obc'])
 
     if settings["is_generated_sib"]:
-        my_mod.gstos.GenerateGstosFiles(settings, cmd_db['sgc'], tlm_db)
+        my_mod.gstos.GenerateGstosFiles(settings, cmd_db['sgc'], tlm_db['tlm'])
 
     print("Completed!")
     sys.exit(0)

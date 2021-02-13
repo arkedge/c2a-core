@@ -13,7 +13,7 @@ def LoadCmdDb(settings):
 
     sgc_db, bct_db = LoadCmdCSV(cmd_db_path, settings["db_prefix"])
 
-    other_obc_dbs = []
+    other_obc_dbs = {}
     if settings["is_main_obc"]:
         other_obc_dbs = LoadOtherObcCmd(settings);
 
@@ -41,9 +41,13 @@ def LoadTlmDb(settings):
 
     tlm_db = LoadTlmCSV(tlm_db_path, settings["db_prefix"])
 
-    # 重複チェックをする
+    other_obc_dbs = {}
+    if settings["is_main_obc"]:
+        other_obc_dbs = LoadOtherObcTlm(settings);
 
-    return tlm_db;
+    # TODO: 重複チェックをする
+
+    return {'tlm': tlm_db, 'other_obc': other_obc_dbs}
 
 
 def LoadTlmCSV(tlm_db_path, db_prefix):
@@ -85,6 +89,21 @@ def LoadOtherObcCmd(settings):
         # print(i)
 
     # pprint.pprint(settings["other_obc_data"])
+    # pprint.pprint(other_obc_dbs)
+    return other_obc_dbs
+
+
+def LoadOtherObcTlm(settings):
+    other_obc_dbs = {}
+
+    for i in range(len(settings["other_obc_data"])):
+        if not settings["other_obc_data"][i]["is_enable"]:
+            continue
+        tlm_db_path = settings["other_obc_data"][i]["db_path"] + r"TLM_DB/"
+
+        tlm_db = LoadTlmCSV(tlm_db_path, settings["other_obc_data"][i]["db_prefix"])
+        other_obc_dbs[settings["other_obc_data"][i]["name"]] = tlm_db
+
     # pprint.pprint(other_obc_dbs)
     return other_obc_dbs
 
