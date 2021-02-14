@@ -99,7 +99,6 @@ def GenerateTlmDef(settings, tlm_db):
 
 
 def GenerateOtherObcTlmDef(settings, other_obc_dbs):
-    DATA_SART_ROW = 7
     for i in range(len(settings["other_obc_data"])):
         if not settings["other_obc_data"][i]["is_enable"]:
             continue

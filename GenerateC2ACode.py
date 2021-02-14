@@ -10,6 +10,7 @@ import sys
 import my_mod.load_db
 import my_mod.cmd_def
 import my_mod.tlm_def
+import my_mod.tlm_buffer
 import my_mod.gstos
 
 
@@ -42,6 +43,7 @@ def main():
     if settings["is_main_obc"]:
         my_mod.cmd_def.GenerateOtherObcCmdDef(settings, cmd_db['other_obc'])
         my_mod.tlm_def.GenerateOtherObcTlmDef(settings, tlm_db['other_obc'])
+        my_mod.tlm_buffer.GenerateTlmBuffer(settings, tlm_db['other_obc'])
 
     if settings["is_generated_sib"]:
         my_mod.gstos.GenerateGstosFiles(settings, cmd_db['sgc'], tlm_db['tlm'])
