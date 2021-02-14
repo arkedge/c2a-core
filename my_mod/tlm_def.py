@@ -125,6 +125,7 @@ def OutputTlmDefC(file_path, body):
 /**
  * @file   TelemetryDefinitions.c
  * @brief  テレメトリ定義
+ * @note   このコードは自動生成されています！
  * @author 鈴本 遼
  * @date   2020/08/23
  */
@@ -163,6 +164,7 @@ def OutputTlmDefH(file_path, body):
 /**
  * @file   TelemetryDefinitions.h
  * @brief  テレメトリ定義
+ * @note   このコードは自動生成されています！
  * @author 鈴本 遼
  * @date   2020/08/23
  */
@@ -212,24 +214,17 @@ def OutputOtherObcTlmDefH(file_path, name, body):
     output = ""
     output += '''
 /**
-'''[1:]         # 最初の改行を除く
-
-    output += " * @file   " + name_capit + "TelemetryDefinitions.h\n"
-
-    output += '''
+ * @file   {_obc_name_capit}TelemetryDefinitions.h
  * @brief  テレメトリ定義
+ * @note   このコードは自動生成されています！
  * @author 鈴本 遼
  * @date   2020/08/23
  */
-'''[1:]         # 最初の改行を除く
-
-    output += "#ifndef " + name_upper + "_TELEMETRY_DEFINITIONS_H_\n"
-    output += "#define " + name_upper + "_TELEMETRY_DEFINITIONS_H_\n"
-
-    output += '''
+#ifndef {_obc_name_upper}_TELEMETRY_DEFINITIONS_H_
+#define {_obc_name_upper}_TELEMETRY_DEFINITIONS_H_
 
 typedef enum
-{
+{{
 /*
 This pattern is a "separator".
 This should not be changed.
@@ -249,16 +244,12 @@ This pattern is a "separator".
 This should not be changed.
 This should not be used in other places.
 */
-'''[1:]         # 最初の改行を除く
-
-    output += "  " + name_upper + "_TLM_CODE_MAX\n"
-    output += "} " + name_upper + "_TLM_CODE;\n"
-
-    output += '''
+  {_obc_name_upper}_TLM_CODE_MAX
+}} {_obc_name_upper}_TLM_CODE;
 
 #endif
 '''[1:]         # 最初の改行を除く
 
     with open(file_path, mode='w', encoding='shift_jis') as fh:
-        fh.write(output)
+        fh.write(output.format(_obc_name_upper=name_upper, _obc_name_lower=name_lower, _obc_name_capit=name_capit))
 
