@@ -2,6 +2,12 @@
 ## これはなに？
 TlmCmdDBからC2Aのコードを生成するためのスクリプト
 
+以下が自動生成させる．
+- CommandDefinitions.c
+- CommandDefinitions.h
+- TelemetryDefinitions.c
+- TelemetryDefinitions.h
+
 ## 実行
 ```
 $ python GenerateC2ACode.py
@@ -10,7 +16,9 @@ $ python GenerateC2ACode.py
 ## 設定
 `settings.json` にて記述する．  
 現在 `is_main_obc` は，未だ仕様未確定なため， `0` とすること！  
-`1` とした場合，現在は以下のみ生成される
+`1` とした場合，現在は以下のみ生成される．
+- TobcTelemetryBuffer.c
+- TobcTelemetryBuffer.h
 - TobcCommandDefinitions.h
 - TobcTelemetryDefinitions.h
 
