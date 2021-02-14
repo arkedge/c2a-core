@@ -33,6 +33,9 @@ $ python GenerateC2ACode.py
       "db_prefix" : "ISSL6U_AOBC",
       "db_path" : "../../c2a_issl6u_aobc//src/src_user/Settings/CmdTlm/DataBase/",
       "driver_path" : "ADCS/",
+      "driver_type" : "AOBC_Driver",
+      "driver_name" : "aobc",
+      "code_when_tlm_not_found" : "",
       "tlm_id_range" : ["0x90", "0xc0"]
     },
     {
@@ -40,7 +43,11 @@ $ python GenerateC2ACode.py
       "is_enable" : 1,
       "db_prefix" : "ISSL6U_TOBC",
       "db_path" : "../../tobc_tlmcmd/",
+      "tlm_max_contents_len" : 512,
       "driver_path" : "THERMAL/",
+      "driver_type" : "TOBC_Driver",
+      "driver_name" : "tobc",
+      "code_when_tlm_not_found" : "tobc->info.comm.rx_err_code = TOBC_RX_ERR_CODE_TLM_NOT_FOUND;",
       "tlm_id_range" : ["0xc0", "0xf0"]
     }
   ]
