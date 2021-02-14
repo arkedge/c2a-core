@@ -36,12 +36,12 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_h += "\n"
         body_h += "extern const {_obc_name_upper}_Buffer* {_obc_name_lower}_buffer;\n"
         body_h += "\n"
-        body_h += "DRIVER_SUPER_ERR_CODE {_obc_name_upper}_buffer_init(void);\n"
+        body_h += "void {_obc_name_upper}_buffer_init(void);\n"
         body_h += "DRIVER_SUPER_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DriverSuperStreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ");\n"
 
 
         body_c += "\n"
-        body_c += "DRIVER_SUPER_ERR_CODE {_obc_name_upper}_buffer_init(void)\n"
+        body_c += "void {_obc_name_upper}_buffer_init(void)\n"
         body_c += "{{\n"
         body_c += "  {_obc_name_lower}_buffer = &{_obc_name_lower}_buffer_;\n"
         body_c += "}}\n"
@@ -59,7 +59,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             tlm_name_upper = tlm_name.upper()
             tlm_name_lower = tlm_name.lower()
             body_c += "  case {_obc_name_upper}_Tlm_CODE_" + tlm_name_upper + ":\n"
-            body_c += "    return {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(p_stream_config, " + driver_name + ")\n"
+            body_c += "    return {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(p_stream_config, " + driver_name + ");\n"
         body_c += "  default:\n"
         body_c += "    " + settings["other_obc_data"][i]["code_when_tlm_not_found"] + "\n"
         body_c += "    return DRIVER_SUPER_ERR_CODE_OK;\n"
@@ -77,11 +77,12 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "  uint8_t* contents_pos = (p_stream_config->rx_frame) + DRIVER_SUPER_ISSLFMT_COMMON_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_PRIMARY_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE;\n"
             body_c += "\n"
             body_c += "  if (contents_len > " + str(contents_len) + ") return DRIVER_SUPER_ERR_CODE_ERR;\n"
-            body_c += "  memcpy(&({_obc_name_lower}_buffer_" + tlm_name_lower + "), contents_pos, (size_t)contents_len);\n"
+            body_c += "  memcpy({_obc_name_lower}_buffer_." + tlm_name_lower + ", contents_pos, (size_t)contents_len);\n"
             body_c += "\n"
             body_c += "  // [TODO] フレームの中身をパースしてMOBCでもろもろにアクセスするためのコード\n"
             body_c += "  //        テレメDBと同じ構造の構造体を定義して代入する？\n"
             body_c += "  //        問題はビットフィールドを使ってるやつら\n"
+            body_c += "  (void)" + driver_name + ";  // 仮\n"
             body_c += "  return DRIVER_SUPER_ERR_CODE_OK;\n"
             body_c += "}}\n"
             body_c += "\n"
@@ -110,6 +111,7 @@ def OutputTlmBufferC(file_path, name, body):
 
 #include "./{_obc_name_capit}TelemetryDefinitions.h"
 #include "./{_obc_name_capit}TelemetryBuffer.h"
+#include "string.h" // for memcpy
 
 '''[1:]         # 最初の改行を除く
 
@@ -143,7 +145,6 @@ def OutputTlmBufferH(file_path, name, body):
 #ifndef {_obc_name_upper}_TELEMETRY_BUFFER_H_
 #define {_obc_name_upper}_TELEMETRY_BUFFER_H_
 
-#include "string.h" // for memcpy
 #include "./{_obc_name_upper}.h"
 
 '''[1:]         # 最初の改行を除く
