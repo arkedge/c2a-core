@@ -10,6 +10,9 @@
       "db_prefix" : "ISSL6U_AOBC",
       "db_path" : "../../c2a_issl6u_aobc//src/src_user/Settings/CmdTlm/DataBase/",
       "driver_path" : "ADCS/",
+      "driver_type" : "AOBC_Driver",
+      "driver_name" : "aobc",
+      "code_when_tlm_not_found" : "",
       "tlm_id_range" : ["0x90", "0xc0"]
     },
     {

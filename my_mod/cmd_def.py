@@ -32,8 +32,8 @@ def GenerateCmdDef(settings, sgc_db):
         body_c += "  cmd_table_[" + cmd_code + "].cmd_func = " + cmd_name + ";\n"
         body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
 
-    OutputCmdDefC(output_file_path + output_file_name_base + ".c", body_c)
-    OutputCmdDefH(output_file_path + output_file_name_base + ".h", body_h)
+    OutputCmdDefC_(output_file_path + output_file_name_base + ".c", body_c)
+    OutputCmdDefH_(output_file_path + output_file_name_base + ".h", body_h)
 
 
 def GenerateBctDef(settings, bct_db):
@@ -65,7 +65,7 @@ def GenerateBctDef(settings, bct_db):
             else:
                 body_h += "  " + name + " = " + bc_id +",    // " + description + "\n"
 
-    OutputBctDef(output_file_path + output_file_name, body_h)
+    OutputBctDef_(output_file_path + output_file_name, body_h)
 
 
 def GenerateOtherObcCmdDef(settings, other_obc_dbs):
@@ -100,10 +100,10 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
             body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
         # print(body_h)
         output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"] + name_capit + "CommandDefinitions.h"
-        OutputOtherObcCmdDefH(output_file_path, obc_name, body_h)
+        OutputOtherObcCmdDefH_(output_file_path, obc_name, body_h)
 
 
-def OutputCmdDefC(file_path, body):
+def OutputCmdDefC_(file_path, body):
     output = ""
     output += '''
 #pragma section REPRO
@@ -148,7 +148,7 @@ This should not be used in other places.
         fh.write(output)
 
 
-def OutputCmdDefH(file_path, body):
+def OutputCmdDefH_(file_path, body):
     output = ""
     output += '''
 /**
@@ -196,7 +196,7 @@ void CA_load_cmd_table(CmdInfo cmd_table_[CMD_MAX_CMDS]);
         fh.write(output)
 
 
-def OutputBctDef(file_path, body):
+def OutputBctDef_(file_path, body):
     output = ""
     output += '''
 /**
@@ -228,7 +228,7 @@ void BC_load_defaults(void);
         fh.write(output)
 
 
-def OutputOtherObcCmdDefH(file_path, name, body):
+def OutputOtherObcCmdDefH_(file_path, name, body):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()

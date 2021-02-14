@@ -38,7 +38,7 @@ def main():
 
     my_mod.cmd_def.GenerateCmdDef(settings, cmd_db['sgc'])
     my_mod.cmd_def.GenerateBctDef(settings, cmd_db['bct'])
-    my_mod.tlm_def.GenerateTlmDef(settings, tlm_db['tlm'])
+    my_mod.tlm_def.GenerateTlmDef(settings, tlm_db['tlm'], tlm_db['other_obc'])
 
     if settings["is_main_obc"]:
         my_mod.cmd_def.GenerateOtherObcCmdDef(settings, cmd_db['other_obc'])

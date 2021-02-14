@@ -27,7 +27,6 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_h += "typedef struct {{\n"
         for tlm in tlm_db:
             tlm_name = tlm['tlm_name']
-            tlm_name_upper = tlm_name.upper()
             tlm_name_lower = tlm_name.lower()
             body_h += "  struct {{\n"
             body_h += "    int     size;\n"
@@ -47,6 +46,11 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "void {_obc_name_upper}_buffer_init(void)\n"
         body_c += "{{\n"
         body_c += "  {_obc_name_lower}_buffer = &{_obc_name_lower}_buffer_;\n"
+        body_c += "\n"
+        for tlm in tlm_db:
+            tlm_name = tlm['tlm_name']
+            tlm_name_lower = tlm_name.lower()
+            body_c += "  {_obc_name_lower}_buffer_." + tlm_name_lower + ".size = 0;\n"
         body_c += "}}\n"
         body_c += "\n"
         body_c += "DRIVER_SUPER_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DriverSuperStreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ")\n"
@@ -93,11 +97,11 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
 
 
         output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"];
-        OutputTlmBufferC(output_file_path + obc_name.capitalize() + "TelemetryBuffer.c", obc_name, body_c)
-        OutputTlmBufferH(output_file_path + obc_name.capitalize() + "TelemetryBuffer.h", obc_name, body_h)
+        OutputTlmBufferC_(output_file_path + obc_name.capitalize() + "TelemetryBuffer.c", obc_name, body_c)
+        OutputTlmBufferH_(output_file_path + obc_name.capitalize() + "TelemetryBuffer.h", obc_name, body_h)
 
 
-def OutputTlmBufferC(file_path, name, body):
+def OutputTlmBufferC_(file_path, name, body):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()
@@ -132,7 +136,7 @@ def OutputTlmBufferC(file_path, name, body):
 
 
 
-def OutputTlmBufferH(file_path, name, body):
+def OutputTlmBufferH_(file_path, name, body):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()

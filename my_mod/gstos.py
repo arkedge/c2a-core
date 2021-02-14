@@ -28,7 +28,7 @@ def GenerateGstosFiles(settings, sgc_db, tlm_db):
             break
         if comment != "":                                 # Comment
             continue
-        output_cmd += GetCmdSibDef(sgc_db[i])
+        output_cmd += GetCmdSibDef_(sgc_db[i])
 
     output_cmd += '</cmdfile>\n'
 
@@ -59,7 +59,7 @@ def GenerateGstosFiles(settings, sgc_db, tlm_db):
             #     continue
             # if pos == "":
             #     continue
-            output_tlm += GetTlmSibDef(tlm['tlm_id'], tlm['data'][i])
+            output_tlm += GetTlmSibDef_(tlm['tlm_id'], tlm['data'][i])
 
     output_tlm += '</tlmfile>\n'
 
@@ -67,7 +67,7 @@ def GenerateGstosFiles(settings, sgc_db, tlm_db):
         fh.write(output_tlm)
 
 
-def GetCmdSibDef(sgc_db_line):
+def GetCmdSibDef_(sgc_db_line):
     cmd = sgc_db_line[1]
     inf = sgc_db_line[18]
     cmd_id = sgc_db_line[3]
@@ -192,7 +192,7 @@ def GetCmdSibDef(sgc_db_line):
     return output
 
 
-def GetTlmSibDef(tlm_id, tlm_db_line):
+def GetTlmSibDef_(tlm_id, tlm_db_line):
     comment  = tlm_db_line[0]
     name     = tlm_db_line[1]
     var_type = tlm_db_line[2]
