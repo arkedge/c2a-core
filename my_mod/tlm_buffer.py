@@ -29,7 +29,10 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             tlm_name = tlm['tlm_name']
             tlm_name_upper = tlm_name.upper()
             tlm_name_lower = tlm_name.lower()
-            body_h += "  uint8_t " + tlm_name_lower + "[" + str(contents_len) + "];\n"
+            body_h += "  struct {{\n"
+            body_h += "    int     size;\n"
+            body_h += "    uint8_t buffer[" + str(contents_len) + "];\n"
+            body_h += "  }} " + tlm_name_lower + ";\n"
             body_c += "static DRIVER_SUPER_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DriverSuperStreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ");\n"
 
         body_h += "}} {_obc_name_upper}_Buffer;\n"
@@ -77,7 +80,8 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "  uint8_t* contents_pos = (p_stream_config->rx_frame) + DRIVER_SUPER_ISSLFMT_COMMON_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_PRIMARY_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE;\n"
             body_c += "\n"
             body_c += "  if (contents_len > " + str(contents_len) + ") return DRIVER_SUPER_ERR_CODE_ERR;\n"
-            body_c += "  memcpy({_obc_name_lower}_buffer_." + tlm_name_lower + ", contents_pos, (size_t)contents_len);\n"
+            body_c += "  memcpy({_obc_name_lower}_buffer_." + tlm_name_lower + ".buffer, contents_pos, (size_t)contents_len);\n"
+            body_c += "  {_obc_name_lower}_buffer_." + tlm_name_lower + ".size = (int)contents_len;\n"
             body_c += "\n"
             body_c += "  // [TODO] フレームの中身をパースしてMOBCでもろもろにアクセスするためのコード\n"
             body_c += "  //        テレメDBと同じ構造の構造体を定義して代入する？\n"
