@@ -10,7 +10,7 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
     output_file_path = settings["c2a_root_dir"] + r"src_user/CmdTlm/"
     output_file_name_base = "TelemetryDefinitions"
 
-    DATA_SART_ROW = 7
+    DATA_START_ROW = 7
 
     body_c = ""
     body_h = ""
@@ -37,7 +37,7 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
     for tlm in tlm_db:
         func_code = ""
         max_pos = ""
-        for i in range(DATA_SART_ROW, len(tlm['data'])):
+        for i in range(DATA_START_ROW, len(tlm['data'])):
             comment  = tlm['data'][i][0]
             name     = tlm['data'][i][1]
             var_type = tlm['data'][i][2]
