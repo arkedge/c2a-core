@@ -24,11 +24,13 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "static {_obc_name_upper}_Buffer {_obc_name_lower}_buffer_;\n"
         body_c += "const {_obc_name_upper}_Buffer* {_obc_name_lower}_buffer;\n"
         body_c += "\n"
-        body_h += "typedef struct {{\n"
+        body_h += "typedef struct\n"
+        body_h += "{{\n"
         for tlm in tlm_db:
             tlm_name = tlm['tlm_name']
             tlm_name_lower = tlm_name.lower()
-            body_h += "  struct {{\n"
+            body_h += "  struct\n"
+            body_h += "  {{\n"
             body_h += "    int     size;\n"
             body_h += "    uint8_t buffer[" + str(contents_len) + "];\n"
             body_h += "  }} " + tlm_name_lower + ";\n"
