@@ -253,24 +253,11 @@ def OutputTlmDefC_(file_path, body):
 #include "TelemetryDefinitions.h"
 #include "TelemetrySource.h"
 
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
 '''[1:]         # 最初の改行を除く
 
     output += body
 
     output += '''
-
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
 
 #pragma section
 '''[1:]         # 最初の改行を除く
@@ -296,25 +283,12 @@ def OutputTlmDefH_(file_path, body):
 
 typedef enum
 {
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
-
 '''[1:]         # 最初の改行を除く
 
     output += body
 
     output += '''
 
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
   TLM_CODE_MAX
 } TLM_CODE;
 
@@ -346,25 +320,12 @@ def OutputOtherObcTlmDefH(file_path, name, body):
 
 typedef enum
 {{
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
-
 '''[1:]         # 最初の改行を除く
 
     output += body
 
     output += '''
 
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
   {_obc_name_upper}_TLM_CODE_MAX
 }} {_obc_name_upper}_TLM_CODE;
 

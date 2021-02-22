@@ -117,13 +117,6 @@ def OutputCmdDefC_(file_path, body):
 #include "CommandDefinitions.h"
 #include "CommandSource.h"
 
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
-
 void CA_load_cmd_table(CmdInfo cmd_table_[CMD_MAX_CMDS])
 {
 '''[1:]         # 最初の改行を除く
@@ -132,13 +125,6 @@ void CA_load_cmd_table(CmdInfo cmd_table_[CMD_MAX_CMDS])
 
     output += '''
 }
-
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
 
 #pragma section
 '''[1:]         # 最初の改行を除く
@@ -165,25 +151,12 @@ def OutputCmdDefH_(file_path, body):
 
 typedef enum
 {
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
-
 '''[1:]         # 最初の改行を除く
 
     output += body
 
     output += '''
 
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
   Cmd_CODE_MAX
 } CMD_CODE;
 
@@ -247,25 +220,12 @@ def OutputOtherObcCmdDefH_(file_path, name, body):
 
 typedef enum
 {{
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
-
 '''[1:]         # 最初の改行を除く
 
     output += body
 
     output += '''
 
-//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##//##
-/*
-This pattern is a "separator".
-This should not be changed.
-This should not be used in other places.
-*/
   {_obc_name_upper}_Cmd_CODE_MAX
 }} {_obc_name_upper}_CMD_CODE;
 
