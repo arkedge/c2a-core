@@ -23,6 +23,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
 
         body_c = ""
         body_h = ""
+        tlmdef_body_h = ""
 
         body_c += "static {_obc_name_upper}_Buffer {_obc_name_lower}_buffer_;\n"
         body_c += "const {_obc_name_upper}_Buffer* {_obc_name_lower}_buffer;\n"
@@ -41,8 +42,8 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
 
         body_h += "}} {_obc_name_upper}_Buffer;\n"
         body_h += "\n"
-        body_h += "typedef struct\n"
-        body_h += "{{\n"
+        tlmdef_body_h += "typedef struct\n"
+        tlmdef_body_h += "{{\n"
         for tlm in tlm_db:
             tlm_name = tlm['tlm_name']
             tlm_name_lower = tlm_name.lower()
@@ -79,10 +80,10 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             #     print(v)
             #     print("")
 
-            body_h += GenerateStructDef_(tlm_struct_tree, tlm_name_lower)
+            tlmdef_body_h += GenerateStructDef_(tlm_struct_tree, tlm_name_lower)
 
-        body_h += "}} {_obc_name_upper}_TlmData;\n"
-        body_h += "\n"
+        tlmdef_body_h += "}} {_obc_name_upper}_TlmData;\n"
+
         body_h += "extern const {_obc_name_upper}_Buffer* {_obc_name_lower}_buffer;\n"
         body_h += "\n"
         body_h += "void {_obc_name_upper}_buffer_init(void);\n"
@@ -146,6 +147,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"];
         OutputTlmBufferC_(output_file_path + obc_name.capitalize() + "TelemetryBuffer.c", obc_name, body_c)
         OutputTlmBufferH_(output_file_path + obc_name.capitalize() + "TelemetryBuffer.h", obc_name, body_h)
+        OutputTlmDataDefH_(output_file_path + obc_name.capitalize() + "TelemetryDataDefinitions.h", obc_name, tlmdef_body_h)
 
 
 def OutputTlmBufferC_(file_path, name, body):
@@ -198,6 +200,36 @@ def OutputTlmBufferH_(file_path, name, body):
 #define {_obc_name_upper}_TELEMETRY_BUFFER_H_
 
 #include "./{_obc_name_upper}.h"
+
+'''[1:]         # 最初の改行を除く
+
+    output += body
+
+    output += '''
+
+#endif
+'''[1:]         # 最初の改行を除く
+
+    with open(file_path, mode='w', encoding='shift_jis') as fh:
+        fh.write(output.format(_obc_name_upper=name_upper, _obc_name_lower=name_lower, _obc_name_capit=name_capit))
+
+
+def OutputTlmDataDefH_(file_path, name, body):
+    name_upper = name.upper()
+    name_lower = name.lower()
+    name_capit = name.capitalize()
+
+    output = ""
+    output += '''
+/**
+ * @file   {_obc_name_capit}TelemetryDataDefinitions.h
+ * @brief  バッファリングされているテレメをパースしてMOBC内でかんたんに利用できるようにするためのテレメデータ構造体定義
+ * @note   このコードは自動生成されています！
+ * @author 鈴本 遼
+ * @date   2021/02/14
+ */
+#ifndef {_obc_name_upper}_TELEMETRY_DATA_DEFINITIONS_H_
+#define {_obc_name_upper}_TELEMETRY_DATA_DEFINITIONS_H_
 
 '''[1:]         # 最初の改行を除く
 
