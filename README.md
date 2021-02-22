@@ -17,10 +17,11 @@ $ python GenerateC2ACode.py
 ## 設定
 `settings.json` にて記述する．  
 `1` とした場合，現在は以下のみ生成される．
-- TobcTelemetryBuffer.c
-- TobcTelemetryBuffer.h
 - TobcCommandDefinitions.h
 - TobcTelemetryDefinitions.h
+- TobcTelemetryBuffer.c
+- TobcTelemetryBuffer.h
+- TobcTelemetryDataDefinitions.h
 
 ```
 {
