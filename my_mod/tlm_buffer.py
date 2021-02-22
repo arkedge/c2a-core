@@ -124,23 +124,90 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "}}\n"
         body_c += "\n"
         for tlm in tlm_db:
+            conv_tpye_to_temp = {
+                                    'int8_t'   : 'temp_i8',
+                                    'int16_t'  : 'temp_i16',
+                                    'int32_t'  : 'temp_i32',
+                                    'uint8_t'  : 'temp_u8',
+                                    'uint16_t' : 'temp_u16',
+                                    'uint32_t' : 'temp_u32',
+                                    'float'    : 'temp_f',
+                                    'double'   : 'temp_d',
+                                }
+            conv_tpye_to_size = {
+                                    'int8_t'   : 1,
+                                    'int16_t'  : 2,
+                                    'int32_t'  : 4,
+                                    'uint8_t'  : 1,
+                                    'uint16_t' : 2,
+                                    'uint32_t' : 4,
+                                    'float'    : 4,
+                                    'double'   : 8
+                                }
             tlm_name = tlm['tlm_name']
             tlm_name_upper = tlm_name.upper()
             tlm_name_lower = tlm_name.lower()
             body_c += "static DRIVER_SUPER_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DriverSuperStreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ")\n"
             body_c += "{{\n"
             body_c += "  uint32_t tlm_len = DRIVER_SUPER_ISSLFMT_get_tlm_length(p_stream_config);\n"
+            body_c += "  uint8_t* f       = p_stream_config->rx_frame;\n"
             body_c += "  uint32_t contents_len = tlm_len - DRIVER_SUPER_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE - 1;      // FIXME: CCSDSは1起算？\n"
-            body_c += "  uint8_t* contents_pos = (p_stream_config->rx_frame) + DRIVER_SUPER_ISSLFMT_COMMON_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_PRIMARY_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE;\n"
+            body_c += "  uint8_t* contents_pos = f + DRIVER_SUPER_ISSLFMT_COMMON_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_PRIMARY_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE;\n"
+            for k, v in conv_tpye_to_temp.items():
+                if k == "float" or k == "double":
+                    body_c += "  " + k + " " + v + " = 0.0f;\n"
+                else:
+                    body_c += "  " + k + " " + v + " = 0;\n"
             body_c += "\n"
+            body_c += "  // GSへのテレメ中継のためのバッファーへのコピー\n"
             body_c += "  if (contents_len > {_obc_name_upper}_TELEMETRY_BUFFE_SIZE) return DRIVER_SUPER_ERR_CODE_ERR;\n"
             body_c += "  memcpy({_obc_name_lower}_buffer_." + tlm_name_lower + ".buffer, contents_pos, (size_t)contents_len);\n"
             body_c += "  {_obc_name_lower}_buffer_." + tlm_name_lower + ".size = (int)contents_len;\n"
             body_c += "\n"
-            body_c += "  // [TODO] フレームの中身をパースしてMOBCでもろもろにアクセスするためのコード\n"
-            body_c += "  //        例えばTOBCであれば， TOBC_TlmData に代入していく\n"
-            body_c += "  //        問題はビットフィールドを使ってるやつら\n"
-            body_c += "  (void)" + driver_name + ";  // 仮\n"
+            body_c += "  // MOBC内部でテレメデータへアクセスしやすいようにするための構造体へのパース\n"
+            last_var_type = ""
+            for j in range(DATA_START_ROW, len(tlm['data'])):
+                comment  = tlm['data'][j][0]
+                name     = tlm['data'][j][1]
+                var_type = tlm['data'][j][2]
+                if comment == "" and name == "":                    # CommentもNameも空白なら打ち切り
+                    break
+                if comment != "":
+                    continue
+                if name == "":
+                    continue
+                if var_type == "":
+                    var_type = last_var_type
+                last_var_type = var_type
+                if last_var_type == "":
+                    continue
+
+                oct_pos = int(tlm['data'][j][6])
+                bit_pos = int(tlm['data'][j][7])
+                bit_len = int(tlm['data'][j][8])
+                is_compression = 0              # テレメ圧縮フラグ for ビットフィールドをつかってる奴ら
+                if tlm['data'][j][2] == "" or tlm['data'][j+1][2] == "":
+                    is_compression = 1
+                if (tlm['data'][j+1][0] == "" and tlm['data'][j+1][1] == "" and tlm['data'][j][2] != ""):    # 最終行の除外
+                    is_compression = 0
+
+                name_tree = name.lower().split(".")[2:]     # OBC名.テレメ名.HOGE.FUGA を想定
+                name_path = ".".join(name_tree)
+                var_name = driver_name + "->tlm_data." + tlm_name_lower + "." + name_path
+                if (is_compression):
+                    body_c += "  endian_memcpy(&" + conv_tpye_to_temp[var_type] + ", &(f[" + str(oct_pos) + "]), " + str(conv_tpye_to_size[var_type]) + ");\n"
+                    body_c += "  " + conv_tpye_to_temp[var_type] + " >>= " + str(bit_pos) + ";\n"
+                    body_c += "  " + conv_tpye_to_temp[var_type] + " &= " + hex(int("0b" + "1" * bit_len, 2)) + ";\n"
+                    body_c += "  " + var_name + " = " + conv_tpye_to_temp[var_type] + ";\n"
+                else:
+                    body_c += "  endian_memcpy(&(" + var_name + "), &(f[" + str(oct_pos) + "]), " + str(conv_tpye_to_size[var_type]) + ");\n"
+
+            body_c += "  // TODO: ビットフィールドをつかっている系は，様々なパターンがあり得るので，今後，バグが出ないか注視する\n"
+            body_c += "\n"
+            body_c += "  // ワーニング回避\n"
+            for k, v in conv_tpye_to_temp.items():
+                body_c += "  (void)" + v + ";\n"
+            body_c += "\n"
             body_c += "  return DRIVER_SUPER_ERR_CODE_OK;\n"
             body_c += "}}\n"
             body_c += "\n"
