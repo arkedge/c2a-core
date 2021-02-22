@@ -4,9 +4,12 @@ tlm buffer
 """
 
 import os
+import sys
+# from collections import OrderedDict
+import pprint
 
 def GenerateTlmBuffer(settings, other_obc_dbs):
-    # DATA_START_ROW = 7
+    DATA_START_ROW = 7
 
     for i in range(len(settings["other_obc_data"])):
         if not settings["other_obc_data"][i]["is_enable"]:
@@ -37,6 +40,48 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "static DRIVER_SUPER_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DriverSuperStreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ");\n"
 
         body_h += "}} {_obc_name_upper}_Buffer;\n"
+        body_h += "\n"
+        body_h += "typedef struct\n"
+        body_h += "{{\n"
+        for tlm in tlm_db:
+            tlm_name = tlm['tlm_name']
+            tlm_name_lower = tlm_name.lower()
+
+            # pprint.pprint(tlm['data'][DATA_START_ROW:])
+            last_var_type = ""
+            tlm_struct_tree = {}                          # python3.7以上を想定しているので，キーの順番は保存されていることが前提
+            # tlm_struct_tree = collections.OrderedDict()     # やっぱこっちで
+            for j in range(DATA_START_ROW, len(tlm['data'])):
+                comment  = tlm['data'][j][0]
+                name     = tlm['data'][j][1]
+                var_type = tlm['data'][j][2]
+                if comment == "" and name == "":                    # CommentもNameも空白なら打ち切り
+                    break
+                if comment != "":
+                    continue
+                if name == "":
+                    continue
+                if var_type == "":
+                    var_type = last_var_type
+                last_var_type = var_type
+                if last_var_type == "":
+                    continue
+
+                name_tree = name.lower().split(".")[2:]     # OBC名.テレメ名.HOGE.FUGA を想定
+                name_path = "/".join(name_tree)
+                if (SetStructTree_(tlm_struct_tree, name_path, var_type)):
+                    print("Error: Tlm DB Struct Parse Err at " + name, file=sys.stderr)
+                    sys.exit(1)
+
+            # pprint.pprint(tlm_struct_tree)
+            # for k, v in tlm_struct_tree.items():
+            #     print(k)
+            #     print(v)
+            #     print("")
+
+            body_h += GenerateStructDef_(tlm_struct_tree, tlm_name_lower)
+
+        body_h += "}} {_obc_name_upper}_TlmData;\n"
         body_h += "\n"
         body_h += "extern const {_obc_name_upper}_Buffer* {_obc_name_lower}_buffer;\n"
         body_h += "\n"
@@ -135,9 +180,6 @@ def OutputTlmBufferC_(file_path, name, body):
         fh.write(output.format(_obc_name_upper=name_upper, _obc_name_lower=name_lower, _obc_name_capit=name_capit))
 
 
-
-
-
 def OutputTlmBufferH_(file_path, name, body):
     name_upper = name.upper()
     name_lower = name.lower()
@@ -169,3 +211,49 @@ def OutputTlmBufferH_(file_path, name, body):
     with open(file_path, mode='w', encoding='shift_jis') as fh:
         fh.write(output.format(_obc_name_upper=name_upper, _obc_name_lower=name_lower, _obc_name_capit=name_capit))
 
+
+def GetStructTree_(dict, path, sep="/", default=None):
+    path_list = path.split(sep)
+    def _(dict, path_list, sep, default):
+        if len(path_list) == 0:
+            return default
+        if len(path_list) == 1:
+            return dict.get(path_list[0], default)
+        else:
+            return _(dict.get(path_list[0], {}), path_list[1:], sep, default)
+    return _(dict, path_list, sep=sep, default=None)
+
+
+def SetStructTree_(dict, path, val, sep="/"):
+    path_list = path.split(sep)
+    def _(dict, path_list, val, sep):
+        if len(path_list) == 0:
+            return 1            # err
+        if len(path_list) == 1:
+            key = path_list[0]
+            if key in dict:
+                return 1        # 上書きエラー
+            else:
+                dict[key] = val
+                return 0
+        else:
+            key = path_list[0]
+            if not key in dict:
+                dict[key] = {}
+            return _(dict[key], path_list[1:], val, sep)
+    return _(dict, path_list, val, sep=sep)
+
+
+def GenerateStructDef_(tree, name):
+    def _(tree, name, indent):
+        output = ""
+        output += " " * (indent) + "struct\n"
+        output += " " * (indent) + "{{\n"
+        for k, v in tree.items():
+            if type(v) == dict:
+                output += _(v, k, indent+2)
+                continue
+            output += " " * (indent+2) + v + " " + k + ";\n"
+        output += " " * (indent) + "}} " + name + ";\n"
+        return output
+    return _(tree, name, 2)

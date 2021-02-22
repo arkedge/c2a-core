@@ -101,7 +101,7 @@ def LoadOtherObcTlm(settings):
     for i in range(len(settings["other_obc_data"])):
         if not settings["other_obc_data"][i]["is_enable"]:
             continue
-        tlm_db_path = settings["other_obc_data"][i]["db_path"] + r"TLM_DB/"
+        tlm_db_path = settings["other_obc_data"][i]["db_path"] + r"TLM_DB/calced_data/"
 
         tlm_db = LoadTlmCSV_(tlm_db_path, settings["other_obc_data"][i]["db_prefix"])
         other_obc_dbs[settings["other_obc_data"][i]["name"]] = tlm_db
