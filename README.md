@@ -16,7 +16,6 @@ $ python GenerateC2ACode.py
 
 ## 設定
 `settings.json` にて記述する．  
-現在 `is_main_obc` は，未だ仕様未確定なため， `0` とすること！  
 `1` とした場合，現在は以下のみ生成される．
 - TobcTelemetryBuffer.c
 - TobcTelemetryBuffer.h
@@ -32,12 +31,15 @@ $ python GenerateC2ACode.py
   "db_prefix" : "ISSL6U_MOBC",
   # GSTOS用sibファイルを生成するか？ 0/1
   "is_generated_sib" : 0,
-  # MOBCか？（他のOBCのtlm/cmdを取りまとめるか？ 0/1
-  # 0 の場合，以後のパラメタは無効（現在仮おき）
+  # MOBCか？（他のOBCのtlm/cmdを取りまとめるか？） 0/1
+  # (A|T)OBCのコードを生成するときなどは 0 にする
+  # 0 の場合，以後のパラメタは無効
   "is_main_obc" : 0,
   "other_obc_data" : [
     {
+      # OBC名
       "name" : "AOBC",
+      # コードを生成するか？ AOBCについては現時点でDBが存在しないため 0
       "is_enable" : 0,
       "db_prefix" : "ISSL6U_AOBC",
       "db_path" : "../../c2a_issl6u_aobc//src/src_user/Settings/CmdTlm/DataBase/",
@@ -48,9 +50,12 @@ $ python GenerateC2ACode.py
       "tlm_id_range" : ["0x90", "0xc0"]
     },
     {
+      # OBC名
       "name" : "TOBC",
+      # コードを生成するか？
       "is_enable" : 1,
       "db_prefix" : "ISSL6U_TOBC",
+      # 現在，TOBCのDBは https://gitlab.com/ut_issl/issl6u/thermal/tobc_tlmcmd にあるので，これを手元にcloneし，そこまでの相対パスを設定する．
       "db_path" : "../../tobc_tlmcmd/",
       "tlm_max_contents_len" : 512,
       "driver_path" : "THERMAL/",
