@@ -154,8 +154,10 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "  uint32_t contents_len = tlm_len - DRIVER_SUPER_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE - 1;      // FIXME: CCSDSは1起算？\n"
             body_c += "  uint8_t* contents_pos = f + DRIVER_SUPER_ISSLFMT_COMMON_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_PRIMARY_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE;\n"
             for k, v in conv_tpye_to_temp.items():
-                if k == "float" or k == "double":
+                if k == "float":
                     body_c += "  " + k + " " + v + " = 0.0f;\n"
+                elif k == "double":
+                    body_c += "  " + k + " " + v + " = 0.0;\n"
                 else:
                     body_c += "  " + k + " " + v + " = 0;\n"
             body_c += "\n"
