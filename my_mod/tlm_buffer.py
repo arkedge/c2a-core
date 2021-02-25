@@ -119,7 +119,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "    return {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(p_stream_config, " + driver_name + ");\n"
         body_c += "  default:\n"
         body_c += "    " + settings["other_obc_data"][i]["code_when_tlm_not_found"] + "\n"
-        body_c += "    return DRIVER_SUPER_ERR_CODE_OK;\n"
+        body_c += "    return DRIVER_SUPER_ERR_CODE_ERR;\n"
         body_c += "  }}\n"
         body_c += "}}\n"
         body_c += "\n"
