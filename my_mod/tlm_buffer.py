@@ -150,7 +150,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "static DRIVER_SUPER_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DriverSuperStreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ")\n"
             body_c += "{{\n"
             body_c += "  uint32_t tlm_len = DRIVER_SUPER_ISSLFMT_get_tlm_length(p_stream_config);\n"
-            body_c += "  uint8_t* f       = p_stream_config->rx_frame;\n"
+            body_c += "  uint8_t* f       = DSSC_get_rx_frame(p_stream_config);\n"
             body_c += "  uint32_t contents_len = tlm_len - DRIVER_SUPER_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE - 1;      // FIXME: CCSDSは1起算？\n"
             body_c += "  uint8_t* contents_pos = f + DRIVER_SUPER_ISSLFMT_COMMON_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_PRIMARY_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE;\n"
             for k, v in conv_tpye_to_temp.items():
