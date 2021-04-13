@@ -250,6 +250,7 @@ def OutputTlmDefC_(file_path, body):
  * @author 鈴本 遼
  * @date   2020/08/23
  */
+#include "../../src_core/CmdTlm/TelemetryFrame.h"
 #include "TelemetryDefinitions.h"
 #include "TelemetrySource.h"
 
@@ -279,8 +280,6 @@ def OutputTlmDefH_(file_path, body):
 #ifndef TELEMETRY_DEFINITIONS_H_
 #define TELEMETRY_DEFINITIONS_H_
 
-#include "../../src_core/CmdTlm/TelemetryFrame.h"
-
 typedef enum
 {
 '''[1:]         # 最初の改行を除く
@@ -291,8 +290,6 @@ typedef enum
 
   TLM_CODE_MAX
 } TLM_CODE;
-
-void TF_load_tlm_table(TlmInfo tlm_table_[TLM_MAX_TLMS]);
 
 #endif
 '''[1:]         # 最初の改行を除く

@@ -114,6 +114,7 @@ def OutputCmdDefC_(file_path, body):
  * @author 鈴本 遼
  * @date   2020/08/23
  */
+#include "../../src_core/CmdTlm/CommandAnalyze.h"
 #include "CommandDefinitions.h"
 #include "CommandSource.h"
 
@@ -147,8 +148,6 @@ def OutputCmdDefH_(file_path, body):
 #ifndef COMMAND_DEFINITIONS_H_
 #define COMMAND_DEFINITIONS_H_
 
-#include "../../src_core/CmdTlm/CommandAnalyze.h"
-
 typedef enum
 {
 '''[1:]         # 最初の改行を除く
@@ -159,8 +158,6 @@ typedef enum
 
   Cmd_CODE_MAX
 } CMD_CODE;
-
-void CA_load_cmd_table(CmdInfo cmd_table_[CMD_MAX_CMDS]);
 
 #endif
 '''[1:]         # 最初の改行を除く
