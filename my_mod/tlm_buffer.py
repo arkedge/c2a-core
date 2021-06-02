@@ -236,7 +236,7 @@ def OutputTlmBufferC_(file_path, name, body):
 
 #include "./{_obc_name_lower}_telemetry_definitions.h"
 #include "./{_obc_name_lower}_telemetry_buffer.h"
-#include "string.h" // for memcpy
+#include <string.h> // for memcpy
 
 '''[1:]         # 最初の改行を除く
 
