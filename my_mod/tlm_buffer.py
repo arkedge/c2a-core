@@ -26,7 +26,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         tlmdef_body_h = ""
 
         body_c += "static {_obc_name_upper}_Buffer {_obc_name_lower}_buffer_;\n"
-        body_c += "const {_obc_name_upper}_Buffer* {_obc_name_lower}_buffer;\n"
+        body_c += "const {_obc_name_upper}_Buffer* const {_obc_name_lower}_buffer = &{_obc_name_lower}_buffer_;\n"
         body_c += "\n"
         body_h += "#define {_obc_name_upper}_TELEMETRY_BUFFE_SIZE (" + str(contents_len) + ")\n"
         body_h += "\n"
@@ -86,17 +86,16 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
 
         tlmdef_body_h += "}} {_obc_name_upper}_TlmData;\n"
 
-        body_h += "extern const {_obc_name_upper}_Buffer* {_obc_name_lower}_buffer;\n"
+        body_h += "extern const {_obc_name_upper}_Buffer* const {_obc_name_lower}_buffer;\n"
         body_h += "\n"
         body_h += "void {_obc_name_upper}_buffer_init(void);\n"
+        body_h += "\n"
         body_h += "DRIVER_SUPER_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DriverSuperStreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ");\n"
 
 
         body_c += "\n"
         body_c += "void {_obc_name_upper}_buffer_init(void)\n"
         body_c += "{{\n"
-        body_c += "  {_obc_name_lower}_buffer = &{_obc_name_lower}_buffer_;\n"
-        body_c += "\n"
         for tlm in tlm_db:
             tlm_name = tlm['tlm_name']
             tlm_name_lower = tlm_name.lower()
@@ -216,9 +215,9 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
 
 
         output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"];
-        OutputTlmBufferC_(output_file_path + obc_name.capitalize() + "TelemetryBuffer.c", obc_name, body_c)
-        OutputTlmBufferH_(output_file_path + obc_name.capitalize() + "TelemetryBuffer.h", obc_name, body_h)
-        OutputTlmDataDefH_(output_file_path + obc_name.capitalize() + "TelemetryDataDefinitions.h", obc_name, tlmdef_body_h)
+        OutputTlmBufferC_(output_file_path + obc_name.lower() + "_telemetry_buffer.c", obc_name, body_c)
+        OutputTlmBufferH_(output_file_path + obc_name.lower() + "_telemetry_buffer.h", obc_name, body_h)
+        OutputTlmDataDefH_(output_file_path + obc_name.lower() + "_telemetry_data_definitions.h", obc_name, tlmdef_body_h)
 
 
 def OutputTlmBufferC_(file_path, name, body):
@@ -230,16 +229,14 @@ def OutputTlmBufferC_(file_path, name, body):
     output += '''
 #pragma section REPRO
 /**
- * @file   {_obc_name_capit}TelemetryBuffer.c
+ * @file   {_obc_name_lower}_telemetry_buffer.c
  * @brief  テレメトリバッファー（テレメ中継）
  * @note   このコードは自動生成されています！
- * @author 鈴本 遼
- * @date   2021/02/14
  */
 
-#include "./{_obc_name_capit}TelemetryDefinitions.h"
-#include "./{_obc_name_capit}TelemetryBuffer.h"
-#include "string.h" // for memcpy
+#include "./{_obc_name_lower}_telemetry_definitions.h"
+#include "./{_obc_name_lower}_telemetry_buffer.h"
+#include <string.h> // for memcpy
 
 '''[1:]         # 最初の改行を除く
 
@@ -261,16 +258,14 @@ def OutputTlmBufferH_(file_path, name, body):
     output = ""
     output += '''
 /**
- * @file   {_obc_name_capit}TelemetryBuffer.h
+ * @file   {_obc_name_lower}_telemetry_buffer.h
  * @brief  テレメトリバッファー（テレメ中継）
  * @note   このコードは自動生成されています！
- * @author 鈴本 遼
- * @date   2021/02/14
  */
 #ifndef {_obc_name_upper}_TELEMETRY_BUFFER_H_
 #define {_obc_name_upper}_TELEMETRY_BUFFER_H_
 
-#include "./{_obc_name_upper}.h"
+#include "./{_obc_name_lower}.h"
 
 '''[1:]         # 最初の改行を除く
 
@@ -293,11 +288,9 @@ def OutputTlmDataDefH_(file_path, name, body):
     output = ""
     output += '''
 /**
- * @file   {_obc_name_capit}TelemetryDataDefinitions.h
+ * @file   {_obc_name_lower}_telemetry_data_definitions.h
  * @brief  バッファリングされているテレメをパースしてMOBC内でかんたんに利用できるようにするためのテレメデータ構造体定義
  * @note   このコードは自動生成されています！
- * @author 鈴本 遼
- * @date   2021/02/14
  */
 #ifndef {_obc_name_upper}_TELEMETRY_DATA_DEFINITIONS_H_
 #define {_obc_name_upper}_TELEMETRY_DATA_DEFINITIONS_H_

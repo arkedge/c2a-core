@@ -8,7 +8,7 @@ import sys
 
 def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
     output_file_path = settings["c2a_root_dir"] + r"src_user/CmdTlm/"
-    output_file_name_base = "TelemetryDefinitions"
+    output_file_name_base = "telemetry_definitions"
 
     DATA_START_ROW = 7
 
@@ -120,8 +120,9 @@ def GetTlmDefCOfOtherObcFunDef_(settings, tlm_db, other_obc_dbs):
 
         temp_c = ""
         temp_c += "\n"
+        temp_c += "// {_obc_name_upper} TLM\n"
         for tlm in oter_obc_tlm_db:
-            temp_c += "static int Tlm_{_obc_name_upper}_" + tlm['tlm_name'].upper() + "_(unsigned char* contents, int max_len);\n"
+            temp_c += "static int Tlm_" + tlm['tlm_name'].upper() + "_(unsigned char* contents, int max_len);\n"
 
         body_c += temp_c.format(_obc_name_upper=obc_name.upper(), _obc_name_lower=obc_name.lower(), _obc_name_capit=obc_name.capitalize())
 
@@ -140,8 +141,9 @@ def GetTlmDefCOfOtherObcFunLoad_(settings, tlm_db, other_obc_dbs):
 
         temp_c = ""
         temp_c += "\n"
+        temp_c += "  // {_obc_name_upper} TLM\n"
         for tlm in oter_obc_tlm_db:
-            temp_c += "  tlm_table_[Tlm_CODE_{_obc_name_upper}_" + tlm['tlm_name'].upper() + "].tlm_func = Tlm_{_obc_name_upper}_" + tlm['tlm_name'].upper() + "_;\n"
+            temp_c += "  tlm_table_[Tlm_CODE_" + tlm['tlm_name'].upper() + "].tlm_func = Tlm_" + tlm['tlm_name'].upper() + "_;\n"
         body_c += temp_c.format(_obc_name_upper=obc_name.upper(), _obc_name_lower=obc_name.lower(), _obc_name_capit=obc_name.capitalize())
 
     return body_c
@@ -163,7 +165,7 @@ def GetTlmDefCOfOtherObcFunBody_(settings, tlm_db, other_obc_dbs):
             tlm_name_upper = tlm_name.upper()
             tlm_name_lower = tlm_name.lower()
             temp_c += "\n"
-            temp_c += "static int Tlm_{_obc_name_upper}_" + tlm_name_upper + "_(unsigned char* contents, int max_len)\n"
+            temp_c += "static int Tlm_" + tlm_name_upper + "_(unsigned char* contents, int max_len)\n"
             temp_c += "{{\n"
             temp_c += "  int buffer_size = {_obc_name_lower}_buffer->" + tlm_name_lower + ".size;\n"
             temp_c += "\n"
@@ -209,8 +211,9 @@ def GetTlmDefHOfOtherObc_(settings, tlm_db, other_obc_dbs):
                 sys.exit(1)
 
         body_h += "\n"
+        temp_h += "  // {_obc_name_upper} TLM\n"
         for tlm in oter_obc_tlm_db:
-            temp_h += "  Tlm_CODE_{_obc_name_upper}_" + tlm['tlm_name'].upper() + " = " + tlm['tlm_id'] + ",\n"
+            temp_h += "  Tlm_CODE_" + tlm['tlm_name'].upper() + " = " + tlm['tlm_id'] + ",\n"
 
         body_h += temp_h.format(_obc_name_upper=obc_name.upper(), _obc_name_lower=obc_name.lower(), _obc_name_capit=obc_name.capitalize())
 
@@ -234,7 +237,7 @@ def GenerateOtherObcTlmDef(settings, other_obc_dbs):
         # "  TOBC_Tlm_CODE_HK = 0xf0,"
         for tlm in tlm_db:
             body_h += "  {_obc_name_upper}_Tlm_CODE_" + tlm['tlm_name'].upper() + " = " + tlm['tlm_id'] + ",\n"
-        output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"] + obc_name.capitalize() + "TelemetryDefinitions.h"
+        output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"] + obc_name.lower() + "_telemetry_definitions.h"
         OutputOtherObcTlmDefH(output_file_path, obc_name, body_h)
 
 
@@ -244,15 +247,13 @@ def OutputTlmDefC_(file_path, body):
     output += '''
 #pragma section REPRO
 /**
- * @file   TelemetryDefinitions.c
+ * @file   telemetry_definitions.c
  * @brief  テレメトリ定義
  * @note   このコードは自動生成されています！
- * @author 鈴本 遼
- * @date   2020/08/23
  */
 #include "../../src_core/CmdTlm/TelemetryFrame.h"
-#include "TelemetryDefinitions.h"
-#include "TelemetrySource.h"
+#include "telemetry_definitions.h"
+#include "telemetry_source.h"
 
 '''[1:]         # 最初の改行を除く
 
@@ -271,11 +272,9 @@ def OutputTlmDefH_(file_path, body):
     output = ""
     output += '''
 /**
- * @file   TelemetryDefinitions.h
+ * @file   telemetry_definitions.h
  * @brief  テレメトリ定義
  * @note   このコードは自動生成されています！
- * @author 鈴本 遼
- * @date   2020/08/23
  */
 #ifndef TELEMETRY_DEFINITIONS_H_
 #define TELEMETRY_DEFINITIONS_H_
@@ -306,11 +305,9 @@ def OutputOtherObcTlmDefH(file_path, name, body):
     output = ""
     output += '''
 /**
- * @file   {_obc_name_capit}TelemetryDefinitions.h
+ * @file   {_obc_name_lower}_telemetry_definitions.h
  * @brief  テレメトリ定義
  * @note   このコードは自動生成されています！
- * @author 鈴本 遼
- * @date   2020/08/23
  */
 #ifndef {_obc_name_upper}_TELEMETRY_DEFINITIONS_H_
 #define {_obc_name_upper}_TELEMETRY_DEFINITIONS_H_

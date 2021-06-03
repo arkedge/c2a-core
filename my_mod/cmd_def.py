@@ -8,7 +8,7 @@ import pprint
 
 def GenerateCmdDef(settings, sgc_db):
     output_file_path = settings["c2a_root_dir"] + r"src_user/CmdTlm/"
-    output_file_name_base = "CommandDefinitions"
+    output_file_name_base = "command_definitions"
 
     DATA_SART_ROW = 3
 
@@ -38,7 +38,7 @@ def GenerateCmdDef(settings, sgc_db):
 
 def GenerateBctDef(settings, bct_db):
     output_file_path = settings["c2a_root_dir"] + r"src_user/CmdTlm/"
-    output_file_name = "BlockCommandDefinitions.h"
+    output_file_name = "block_command_definitions.h"
 
     DATA_SART_ROW = 2
 
@@ -99,7 +99,7 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
             cmd_code = cmd_name.replace("Cmd_", name_upper+"_Cmd_CODE_")
             body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
         # print(body_h)
-        output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"] + name_capit + "CommandDefinitions.h"
+        output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"] + name_lower + "_command_definitions.h"
         OutputOtherObcCmdDefH_(output_file_path, obc_name, body_h)
 
 
@@ -108,15 +108,13 @@ def OutputCmdDefC_(file_path, body):
     output += '''
 #pragma section REPRO
 /**
- * @file   CommandDefinitions.c
+ * @file   command_definitions.c
  * @brief  コマンド定義
  * @note   このコードは自動生成されています！
- * @author 鈴本 遼
- * @date   2020/08/23
  */
 #include "../../src_core/CmdTlm/CommandAnalyze.h"
-#include "CommandDefinitions.h"
-#include "CommandSource.h"
+#include "command_definitions.h"
+#include "command_source.h"
 
 void CA_load_cmd_table(CmdInfo cmd_table_[CMD_MAX_CMDS])
 {
@@ -139,11 +137,9 @@ def OutputCmdDefH_(file_path, body):
     output = ""
     output += '''
 /**
- * @file   CommandDefinitions.h
+ * @file   command_definitions.h
  * @brief  コマンド定義
  * @note   このコードは自動生成されています！
- * @author 鈴本 遼
- * @date   2020/08/23
  */
 #ifndef COMMAND_DEFINITIONS_H_
 #define COMMAND_DEFINITIONS_H_
@@ -170,11 +166,9 @@ def OutputBctDef_(file_path, body):
     output = ""
     output += '''
 /**
- * @file   BlockCommandDefinitions.h
+ * @file   block_command_definitions.h
  * @brief  ブロックコマンド定義
  * @note   このコードは自動生成されています！
- * @author 鈴本 遼
- * @date   2020/11/14
  */
 #ifndef BLOCK_COMMAND_DEFINITIONS_H_
 #define BLOCK_COMMAND_DEFINITIONS_H_
@@ -206,11 +200,9 @@ def OutputOtherObcCmdDefH_(file_path, name, body):
     output = ""
     output += '''
 /**
- * @file   {_obc_name_capit}CommandDefinitions.h
+ * @file   {_obc_name_lower}_command_definitions.h
  * @brief  コマンド定義
  * @note   このコードは自動生成されています！
- * @author 鈴本 遼
- * @date   2020/08/23
  */
 #ifndef {_obc_name_upper}_COMMAND_DEFINITIONS_H_
 #define {_obc_name_upper}_COMMAND_DEFINITIONS_H_
