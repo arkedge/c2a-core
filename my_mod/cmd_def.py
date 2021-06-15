@@ -4,6 +4,7 @@ cmd def
 """
 
 import os
+import sys
 import pprint
 
 def GenerateCmdDef(settings, sgc_db):
@@ -24,13 +25,61 @@ def GenerateCmdDef(settings, sgc_db):
             break
         if comment != "":                                 # Comment
             continue
-        # print(name)
+
         cmd_name = name
         cmd_code = cmd_name.replace("Cmd_", "Cmd_CODE_")
         # print(cmd_name)
         # print(cmd_code)
         body_c += "  cmd_table_[" + cmd_code + "].cmd_func = " + cmd_name + ";\n"
         body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
+
+    body_c += "\n";
+    for i in range(DATA_SART_ROW, len(sgc_db)):
+        comment = sgc_db[i][0]
+        name    = sgc_db[i][1]
+        cmd_id  = sgc_db[i][3]
+        if comment == "" and name == "":                  # CommentもNameも空白なら打ち切り
+            break
+        if comment != "":                                 # Comment
+            continue
+
+        param_num = int(sgc_db[i][4])
+        type_list = [sgc_db[i][5], sgc_db[i][7], sgc_db[i][9], sgc_db[i][11], sgc_db[i][13], sgc_db[i][15]]
+        cmd_name = name
+        cmd_code = cmd_name.replace("Cmd_", "Cmd_CODE_")
+
+        # パラメタ長の整合性チェック
+        for j in range(len(type_list)):
+            err_flag = 0;
+            if j < param_num and type_list[j] == "":
+                err_flag = 1
+            if j >= param_num and type_list[j] != "":
+                err_flag = 1
+            if (err_flag):
+                print("Error: Cmd DB Err at " + name, file=sys.stderr)
+                sys.exit(1)
+
+        # パラメタ長のカウント
+        conv_tpye_to_size = {
+                                'int8_t'   : 1,
+                                'int16_t'  : 2,
+                                'int32_t'  : 4,
+                                'uint8_t'  : 1,
+                                'uint16_t' : 2,
+                                'uint32_t' : 4,
+                                'float'    : 4,
+                                'double'   : 8,
+                                'raw'      : 0
+                            }
+        param_len_type = "CA_CMD_PARAM_LEN_TYPE_FIXED"
+        param_len = 0
+        for j in range(param_num):
+            if type_list[j] == "raw":
+                param_len_type = "CA_CMD_PARAM_LEN_TYPE_LOWER_LIMIT"
+            param_len += conv_tpye_to_size[type_list[j]]
+
+        body_c += "  cmd_table_[" + cmd_code + "].param_len_type = " + param_len_type + ";\n"
+        body_c += "  cmd_table_[" + cmd_code + "].param_len = " + str(param_len) + ";\n"
 
     OutputCmdDefC_(output_file_path + output_file_name_base + ".c", body_c)
     OutputCmdDefH_(output_file_path + output_file_name_base + ".h", body_h)
@@ -112,7 +161,7 @@ def OutputCmdDefC_(file_path, body):
  * @brief  コマンド定義
  * @note   このコードは自動生成されています！
  */
-#include "../../src_core/CmdTlm/CommandAnalyze.h"
+#include "../../src_core/CmdTlm/command_analyze.h"
 #include "command_definitions.h"
 #include "command_source.h"
 
