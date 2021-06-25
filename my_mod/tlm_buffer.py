@@ -40,7 +40,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_h += "    int     size;\n"
             body_h += "    uint8_t buffer[{_obc_name_upper}_TELEMETRY_BUFFE_SIZE];\n"
             body_h += "  }} " + tlm_name_lower + ";\n"
-            body_c += "static DRIVER_SUPER_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DriverSuperStreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ");\n"
+            body_c += "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DS_StreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ");\n"
 
         body_h += "}} {_obc_name_upper}_Buffer;\n"
         body_h += "\n"
@@ -90,7 +90,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_h += "\n"
         body_h += "void {_obc_name_upper}_buffer_init(void);\n"
         body_h += "\n"
-        body_h += "DRIVER_SUPER_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DriverSuperStreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ");\n"
+        body_h += "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DS_StreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ");\n"
 
 
         body_c += "\n"
@@ -102,10 +102,10 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "  {_obc_name_lower}_buffer_." + tlm_name_lower + ".size = 0;\n"
         body_c += "}}\n"
         body_c += "\n"
-        body_c += "DRIVER_SUPER_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DriverSuperStreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ")\n"
+        body_c += "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DS_StreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ")\n"
         body_c += "{{\n"
 
-        body_c += "  uint8_t tlm_id  = DRIVER_SUPER_C2AFMT_get_tlm_id(p_stream_config);\n"
+        body_c += "  uint8_t tlm_id  = DS_C2AFMT_get_tlm_id(p_stream_config);\n"
         body_c += "\n"
 
         body_c += "  switch (tlm_id)\n"
@@ -118,7 +118,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "    return {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(p_stream_config, " + driver_name + ");\n"
         body_c += "  default:\n"
         body_c += "    " + settings["other_obc_data"][i]["code_when_tlm_not_found"] + "\n"
-        body_c += "    return DRIVER_SUPER_ERR_CODE_ERR;\n"
+        body_c += "    return DS_ERR_CODE_ERR;\n"
         body_c += "  }}\n"
         body_c += "}}\n"
         body_c += "\n"
@@ -146,12 +146,12 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             tlm_name = tlm['tlm_name']
             tlm_name_upper = tlm_name.upper()
             tlm_name_lower = tlm_name.lower()
-            body_c += "static DRIVER_SUPER_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DriverSuperStreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ")\n"
+            body_c += "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DS_StreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ")\n"
             body_c += "{{\n"
-            body_c += "  uint32_t tlm_len = DRIVER_SUPER_ISSLFMT_get_tlm_length(p_stream_config);\n"
+            body_c += "  uint32_t tlm_len = DS_ISSLFMT_get_tlm_length(p_stream_config);\n"
             body_c += "  const uint8_t* f = DSSC_get_rx_frame(p_stream_config);\n"
-            body_c += "  uint32_t contents_len = tlm_len - DRIVER_SUPER_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE - 1;      // FIXME: CCSDSは1起算？\n"
-            body_c += "  const uint8_t* contents_pos = f + DRIVER_SUPER_ISSLFMT_COMMON_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_PRIMARY_HEADER_SIZE + DRIVER_SUPER_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE;\n"
+            body_c += "  uint32_t contents_len = tlm_len - DS_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE - 1;      // FIXME: CCSDSは1起算？\n"
+            body_c += "  const uint8_t* contents_pos = f + DS_ISSLFMT_COMMON_HEADER_SIZE + DS_C2AFMT_TCP_TLM_PRIMARY_HEADER_SIZE + DS_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE;\n"
             for k, v in conv_tpye_to_temp.items():
                 if k == "float":
                     body_c += "  " + k + " " + v + " = 0.0f;\n"
@@ -161,7 +161,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
                     body_c += "  " + k + " " + v + " = 0;\n"
             body_c += "\n"
             body_c += "  // GSへのテレメ中継のためのバッファーへのコピー\n"
-            body_c += "  if (contents_len > {_obc_name_upper}_TELEMETRY_BUFFE_SIZE) return DRIVER_SUPER_ERR_CODE_ERR;\n"
+            body_c += "  if (contents_len > {_obc_name_upper}_TELEMETRY_BUFFE_SIZE) return DS_ERR_CODE_ERR;\n"
             body_c += "  memcpy({_obc_name_lower}_buffer_." + tlm_name_lower + ".buffer, contents_pos, (size_t)contents_len);\n"
             body_c += "  {_obc_name_lower}_buffer_." + tlm_name_lower + ".size = (int)contents_len;\n"
             body_c += "\n"
@@ -209,7 +209,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             for k, v in conv_tpye_to_temp.items():
                 body_c += "  (void)" + v + ";\n"
             body_c += "\n"
-            body_c += "  return DRIVER_SUPER_ERR_CODE_OK;\n"
+            body_c += "  return DS_ERR_CODE_OK;\n"
             body_c += "}}\n"
             body_c += "\n"
 

@@ -59,28 +59,28 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
             code = code.replace("@@", ",")
             func_code += "  "
             if   var_type == "int8_t":
-                func_code += "copy_i8_"
+                func_code += "TF_copy_i8"
                 max_pos = int(pos) + 1
             elif var_type == "int16_t":
-                func_code += "copy_i16_"
+                func_code += "TF_copy_i16"
                 max_pos = int(pos) + 2
             elif var_type == "int32_t":
-                func_code += "copy_i32_"
+                func_code += "TF_copy_i32"
                 max_pos = int(pos) + 4
             elif var_type == "uint8_t":
-                func_code += "copy_u8_"
+                func_code += "TF_copy_u8"
                 max_pos = int(pos) + 1
             elif var_type == "uint16_t":
-                func_code += "copy_u16_"
+                func_code += "TF_copy_u16"
                 max_pos = int(pos) + 2
             elif var_type == "uint32_t":
-                func_code += "copy_u32_"
+                func_code += "TF_copy_u32"
                 max_pos = int(pos) + 4
             elif var_type == "float":
-                func_code += "copy_float_"
+                func_code += "TF_copy_float"
                 max_pos = int(pos) + 4
             elif var_type == "double":
-                func_code += "copy_double_"
+                func_code += "TF_copy_double"
                 max_pos = int(pos) + 8
             else:
                 print("Error: Tlm DB Err at " + tlm['tlm_name'].upper(), file=sys.stderr)
@@ -251,7 +251,7 @@ def OutputTlmDefC_(file_path, body):
  * @brief  テレメトリ定義
  * @note   このコードは自動生成されています！
  */
-#include "../../src_core/CmdTlm/TelemetryFrame.h"
+#include "../../src_core/CmdTlm/telemetry_frame.h"
 #include "telemetry_definitions.h"
 #include "telemetry_source.h"
 
