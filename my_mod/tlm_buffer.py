@@ -40,7 +40,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_h += "    int     size;\n"
             body_h += "    uint8_t buffer[{_obc_name_upper}_TELEMETRY_BUFFE_SIZE];\n"
             body_h += "  }} " + tlm_name_lower + ";\n"
-            body_c += "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DS_StreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ");\n"
+            body_c += "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DS_StreamConfig* p_stream_config, " + driver_type + "* " + driver_name + ");\n"
 
         body_h += "}} {_obc_name_upper}_Buffer;\n"
         body_h += "\n"
@@ -90,7 +90,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_h += "\n"
         body_h += "void {_obc_name_upper}_buffer_init(void);\n"
         body_h += "\n"
-        body_h += "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DS_StreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ");\n"
+        body_h += "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DS_StreamConfig* p_stream_config, " + driver_type + "* " + driver_name + ");\n"
 
 
         body_c += "\n"
@@ -102,7 +102,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "  {_obc_name_lower}_buffer_." + tlm_name_lower + ".size = 0;\n"
         body_c += "}}\n"
         body_c += "\n"
-        body_c += "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DS_StreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ")\n"
+        body_c += "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DS_StreamConfig* p_stream_config, " + driver_type + "* " + driver_name + ")\n"
         body_c += "{{\n"
 
         body_c += "  uint8_t tlm_id  = DS_C2AFMT_get_tlm_id(p_stream_config);\n"
@@ -146,7 +146,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             tlm_name = tlm['tlm_name']
             tlm_name_upper = tlm_name.upper()
             tlm_name_lower = tlm_name.lower()
-            body_c += "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DS_StreamConfig *p_stream_config, " + driver_type + " *" + driver_name + ")\n"
+            body_c += "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DS_StreamConfig* p_stream_config, " + driver_type + "* " + driver_name + ")\n"
             body_c += "{{\n"
             body_c += "  uint32_t tlm_len = DS_ISSLFMT_get_tlm_length(p_stream_config);\n"
             body_c += "  const uint8_t* f = DSSC_get_rx_frame(p_stream_config);\n"
