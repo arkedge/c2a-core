@@ -56,7 +56,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             # tlm_struct_tree = collections.OrderedDict()     # やっぱこっちで
             for j in range(DATA_START_ROW, len(tlm['data'])):
                 comment  = tlm['data'][j][0]
-                name     = tlm['data'][j][1]
+                name     = EscapeTlmElemName_(tlm['data'][j][1])
                 var_type = tlm['data'][j][2]
                 if comment == "" and name == "":                    # CommentもNameも空白なら打ち切り
                     break
@@ -169,7 +169,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             last_var_type = ""
             for j in range(DATA_START_ROW, len(tlm['data'])):
                 comment  = tlm['data'][j][0]
-                name     = tlm['data'][j][1]
+                name     = EscapeTlmElemName_(tlm['data'][j][1])
                 var_type = tlm['data'][j][2]
                 if comment == "" and name == "":                    # CommentもNameも空白なら打ち切り
                     break
@@ -353,3 +353,7 @@ def GenerateStructDef_(tree, name):
         output += " " * (indent) + "}} " + name + ";\n"
         return output
     return _(tree, name, 2)
+
+
+def EscapeTlmElemName_(name):
+    return name.replace("/", "_")
