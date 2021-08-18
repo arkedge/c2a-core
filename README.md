@@ -60,12 +60,12 @@ $ python GenerateC2ACode.py
       "is_enable" : 1,
       "db_prefix" : "ISSL6U_TOBC",
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
-      "db_path" : ""../../c2a_issl6u_tobc/src/src_user/Settings/CmdTlm/DataBase/",",
+      "db_path" : ""../../c2a_issl6u_tobc/src/src_user/Settings/CmdTlm/DataBase/",
       "tlm_max_contents_len" : 512,
       "driver_path" : "Thermal/",
       "driver_type" : "TOBC_Driver",
       "driver_name" : "tobc",
-      "code_when_tlm_not_found" : "tobc->info.comm.rx_err_code = TOBC_RX_ERR_CODE_TLM_NOT_FOUND;",
+      "code_when_tlm_not_found" : "tobc_driver->info.comm.rx_err_code = TOBC_RX_ERR_CODE_TLM_NOT_FOUND;",
       "tlm_id_range" : ["0xc0", "0xf0"]
     }
   ]
