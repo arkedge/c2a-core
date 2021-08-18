@@ -19,11 +19,11 @@ $ python GenerateC2ACode.py
 
 `is_main_obc` は，MOBCかそれ以外のOBCかを制御する．  
 `1` とした場合，MOBCを意図したコードが生成され，加えて以下が生成される．
-- TobcCommandDefinitions.h
-- TobcTelemetryDefinitions.h
-- TobcTelemetryBuffer.c
-- TobcTelemetryBuffer.h
-- TobcTelemetryDataDefinitions.h
+- (a|t)obc_command_definitions.h
+- (a|t)obc_telemetry_definitions.h
+- (a|t)obc_telemetry_buffer.c
+- (a|t)obc_telemetry_buffer.h
+- (a|t)obc_telemetry_data_definitions.h
 
 ```
 {
@@ -42,14 +42,15 @@ $ python GenerateC2ACode.py
     {
       # OBC名
       "name" : "AOBC",
-      # コードを生成するか？ AOBCについては現時点でDBが存在しないため 0
-      "is_enable" : 0,
+      # コードを生成するか？
+      "is_enable" : 1,
       "db_prefix" : "ISSL6U_AOBC",
-      "db_path" : "../../c2a_issl6u_aobc//src/src_user/Settings/CmdTlm/DataBase/",
-      "driver_path" : "ADCS/",
+      # DBがあるディレクトリへのパス（絶対でも相対でもOK）
+      "db_path" : "../../c2a_issl6u_aobc/src/src_user/Settings/CmdTlm/DataBase/",
+      "driver_path" : "Aocs/",
       "driver_type" : "AOBC_Driver",
       "driver_name" : "aobc",
-      "code_when_tlm_not_found" : "",
+      "code_when_tlm_not_found" : "aobc_driver->info.comm.rx_err_code = AOBC_RX_ERR_CODE_TLM_NOT_FOUND;",
       "tlm_id_range" : ["0x90", "0xc0"]
     },
     {
@@ -58,10 +59,10 @@ $ python GenerateC2ACode.py
       # コードを生成するか？
       "is_enable" : 1,
       "db_prefix" : "ISSL6U_TOBC",
-      # 現在，TOBCのDBは https://gitlab.com/ut_issl/issl6u/thermal/tobc_tlmcmd にあるので，これを手元にcloneし，そこまでの相対パスを設定する．
-      "db_path" : "../../tobc_tlmcmd/",
+      # DBがあるディレクトリへのパス（絶対でも相対でもOK）
+      "db_path" : ""../../c2a_issl6u_tobc/src/src_user/Settings/CmdTlm/DataBase/",",
       "tlm_max_contents_len" : 512,
-      "driver_path" : "THERMAL/",
+      "driver_path" : "Thermal/",
       "driver_type" : "TOBC_Driver",
       "driver_name" : "tobc",
       "code_when_tlm_not_found" : "tobc->info.comm.rx_err_code = TOBC_RX_ERR_CODE_TLM_NOT_FOUND;",
