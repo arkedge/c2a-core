@@ -3,11 +3,11 @@
 TlmCmdDBからC2Aのコードを生成するためのスクリプト
 
 以下が自動生成される．
-- CommandDefinitions.c
-- CommandDefinitions.h
-- TelemetryDefinitions.c
-- TelemetryDefinitions.h
-- BlockCommandDefinitions.h
+- command_definitions.c
+- command_definitions.h
+- telemetry_definitions.c
+- telemetry_definitions.h
+- block_command_definitions.h
 
 ## 実行
 ```
