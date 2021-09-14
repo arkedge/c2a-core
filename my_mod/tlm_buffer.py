@@ -149,9 +149,9 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_" + tlm_name_lower + "_(DS_StreamConfig* p_stream_config, " + driver_type + "* " + driver_name + ")\n"
             body_c += "{{\n"
             body_c += "  uint32_t tlm_len = DS_ISSLFMT_get_tlm_length(p_stream_config);\n"
-            body_c += "  const uint8_t* f = DSSC_get_rx_frame(p_stream_config);\n"
+            body_c += "  const uint8_t* f = DSSC_get_rx_frame(p_stream_config) + DS_ISSLFMT_COMMON_HEADER_SIZE;\n"
             body_c += "  uint32_t contents_len = tlm_len - DS_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE - 1;      // FIXME: CCSDSは1起算？\n"
-            body_c += "  const uint8_t* contents_pos = f + DS_ISSLFMT_COMMON_HEADER_SIZE + DS_C2AFMT_TCP_TLM_PRIMARY_HEADER_SIZE + DS_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE;\n"
+            body_c += "  const uint8_t* contents_pos = f + DS_C2AFMT_TCP_TLM_PRIMARY_HEADER_SIZE + DS_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE;\n"
             for k, v in conv_tpye_to_temp.items():
                 if k == "float":
                     body_c += "  " + k + " " + v + " = 0.0f;\n"
