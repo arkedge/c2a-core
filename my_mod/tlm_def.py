@@ -94,7 +94,7 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
         body_c += "\n"
         body_c += "  if (" + str(max_pos) + " > max_len) return TLM_TOO_SHORT_LEN;\n"
         body_c += "\n"
-        body_c += "#ifndef FAST_BUILD\n"
+        body_c += "#ifndef BUILD_SETTINGS_FAST_BUILD\n"
         body_c += func_code
         body_c += "#endif\n"
         body_c += "\n"
