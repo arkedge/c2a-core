@@ -37,6 +37,8 @@ $ python GenerateC2ACode.py
   # MOBCか？（他のOBCのtlm/cmdを取りまとめるか？） 0/1
   # (A|T)OBCのコードを生成するときなどは 0 にする
   # 0 の場合，以後のパラメタは無効
+  "header_len" : 13,
+  # テレメパケットのヘッダ長．これをoffsetしたところから，C2A上のテレメのユーザー定義部
   "is_main_obc" : 1,
   "other_obc_data" : [
     {
