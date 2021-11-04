@@ -10,7 +10,7 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
     output_file_path = settings["c2a_root_dir"] + r"src_user/CmdTlm/"
     output_file_name_base = "telemetry_definitions"
 
-    DATA_START_ROW = 7
+    DATA_START_ROW = 8
 
     body_c = ""
     body_h = ""
@@ -42,7 +42,7 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
             name     = tlm['data'][i][1]
             var_type = tlm['data'][i][2]
             code     = tlm['data'][i][3]
-            pos      = tlm['data'][i][4]
+            pos      = tlm['data'][i][5]
             if comment == "" and name == "":                    # CommentもNameも空白なら打ち切り
                 break
             if comment != "":
@@ -56,36 +56,37 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
             if pos == "":
                 continue
 
+            pos = int(pos) - settings['header_len']
             code = code.replace("@@", ",")
             func_code += "  "
             if   var_type == "int8_t":
                 func_code += "TF_copy_i8"
-                max_pos = int(pos) + 1
+                max_pos = pos + 1
             elif var_type == "int16_t":
                 func_code += "TF_copy_i16"
-                max_pos = int(pos) + 2
+                max_pos = pos + 2
             elif var_type == "int32_t":
                 func_code += "TF_copy_i32"
-                max_pos = int(pos) + 4
+                max_pos = pos + 4
             elif var_type == "uint8_t":
                 func_code += "TF_copy_u8"
-                max_pos = int(pos) + 1
+                max_pos = pos + 1
             elif var_type == "uint16_t":
                 func_code += "TF_copy_u16"
-                max_pos = int(pos) + 2
+                max_pos = pos + 2
             elif var_type == "uint32_t":
                 func_code += "TF_copy_u32"
-                max_pos = int(pos) + 4
+                max_pos = pos + 4
             elif var_type == "float":
                 func_code += "TF_copy_float"
-                max_pos = int(pos) + 4
+                max_pos = pos + 4
             elif var_type == "double":
                 func_code += "TF_copy_double"
-                max_pos = int(pos) + 8
+                max_pos = pos + 8
             else:
                 print("Error: Tlm DB Err at " + tlm['tlm_name'].upper(), file=sys.stderr)
                 sys.exit(1)
-            func_code += "(&contents[" + pos + "], " + code + ");\n"
+            func_code += "(&contents[" + str(pos) + "], " + code + ");\n"
 
         body_c += "\n"
         body_c += "static int Tlm_" + tlm['tlm_name'].upper() + "_(unsigned char* contents, int max_len)\n"
@@ -93,7 +94,7 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
         body_c += "\n"
         body_c += "  if (" + str(max_pos) + " > max_len) return TLM_TOO_SHORT_LEN;\n"
         body_c += "\n"
-        body_c += "#ifndef FAST_BUILD\n"
+        body_c += "#ifndef BUILD_SETTINGS_FAST_BUILD\n"
         body_c += func_code
         body_c += "#endif\n"
         body_c += "\n"

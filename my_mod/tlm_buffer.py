@@ -9,7 +9,7 @@ import sys
 import pprint
 
 def GenerateTlmBuffer(settings, other_obc_dbs):
-    DATA_START_ROW = 7
+    DATA_START_ROW = 8
 
     for i in range(len(settings["other_obc_data"])):
         if not settings["other_obc_data"][i]["is_enable"]:
@@ -70,7 +70,8 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
                 if last_var_type == "":
                     continue
 
-                name_tree = name.lower().split(".")[2:]     # OBC名.テレメ名.HOGE.FUGA を想定
+                # name_tree = name.lower().split(".")[2:]     # OBC名.テレメ名.HOGE.FUGA を想定
+                name_tree = name.lower().split(".")
                 name_path = "/".join(name_tree)
                 if (SetStructTree_(tlm_struct_tree, name_path, var_type)):
                     print("Error: Tlm DB Struct Parse Err at " + name, file=sys.stderr)
@@ -183,16 +184,17 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
                 if last_var_type == "":
                     continue
 
-                oct_pos = int(tlm['data'][j][6])
-                bit_pos = int(tlm['data'][j][7])
-                bit_len = int(tlm['data'][j][8])
+                oct_pos = int(tlm['data'][j][5])
+                bit_pos = int(tlm['data'][j][6])
+                bit_len = int(tlm['data'][j][7])
                 is_compression = 0              # テレメ圧縮フラグ for ビットフィールドをつかってる奴ら
                 if tlm['data'][j][2] == "" or tlm['data'][j+1][2] == "":
                     is_compression = 1
                 if (tlm['data'][j+1][0] == "" and tlm['data'][j+1][1] == "" and tlm['data'][j][2] != ""):    # 最終行の除外
                     is_compression = 0
 
-                name_tree = name.lower().split(".")[2:]     # OBC名.テレメ名.HOGE.FUGA を想定
+                # name_tree = name.lower().split(".")[2:]     # OBC名.テレメ名.HOGE.FUGA を想定
+                name_tree = name.lower().split(".")
                 name_path = ".".join(name_tree)
                 var_name = driver_name + "->tlm_data." + tlm_name_lower + "." + name_path
                 if (is_compression):
