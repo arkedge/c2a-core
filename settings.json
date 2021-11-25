@@ -1,6 +1,6 @@
 {
-  "c2a_root_dir" : "../../c2a_user_oss/SH7254R_C2A/",
-  "db_prefix" : "ISSL6U_MOBC",
+  "c2a_root_dir" : "../../c2a/src/",
+  "db_prefix" : "SAMPLE_MOBC",
   "is_generated_sib" : 0,
   "header_len" : 13,
   "is_main_obc" : 1,
@@ -8,8 +8,8 @@
     {
       "name" : "AOBC",
       "is_enable" : 1,
-      "db_prefix" : "ISSL6U_AOBC",
-      "db_path" : "C:/Docs/ISSL_Git/S2E/FlightSW/c2a_issl6u_aobc/src/src_user/Settings/CmdTlm/DataBase/",
+      "db_prefix" : "SAMPLE_AOBC",
+      "db_path" : "C:/Docs/ISSL_Git/S2E/FlightSW/c2a_sample_aobc/src/src_user/Settings/CmdTlm/DataBase/",
       "tlm_max_contents_len" : 512,
       "driver_path" : "Aocs/",
       "driver_type" : "AOBC_Driver",
@@ -20,8 +20,8 @@
     {
       "name" : "TOBC",
       "is_enable" : 1,
-      "db_prefix" : "ISSL6U_TOBC",
-      "db_path" : "C:/Docs/ISSL_Git/S2E/FlightSW/c2a_issl6u_tobc/src/src_user/Settings/CmdTlm/DataBase/",
+      "db_prefix" : "SAMPLE_TOBC",
+      "db_path" : "C:/Docs/ISSL_Git/S2E/FlightSW/c2a_sample_tobc/src/src_user/Settings/CmdTlm/DataBase/",
       "tlm_max_contents_len" : 512,
       "driver_path" : "Thermal/",
       "driver_type" : "TOBC_Driver",
