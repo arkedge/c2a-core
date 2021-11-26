@@ -5,8 +5,8 @@ import os
 import re
 
 class C2aEnum:
-    def __init__(self, path):
-        self.path = path
+    def __init__(self, c2a_src_path):
+        self.path = c2a_src_path
 
         self._load_bc()
         self._load_tlm_code()
@@ -78,11 +78,11 @@ class C2aEnum:
         pass
 
 
-def load_enum(c2a_abs_path) -> C2aEnum:
-    c2a_enum = C2aEnum(c2a_abs_path)
+def load_enum(c2a_src_path) -> C2aEnum:
+    c2a_enum = C2aEnum(c2a_src_path)
     return c2a_enum
 
 
 if __name__ == "__main__":
     # 単なる動作確認用
-    c2a_enum = load_enum(os.path.dirname(__file__) + "/../../../c2a_user_oss")
+    c2a_enum = load_enum(os.path.dirname(__file__) + "/../../..")
