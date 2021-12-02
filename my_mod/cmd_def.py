@@ -15,7 +15,7 @@ def GenerateCmdDef(settings, sgc_db):
 
     body_c = ""
     body_h = ""
-    # "  cmd_table_[Cmd_CODE_NOP].cmd_func = Cmd_NOP;"
+    # "  cmd_table[Cmd_CODE_NOP].cmd_func = Cmd_NOP;"
     # "  Cmd_CODE_NOP = 0x0000,"
     for i in range(DATA_SART_ROW, len(sgc_db)):
         comment = sgc_db[i][0]
@@ -30,7 +30,7 @@ def GenerateCmdDef(settings, sgc_db):
         cmd_code = cmd_name.replace("Cmd_", "Cmd_CODE_")
         # print(cmd_name)
         # print(cmd_code)
-        body_c += "  cmd_table_[" + cmd_code + "].cmd_func = " + cmd_name + ";\n"
+        body_c += "  cmd_table[" + cmd_code + "].cmd_func = " + cmd_name + ";\n"
         body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
 
     body_c += "\n";
@@ -78,8 +78,8 @@ def GenerateCmdDef(settings, sgc_db):
                 param_len_type = "CA_CMD_PARAM_LEN_TYPE_LOWER_LIMIT"
             param_len += conv_tpye_to_size[type_list[j]]
 
-        body_c += "  cmd_table_[" + cmd_code + "].param_len_type = " + param_len_type + ";\n"
-        body_c += "  cmd_table_[" + cmd_code + "].param_len = " + str(param_len) + ";\n"
+        body_c += "  cmd_table[" + cmd_code + "].param_len_type = " + param_len_type + ";\n"
+        body_c += "  cmd_table[" + cmd_code + "].param_len = " + str(param_len) + ";\n"
 
     OutputCmdDefC_(output_file_path + output_file_name_base + ".c", body_c)
     OutputCmdDefH_(output_file_path + output_file_name_base + ".h", body_h)
@@ -92,7 +92,7 @@ def GenerateBctDef(settings, bct_db):
     DATA_SART_ROW = 2
 
     body_h = ""
-    # "  cmd_table_[Cmd_CODE_NOP].cmd_func = Cmd_NOP;"
+    # "  cmd_table[Cmd_CODE_NOP].cmd_func = Cmd_NOP;"
     # "  Cmd_CODE_NOP = 0x0000,"
     for i in range(DATA_SART_ROW, len(bct_db)):
         comment = bct_db[i][0]
@@ -165,7 +165,7 @@ def OutputCmdDefC_(file_path, body):
 #include "command_definitions.h"
 #include "command_source.h"
 
-void CA_load_cmd_table(CmdInfo cmd_table_[CMD_MAX_CMDS])
+void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
 {
 '''[1:]         # 最初の改行を除く
 
