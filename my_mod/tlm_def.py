@@ -25,11 +25,11 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
         body_c += GetTlmDefCOfOtherObcFunDef_(settings, tlm_db, other_obc_dbs)
 
     body_c += "\n"
-    body_c += "void TF_load_tlm_table(TlmInfo tlm_table_[TLM_MAX_TLMS])\n"
+    body_c += "void TF_load_tlm_table(TF_TlmInfo tlm_table[TF_MAX_TLMS])\n"
     body_c += "{\n"
     for tlm in tlm_db:
-        # "  tlm_table_[OBC_ID].tlm_func = OBC_;"
-        body_c += "  tlm_table_[Tlm_CODE_" + tlm['tlm_name'].upper() + "].tlm_func = Tlm_" + tlm['tlm_name'].upper() + "_;\n"
+        # "  tlm_table[OBC_ID].tlm_func = OBC_;"
+        body_c += "  tlm_table[Tlm_CODE_" + tlm['tlm_name'].upper() + "].tlm_func = Tlm_" + tlm['tlm_name'].upper() + "_;\n"
     if settings["is_main_obc"]:
         body_c += GetTlmDefCOfOtherObcFunLoad_(settings, tlm_db, other_obc_dbs)
     body_c += "}\n"
@@ -91,8 +91,7 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
         body_c += "\n"
         body_c += "static int Tlm_" + tlm['tlm_name'].upper() + "_(unsigned char* contents, int max_len)\n"
         body_c += "{\n"
-        body_c += "\n"
-        body_c += "  if (" + str(max_pos) + " > max_len) return TLM_TOO_SHORT_LEN;\n"
+        body_c += "  if (" + str(max_pos) + " > max_len) return TF_TOO_SHORT_LEN;\n"
         body_c += "\n"
         body_c += "#ifndef BUILD_SETTINGS_FAST_BUILD\n"
         body_c += func_code
@@ -144,7 +143,7 @@ def GetTlmDefCOfOtherObcFunLoad_(settings, tlm_db, other_obc_dbs):
         temp_c += "\n"
         temp_c += "  // {_obc_name_upper} TLM\n"
         for tlm in oter_obc_tlm_db:
-            temp_c += "  tlm_table_[Tlm_CODE_" + tlm['tlm_name'].upper() + "].tlm_func = Tlm_" + tlm['tlm_name'].upper() + "_;\n"
+            temp_c += "  tlm_table[Tlm_CODE_" + tlm['tlm_name'].upper() + "].tlm_func = Tlm_" + tlm['tlm_name'].upper() + "_;\n"
         body_c += temp_c.format(_obc_name_upper=obc_name.upper(), _obc_name_lower=obc_name.lower(), _obc_name_capit=obc_name.capitalize())
 
     return body_c
@@ -170,7 +169,7 @@ def GetTlmDefCOfOtherObcFunBody_(settings, tlm_db, other_obc_dbs):
             temp_c += "{{\n"
             temp_c += "  int buffer_size = {_obc_name_lower}_buffer->" + tlm_name_lower + ".size;\n"
             temp_c += "\n"
-            temp_c += "  if (buffer_size > max_len) {{ return TLM_TOO_SHORT_LEN; }}\n"
+            temp_c += "  if (buffer_size > max_len) {{ return TF_TOO_SHORT_LEN; }}\n"
             temp_c += "\n"
             temp_c += "  memcpy(contents, {_obc_name_lower}_buffer->" + tlm_name_lower + ".buffer, (size_t)buffer_size);\n"
             temp_c += "\n"
