@@ -61,25 +61,20 @@ def GenerateCmdDef(settings, sgc_db):
 
         # パラメタ長のカウント
         conv_tpye_to_size = {
-                                'int8_t'   : 1,
-                                'int16_t'  : 2,
-                                'int32_t'  : 4,
-                                'uint8_t'  : 1,
-                                'uint16_t' : 2,
-                                'uint32_t' : 4,
-                                'float'    : 4,
-                                'double'   : 8,
-                                'raw'      : 0
+                                'int8_t'   : "CA_PARAM_SIZE_TYPE_1BYTE",
+                                'int16_t'  : "CA_PARAM_SIZE_TYPE_2BYTE",
+                                'int32_t'  : "CA_PARAM_SIZE_TYPE_4BYTE",
+                                'uint8_t'  : "CA_PARAM_SIZE_TYPE_1BYTE",
+                                'uint16_t' : "CA_PARAM_SIZE_TYPE_2BYTE",
+                                'uint32_t' : "CA_PARAM_SIZE_TYPE_4BYTE",
+                                'float'    : "CA_PARAM_SIZE_TYPE_4BYTE",
+                                'double'   : "CA_PARAM_SIZE_TYPE_8BYTE",
+                                'raw'      : "CA_PARAM_SIZE_TYPE_RAW"
                             }
-        param_len_type = "CA_CMD_PARAM_LEN_TYPE_FIXED"
-        param_len = 0
         for j in range(param_num):
-            if type_list[j] == "raw":
-                param_len_type = "CA_CMD_PARAM_LEN_TYPE_LOWER_LIMIT"
-            param_len += conv_tpye_to_size[type_list[j]]
-
-        body_c += "  cmd_table[" + cmd_code + "].param_len_type = " + param_len_type + ";\n"
-        body_c += "  cmd_table[" + cmd_code + "].param_len = " + str(param_len) + ";\n"
+            index = j // 2
+            subindex = "second" if j % 2 else "first"
+            body_c += "  cmd_table[" + cmd_code + "].param_size_infos[" + str(index)  + "].bit." + subindex + " = " + conv_tpye_to_size[type_list[j]] + ";\n"
 
     OutputCmdDefC_(output_file_path + output_file_name_base + ".c", body_c)
     OutputCmdDefH_(output_file_path + output_file_name_base + ".h", body_h)
