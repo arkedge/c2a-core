@@ -74,7 +74,7 @@ def GenerateCmdDef(settings, sgc_db):
         for j in range(param_num):
             index = j // 2
             subindex = "second" if j % 2 else "first"
-            body_c += "  cmd_table[" + cmd_code + "].param_size_infos[" + str(index)  + "].bit." + subindex + " = " + conv_tpye_to_size[type_list[j]] + ";\n"
+            body_c += "  cmd_table[" + cmd_code + "].param_size_infos[" + str(index)  + "].packed_info.bit." + subindex + " = " + conv_tpye_to_size[type_list[j]] + ";\n"
 
     OutputCmdDefC_(output_file_path + output_file_name_base + ".c", body_c)
     OutputCmdDefH_(output_file_path + output_file_name_base + ".h", body_h)
