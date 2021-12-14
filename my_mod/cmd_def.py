@@ -225,6 +225,8 @@ typedef enum
     output += body
 
     output += '''
+
+  BC_ID_MAX    // BCT 自体のサイズは BCT_MAX_BLOCKS で規定
 } BC_DEFAULT_ID;
 
 void BC_load_defaults(void);
