@@ -53,7 +53,7 @@ class C2aEnum:
 
     def _load_numbered_enum_from_file(self, path, prefix):
         path = self.path + path
-        p = re.compile("  {}.* = .*,.*".format(prefix))
+        p = re.compile("^  ({}\w+) = (\w+)".format(prefix))
 
         with open(path, encoding="shift_jis") as f:
 
@@ -62,9 +62,8 @@ class C2aEnum:
                 if not m:
                     continue
 
-                # 最初の空白と後ろのカンマ・改行を捨てる
-                enum_name, enum_id = m.string[2:-2].split(" = ")
-                enum_id = enum_id.split(",")[0]
+                enum_name = m.group(1)
+                enum_id   = m.group(2)
 
                 if enum_id[:2] == "0x":
                     enum_id = int(enum_id, base=16)
