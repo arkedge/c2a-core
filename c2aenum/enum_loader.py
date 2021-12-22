@@ -53,7 +53,7 @@ class C2aEnum:
 
     def _load_numbered_enum_from_file(self, path, prefix):
         path = self.path + path
-        p_with_id = re.compile(r"^  ({}\w+) = (\w+)".format(prefix))
+        p_with_id = re.compile(r"^  ({}\w+) += +(\w+)".format(prefix))
         p_without_id = re.compile(r"^  ({}\w+)".format(prefix))
 
         with open(path, encoding="shift_jis") as f:
