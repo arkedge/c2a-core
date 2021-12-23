@@ -13,6 +13,9 @@ class C2aEnum:
         self._load_cmd_code()
         self._load_app()
         self._load_anomaly()
+        self._load_el_core_group()
+        self._load_el_group()
+        self._load_eh_rule()
         self._load_mode()
         self._load_exec_sts()
         self._load_tl_id()
@@ -37,6 +40,21 @@ class C2aEnum:
 
     def _load_anomaly(self):
         pass
+
+    def _load_el_core_group(self):
+        self._load_numbered_enum_from_file(
+            "/src_core/System/EventManager/event_logger.h", "EL_CORE_GROUP_"
+        )
+
+    def _load_el_group(self):
+        self._load_numbered_enum_from_file(
+            "/src_user/Settings/System/event_logger_group.h", "EL_GROUP_"
+        )
+
+    def _load_eh_rule(self):
+        self._load_numbered_enum_from_file(
+            "/src_user/Settings/System/EventHandlerRules/event_handler_rules.h", "EH_RULE_"
+        )
 
     def _load_mode(self):
         pass
