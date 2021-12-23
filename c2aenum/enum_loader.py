@@ -58,7 +58,7 @@ class C2aEnum:
 
         with open(path, encoding="shift_jis") as f:
 
-            last_enum_id = 0
+            last_enum_id = -1
             for line in f.readlines():
                 m_with_id = p_with_id.match(line)
                 m_without_id = p_without_id.match(line)
