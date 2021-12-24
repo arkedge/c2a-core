@@ -21,17 +21,17 @@ class C2aEnum:
         self._load_tl_id()
 
     def _load_bc(self):
-        self._load_numbered_enum_from_file(
+        self._load_enum_from_file(
             "/src_user/CmdTlm/block_command_definitions.h", "BC_"
         )
 
     def _load_tlm_code(self):
-        self._load_numbered_enum_from_file(
+        self._load_enum_from_file(
             "/src_user/CmdTlm/telemetry_definitions.h", "Tlm_CODE_"
         )
 
     def _load_cmd_code(self):
-        self._load_numbered_enum_from_file(
+        self._load_enum_from_file(
             "/src_user/CmdTlm/command_definitions.h", "Cmd_CODE_"
         )
 
@@ -42,17 +42,17 @@ class C2aEnum:
         pass
 
     def _load_el_core_group(self):
-        self._load_numbered_enum_from_file(
+        self._load_enum_from_file(
             "/src_core/System/EventManager/event_logger.h", "EL_CORE_GROUP_"
         )
 
     def _load_el_group(self):
-        self._load_numbered_enum_from_file(
+        self._load_enum_from_file(
             "/src_user/Settings/System/event_logger_group.h", "EL_GROUP_"
         )
 
     def _load_eh_rule(self):
-        self._load_numbered_enum_from_file(
+        self._load_enum_from_file(
             "/src_user/Settings/System/EventHandlerRules/event_handler_rules.h", "EH_RULE_"
         )
 
@@ -60,22 +60,21 @@ class C2aEnum:
         pass
 
     def _load_exec_sts(self):
-        self._load_numbered_enum_from_file(
+        self._load_enum_from_file(
             "/src_core/CmdTlm/common_tlm_cmd_packet.h", "CCP_EXEC_"
         )
 
     def _load_tl_id(self):
-        self._load_numbered_enum_from_file(
+        self._load_enum_from_file(
             "/src_core/Applications/timeline_command_dispatcher.h", "TL_ID_"
         )
 
-    def _load_numbered_enum_from_file(self, path, prefix):
+    def _load_enum_from_file(self, path, prefix):
         path = self.path + path
         p_with_id = re.compile(r"^  ({}\w+) += +(\w+)".format(prefix))
         p_without_id = re.compile(r"^  ({}\w+)".format(prefix))
 
         with open(path, encoding="shift_jis") as f:
-
             last_enum_id = -1
             for line in f.readlines():
                 m_with_id = p_with_id.match(line)
@@ -97,10 +96,6 @@ class C2aEnum:
 
                 self.__setattr__(enum_name, enum_id)
                 last_enum_id = enum_id
-
-    def _load_non_numbered_enum_from_file(self, path, prefix):
-        # TBD
-        pass
 
 
 def load_enum(c2a_src_path) -> C2aEnum:
