@@ -69,8 +69,8 @@ def LoadTlmCSV_(tlm_db_path, db_prefix):
             sheet = [row for row in reader]
             # pprint.pprint(sheet)
             # print(sheet)
-            tlm_id = sheet[1][2]        # テレメIDを取得．マジックナンバーで指定してしまってる．
-            raw_local_vars =  sheet[1][3].replace("%%", "").split("##")     # ローカル変数を取得．マジックナンバーで指定してしまってる．
+            tlm_id = sheet[1][2]        # FIXME: テレメIDを取得．マジックナンバーで指定してしまってる．
+            raw_local_vars =  sheet[1][3].replace("%%", "").split("##")     # FIXME: ローカル変数を取得．マジックナンバーで指定してしまってる．
             local_vars = []
             for raw_local_var in raw_local_vars:
                 local_var = raw_local_var.strip()
