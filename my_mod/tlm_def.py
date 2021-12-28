@@ -91,6 +91,10 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
         body_c += "\n"
         body_c += "static int Tlm_" + tlm['tlm_name'].upper() + "_(unsigned char* contents, int max_len)\n"
         body_c += "{\n"
+        for local_var in tlm['local_vars']:
+            body_c += "  " + local_var + "\n"
+        if len(tlm['local_vars']) > 0:
+            body_c += "\n"
         body_c += "  if (" + str(max_pos) + " > max_len) return TF_TOO_SHORT_LEN;\n"
         body_c += "\n"
         body_c += "#ifndef BUILD_SETTINGS_FAST_BUILD\n"
