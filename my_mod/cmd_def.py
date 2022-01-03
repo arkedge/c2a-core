@@ -95,6 +95,10 @@ def GenerateBctDef(settings, bct_db):
         bc_id   = bct_db[i][3]
         description = bct_db[i][10]
 
+        # エスケープ解除
+        name = name.replace("@@", ",")
+        description = description.replace("@@", ",")
+
         if comment == "" and name == "":                    # CommentもNameも空白なら打ち切り
             break
 
