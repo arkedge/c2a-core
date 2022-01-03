@@ -231,7 +231,7 @@ def OutputTlmBufferC_(file_path, name, body):
     output += '''
 #pragma section REPRO
 /**
- * @file   {_obc_name_lower}_telemetry_buffer.c
+ * @file
  * @brief  テレメトリバッファー（テレメ中継）
  * @note   このコードは自動生成されています！
  */
@@ -260,7 +260,7 @@ def OutputTlmBufferH_(file_path, name, body):
     output = ""
     output += '''
 /**
- * @file   {_obc_name_lower}_telemetry_buffer.h
+ * @file
  * @brief  テレメトリバッファー（テレメ中継）
  * @note   このコードは自動生成されています！
  */
@@ -290,7 +290,7 @@ def OutputTlmDataDefH_(file_path, name, body):
     output = ""
     output += '''
 /**
- * @file   {_obc_name_lower}_telemetry_data_definitions.h
+ * @file
  * @brief  バッファリングされているテレメをパースしてMOBC内でかんたんに利用できるようにするためのテレメデータ構造体定義
  * @note   このコードは自動生成されています！
  */

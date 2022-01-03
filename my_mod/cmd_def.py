@@ -152,7 +152,7 @@ def OutputCmdDefC_(file_path, body):
     output += '''
 #pragma section REPRO
 /**
- * @file   command_definitions.c
+ * @file
  * @brief  コマンド定義
  * @note   このコードは自動生成されています！
  */
@@ -181,7 +181,7 @@ def OutputCmdDefH_(file_path, body):
     output = ""
     output += '''
 /**
- * @file   command_definitions.h
+ * @file
  * @brief  コマンド定義
  * @note   このコードは自動生成されています！
  */
@@ -210,7 +210,7 @@ def OutputBctDef_(file_path, body):
     output = ""
     output += '''
 /**
- * @file   block_command_definitions.h
+ * @file
  * @brief  ブロックコマンド定義
  * @note   このコードは自動生成されています！
  */
@@ -246,7 +246,7 @@ def OutputOtherObcCmdDefH_(file_path, name, body):
     output = ""
     output += '''
 /**
- * @file   {_obc_name_lower}_command_definitions.h
+ * @file
  * @brief  コマンド定義
  * @note   このコードは自動生成されています！
  */
