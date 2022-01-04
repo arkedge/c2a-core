@@ -251,7 +251,7 @@ def OutputTlmDefC_(file_path, body):
     output += '''
 #pragma section REPRO
 /**
- * @file   telemetry_definitions.c
+ * @file
  * @brief  テレメトリ定義
  * @note   このコードは自動生成されています！
  */
@@ -276,7 +276,7 @@ def OutputTlmDefH_(file_path, body):
     output = ""
     output += '''
 /**
- * @file   telemetry_definitions.h
+ * @file
  * @brief  テレメトリ定義
  * @note   このコードは自動生成されています！
  */
@@ -309,7 +309,7 @@ def OutputOtherObcTlmDefH(file_path, name, body):
     output = ""
     output += '''
 /**
- * @file   {_obc_name_lower}_telemetry_definitions.h
+ * @file
  * @brief  テレメトリ定義
  * @note   このコードは自動生成されています！
  */
