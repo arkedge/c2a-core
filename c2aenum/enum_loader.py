@@ -22,17 +22,17 @@ class C2aEnum:
 
     def _load_bc(self):
         self._load_enum_from_file(
-            "/src_user/CmdTlm/block_command_definitions.h", "BC_"
+            "/src_user/TlmCmd/block_command_definitions.h", "BC_"
         )
 
     def _load_tlm_code(self):
         self._load_enum_from_file(
-            "/src_user/CmdTlm/telemetry_definitions.h", "Tlm_CODE_"
+            "/src_user/TlmCmd/telemetry_definitions.h", "Tlm_CODE_"
         )
 
     def _load_cmd_code(self):
         self._load_enum_from_file(
-            "/src_user/CmdTlm/command_definitions.h", "Cmd_CODE_"
+            "/src_user/TlmCmd/command_definitions.h", "Cmd_CODE_"
         )
 
     def _load_app(self):
@@ -61,7 +61,7 @@ class C2aEnum:
 
     def _load_exec_sts(self):
         self._load_enum_from_file(
-            "/src_core/CmdTlm/common_tlm_cmd_packet.h", "CCP_EXEC_"
+            "/src_core/TlmCmd/common_tlm_cmd_packet.h", "CCP_EXEC_"
         )
 
     def _load_tl_id(self):
