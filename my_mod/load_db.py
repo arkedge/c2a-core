@@ -9,7 +9,7 @@ import re           # 正規表現
 import pprint
 
 def LoadCmdDb(settings):
-    cmd_db_path = settings["c2a_root_dir"] + r"src_user/Settings/CmdTlm/DataBase/CMD_DB/"
+    cmd_db_path = settings["c2a_root_dir"] + r"src_user/Settings/TlmCmd/DataBase/CMD_DB/"
 
     sgc_db, bct_db = LoadCmdCSV_(cmd_db_path, settings["db_prefix"])
 
@@ -39,7 +39,7 @@ def LoadCmdCSV_(cmd_db_path, db_prefix):
 
 
 def LoadTlmDb(settings):
-    tlm_db_path = settings["c2a_root_dir"] + r"src_user/Settings/CmdTlm/DataBase/TLM_DB/calced_data/"
+    tlm_db_path = settings["c2a_root_dir"] + r"src_user/Settings/TlmCmd/DataBase/TLM_DB/calced_data/"
 
     tlm_db = LoadTlmCSV_(tlm_db_path, settings["db_prefix"])
 

@@ -47,7 +47,7 @@ $ python GenerateC2ACode.py
       "is_enable" : 1,
       "db_prefix" : "SAMPLE_AOBC",
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
-      "db_path" : "../../c2a_sample_aobc/src/src_user/Settings/CmdTlm/DataBase/",
+      "db_path" : "../../c2a_sample_aobc/src/src_user/Settings/TlmCmd/DataBase/",
       "driver_path" : "Aocs/",
       "driver_type" : "AOBC_Driver",
       "driver_name" : "aobc",
@@ -61,7 +61,7 @@ $ python GenerateC2ACode.py
       "is_enable" : 1,
       "db_prefix" : "SAMPLE_TOBC",
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
-      "db_path" : ""../../c2a_sample_tobc/src/src_user/Settings/CmdTlm/DataBase/",
+      "db_path" : ""../../c2a_sample_tobc/src/src_user/Settings/TlmCmd/DataBase/",
       "tlm_max_contents_len" : 512,
       "driver_path" : "Thermal/",
       "driver_type" : "TOBC_Driver",

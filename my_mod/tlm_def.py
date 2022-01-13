@@ -7,7 +7,7 @@ import os
 import sys
 
 def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
-    output_file_path = settings["c2a_root_dir"] + r"src_user/CmdTlm/"
+    output_file_path = settings["c2a_root_dir"] + r"src_user/TlmCmd/"
     output_file_name_base = "telemetry_definitions"
 
     DATA_START_ROW = 8
@@ -255,7 +255,7 @@ def OutputTlmDefC_(file_path, body):
  * @brief  テレメトリ定義
  * @note   このコードは自動生成されています！
  */
-#include "../../src_core/CmdTlm/telemetry_frame.h"
+#include "../../src_core/TlmCmd/telemetry_frame.h"
 #include "telemetry_definitions.h"
 #include "telemetry_source.h"
 
