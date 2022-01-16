@@ -108,8 +108,8 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
         body_c += GetTlmDefCOfOtherObcFunBody_(settings, tlm_db, other_obc_dbs)
         body_h += GetTlmDefHOfOtherObc_(settings, tlm_db, other_obc_dbs)
 
-    OutputTlmDefC_(output_file_path + output_file_name_base + ".c", body_c)
-    OutputTlmDefH_(output_file_path + output_file_name_base + ".h", body_h)
+    OutputTlmDefC_(output_file_path + output_file_name_base + ".c", body_c, settings)
+    OutputTlmDefH_(output_file_path + output_file_name_base + ".h", body_h, settings)
 
 
 def GetTlmDefCOfOtherObcFunDef_(settings, tlm_db, other_obc_dbs):
@@ -242,11 +242,11 @@ def GenerateOtherObcTlmDef(settings, other_obc_dbs):
         for tlm in tlm_db:
             body_h += "  {_obc_name_upper}_Tlm_CODE_" + tlm['tlm_name'].upper() + " = " + tlm['tlm_id'] + ",\n"
         output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"] + obc_name.lower() + "_telemetry_definitions.h"
-        OutputOtherObcTlmDefH(output_file_path, obc_name, body_h)
+        OutputOtherObcTlmDefH(output_file_path, obc_name, body_h, settings)
 
 
 
-def OutputTlmDefC_(file_path, body):
+def OutputTlmDefC_(file_path, body, settings):
     output = ""
     output += '''
 #pragma section REPRO
@@ -268,11 +268,11 @@ def OutputTlmDefC_(file_path, body):
 #pragma section
 '''[1:]         # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding='shift_jis') as fh:
+    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
         fh.write(output)
 
 
-def OutputTlmDefH_(file_path, body):
+def OutputTlmDefH_(file_path, body, settings):
     output = ""
     output += '''
 /**
@@ -297,11 +297,11 @@ typedef enum
 #endif
 '''[1:]         # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding='shift_jis') as fh:
+    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
         fh.write(output)
 
 
-def OutputOtherObcTlmDefH(file_path, name, body):
+def OutputOtherObcTlmDefH(file_path, name, body, settings):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()
@@ -330,6 +330,6 @@ typedef enum
 #endif
 '''[1:]         # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding='shift_jis') as fh:
+    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
         fh.write(output.format(_obc_name_upper=name_upper, _obc_name_lower=name_lower, _obc_name_capit=name_capit))
 

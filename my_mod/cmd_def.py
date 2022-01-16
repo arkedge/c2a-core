@@ -76,8 +76,8 @@ def GenerateCmdDef(settings, sgc_db):
             subindex = "second" if j % 2 else "first"
             body_c += "  cmd_table[" + cmd_code + "].param_size_infos[" + str(index)  + "].packed_info.bit." + subindex + " = " + conv_tpye_to_size[type_list[j]] + ";\n"
 
-    OutputCmdDefC_(output_file_path + output_file_name_base + ".c", body_c)
-    OutputCmdDefH_(output_file_path + output_file_name_base + ".h", body_h)
+    OutputCmdDefC_(output_file_path + output_file_name_base + ".c", body_c, settings)
+    OutputCmdDefH_(output_file_path + output_file_name_base + ".h", body_h, settings)
 
 
 def GenerateBctDef(settings, bct_db):
@@ -113,7 +113,7 @@ def GenerateBctDef(settings, bct_db):
             else:
                 body_h += "  " + name + " = " + bc_id +",    // " + description + "\n"
 
-    OutputBctDef_(output_file_path + output_file_name, body_h)
+    OutputBctDef_(output_file_path + output_file_name, body_h, settings)
 
 
 def GenerateOtherObcCmdDef(settings, other_obc_dbs):
@@ -148,10 +148,10 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
             body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
         # print(body_h)
         output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"] + name_lower + "_command_definitions.h"
-        OutputOtherObcCmdDefH_(output_file_path, obc_name, body_h)
+        OutputOtherObcCmdDefH_(output_file_path, obc_name, body_h, settings)
 
 
-def OutputCmdDefC_(file_path, body):
+def OutputCmdDefC_(file_path, body, settings):
     output = ""
     output += '''
 #pragma section REPRO
@@ -177,11 +177,11 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
 '''[1:]         # 最初の改行を除く
 
 
-    with open(file_path, mode='w', encoding='shift_jis') as fh:
+    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
         fh.write(output)
 
 
-def OutputCmdDefH_(file_path, body):
+def OutputCmdDefH_(file_path, body, settings):
     output = ""
     output += '''
 /**
@@ -206,11 +206,11 @@ typedef enum
 #endif
 '''[1:]         # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding='shift_jis') as fh:
+    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
         fh.write(output)
 
 
-def OutputBctDef_(file_path, body):
+def OutputBctDef_(file_path, body, settings):
     output = ""
     output += '''
 /**
@@ -238,11 +238,11 @@ void BC_load_defaults(void);
 #endif
 '''[1:]         # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding='shift_jis') as fh:
+    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
         fh.write(output)
 
 
-def OutputOtherObcCmdDefH_(file_path, name, body):
+def OutputOtherObcCmdDefH_(file_path, name, body, settings):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()
@@ -271,6 +271,6 @@ typedef enum
 #endif
 '''[1:]         # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding='shift_jis') as fh:
+    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
         fh.write(output.format(_obc_name_upper=name_upper, _obc_name_lower=name_lower, _obc_name_capit=name_capit))
 
