@@ -5,8 +5,9 @@ import os
 import re
 
 class C2aEnum:
-    def __init__(self, c2a_src_path):
+    def __init__(self, c2a_src_path, encoding):
         self.path = c2a_src_path
+        self.encoding = encoding
 
         self._load_bc()
         self._load_tlm_code()
@@ -74,7 +75,7 @@ class C2aEnum:
         p_with_id = re.compile(r"^  ({}\w+) += +(\w+)".format(prefix))
         p_without_id = re.compile(r"^  ({}\w+)".format(prefix))
 
-        with open(path, encoding="shift_jis") as f:
+        with open(path, encoding=self.encoding) as f:
             last_enum_id = -1
             for line in f.readlines():
                 m_with_id = p_with_id.match(line)
@@ -98,11 +99,11 @@ class C2aEnum:
                 last_enum_id = enum_id
 
 
-def load_enum(c2a_src_path) -> C2aEnum:
-    c2a_enum = C2aEnum(c2a_src_path)
+def load_enum(c2a_src_path, encoding) -> C2aEnum:
+    c2a_enum = C2aEnum(c2a_src_path, encoding)
     return c2a_enum
 
 
 if __name__ == "__main__":
     # 単なる動作確認用
-    c2a_enum = load_enum(os.path.dirname(__file__) + "/../../..")
+    c2a_enum = load_enum(os.path.dirname(__file__) + "/../../..", "utf-8")
