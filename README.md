@@ -31,6 +31,8 @@ $ python GenerateC2ACode.py
   "c2a_root_dir" : "../../c2a/src/",
   # TlmCmdDBのファイル名の接頭辞
   "db_prefix" : "SAMPLE_MOBC",
+  # 出力ファイルのエンコーディング
+  "output_file_encoding" : "utf-8",
   # GSTOS用sibファイルを生成するか？ 0/1
   "is_generated_sib" : 0,
   # テレメパケットのヘッダ長．これをoffsetしたところから，C2A上のテレメのユーザー定義部

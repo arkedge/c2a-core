@@ -1,6 +1,7 @@
 {
   "c2a_root_dir" : "../../c2a/src/",
   "db_prefix" : "SAMPLE_MOBC",
+  "output_file_encoding" : "utf-8",
   "is_generated_sib" : 0,
   "header_len" : 13,
   "is_main_obc" : 1,

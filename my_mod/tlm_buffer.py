@@ -217,12 +217,12 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
 
 
         output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"];
-        OutputTlmBufferC_(output_file_path + obc_name.lower() + "_telemetry_buffer.c", obc_name, body_c)
-        OutputTlmBufferH_(output_file_path + obc_name.lower() + "_telemetry_buffer.h", obc_name, body_h)
-        OutputTlmDataDefH_(output_file_path + obc_name.lower() + "_telemetry_data_definitions.h", obc_name, tlmdef_body_h)
+        OutputTlmBufferC_(output_file_path + obc_name.lower() + "_telemetry_buffer.c", obc_name, body_c, settings)
+        OutputTlmBufferH_(output_file_path + obc_name.lower() + "_telemetry_buffer.h", obc_name, body_h, settings)
+        OutputTlmDataDefH_(output_file_path + obc_name.lower() + "_telemetry_data_definitions.h", obc_name, tlmdef_body_h, settings)
 
 
-def OutputTlmBufferC_(file_path, name, body):
+def OutputTlmBufferC_(file_path, name, body, settings):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()
@@ -248,11 +248,11 @@ def OutputTlmBufferC_(file_path, name, body):
 #pragma section
 '''[1:]         # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding='shift_jis') as fh:
+    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
         fh.write(output.format(_obc_name_upper=name_upper, _obc_name_lower=name_lower, _obc_name_capit=name_capit))
 
 
-def OutputTlmBufferH_(file_path, name, body):
+def OutputTlmBufferH_(file_path, name, body, settings):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()
@@ -278,11 +278,11 @@ def OutputTlmBufferH_(file_path, name, body):
 #endif
 '''[1:]         # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding='shift_jis') as fh:
+    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
         fh.write(output.format(_obc_name_upper=name_upper, _obc_name_lower=name_lower, _obc_name_capit=name_capit))
 
 
-def OutputTlmDataDefH_(file_path, name, body):
+def OutputTlmDataDefH_(file_path, name, body, settings):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()
@@ -306,7 +306,7 @@ def OutputTlmDataDefH_(file_path, name, body):
 #endif
 '''[1:]         # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding='shift_jis') as fh:
+    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
         fh.write(output.format(_obc_name_upper=name_upper, _obc_name_lower=name_lower, _obc_name_capit=name_capit))
 
 
