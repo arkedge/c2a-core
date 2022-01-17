@@ -76,12 +76,12 @@ $ python GenerateC2ACode.py
 ```
 
 ## 開発方針
-そこまで込み入った開発はしないので，
+- `main`: リリース版
+- `feature/*` : 開発ブランチ
 
-- master
-- develop
+というブランチを用いる．
 
-ブランチのみ作成し，master pushは禁止する．
+[C2A Core](https://github.com/ut-issl/c2a-core) との互換性などは，[Releases](https://github.com/ut-issl/c2a-tlm-cmd-code-generator/releases) を参照すること（[詳細](https://github.com/ut-issl/c2a-core/tree/develop/Docs/．General/release.md)）
 
 ## 要求
 - python 3.7 以上
