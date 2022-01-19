@@ -4,6 +4,7 @@ DB読み込み
 """
 
 import os
+import sys
 import csv
 import re           # 正規表現
 import pprint
@@ -41,7 +42,7 @@ def LoadCmdCSV_(cmd_db_path, db_prefix):
 def LoadTlmDb(settings):
     tlm_db_path = settings["c2a_root_dir"] + r"src_user/Settings/TlmCmd/DataBase/TLM_DB/calced_data/"
 
-    tlm_db = LoadTlmCSV_(tlm_db_path, settings["db_prefix"])
+    tlm_db = LoadTlmCSV_(tlm_db_path, settings["db_prefix"], settings["tlm_id_range"])
 
     other_obc_dbs = {}
     if settings["is_main_obc"]:
@@ -52,7 +53,7 @@ def LoadTlmDb(settings):
     return {'tlm': tlm_db, 'other_obc': other_obc_dbs}
 
 
-def LoadTlmCSV_(tlm_db_path, db_prefix):
+def LoadTlmCSV_(tlm_db_path, db_prefix, tlm_id_range):
     tlm_names = [file for file in os.listdir(tlm_db_path) if file.endswith(".csv")]
     regex = r"^" + db_prefix + "_TLM_DB_"
     tlm_names = [re.sub(regex, "", file) for file in tlm_names]
@@ -70,6 +71,9 @@ def LoadTlmCSV_(tlm_db_path, db_prefix):
             # pprint.pprint(sheet)
             # print(sheet)
             tlm_id = sheet[1][2]        # FIXME: テレメIDを取得．マジックナンバーで指定してしまってる．
+            if not int(tlm_id_range[0], 0) <= int(tlm_id, 0) < int(tlm_id_range[1], 0):
+                print("Error: TLM ID is invalid at " + db_prefix + "_TLM_DB_" + tlm_name + ".csv", file=sys.stderr)
+                sys.exit(1)
             raw_local_vars =  sheet[1][3].replace("%%", "").split("##")     # FIXME: ローカル変数を取得．マジックナンバーで指定してしまってる．
             local_vars = []
             for raw_local_var in raw_local_vars:
@@ -109,7 +113,7 @@ def LoadOtherObcTlm(settings):
             continue
         tlm_db_path = settings["other_obc_data"][i]["db_path"] + r"TLM_DB/calced_data/"
 
-        tlm_db = LoadTlmCSV_(tlm_db_path, settings["other_obc_data"][i]["db_prefix"])
+        tlm_db = LoadTlmCSV_(tlm_db_path, settings["other_obc_data"][i]["db_prefix"], settings["other_obc_data"][i]["tlm_id_range"])
         other_obc_dbs[settings["other_obc_data"][i]["name"]] = tlm_db
 
     # pprint.pprint(other_obc_dbs)
