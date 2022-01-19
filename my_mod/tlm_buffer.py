@@ -443,7 +443,7 @@ def SetStructTree_(dict, path, val, sep="/"):
                 return 0
         else:
             key = path_list[0]
-            if not key in dict:
+            if key not in dict:
                 dict[key] = {}
             return _(dict[key], path_list[1:], val, sep)
 
