@@ -74,6 +74,9 @@ def LoadTlmCSV_(tlm_db_path, db_prefix, tlm_id_range):
             if not int(tlm_id_range[0], 0) <= int(tlm_id, 0) < int(tlm_id_range[1], 0):
                 print("Error: TLM ID is invalid at " + db_prefix + "_TLM_DB_" + tlm_name + ".csv", file=sys.stderr)
                 sys.exit(1)
+            enable_flag = sheet[2][2]        # FIXME: Enable/Disable を取得．マジックナンバーで指定してしまってる．
+            if enable_flag != "ENABLE":
+                continue
             raw_local_vars =  sheet[1][3].replace("%%", "").split("##")     # FIXME: ローカル変数を取得．マジックナンバーで指定してしまってる．
             local_vars = []
             for raw_local_var in raw_local_vars:
