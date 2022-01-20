@@ -51,6 +51,7 @@ $ python GenerateC2ACode.py
       "tlm_id_range" : ["0x90", "0xc0"],
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
       "db_path" : "../../c2a_sample_aobc/src/src_user/Settings/TlmCmd/DataBase/",
+      "tlm_max_contents_len" : 512,
       "driver_path" : "Aocs/",
       "driver_type" : "AOBC_Driver",
       "driver_name" : "aobc",
@@ -62,8 +63,8 @@ $ python GenerateC2ACode.py
       # コードを生成するか？
       "is_enable" : 1,
       "db_prefix" : "SAMPLE_TOBC",
-      # DBがあるディレクトリへのパス（絶対でも相対でもOK）
       "tlm_id_range" : ["0xc0", "0xf0"],
+      # DBがあるディレクトリへのパス（絶対でも相対でもOK）
       "db_path" : ""../../c2a_sample_tobc/src/src_user/Settings/TlmCmd/DataBase/",
       "tlm_max_contents_len" : 512,
       "driver_path" : "Thermal/",
