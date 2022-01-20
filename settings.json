@@ -3,7 +3,6 @@
   "db_prefix" : "SAMPLE_MOBC",
   "tlm_id_range" : ["0x00", "0x100"],
   "output_file_encoding" : "utf-8",
-  "is_generated_sib" : 0,
   "header_len" : 13,
   "is_main_obc" : 1,
   "other_obc_data" : [

@@ -35,8 +35,6 @@ $ python GenerateC2ACode.py
   "tlm_id_range" : ["0x00", "0x100"],
   # 出力ファイルのエンコーディング
   "output_file_encoding" : "utf-8",
-  # GSTOS用sibファイルを生成するか？ 0/1
-  "is_generated_sib" : 0,
   # テレメパケットのヘッダ長．これをoffsetしたところから，C2A上のテレメのユーザー定義部
   "header_len" : 13,
   # MOBCか？（他のOBCのtlm/cmdを取りまとめるか？） 0/1
