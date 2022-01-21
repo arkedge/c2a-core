@@ -3,9 +3,10 @@
 cmd def
 """
 
-import os
 import sys
-import pprint
+
+# import pprint
+
 
 def GenerateCmdDef(settings, sgc_db):
     output_file_path = settings["c2a_root_dir"] + r"src_user/TlmCmd/"
@@ -19,11 +20,11 @@ def GenerateCmdDef(settings, sgc_db):
     # "  Cmd_CODE_NOP = 0x0000,"
     for i in range(DATA_SART_ROW, len(sgc_db)):
         comment = sgc_db[i][0]
-        name    = sgc_db[i][1]
-        cmd_id  = sgc_db[i][3]
-        if comment == "" and name == "":                  # CommentもNameも空白なら打ち切り
+        name = sgc_db[i][1]
+        cmd_id = sgc_db[i][3]
+        if comment == "" and name == "":  # CommentもNameも空白なら打ち切り
             break
-        if comment != "":                                 # Comment
+        if comment != "":  # Comment
             continue
 
         cmd_name = name
@@ -33,48 +34,65 @@ def GenerateCmdDef(settings, sgc_db):
         body_c += "  cmd_table[" + cmd_code + "].cmd_func = " + cmd_name + ";\n"
         body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
 
-    body_c += "\n";
+    body_c += "\n"
     for i in range(DATA_SART_ROW, len(sgc_db)):
         comment = sgc_db[i][0]
-        name    = sgc_db[i][1]
-        cmd_id  = sgc_db[i][3]
-        if comment == "" and name == "":                  # CommentもNameも空白なら打ち切り
+        name = sgc_db[i][1]
+        cmd_id = sgc_db[i][3]
+        if comment == "" and name == "":  # CommentもNameも空白なら打ち切り
             break
-        if comment != "":                                 # Comment
+        if comment != "":  # Comment
             continue
 
         param_num = int(sgc_db[i][4])
-        type_list = [sgc_db[i][5], sgc_db[i][7], sgc_db[i][9], sgc_db[i][11], sgc_db[i][13], sgc_db[i][15]]
+        type_list = [
+            sgc_db[i][5],
+            sgc_db[i][7],
+            sgc_db[i][9],
+            sgc_db[i][11],
+            sgc_db[i][13],
+            sgc_db[i][15],
+        ]
         cmd_name = name
         cmd_code = cmd_name.replace("Cmd_", "Cmd_CODE_")
 
         # パラメタ長の整合性チェック
         for j in range(len(type_list)):
-            err_flag = 0;
+            err_flag = 0
             if j < param_num and type_list[j] == "":
                 err_flag = 1
             if j >= param_num and type_list[j] != "":
                 err_flag = 1
-            if (err_flag):
+            if err_flag:
                 print("Error: Cmd DB Err at " + name, file=sys.stderr)
                 sys.exit(1)
 
         # パラメタ長のカウント
         conv_tpye_to_size = {
-                                'int8_t'   : "CA_PARAM_SIZE_TYPE_1BYTE",
-                                'int16_t'  : "CA_PARAM_SIZE_TYPE_2BYTE",
-                                'int32_t'  : "CA_PARAM_SIZE_TYPE_4BYTE",
-                                'uint8_t'  : "CA_PARAM_SIZE_TYPE_1BYTE",
-                                'uint16_t' : "CA_PARAM_SIZE_TYPE_2BYTE",
-                                'uint32_t' : "CA_PARAM_SIZE_TYPE_4BYTE",
-                                'float'    : "CA_PARAM_SIZE_TYPE_4BYTE",
-                                'double'   : "CA_PARAM_SIZE_TYPE_8BYTE",
-                                'raw'      : "CA_PARAM_SIZE_TYPE_RAW"
-                            }
+            "int8_t": "CA_PARAM_SIZE_TYPE_1BYTE",
+            "int16_t": "CA_PARAM_SIZE_TYPE_2BYTE",
+            "int32_t": "CA_PARAM_SIZE_TYPE_4BYTE",
+            "uint8_t": "CA_PARAM_SIZE_TYPE_1BYTE",
+            "uint16_t": "CA_PARAM_SIZE_TYPE_2BYTE",
+            "uint32_t": "CA_PARAM_SIZE_TYPE_4BYTE",
+            "float": "CA_PARAM_SIZE_TYPE_4BYTE",
+            "double": "CA_PARAM_SIZE_TYPE_8BYTE",
+            "raw": "CA_PARAM_SIZE_TYPE_RAW",
+        }
         for j in range(param_num):
             index = j // 2
             subindex = "second" if j % 2 else "first"
-            body_c += "  cmd_table[" + cmd_code + "].param_size_infos[" + str(index)  + "].packed_info.bit." + subindex + " = " + conv_tpye_to_size[type_list[j]] + ";\n"
+            body_c += (
+                "  cmd_table["
+                + cmd_code
+                + "].param_size_infos["
+                + str(index)
+                + "].packed_info.bit."
+                + subindex
+                + " = "
+                + conv_tpye_to_size[type_list[j]]
+                + ";\n"
+            )
 
     OutputCmdDefC_(output_file_path + output_file_name_base + ".c", body_c, settings)
     OutputCmdDefH_(output_file_path + output_file_name_base + ".h", body_h, settings)
@@ -91,27 +109,27 @@ def GenerateBctDef(settings, bct_db):
     # "  Cmd_CODE_NOP = 0x0000,"
     for i in range(DATA_SART_ROW, len(bct_db)):
         comment = bct_db[i][0]
-        name    = bct_db[i][1]
-        bc_id   = bct_db[i][3]
+        name = bct_db[i][1]
+        bc_id = bct_db[i][3]
         description = bct_db[i][10]
 
         # エスケープ解除
         name = name.replace("@@", ",")
         description = description.replace("@@", ",")
 
-        if comment == "" and name == "":                    # CommentもNameも空白なら打ち切り
+        if comment == "" and name == "":  # CommentもNameも空白なら打ち切り
             break
 
-        if comment == "**":                                 # New Line Comment
+        if comment == "**":  # New Line Comment
             body_h += "\n  // " + name + "\n"
-        elif comment != "":                                 # Comment
+        elif comment != "":  # Comment
             body_h += "  // " + name + "\n"
         else:
             # "  BC_SL_INITIAL_TO_INITIAL = 0,"
             if description == "":
-                body_h += "  " + name + " = " + bc_id +",\n"
+                body_h += "  " + name + " = " + bc_id + ",\n"
             else:
-                body_h += "  " + name + " = " + bc_id +",    // " + description + "\n"
+                body_h += "  " + name + " = " + bc_id + ",    // " + description + "\n"
 
     OutputBctDef_(output_file_path + output_file_name, body_h, settings)
 
@@ -125,7 +143,7 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
         obc_name = settings["other_obc_data"][i]["name"]
         name_upper = obc_name.upper()
         name_lower = obc_name.lower()
-        name_capit = obc_name.capitalize()
+        # name_capit = obc_name.capitalize()
         # print(name_upper)
         # print(name_lower)
         # print(name_capit)
@@ -136,24 +154,30 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
         # "  TOBC_Cmd_CODE_NOP = 0x0000,"
         for j in range(DATA_SART_ROW, len(sgc_db)):
             comment = sgc_db[j][0]
-            name    = sgc_db[j][1]
-            cmd_id  = sgc_db[j][3]
-            if comment == "" and name == "":                  # CommentもNameも空白なら打ち切り
+            name = sgc_db[j][1]
+            cmd_id = sgc_db[j][3]
+            if comment == "" and name == "":  # CommentもNameも空白なら打ち切り
                 break
-            if comment != "":                                 # Comment
+            if comment != "":  # Comment
                 continue
             # print(name)
             cmd_name = name
-            cmd_code = cmd_name.replace("Cmd_", name_upper+"_Cmd_CODE_")
+            cmd_code = cmd_name.replace("Cmd_", name_upper + "_Cmd_CODE_")
             body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
         # print(body_h)
-        output_file_path = settings["c2a_root_dir"] + r"src_user/Drivers/" + settings["other_obc_data"][i]["driver_path"] + name_lower + "_command_definitions.h"
+        output_file_path = (
+            settings["c2a_root_dir"]
+            + r"src_user/Drivers/"
+            + settings["other_obc_data"][i]["driver_path"]
+            + name_lower
+            + "_command_definitions.h"
+        )
         OutputOtherObcCmdDefH_(output_file_path, obc_name, body_h, settings)
 
 
 def OutputCmdDefC_(file_path, body, settings):
     output = ""
-    output += '''
+    output += """
 #pragma section REPRO
 /**
  * @file
@@ -166,24 +190,27 @@ def OutputCmdDefC_(file_path, body, settings):
 
 void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
 {
-'''[1:]         # 最初の改行を除く
+"""[
+        1:
+    ]  # 最初の改行を除く
 
     output += body
 
-    output += '''
+    output += """
 }
 
 #pragma section
-'''[1:]         # 最初の改行を除く
+"""[
+        1:
+    ]  # 最初の改行を除く
 
-
-    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
+    with open(file_path, mode="w", encoding=settings["output_file_encoding"]) as fh:
         fh.write(output)
 
 
 def OutputCmdDefH_(file_path, body, settings):
     output = ""
-    output += '''
+    output += """
 /**
  * @file
  * @brief  コマンド定義
@@ -194,25 +221,29 @@ def OutputCmdDefH_(file_path, body, settings):
 
 typedef enum
 {
-'''[1:]         # 最初の改行を除く
+"""[
+        1:
+    ]  # 最初の改行を除く
 
     output += body
 
-    output += '''
+    output += """
 
   Cmd_CODE_MAX
 } CMD_CODE;
 
 #endif
-'''[1:]         # 最初の改行を除く
+"""[
+        1:
+    ]  # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
+    with open(file_path, mode="w", encoding=settings["output_file_encoding"]) as fh:
         fh.write(output)
 
 
 def OutputBctDef_(file_path, body, settings):
     output = ""
-    output += '''
+    output += """
 /**
  * @file
  * @brief  ブロックコマンド定義
@@ -224,11 +255,13 @@ def OutputBctDef_(file_path, body, settings):
 // 登録されるBlockCommandTableのblock番号を規定
 typedef enum
 {
-'''[1:]         # 最初の改行を除く
+"""[
+        1:
+    ]  # 最初の改行を除く
 
     output += body
 
-    output += '''
+    output += """
 
   BC_ID_MAX    // BCT 自体のサイズは BCT_MAX_BLOCKS で規定
 } BC_DEFAULT_ID;
@@ -236,9 +269,11 @@ typedef enum
 void BC_load_defaults(void);
 
 #endif
-'''[1:]         # 最初の改行を除く
+"""[
+        1:
+    ]  # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
+    with open(file_path, mode="w", encoding=settings["output_file_encoding"]) as fh:
         fh.write(output)
 
 
@@ -248,7 +283,7 @@ def OutputOtherObcCmdDefH_(file_path, name, body, settings):
     name_capit = name.capitalize()
 
     output = ""
-    output += '''
+    output += """
 /**
  * @file
  * @brief  コマンド定義
@@ -259,18 +294,25 @@ def OutputOtherObcCmdDefH_(file_path, name, body, settings):
 
 typedef enum
 {{
-'''[1:]         # 最初の改行を除く
+"""[
+        1:
+    ]  # 最初の改行を除く
 
     output += body
 
-    output += '''
+    output += """
 
   {_obc_name_upper}_Cmd_CODE_MAX
 }} {_obc_name_upper}_CMD_CODE;
 
 #endif
-'''[1:]         # 最初の改行を除く
+"""[
+        1:
+    ]  # 最初の改行を除く
 
-    with open(file_path, mode='w', encoding=settings['output_file_encoding']) as fh:
-        fh.write(output.format(_obc_name_upper=name_upper, _obc_name_lower=name_lower, _obc_name_capit=name_capit))
-
+    with open(file_path, mode="w", encoding=settings["output_file_encoding"]) as fh:
+        fh.write(
+            output.format(
+                _obc_name_upper=name_upper, _obc_name_lower=name_lower, _obc_name_capit=name_capit
+            )
+        )
