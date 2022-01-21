@@ -143,7 +143,7 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
         obc_name = settings["other_obc_data"][i]["name"]
         name_upper = obc_name.upper()
         name_lower = obc_name.lower()
-        name_capit = obc_name.capitalize()
+        # name_capit = obc_name.capitalize()
         # print(name_upper)
         # print(name_lower)
         # print(name_capit)
