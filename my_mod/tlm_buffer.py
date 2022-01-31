@@ -314,6 +314,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         )
         body_c += "{{\n"
         body_c += "  const CommonTlmPacket* buffered_packet;\n"
+        body_c += "  uint16_t packet_len;\n"
         body_c += "\n"
         body_c += "  if (tlm_id >= {_obc_name_upper}_MAX_TLMS) return TF_NOT_DEFINED;\n"
         body_c += (
@@ -323,10 +324,12 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         )
         body_c += "\n"
         body_c += "  buffered_packet = &(" + driver_name + "->tlm_buffer.tlm[tlm_id].packet);\n"
+        body_c += "  packet_len = CTP_get_packet_len(buffered_packet);\n"
         body_c += "\n"
-        body_c += "  if (CTP_get_packet_len(buffered_packet) > max_len) return TF_TOO_SHORT_LEN;\n"
+        body_c += "  if (packet_len > max_len) return TF_TOO_SHORT_LEN;\n"
         body_c += "\n"
-        body_c += "  memcpy(packet, &buffered_packet->packet, (size_t)CTP_get_packet_len(buffered_packet));\n"
+        body_c += "  memcpy(packet, &buffered_packet->packet, (size_t)packet_len);\n"
+        body_c += "  return packet_len;\n"
         body_c += "}}\n"
         body_c += "\n"
 
