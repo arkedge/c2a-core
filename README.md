@@ -35,8 +35,6 @@ $ python GenerateC2ACode.py
   "tlm_id_range" : ["0x00", "0x100"],
   # 出力ファイルのエンコーディング
   "output_file_encoding" : "utf-8",
-  # テレメパケットのヘッダ長．これをoffsetしたところから，C2A上のテレメのユーザー定義部
-  "header_len" : 26,
   # MOBCか？（他のOBCのtlm/cmdを取りまとめるか？） 0/1
   # 2nd OBCのコードを生成するときなどは 0 にする
   # 0 の場合，以後のパラメタは無効
