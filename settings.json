@@ -3,7 +3,6 @@
   "db_prefix" : "SAMPLE_MOBC",
   "tlm_id_range" : ["0x00", "0x100"],
   "output_file_encoding" : "utf-8",
-  "header_len" : 13,
   "is_main_obc" : 1,
   "other_obc_data" : [
     {
@@ -12,7 +11,7 @@
       "db_prefix" : "SAMPLE_AOBC",
       "tlm_id_range" : ["0x90", "0xc0"],
       "db_path" : "C:/c2a_sample_aobc/src/src_user/Settings/TlmCmd/DataBase/",
-      "tlm_max_contents_len" : 512,
+      "max_tlms" : 256,
       "driver_path" : "Aocs/",
       "driver_type" : "AOBC_Driver",
       "driver_name" : "aobc_driver",
@@ -24,7 +23,7 @@
       "db_prefix" : "SAMPLE_TOBC",
       "tlm_id_range" : ["0xc0", "0xf0"],
       "db_path" : "C:/c2a_sample_tobc/src/src_user/Settings/TlmCmd/DataBase/",
-      "tlm_max_contents_len" : 512,
+      "max_tlms" : 256,
       "driver_path" : "Thermal/",
       "driver_type" : "TOBC_Driver",
       "driver_name" : "tobc_driver",
