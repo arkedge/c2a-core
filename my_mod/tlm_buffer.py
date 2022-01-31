@@ -18,7 +18,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         obc_name = settings["other_obc_data"][i]["name"]
         driver_type = settings["other_obc_data"][i]["driver_type"]
         driver_name = settings["other_obc_data"][i]["driver_name"]
-        contents_len = settings["other_obc_data"][i]["tlm_max_contents_len"]
+        max_tlms = settings["other_obc_data"][i]["max_tlms"]
 
         tlm_db = other_obc_dbs[obc_name]
 
@@ -26,33 +26,39 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_h = ""
         tlmdef_body_h = ""
 
-        body_c += "static {_obc_name_upper}_Buffer {_obc_name_lower}_buffer_;\n"
-        body_c += "const {_obc_name_upper}_Buffer* const {_obc_name_lower}_buffer = &{_obc_name_lower}_buffer_;\n"
-        body_c += "\n"
-        body_h += "#define {_obc_name_upper}_TELEMETRY_BUFFE_SIZE (" + str(contents_len) + ")\n"
-        body_h += "\n"
-        body_h += "typedef struct\n"
-        body_h += "{{\n"
         for tlm in tlm_db:
             tlm_name = tlm["tlm_name"]
             tlm_name_lower = tlm_name.lower()
-            body_h += "  struct\n"
-            body_h += "  {{\n"
-            body_h += "    int     size;\n"
-            body_h += "    uint8_t buffer[{_obc_name_upper}_TELEMETRY_BUFFE_SIZE];\n"
-            body_h += "  }} " + tlm_name_lower + ";\n"
             body_c += (
                 "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_"
                 + tlm_name_lower
-                + "_(DS_StreamConfig* p_stream_config, "
+                + "_(const CommonTlmPacket* packet, {_obc_name_upper}_TLM_CODE tlm_id, "
                 + driver_type
                 + "* "
                 + driver_name
                 + ");\n"
             )
 
-        body_h += "}} {_obc_name_upper}_Buffer;\n"
+        body_c += "\n"
+        body_c += "static CommonTlmPacket {_obc_name_upper}_ctp_;\n"
+        body_c += "\n"
+
+        body_h += "typedef struct " + driver_type + " " + driver_type + ";\n"
         body_h += "\n"
+        body_h += "#define {_obc_name_upper}_MAX_TLMS (" + str(max_tlms) + ")\n"
+        body_h += "\n"
+        body_h += "typedef struct\n"
+        body_h += "{{\n"
+        body_h += "  CommonTlmPacket packet;   //!< 最新のテレメパケットを保持\n"
+        body_h += "  uint8_t is_null_packet;   //!< 一度でもテレメを受信しているか？（空配列が読み出されるのを防ぐため）\n"
+        body_h += "}} {_obc_name_upper}_TlmBufferElem;\n"
+        body_h += "\n"
+        body_h += "typedef struct\n"
+        body_h += "{{\n"
+        body_h += "  {_obc_name_upper}_TlmBufferElem tlm[{_obc_name_upper}_MAX_TLMS];   //!< TLM ID ごとに保持\n"
+        body_h += "}} {_obc_name_upper}_TlmBuffer;\n"
+        body_h += "\n"
+
         tlmdef_body_h += "typedef struct\n"
         tlmdef_body_h += "{{\n"
         for tlm in tlm_db:
@@ -96,29 +102,41 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
 
         tlmdef_body_h += "}} {_obc_name_upper}_TlmData;\n"
 
-        body_h += "extern const {_obc_name_upper}_Buffer* const {_obc_name_lower}_buffer;\n"
-        body_h += "\n"
-        body_h += "void {_obc_name_upper}_buffer_init(void);\n"
+        body_h += (
+            "void {_obc_name_upper}_init_tlm_buffer(" + driver_type + "* " + driver_name + ");\n"
+        )
         body_h += "\n"
         body_h += (
-            "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DS_StreamConfig* p_stream_config, "
+            "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_packet(DS_StreamConfig* p_stream_config, "
             + driver_type
             + "* "
             + driver_name
             + ");\n"
         )
+        body_h += "\n"
+        body_h += "// FIXME: TF_ACK になおす！\n"
+        body_h += (
+            "int {_obc_name_upper}_pick_up_tlm_buffer(const "
+            + driver_type
+            + "* "
+            + driver_name
+            + ", {_obc_name_upper}_TLM_CODE tlm_id, uint8_t* packet, int max_len);\n"
+        )
 
-        body_c += "\n"
-        body_c += "void {_obc_name_upper}_buffer_init(void)\n"
+        body_c += (
+            "void {_obc_name_upper}_init_tlm_buffer(" + driver_type + "* " + driver_name + ")\n"
+        )
         body_c += "{{\n"
-        for tlm in tlm_db:
-            tlm_name = tlm["tlm_name"]
-            tlm_name_lower = tlm_name.lower()
-            body_c += "  {_obc_name_lower}_buffer_." + tlm_name_lower + ".size = 0;\n"
+        body_c += "  // packet などは，上位の driver の初期化で driver もろとも memset 0x00 されていると期待して，ここではしない\n"
+        body_c += "  int i = 0;\n"
+        body_c += "  for (i = 0; i < {_obc_name_upper}_MAX_TLMS; ++i)\n"
+        body_c += "  {{\n"
+        body_c += "    " + driver_name + "->tlm_buffer.tlm[i].is_null_packet = 1;\n"
+        body_c += "  }}\n"
         body_c += "}}\n"
         body_c += "\n"
         body_c += (
-            "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_contents(DS_StreamConfig* p_stream_config, "
+            "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_packet(DS_StreamConfig* p_stream_config, "
             + driver_type
             + "* "
             + driver_name
@@ -126,7 +144,10 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         )
         body_c += "{{\n"
 
-        body_c += "  uint8_t tlm_id  = DS_C2AFMT_get_tlm_id(p_stream_config);\n"
+        body_c += "  {_obc_name_upper}_TLM_CODE tlm_id;\n"
+        body_c += "\n"
+        body_c += "  DS_C2AFMT_get_ctp(p_stream_config, &{_obc_name_upper}_ctp_);\n"
+        body_c += "  tlm_id  = ({_obc_name_upper}_TLM_CODE)CTP_get_id(&{_obc_name_upper}_ctp_);\n"
         body_c += "\n"
 
         body_c += "  switch (tlm_id)\n"
@@ -139,7 +160,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += (
                 "    return {_obc_name_upper}_analyze_tlm_"
                 + tlm_name_lower
-                + "_(p_stream_config, "
+                + "_(&{_obc_name_upper}_ctp_, tlm_id, "
                 + driver_name
                 + ");\n"
             )
@@ -173,20 +194,18 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             tlm_name = tlm["tlm_name"]
             tlm_name_upper = tlm_name.upper()
             tlm_name_lower = tlm_name.lower()
+
             body_c += (
                 "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_"
                 + tlm_name_lower
-                + "_(DS_StreamConfig* p_stream_config, "
+                + "_(const CommonTlmPacket* packet, {_obc_name_upper}_TLM_CODE tlm_id, "
                 + driver_type
                 + "* "
                 + driver_name
                 + ")\n"
             )
             body_c += "{{\n"
-            body_c += "  uint32_t tlm_len = DS_ISSLFMT_get_tlm_length(p_stream_config);\n"
-            body_c += "  const uint8_t* f = DSSC_get_rx_frame(p_stream_config) + DS_ISSLFMT_COMMON_HEADER_SIZE;\n"
-            body_c += "  uint32_t contents_len = tlm_len - DS_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE - 1;      // FIXME: CCSDSは1起算？\n"
-            body_c += "  const uint8_t* contents_pos = f + DS_C2AFMT_TCP_TLM_PRIMARY_HEADER_SIZE + DS_C2AFMT_TCP_TLM_SECONDARY_HEADER_SIZE;\n"
+            body_c += "  const uint8_t* f = packet->packet;\n"
             for k, v in conv_tpye_to_temp.items():
                 if k == "float":
                     body_c += "  " + k + " " + v + " = 0.0f;\n"
@@ -195,18 +214,17 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
                 else:
                     body_c += "  " + k + " " + v + " = 0;\n"
             body_c += "\n"
-            body_c += "  // GSへのテレメ中継のためのバッファーへのコピー\n"
-            body_c += "  if (contents_len > {_obc_name_upper}_TELEMETRY_BUFFE_SIZE) return DS_ERR_CODE_ERR;\n"
+            body_c += "  // GS へのテレメ中継のためのバッファーへのコピー\n"
             body_c += (
-                "  memcpy({_obc_name_lower}_buffer_."
-                + tlm_name_lower
-                + ".buffer, contents_pos, (size_t)contents_len);\n"
+                "  CTP_copy_packet(&("
+                + driver_name
+                + "->tlm_buffer.tlm[tlm_id].packet), packet);\n"
             )
-            body_c += (
-                "  {_obc_name_lower}_buffer_." + tlm_name_lower + ".size = (int)contents_len;\n"
-            )
+            body_c += "  " + driver_name + "->tlm_buffer.tlm[tlm_id].is_null_packet = 0;\n"
+            body_c += "  // TODO: CRC チェック\n"
             body_c += "\n"
-            body_c += "  // MOBC内部でテレメデータへアクセスしやすいようにするための構造体へのパース\n"
+
+            body_c += "  // MOBC 内部でテレメデータへアクセスしやすいようにするための構造体へのパース\n"
             last_var_type = ""
             for j in range(DATA_START_ROW, len(tlm["data"])):
                 comment = tlm["data"][j][0]
@@ -252,7 +270,11 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
                         + ");\n"
                     )
                     body_c += (
-                        "  " + conv_tpye_to_temp[var_type] + " >>= " + str(7 - bit_pos) + ";\n"
+                        "  "
+                        + conv_tpye_to_temp[var_type]
+                        + " >>= "
+                        + str(conv_tpye_to_size[var_type] * 8 - bit_pos - bit_len)
+                        + ";\n"
                     )
                     body_c += (
                         "  "
@@ -282,6 +304,31 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "  return DS_ERR_CODE_OK;\n"
             body_c += "}}\n"
             body_c += "\n"
+
+        body_c += (
+            "int {_obc_name_upper}_pick_up_tlm_buffer(const "
+            + driver_type
+            + "* "
+            + driver_name
+            + ", {_obc_name_upper}_TLM_CODE tlm_id, uint8_t* packet, int max_len)\n"
+        )
+        body_c += "{{\n"
+        body_c += "  const CommonTlmPacket* buffered_packet;\n"
+        body_c += "\n"
+        body_c += "  if (tlm_id >= {_obc_name_upper}_MAX_TLMS) return TF_NOT_DEFINED;\n"
+        body_c += (
+            "  if ("
+            + driver_name
+            + "->tlm_buffer.tlm[tlm_id].is_null_packet) return TF_NULL_PACKET;\n"
+        )
+        body_c += "\n"
+        body_c += "  buffered_packet = &(" + driver_name + "->tlm_buffer.tlm[tlm_id].packet);\n"
+        body_c += "\n"
+        body_c += "  if (CTP_get_packet_len(buffered_packet) > max_len) return TF_TOO_SHORT_LEN;\n"
+        body_c += "\n"
+        body_c += "  memcpy(packet, &buffered_packet->packet, (size_t)CTP_get_packet_len(buffered_packet));\n"
+        body_c += "}}\n"
+        body_c += "\n"
 
         output_file_path = (
             settings["c2a_root_dir"]
@@ -315,10 +362,10 @@ def OutputTlmBufferC_(file_path, name, body, settings):
  * @brief  テレメトリバッファー（テレメ中継）
  * @note   このコードは自動生成されています！
  */
-
 #include "./{_obc_name_lower}_telemetry_definitions.h"
 #include "./{_obc_name_lower}_telemetry_buffer.h"
-#include <string.h> // for memcpy
+#include "./{_obc_name_lower}.h"
+#include <string.h>
 
 """[
         1:
@@ -355,7 +402,10 @@ def OutputTlmBufferH_(file_path, name, body, settings):
 #ifndef {_obc_name_upper}_TELEMETRY_BUFFER_H_
 #define {_obc_name_upper}_TELEMETRY_BUFFER_H_
 
-#include "./{_obc_name_lower}.h"
+#include "./{_obc_name_lower}_telemetry_definitions.h"
+#include <src_core/Drivers/Super/driver_super.h>
+#include <src_core/TlmCmd/common_tlm_packet.h>
+#include <src_core/TlmCmd/telemetry_frame.h>
 
 """[
         1:

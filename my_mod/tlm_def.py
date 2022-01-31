@@ -194,28 +194,25 @@ def GetTlmDefCOfOtherObcFunBody_(settings, tlm_db, other_obc_dbs):
 
         obc_name = settings["other_obc_data"][i]["name"]
         oter_obc_tlm_db = other_obc_dbs[obc_name]
+        driver_name = settings["other_obc_data"][i]["driver_name"]
 
         temp_c = ""
         for tlm in oter_obc_tlm_db:
             tlm_name = tlm["tlm_name"]
             tlm_name_upper = tlm_name.upper()
-            tlm_name_lower = tlm_name.lower()
+            # tlm_name_lower = tlm_name.lower()
             temp_c += "\n"
             temp_c += (
                 "static int Tlm_" + tlm_name_upper + "_(unsigned char* contents, int max_len)\n"
             )
             temp_c += "{{\n"
-            temp_c += "  int buffer_size = {_obc_name_lower}_buffer->" + tlm_name_lower + ".size;\n"
-            temp_c += "\n"
-            temp_c += "  if (buffer_size > max_len) {{ return TF_TOO_SHORT_LEN; }}\n"
-            temp_c += "\n"
             temp_c += (
-                "  memcpy(contents, {_obc_name_lower}_buffer->"
-                + tlm_name_lower
-                + ".buffer, (size_t)buffer_size);\n"
+                "  return AOBC_pick_up_tlm_buffer("
+                + driver_name
+                + ", {_obc_name_upper}_Tlm_CODE_"
+                + tlm_name_upper
+                + ", contents, max_len);\n"
             )
-            temp_c += "\n"
-            temp_c += "  return buffer_size;\n"
             temp_c += "}}\n"
 
         body_c += temp_c.format(
