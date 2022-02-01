@@ -49,7 +49,8 @@ $ python GenerateC2ACode.py
       "tlm_id_range" : ["0x90", "0xc0"],
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
       "db_path" : "../../c2a_sample_aobc/src/src_user/Settings/TlmCmd/DataBase/",
-      "max_tlms" : 256,
+      # MOBC で保持するテレメの TLM ID の最大値（＝テレメ種類数）
+      "max_tlm_num" : 256,
       "driver_path" : "Aocs/",
       "driver_type" : "AOBC_Driver",
       "driver_name" : "aobc",
@@ -64,7 +65,8 @@ $ python GenerateC2ACode.py
       "tlm_id_range" : ["0xc0", "0xf0"],
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
       "db_path" : ""../../c2a_sample_tobc/src/src_user/Settings/TlmCmd/DataBase/",
-      "max_tlms" : 256,
+      # MOBC で保持するテレメの TLM ID の最大値（＝テレメ種類数）
+      "max_tlm_num" : 256,
       "driver_path" : "Thermal/",
       "driver_type" : "TOBC_Driver",
       "driver_name" : "tobc",

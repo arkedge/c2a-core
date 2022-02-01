@@ -18,7 +18,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         obc_name = settings["other_obc_data"][i]["name"]
         driver_type = settings["other_obc_data"][i]["driver_type"]
         driver_name = settings["other_obc_data"][i]["driver_name"]
-        max_tlms = settings["other_obc_data"][i]["max_tlms"]
+        max_tlm_num = settings["other_obc_data"][i]["max_tlm_num"]
 
         tlm_db = other_obc_dbs[obc_name]
 
@@ -45,7 +45,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
 
         body_h += "typedef struct " + driver_type + " " + driver_type + ";\n"
         body_h += "\n"
-        body_h += "#define {_obc_name_upper}_MAX_TLMS (" + str(max_tlms) + ")\n"
+        body_h += "#define {_obc_name_upper}_MAX_TLM_NUM (" + str(max_tlm_num) + ")\n"
         body_h += "\n"
         body_h += "typedef struct\n"
         body_h += "{{\n"
@@ -55,7 +55,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_h += "\n"
         body_h += "typedef struct\n"
         body_h += "{{\n"
-        body_h += "  {_obc_name_upper}_TlmBufferElem tlm[{_obc_name_upper}_MAX_TLMS];   //!< TLM ID ごとに保持\n"
+        body_h += "  {_obc_name_upper}_TlmBufferElem tlm[{_obc_name_upper}_MAX_TLM_NUM];   //!< TLM ID ごとに保持\n"
         body_h += "}} {_obc_name_upper}_TlmBuffer;\n"
         body_h += "\n"
 
@@ -129,7 +129,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "{{\n"
         body_c += "  // packet などは，上位の driver の初期化で driver もろとも memset 0x00 されていると期待して，ここではしない\n"
         body_c += "  int i = 0;\n"
-        body_c += "  for (i = 0; i < {_obc_name_upper}_MAX_TLMS; ++i)\n"
+        body_c += "  for (i = 0; i < {_obc_name_upper}_MAX_TLM_NUM; ++i)\n"
         body_c += "  {{\n"
         body_c += "    " + driver_name + "->tlm_buffer.tlm[i].is_null_packet = 1;\n"
         body_c += "  }}\n"
@@ -319,7 +319,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "  const CommonTlmPacket* buffered_packet;\n"
         body_c += "  uint16_t packet_len;\n"
         body_c += "\n"
-        body_c += "  if (tlm_id >= {_obc_name_upper}_MAX_TLMS) return TF_NOT_DEFINED;\n"
+        body_c += "  if (tlm_id >= {_obc_name_upper}_MAX_TLM_NUM) return TF_NOT_DEFINED;\n"
         body_c += (
             "  if ("
             + driver_name
