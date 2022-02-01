@@ -74,6 +74,9 @@ def LoadTlmCSV_(tlm_db_path, db_prefix, tlm_id_range):
             sheet = [row for row in reader]
             # pprint.pprint(sheet)
             # print(sheet)
+            enable_flag = sheet[2][2]  # FIXME: Enable/Disable を取得．マジックナンバーで指定してしまってる．
+            if enable_flag != "ENABLE":
+                continue
             tlm_id = sheet[1][2]  # FIXME: テレメIDを取得．マジックナンバーで指定してしまってる．
             if not int(tlm_id_range[0], 0) <= int(tlm_id, 0) < int(tlm_id_range[1], 0):
                 print(
@@ -81,9 +84,6 @@ def LoadTlmCSV_(tlm_db_path, db_prefix, tlm_id_range):
                     file=sys.stderr,
                 )
                 sys.exit(1)
-            enable_flag = sheet[2][2]  # FIXME: Enable/Disable を取得．マジックナンバーで指定してしまってる．
-            if enable_flag != "ENABLE":
-                continue
             raw_local_vars = (
                 sheet[1][3].replace("%%", "").split("##")
             )  # FIXME: ローカル変数を取得．マジックナンバーで指定してしまってる．
