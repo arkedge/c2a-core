@@ -15,14 +15,10 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
     body_c = ""
     body_h = ""
 
-    # "static int OBC_(unsigned char* contents, int max_len);"
+    # "static int OBC_(uint8_t* packet, int max_len);"
     # "  OBC_ID = 0x00,"
     for tlm in tlm_db:
-        body_c += (
-            "static int Tlm_"
-            + tlm["tlm_name"].upper()
-            + "_(unsigned char* contents, int max_len);\n"
-        )
+        body_c += "static int Tlm_" + tlm["tlm_name"].upper() + "_(uint8_t* packet, int max_len);\n"
         body_h += "  Tlm_CODE_" + tlm["tlm_name"].upper() + " = " + tlm["tlm_id"] + ",\n"
 
     if settings["is_main_obc"]:
@@ -66,7 +62,7 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
             if pos == "":
                 continue
 
-            pos = int(pos) - settings["header_len"]
+            pos = int(pos)
             code = code.replace("@@", ",")
             func_code += "  "
             if var_type == "int8_t":
@@ -96,14 +92,10 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
             else:
                 print("Error: Tlm DB Err at " + tlm["tlm_name"].upper(), file=sys.stderr)
                 sys.exit(1)
-            func_code += "(&contents[" + str(pos) + "], " + code + ");\n"
+            func_code += "(&packet[" + str(pos) + "], " + code + ");\n"
 
         body_c += "\n"
-        body_c += (
-            "static int Tlm_"
-            + tlm["tlm_name"].upper()
-            + "_(unsigned char* contents, int max_len)\n"
-        )
+        body_c += "static int Tlm_" + tlm["tlm_name"].upper() + "_(uint8_t* packet, int max_len)\n"
         body_c += "{\n"
         for local_var in tlm["local_vars"]:
             body_c += "  " + local_var + "\n"
@@ -141,9 +133,7 @@ def GetTlmDefCOfOtherObcFunDef_(settings, tlm_db, other_obc_dbs):
         temp_c += "// {_obc_name_upper} TLM\n"
         for tlm in oter_obc_tlm_db:
             temp_c += (
-                "static int Tlm_"
-                + tlm["tlm_name"].upper()
-                + "_(unsigned char* contents, int max_len);\n"
+                "static int Tlm_" + tlm["tlm_name"].upper() + "_(uint8_t* packet, int max_len);\n"
             )
 
         body_c += temp_c.format(
@@ -194,28 +184,23 @@ def GetTlmDefCOfOtherObcFunBody_(settings, tlm_db, other_obc_dbs):
 
         obc_name = settings["other_obc_data"][i]["name"]
         oter_obc_tlm_db = other_obc_dbs[obc_name]
+        driver_name = settings["other_obc_data"][i]["driver_name"]
 
         temp_c = ""
         for tlm in oter_obc_tlm_db:
             tlm_name = tlm["tlm_name"]
             tlm_name_upper = tlm_name.upper()
-            tlm_name_lower = tlm_name.lower()
+            # tlm_name_lower = tlm_name.lower()
             temp_c += "\n"
-            temp_c += (
-                "static int Tlm_" + tlm_name_upper + "_(unsigned char* contents, int max_len)\n"
-            )
+            temp_c += "static int Tlm_" + tlm_name_upper + "_(uint8_t* packet, int max_len)\n"
             temp_c += "{{\n"
-            temp_c += "  int buffer_size = {_obc_name_lower}_buffer->" + tlm_name_lower + ".size;\n"
-            temp_c += "\n"
-            temp_c += "  if (buffer_size > max_len) {{ return TF_TOO_SHORT_LEN; }}\n"
-            temp_c += "\n"
             temp_c += (
-                "  memcpy(contents, {_obc_name_lower}_buffer->"
-                + tlm_name_lower
-                + ".buffer, (size_t)buffer_size);\n"
+                "  return {_obc_name_upper}_pick_up_tlm_buffer("
+                + driver_name
+                + ", {_obc_name_upper}_Tlm_CODE_"
+                + tlm_name_upper
+                + ", packet, max_len);\n"
             )
-            temp_c += "\n"
-            temp_c += "  return buffer_size;\n"
             temp_c += "}}\n"
 
         body_c += temp_c.format(

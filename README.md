@@ -35,8 +35,6 @@ $ python GenerateC2ACode.py
   "tlm_id_range" : ["0x00", "0x100"],
   # 出力ファイルのエンコーディング
   "output_file_encoding" : "utf-8",
-  # テレメパケットのヘッダ長．これをoffsetしたところから，C2A上のテレメのユーザー定義部
-  "header_len" : 13,
   # MOBCか？（他のOBCのtlm/cmdを取りまとめるか？） 0/1
   # 2nd OBCのコードを生成するときなどは 0 にする
   # 0 の場合，以後のパラメタは無効
@@ -51,7 +49,8 @@ $ python GenerateC2ACode.py
       "tlm_id_range" : ["0x90", "0xc0"],
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
       "db_path" : "../../c2a_sample_aobc/src/src_user/Settings/TlmCmd/DataBase/",
-      "tlm_max_contents_len" : 512,
+      # MOBC で保持するテレメの TLM ID の最大値（＝テレメ種類数）
+      "max_tlm_num" : 256,
       "driver_path" : "Aocs/",
       "driver_type" : "AOBC_Driver",
       "driver_name" : "aobc",
@@ -66,7 +65,8 @@ $ python GenerateC2ACode.py
       "tlm_id_range" : ["0xc0", "0xf0"],
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
       "db_path" : ""../../c2a_sample_tobc/src/src_user/Settings/TlmCmd/DataBase/",
-      "tlm_max_contents_len" : 512,
+      # MOBC で保持するテレメの TLM ID の最大値（＝テレメ種類数）
+      "max_tlm_num" : 256,
       "driver_path" : "Thermal/",
       "driver_type" : "TOBC_Driver",
       "driver_name" : "tobc",
