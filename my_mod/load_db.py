@@ -89,7 +89,7 @@ def LoadTlmCSV_(tlm_db_path, db_prefix, tlm_id_range):
             )  # FIXME: ローカル変数を取得．マジックナンバーで指定してしまってる．
             local_vars = []
             for raw_local_var in raw_local_vars:
-                local_var = raw_local_var.strip()
+                local_var = raw_local_var.strip().replace("@@", ",")
                 if len(local_var) > 0:
                     local_vars.append(local_var)
             tlm_db.append(
