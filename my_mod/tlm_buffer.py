@@ -114,13 +114,12 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             + ");\n"
         )
         body_h += "\n"
-        body_h += "// FIXME: TF_ACK になおす！\n"
         body_h += (
-            "int {_obc_name_upper}_pick_up_tlm_buffer(const "
+            "TF_TLM_FUNC_ACK {_obc_name_upper}_pick_up_tlm_buffer(const "
             + driver_type
             + "* "
             + driver_name
-            + ", {_obc_name_upper}_TLM_CODE tlm_id, uint8_t* packet, int max_len);\n"
+            + ", {_obc_name_upper}_TLM_CODE tlm_id, uint8_t* packet, uint16_t* len, uint16_t max_len);\n"
         )
 
         body_c += (
@@ -309,30 +308,29 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "\n"
 
         body_c += (
-            "int {_obc_name_upper}_pick_up_tlm_buffer(const "
+            "TF_TLM_FUNC_ACK {_obc_name_upper}_pick_up_tlm_buffer(const "
             + driver_type
             + "* "
             + driver_name
-            + ", {_obc_name_upper}_TLM_CODE tlm_id, uint8_t* packet, int max_len)\n"
+            + ", {_obc_name_upper}_TLM_CODE tlm_id, uint8_t* packet, uint16_t* len, uint16_t max_len)\n"
         )
         body_c += "{{\n"
         body_c += "  const CommonTlmPacket* buffered_packet;\n"
-        body_c += "  uint16_t packet_len;\n"
         body_c += "\n"
-        body_c += "  if (tlm_id >= {_obc_name_upper}_MAX_TLM_NUM) return TF_NOT_DEFINED;\n"
+        body_c += "  if (tlm_id >= {_obc_name_upper}_MAX_TLM_NUM) return TF_TLM_FUNC_ACK_NOT_DEFINED;\n"
         body_c += (
             "  if ("
             + driver_name
-            + "->tlm_buffer.tlm[tlm_id].is_null_packet) return TF_NULL_PACKET;\n"
+            + "->tlm_buffer.tlm[tlm_id].is_null_packet) return TF_TLM_FUNC_ACK_NULL_PACKET;\n"
         )
         body_c += "\n"
         body_c += "  buffered_packet = &(" + driver_name + "->tlm_buffer.tlm[tlm_id].packet);\n"
-        body_c += "  packet_len = CTP_get_packet_len(buffered_packet);\n"
+        body_c += "  *len = CTP_get_packet_len(buffered_packet);\n"
         body_c += "\n"
-        body_c += "  if (packet_len > max_len) return TF_TOO_SHORT_LEN;\n"
+        body_c += "  if (*len > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;\n"
         body_c += "\n"
-        body_c += "  memcpy(packet, &buffered_packet->packet, (size_t)packet_len);\n"
-        body_c += "  return packet_len;\n"
+        body_c += "  memcpy(packet, &buffered_packet->packet, (size_t)(*len));\n"
+        body_c += "  return TF_TLM_FUNC_ACK_SUCCESS;\n"
         body_c += "}}\n"
         body_c += "\n"
 
