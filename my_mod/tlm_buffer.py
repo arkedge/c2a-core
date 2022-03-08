@@ -317,7 +317,9 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "{{\n"
         body_c += "  const CommonTlmPacket* buffered_packet;\n"
         body_c += "\n"
-        body_c += "  if (tlm_id >= {_obc_name_upper}_MAX_TLM_NUM) return TF_TLM_FUNC_ACK_NOT_DEFINED;\n"
+        body_c += (
+            "  if (tlm_id >= {_obc_name_upper}_MAX_TLM_NUM) return TF_TLM_FUNC_ACK_NOT_DEFINED;\n"
+        )
         body_c += (
             "  if ("
             + driver_name
