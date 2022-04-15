@@ -55,7 +55,7 @@ class C2aEnum:
         self._load_enum_from_file("/src_core/TlmCmd/common_cmd_packet.h", "CCP_EXEC_")
 
     def _load_tl_id(self):
-        self._load_enum_from_file("/src_core/Applications/timeline_command_dispatcher.h", "TL_ID_")
+        self._load_enum_from_file("/src_core/Applications/timeline_command_dispatcher.h", "TLCD_ID_")
 
     def _load_enum_from_file(self, path, prefix):
         path = self.path + path
