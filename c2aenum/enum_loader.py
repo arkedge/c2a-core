@@ -20,7 +20,7 @@ class C2aEnum:
         self._load_eh_rule()
         self._load_mode()
         self._load_exec_sts()
-        self._load_tl_id()
+        self._load_tlcd_id()
 
     def _load_bc(self):
         self._load_enum_from_file("/src_user/TlmCmd/block_command_definitions.h", "BC_")
@@ -54,7 +54,7 @@ class C2aEnum:
     def _load_exec_sts(self):
         self._load_enum_from_file("/src_core/TlmCmd/common_cmd_packet.h", "CCP_EXEC_")
 
-    def _load_tl_id(self):
+    def _load_tlcd_id(self):
         self._load_enum_from_file(
             "/src_core/Applications/timeline_command_dispatcher.h", "TLCD_ID_"
         )
