@@ -42,8 +42,8 @@ class C2aEnum:
         with open(path, encoding=self.encoding) as f:
             code_lines = f.read().split("\n")
 
-        code_lines = self._delete_preprocessor(code_lines)
         code_lines = self._delete_multiline_comment(code_lines)
+        code_lines = self._delete_preprocessor(code_lines)
 
         p_enum_begin = re.compile(r"^ *typedef +enum")
         p_enum_end = re.compile(r"^ *} +\w+")
