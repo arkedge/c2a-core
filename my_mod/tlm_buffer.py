@@ -146,7 +146,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "  {_obc_name_upper}_TLM_CODE tlm_id;\n"
         body_c += "  DS_ERR_CODE ret;\n"
         body_c += "\n"
-        body_c += "  ret = DS_C2AFMT_get_ctp(p_stream_config, &{_obc_name_upper}_ctp_);\n"
+        body_c += "  ret = CTP_get_ctp_from_dssc(p_stream_config, &{_obc_name_upper}_ctp_);\n"
         body_c += "  if (ret != DS_ERR_CODE_OK) return ret;\n"
         body_c += "\n"
         body_c += "  tlm_id  = ({_obc_name_upper}_TLM_CODE)CTP_get_id(&{_obc_name_upper}_ctp_);\n"
@@ -368,6 +368,7 @@ def OutputTlmBufferC_(file_path, name, body, settings):
  * @brief  テレメトリバッファー（テレメ中継）
  * @note   このコードは自動生成されています！
  */
+#include <src_core/Drivers/Protocol/common_tlm_cmd_packet_for_driver_super.h>
 #include "./{_obc_name_lower}_telemetry_definitions.h"
 #include "./{_obc_name_lower}_telemetry_buffer.h"
 #include "./{_obc_name_lower}.h"
