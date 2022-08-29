@@ -14,7 +14,9 @@ import re  # 正規表現
 def LoadCmdDb(settings):
     cmd_db_path = settings["c2a_root_dir"] + r"src_user/Settings/TlmCmd/DataBase/CMD_DB/"
 
-    sgc_db, bct_db = LoadCmdCSV_(cmd_db_path, settings["db_prefix"], settings["input_file_encoding"])
+    sgc_db, bct_db = LoadCmdCSV_(
+        cmd_db_path, settings["db_prefix"], settings["input_file_encoding"]
+    )
 
     other_obc_dbs = {}
     if settings["is_main_obc"]:
@@ -46,7 +48,12 @@ def LoadTlmDb(settings):
         settings["c2a_root_dir"] + r"src_user/Settings/TlmCmd/DataBase/TLM_DB/calced_data/"
     )
 
-    tlm_db = LoadTlmCSV_(tlm_db_path, settings["db_prefix"], settings["tlm_id_range"], settings["input_file_encoding"])
+    tlm_db = LoadTlmCSV_(
+        tlm_db_path,
+        settings["db_prefix"],
+        settings["tlm_id_range"],
+        settings["input_file_encoding"],
+    )
 
     other_obc_dbs = {}
     if settings["is_main_obc"]:
@@ -109,7 +116,11 @@ def LoadOtherObcCmd_(settings):
         if not settings["other_obc_data"][i]["is_enable"]:
             continue
         cmd_db_path = settings["other_obc_data"][i]["db_path"] + r"CMD_DB/"
-        sgc_db, bct_db = LoadCmdCSV_(cmd_db_path, settings["other_obc_data"][i]["db_prefix"], settings["other_obc_data"][i]["input_file_encoding"])
+        sgc_db, bct_db = LoadCmdCSV_(
+            cmd_db_path,
+            settings["other_obc_data"][i]["db_prefix"],
+            settings["other_obc_data"][i]["input_file_encoding"],
+        )
         # other_obc_dbs.append(sgc_db)
         other_obc_dbs[settings["other_obc_data"][i]["name"]] = sgc_db
         # print(i)
@@ -131,7 +142,7 @@ def LoadOtherObcTlm(settings):
             tlm_db_path,
             settings["other_obc_data"][i]["db_prefix"],
             settings["other_obc_data"][i]["tlm_id_range"],
-            settings["other_obc_data"][i]["input_file_encoding"]
+            settings["other_obc_data"][i]["input_file_encoding"],
         )
         other_obc_dbs[settings["other_obc_data"][i]["name"]] = tlm_db
 
