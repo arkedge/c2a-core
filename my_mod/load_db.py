@@ -14,7 +14,9 @@ import re  # 正規表現
 def LoadCmdDb(settings):
     cmd_db_path = settings["c2a_root_dir"] + r"src_user/Settings/TlmCmd/DataBase/CMD_DB/"
 
-    sgc_db, bct_db = LoadCmdCSV_(cmd_db_path, settings["db_prefix"])
+    sgc_db, bct_db = LoadCmdCSV_(
+        cmd_db_path, settings["db_prefix"], settings["input_file_encoding"]
+    )
 
     other_obc_dbs = {}
     if settings["is_main_obc"]:
@@ -27,14 +29,14 @@ def LoadCmdDb(settings):
     return {"sgc": sgc_db, "bct": bct_db, "other_obc": other_obc_dbs}
 
 
-def LoadCmdCSV_(cmd_db_path, db_prefix):
+def LoadCmdCSV_(cmd_db_path, db_prefix, encoding):
     sgc_db_path = cmd_db_path + db_prefix + "_CMD_DB_CMD_DB.csv"  # single cmd
     bct_db_path = cmd_db_path + db_prefix + "_CMD_DB_BCT.csv"  # block cmd table
 
-    with open(sgc_db_path, mode="r", encoding="shift_jis") as fh:
+    with open(sgc_db_path, mode="r", encoding=encoding) as fh:
         reader = csv.reader(fh)
         sgc_db = [row for row in reader]
-    with open(bct_db_path, mode="r", encoding="shift_jis") as fh:
+    with open(bct_db_path, mode="r", encoding=encoding) as fh:
         reader = csv.reader(fh)
         bct_db = [row for row in reader]
 
@@ -46,7 +48,12 @@ def LoadTlmDb(settings):
         settings["c2a_root_dir"] + r"src_user/Settings/TlmCmd/DataBase/TLM_DB/calced_data/"
     )
 
-    tlm_db = LoadTlmCSV_(tlm_db_path, settings["db_prefix"], settings["tlm_id_range"])
+    tlm_db = LoadTlmCSV_(
+        tlm_db_path,
+        settings["db_prefix"],
+        settings["tlm_id_range"],
+        settings["input_file_encoding"],
+    )
 
     other_obc_dbs = {}
     if settings["is_main_obc"]:
@@ -57,7 +64,7 @@ def LoadTlmDb(settings):
     return {"tlm": tlm_db, "other_obc": other_obc_dbs}
 
 
-def LoadTlmCSV_(tlm_db_path, db_prefix, tlm_id_range):
+def LoadTlmCSV_(tlm_db_path, db_prefix, tlm_id_range, encoding):
     tlm_names = [file for file in os.listdir(tlm_db_path) if file.endswith(".csv")]
     regex = r"^" + db_prefix + "_TLM_DB_"
     tlm_names = [re.sub(regex, "", file) for file in tlm_names]
@@ -69,7 +76,7 @@ def LoadTlmCSV_(tlm_db_path, db_prefix, tlm_id_range):
 
     for tlm_name in tlm_names:
         tlm_sheet_path = tlm_db_path + db_prefix + "_TLM_DB_" + tlm_name + ".csv"
-        with open(tlm_sheet_path, mode="r", encoding="shift_jis") as fh:
+        with open(tlm_sheet_path, mode="r", encoding=encoding) as fh:
             reader = csv.reader(fh)
             sheet = [row for row in reader]
             # pprint.pprint(sheet)
@@ -109,7 +116,11 @@ def LoadOtherObcCmd_(settings):
         if not settings["other_obc_data"][i]["is_enable"]:
             continue
         cmd_db_path = settings["other_obc_data"][i]["db_path"] + r"CMD_DB/"
-        sgc_db, bct_db = LoadCmdCSV_(cmd_db_path, settings["other_obc_data"][i]["db_prefix"])
+        sgc_db, bct_db = LoadCmdCSV_(
+            cmd_db_path,
+            settings["other_obc_data"][i]["db_prefix"],
+            settings["other_obc_data"][i]["input_file_encoding"],
+        )
         # other_obc_dbs.append(sgc_db)
         other_obc_dbs[settings["other_obc_data"][i]["name"]] = sgc_db
         # print(i)
@@ -131,6 +142,7 @@ def LoadOtherObcTlm(settings):
             tlm_db_path,
             settings["other_obc_data"][i]["db_prefix"],
             settings["other_obc_data"][i]["tlm_id_range"],
+            settings["other_obc_data"][i]["input_file_encoding"],
         )
         other_obc_dbs[settings["other_obc_data"][i]["name"]] = tlm_db
 

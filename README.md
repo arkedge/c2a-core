@@ -33,6 +33,8 @@ $ python GenerateC2ACode.py
   "db_prefix" : "SAMPLE_MOBC",
   # TLM ID の定義域
   "tlm_id_range" : ["0x00", "0x100"],
+  # 入力 Tlm Cmd DB のエンコーディング
+  "input_file_encoding" : "utf-8",
   # 出力ファイルのエンコーディング
   "output_file_encoding" : "utf-8",
   # MOBCか？（他のOBCのtlm/cmdを取りまとめるか？） 0/1
@@ -47,6 +49,7 @@ $ python GenerateC2ACode.py
       "is_enable" : 1,
       "db_prefix" : "SAMPLE_AOBC",
       "tlm_id_range" : ["0x90", "0xc0"],
+      "input_file_encoding" : "utf-8",
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
       "db_path" : "../../c2a_sample_aobc/src/src_user/Settings/TlmCmd/DataBase/",
       # MOBC で保持するテレメの TLM ID の最大値（＝テレメ種類数）
@@ -63,6 +66,7 @@ $ python GenerateC2ACode.py
       "is_enable" : 1,
       "db_prefix" : "SAMPLE_TOBC",
       "tlm_id_range" : ["0xc0", "0xf0"],
+      "input_file_encoding" : "utf-8",
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
       "db_path" : ""../../c2a_sample_tobc/src/src_user/Settings/TlmCmd/DataBase/",
       # MOBC で保持するテレメの TLM ID の最大値（＝テレメ種類数）
