@@ -263,7 +263,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
                 var_name = driver_name + "->tlm_data." + tlm_name_lower + "." + name_path
                 if is_compression:
                     body_c += (
-                        "  endian_memcpy(&"
+                        "  ENDIAN_memcpy(&"
                         + conv_tpye_to_temp[var_type]
                         + ", &(f["
                         + str(oct_pos)
@@ -288,7 +288,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
                     body_c += "  " + var_name + " = " + conv_tpye_to_temp[var_type] + ";\n"
                 else:
                     body_c += (
-                        "  endian_memcpy(&("
+                        "  ENDIAN_memcpy(&("
                         + var_name
                         + "), &(f["
                         + str(oct_pos)
