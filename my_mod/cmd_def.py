@@ -157,7 +157,9 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
             if comment != "":  # Comment
                 continue
             # print(name)
-            _, cmd_code = GetCmdNameAndCmdCode_(name, settings["other_obc_data"][i]["is_cmd_prefix_in_db"])
+            _, cmd_code = GetCmdNameAndCmdCode_(
+                name, settings["other_obc_data"][i]["is_cmd_prefix_in_db"]
+            )
             cmd_code = name_upper + cmd_code
             body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
         # print(body_h)
