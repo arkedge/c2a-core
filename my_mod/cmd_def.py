@@ -105,8 +105,6 @@ def GenerateBctDef(settings, bct_db):
     DATA_SART_ROW = 2
 
     body_h = ""
-    # "  cmd_table[Cmd_CODE_NOP].cmd_func = Cmd_NOP;"
-    # "  Cmd_CODE_NOP = 0x0000,"
     for i in range(DATA_SART_ROW, len(bct_db)):
         comment = bct_db[i][0]
         name = bct_db[i][1]
