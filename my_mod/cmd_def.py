@@ -27,8 +27,7 @@ def GenerateCmdDef(settings, sgc_db):
         if comment != "":  # Comment
             continue
 
-        cmd_name = name
-        cmd_code = cmd_name.replace("Cmd_", "Cmd_CODE_")
+        cmd_name, cmd_code = GetCmdNameAndCmdCode_(name, settings["is_cmd_prefixed_in_db"])
         # print(cmd_name)
         # print(cmd_code)
         body_c += "  cmd_table[" + cmd_code + "].cmd_func = " + cmd_name + ";\n"
@@ -53,8 +52,7 @@ def GenerateCmdDef(settings, sgc_db):
             sgc_db[i][13],
             sgc_db[i][15],
         ]
-        cmd_name = name
-        cmd_code = cmd_name.replace("Cmd_", "Cmd_CODE_")
+        cmd_name, cmd_code = GetCmdNameAndCmdCode_(name, settings["is_cmd_prefixed_in_db"])
 
         # パラメタ長の整合性チェック
         for j in range(len(type_list)):
@@ -105,8 +103,6 @@ def GenerateBctDef(settings, bct_db):
     DATA_SART_ROW = 2
 
     body_h = ""
-    # "  cmd_table[Cmd_CODE_NOP].cmd_func = Cmd_NOP;"
-    # "  Cmd_CODE_NOP = 0x0000,"
     for i in range(DATA_SART_ROW, len(bct_db)):
         comment = bct_db[i][0]
         name = bct_db[i][1]
@@ -161,8 +157,10 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
             if comment != "":  # Comment
                 continue
             # print(name)
-            cmd_name = name
-            cmd_code = cmd_name.replace("Cmd_", name_upper + "_Cmd_CODE_")
+            _, cmd_code = GetCmdNameAndCmdCode_(
+                name, settings["other_obc_data"][i]["is_cmd_prefixed_in_db"]
+            )
+            cmd_code = name_upper + "_" + cmd_code
             body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
         # print(body_h)
         output_file_path = (
@@ -173,6 +171,15 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
             + "_command_definitions.h"
         )
         OutputOtherObcCmdDefH_(output_file_path, obc_name, body_h, settings)
+
+
+def GetCmdNameAndCmdCode_(name, is_cmd_prefixed_in_db):
+    if is_cmd_prefixed_in_db:
+        cmd_name = name
+    else:
+        cmd_name = "Cmd_" + name
+    cmd_code = cmd_name.replace("Cmd_", "Cmd_CODE_")
+    return cmd_name, cmd_code
 
 
 def OutputCmdDefC_(file_path, body, settings):
