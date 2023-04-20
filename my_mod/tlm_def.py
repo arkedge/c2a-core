@@ -6,7 +6,7 @@ tlm def
 import sys
 
 
-def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
+def GenerateTlmDef(settings, tlm_db):
     output_file_path = settings["c2a_root_dir"] + r"src_user/TlmCmd/"
     output_file_name_base = "telemetry_definitions"
 
@@ -25,9 +25,6 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
         )
         body_h += "  Tlm_CODE_" + tlm["tlm_name"].upper() + " = " + tlm["tlm_id"] + ",\n"
 
-    if settings["is_main_obc"]:
-        body_c += GetTlmDefCOfOtherObcFunDef_(settings, tlm_db, other_obc_dbs)
-
     body_c += "\n"
     body_c += "void TF_load_tlm_table(TF_TlmInfo tlm_table[TF_MAX_TLMS])\n"
     body_c += "{\n"
@@ -40,8 +37,6 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
             + tlm["tlm_name"].upper()
             + "_;\n"
         )
-    if settings["is_main_obc"]:
-        body_c += GetTlmDefCOfOtherObcFunLoad_(settings, tlm_db, other_obc_dbs)
     body_c += "}\n"
 
     for tlm in tlm_db:
@@ -119,165 +114,8 @@ def GenerateTlmDef(settings, tlm_db, other_obc_dbs):
         body_c += "  return TF_TLM_FUNC_ACK_SUCCESS;\n"
         body_c += "}\n"
 
-    if settings["is_main_obc"]:
-        body_c += GetTlmDefCOfOtherObcFunBody_(settings, tlm_db, other_obc_dbs)
-        body_h += GetTlmDefHOfOtherObc_(settings, tlm_db, other_obc_dbs)
-
     OutputTlmDefC_(output_file_path + output_file_name_base + ".c", body_c, settings)
     OutputTlmDefH_(output_file_path + output_file_name_base + ".h", body_h, settings)
-
-
-def GetTlmDefCOfOtherObcFunDef_(settings, tlm_db, other_obc_dbs):
-    body_c = ""
-
-    for i in range(len(settings["other_obc_data"])):
-        if not settings["other_obc_data"][i]["is_enable"]:
-            continue
-
-        obc_name = settings["other_obc_data"][i]["name"]
-        oter_obc_tlm_db = other_obc_dbs[obc_name]
-
-        temp_c = ""
-        temp_c += "\n"
-        temp_c += "// {_obc_name_upper} TLM\n"
-        for tlm in oter_obc_tlm_db:
-            temp_c += (
-                "static TF_TLM_FUNC_ACK Tlm_"
-                + tlm["tlm_name"].upper()
-                + "_(uint8_t* packet, uint16_t* len, uint16_t max_len);\n"
-            )
-
-        body_c += temp_c.format(
-            _obc_name_upper=obc_name.upper(),
-            _obc_name_lower=obc_name.lower(),
-            _obc_name_capit=obc_name.capitalize(),
-        )
-
-    return body_c
-
-
-def GetTlmDefCOfOtherObcFunLoad_(settings, tlm_db, other_obc_dbs):
-    body_c = ""
-
-    for i in range(len(settings["other_obc_data"])):
-        if not settings["other_obc_data"][i]["is_enable"]:
-            continue
-
-        obc_name = settings["other_obc_data"][i]["name"]
-        oter_obc_tlm_db = other_obc_dbs[obc_name]
-
-        temp_c = ""
-        temp_c += "\n"
-        temp_c += "  // {_obc_name_upper} TLM\n"
-        for tlm in oter_obc_tlm_db:
-            temp_c += (
-                "  tlm_table[Tlm_CODE_"
-                + tlm["tlm_name"].upper()
-                + "].tlm_func = Tlm_"
-                + tlm["tlm_name"].upper()
-                + "_;\n"
-            )
-        body_c += temp_c.format(
-            _obc_name_upper=obc_name.upper(),
-            _obc_name_lower=obc_name.lower(),
-            _obc_name_capit=obc_name.capitalize(),
-        )
-
-    return body_c
-
-
-def GetTlmDefCOfOtherObcFunBody_(settings, tlm_db, other_obc_dbs):
-    body_c = ""
-
-    for i in range(len(settings["other_obc_data"])):
-        if not settings["other_obc_data"][i]["is_enable"]:
-            continue
-
-        obc_name = settings["other_obc_data"][i]["name"]
-        oter_obc_tlm_db = other_obc_dbs[obc_name]
-        driver_name = settings["other_obc_data"][i]["driver_name"]
-
-        temp_c = ""
-        for tlm in oter_obc_tlm_db:
-            tlm_name = tlm["tlm_name"]
-            tlm_name_upper = tlm_name.upper()
-            # tlm_name_lower = tlm_name.lower()
-            temp_c += "\n"
-            temp_c += (
-                "static TF_TLM_FUNC_ACK Tlm_"
-                + tlm_name_upper
-                + "_(uint8_t* packet, uint16_t* len, uint16_t max_len)\n"
-            )
-            temp_c += "{{\n"
-            temp_c += (
-                "  return {_obc_name_upper}_pick_up_tlm_buffer("
-                + driver_name
-                + ", {_obc_name_upper}_Tlm_CODE_"
-                + tlm_name_upper
-                + ", packet, len, max_len);\n"
-            )
-            temp_c += "}}\n"
-
-        body_c += temp_c.format(
-            _obc_name_upper=obc_name.upper(),
-            _obc_name_lower=obc_name.lower(),
-            _obc_name_capit=obc_name.capitalize(),
-        )
-
-    return body_c
-
-
-def GetTlmDefHOfOtherObc_(settings, tlm_db, other_obc_dbs):
-    # ID重複チェックはここでやり，他のGet関数ではやらない（実装イマイチ．．．）
-    body_h = ""
-
-    for i in range(len(settings["other_obc_data"])):
-        if not settings["other_obc_data"][i]["is_enable"]:
-            continue
-        obc_name = settings["other_obc_data"][i]["name"]
-
-        temp_h = ""
-
-        id_begin = int(settings["other_obc_data"][i]["tlm_id_range"][0], 0)
-        id_end = int(settings["other_obc_data"][i]["tlm_id_range"][1], 0)
-
-        # MOBC Tlmが範囲外かチェック
-        for tlm in tlm_db:
-            tlm_id = int(tlm["tlm_id"], 0)
-            if id_begin <= tlm_id < id_end:
-                print(
-                    "Error: MOBC TLM ID is invalid at " + tlm["tlm_name"].upper(), file=sys.stderr
-                )
-                sys.exit(1)
-
-        oter_obc_tlm_db = other_obc_dbs[obc_name]
-        # ID範囲内チェック
-        for tlm in oter_obc_tlm_db:
-            tlm_id = int(tlm["tlm_id"], 0)
-            if not id_begin <= tlm_id < id_end:
-                print(
-                    "Error: " + obc_name + " TLM ID is invalid at " + tlm["tlm_name"].upper(),
-                    file=sys.stderr,
-                )
-                sys.exit(1)
-
-        body_h += "\n"
-        temp_h += "  // {_obc_name_upper} TLM\n"
-        for tlm in oter_obc_tlm_db:
-            temp_h += "  Tlm_CODE_" + tlm["tlm_name"].upper() + " = " + tlm["tlm_id"] + ",\n"
-
-        body_h += temp_h.format(
-            _obc_name_upper=obc_name.upper(),
-            _obc_name_lower=obc_name.lower(),
-            _obc_name_capit=obc_name.capitalize(),
-        )
-
-    body_h += "\n"
-    body_h += "  // FIXME:\n"
-    body_h += "  // 他OBCのTLMをまとめたため，IDが昇順となっていない\n"
-    body_h += "  // TLM_CODE_MAX が意味をなさなくなってしまうが，他で使われていないため，一旦このままにする（今後解決する実装）\n"
-
-    return body_h
 
 
 def GenerateOtherObcTlmDef(settings, other_obc_dbs):
