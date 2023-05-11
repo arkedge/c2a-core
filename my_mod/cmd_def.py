@@ -191,7 +191,7 @@ def OutputCmdDefC_(file_path, body, settings):
  * @brief  コマンド定義
  * @note   このコードは自動生成されています！
  */
-#include "../../src_core/TlmCmd/command_analyze.h"
+#include <src_core/TlmCmd/command_analyze.h>
 #include "command_definitions.h"
 #include "command_source.h"
 
