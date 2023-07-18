@@ -3,7 +3,8 @@
 ## C2A
 - Command Centric Architecture
 - OBC 搭載フライトソフトウェアフレームワーク
-- v4 系以降の先行開発は https://github.com/arkedge/c2a-core で行われる
+- 本リポジトリは， ArkEdge Space Inc. による C2A の先行開発のため，[ut-issl/c2a-core v3.10.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.0) から fork したもの
+- v3 系列の開発は [ut-issl/c2a-core](https://github.com/ut-issl/c2a-core) で引き続き行われる
 
 ### C2A core
 - 各 C2A で共通利用される C2A の中核部のコード
@@ -12,8 +13,8 @@
 
 
 ## ドキュメント
-- ドキュメント:  https://github.com/ut-issl/c2a-core/tree/develop/Docs
-- リファレンス:  https://github.com/ut-issl/c2a-reference
+- ドキュメント:  https://github.com/arkedge/c2a-core/tree/develop/Docs
+- リファレンス (TBD):  https://github.com/ut-issl/c2a-reference
 
 
 ## 開発
@@ -21,7 +22,7 @@
 1. clone 後， [`setup.bat`](./setup.bat) or [`setup.sh`](./setup.sh) を実行
 
 ### Kanban (開発マイルストーンなど)
-- https://github.com/orgs/ut-issl/projects/1
+- https://github.com/orgs/arkedge/projects/43/views/1
 
 ### SILS (Software-In-the-Loop-Simulation) 環境
 - C2A は， [S2E](https://github.com/ut-issl/s2e-core) などの SILS を用いて，フライトソフトウェアがそのまま実行される SILS を構築できる．
@@ -80,11 +81,3 @@ C2A Core の採用実績のある衛星 OBC や動作実績のあるボードの
 - https://crates.io/crates/tlmcmddb
 - https://crates.io/crates/tlmcmddb-cli
 - https://crates.io/crates/tlmcmddb-csv
-
-
-## 協力
-[<img src="./Docs/Img/arkedgespace_logo.png" width="25%" alt="ArkEdge Space Inc.">](https://arkedgespace.com/)
-
-
-## 質問，問い合わせ，その他なんでも
-お気軽に [Discussions](https://github.com/ut-issl/c2a-core/discussions) に投稿してください．
