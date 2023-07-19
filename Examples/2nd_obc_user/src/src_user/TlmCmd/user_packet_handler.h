@@ -49,7 +49,7 @@ PH_ACK PH_user_analyze_cmd(const CommonCmdPacket* packet);
 CCP_CmdRet PH_user_cmd_router(const CommonCmdPacket* packet);
 
 /**
- * @brief 2nd OBC のテレメを転送するために， APID からテレメを判定してルーティングする  // FIXME: 命名， router ではない？
+ * @brief sub OBC のテレメを転送するために， APID からテレメを判定してルーティングする  // FIXME: 命名， router ではない？
  * @param[in]  apid:    2nd OBC の Tlm APID
  * @param[in]  tlm_id:  2nd OBC の Tlm ID
  * @param[out] packet:  テレメを作る uint8_t にシリアライズされた packet へのポインタ

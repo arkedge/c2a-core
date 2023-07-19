@@ -16,7 +16,7 @@
 
 /**
  * @brief 自身のテレメを生成
- * @note  2nd OBC のテレメは生成できない
+ * @note  sub OBC のテレメは生成できない
  * @param[in] tlm_id:     Tlm ID
  * @param[in] dest_flags: Dest Flags
  * @param[in] dest_info:  Dest Info
@@ -29,7 +29,7 @@ static CCP_CmdRet TG_generate_tlm_(TLM_CODE tlm_id,
                                    uint8_t num_dumps);
 
 /**
- * @brief 2nd OBC のテレメを転送
+ * @brief sub OBC のテレメを転送
  * @note  自身の OBC のテレメは転送できない
  * @param[in] apid:       転送する 2nd OBC tlm の APID
  * @param[in] tlm_id:     Tlm ID
