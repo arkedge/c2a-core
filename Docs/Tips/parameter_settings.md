@@ -86,7 +86,6 @@ NOTE: `sizeof(bct_id_t)` は `SIZE_OF_BCT_ID_T` にて設定可能である．
 [`/src_core/TlmCmd/block_command_table.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_table.h)，[`/src_core/TlmCmd/block_command_executor.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_executor.h) を参照．
 
 
-
 - - -
 ### packet_handler_params
 各種コマンド，テレメのキューサイズを決める．  
