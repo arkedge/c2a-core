@@ -7,8 +7,8 @@
 #include <stddef.h>
 
 AppInfo AI_create_app_info(const char* name,
-                           void (*initializer)(void),
-                           void (*entry_point)(void))
+                           RESULT (*initializer)(void),
+                           RESULT (*entry_point)(void))
 {
   AppInfo ai;
 
