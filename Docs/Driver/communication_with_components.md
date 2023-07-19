@@ -103,11 +103,11 @@ C2A 間通信によって，以下のような機能が提供される．
     - OBC A から OBC B に対してコマンド発行 / テレメ送信．
     - 他
 
-C2A 間通信の具体的な実装については，本リポジトリに同封されている User Sample である [`Examples/mobc`](/Examples/mobc) と [`Examples/2nd_obc_user`](/Examples/2nd_obc_user) での通信（前者が MOBC，後者が AOBC を想定）を参考にされたい．
+C2A 間通信の具体的な実装については，本リポジトリに同封されている User Sample である [`Examples/mobc`](/Examples/mobc) と [`Examples/subobc`](/Examples/subobc) での通信（前者が MOBC，後者が AOBC を想定）を参考にされたい．
 具体的なドライバのコードは以下となる．
 
 - https://github.com/ut-issl/c2a-core/blob/9f5154ddc5684f8e626b77c8f8bc7c8215c0e096/Examples/mobc/src/src_user/Drivers/Aocs/aobc.c#L1-L164
-- https://github.com/ut-issl/c2a-core/blob/9f5154ddc5684f8e626b77c8f8bc7c8215c0e096/Examples/2nd_obc_user/src/src_user/Drivers/Etc/mobc.c#L1-L150
+- https://github.com/ut-issl/c2a-core/blob/9f5154ddc5684f8e626b77c8f8bc7c8215c0e096/Examples/subobc/src/src_user/Drivers/Etc/mobc.c#L1-L150
 
 地上局からのコマンドルーティングについては [Core Layer/Communication#コマンド配送におけるルーティングについて](../Core/communication.md#コマンド配送におけるルーティングについて) などを参照すること．
 

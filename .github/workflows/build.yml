@@ -27,7 +27,7 @@ jobs:
     name: 2nd obc user
     uses: arkedge/workflows-c2a/.github/workflows/build.yml@v2.5.0
     with:
-      c2a_dir: Examples/2nd_obc_user
+      c2a_dir: Examples/subobc
       c2a_custom_setup: |
         cd ../..
         pwd

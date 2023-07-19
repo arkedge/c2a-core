@@ -1,6 +1,6 @@
 # C2A PYTEST (C2A 間通信用)
 - C2A におけるテスト一般については， [Examples/mobc/src/src_user/Test](../../../../mobc/src/src_user/Test) を参照すること．
-- ここでは， `mobc` （MOBC に相当）と `2nd_obc_user` （非 MOBC に相当．ここでは AOBC とする）を用いた C2A 間通信のテストについて記載する．
+- ここでは， `mobc` （MOBC に相当）と `subobc` （非 MOBC に相当．ここでは AOBC とする）を用いた C2A 間通信のテストについて記載する．
 
 ## テスト用 SILS 構成
 - WINGS に， MOBC と AOBC の両方の TlmCmd DB を登録する．

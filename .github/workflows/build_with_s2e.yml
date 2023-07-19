@@ -19,7 +19,7 @@ jobs:
       matrix:
         example:
           - mobc
-          - 2nd_obc_user
+          - subobc
 
     steps:
       - name: checkout S2E core

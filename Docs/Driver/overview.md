@@ -13,7 +13,7 @@ Driver とは，各コンポーネントとの通信において， HW 依存部
 - GS: https://github.com/ut-issl/c2a-core/blob/develop/Examples/mobc/src/src_user/Drivers/Com/gs.c
 - C2A 間通信:
     - https://github.com/ut-issl/c2a-core/blob/develop/Examples/mobc/src/src_user/Drivers/Aocs/aobc.c
-    - https://github.com/ut-issl/c2a-core/blob/develop/Examples/2nd_obc_user/src/src_user/Drivers/Etc/mobc.c
+    - https://github.com/ut-issl/c2a-core/blob/develop/Examples/subobc/src/src_user/Drivers/Etc/mobc.c
 
 が実装されているので，それを参考のこと．  
 `load_init_setting` については下を参照．

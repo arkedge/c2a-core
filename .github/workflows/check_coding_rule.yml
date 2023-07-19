@@ -15,7 +15,7 @@ jobs:
       matrix:
         example:
           - mobc
-          - 2nd_obc_user
+          - subobc
 
     steps:
       - uses: actions/checkout@v3
