@@ -42,7 +42,7 @@ DS_ERR_CODE CTP_get_ctp_from_dssc(const DS_StreamConfig* p_stream_config, Common
   {
     // FIXME: TG_forward_tlm_ ではなくてここでいいか検討
     // 可能な限り正確な時間をいれるには，受信直後のここでいれるべき（←→網羅性）
-    // MOBC - 2nd OBC - 3rd OBC というとき， 2nd OBC でも 0xffffffff ができるようにしている
+    // MOBC - sub OBC (2nd OBC) - 3rd OBC というとき， 2nd OBC でも 0xffffffff ができるようにしている
     CTP_set_on_board_subnet_time(received_packet);
   }
   return DS_ERR_CODE_OK;
@@ -68,7 +68,7 @@ DS_ERR_CODE CTCP_init_dssc(DS_StreamConfig* p_stream_config,
                            int16_t tx_frame_buffer_size,
                            DS_ERR_CODE (*data_analyzer)(DS_StreamConfig* p_stream_config, void* p_driver))
 {
-  // MOBC か 2nd OBC かによって，送信側 (tx 側) が CTP になるか CCP になるかは不明なため，ひとまず CTCP に
+  // MOBC か sub OBC かによって，送信側 (tx 側) が CTP になるか CCP になるかは不明なため，ひとまず CTCP に
   // メモリが苦しい OBC もあるので，考えてもいいかも
   const uint16_t max_frame_size = EB90_FRAME_HEADER_SIZE + CTCP_MAX_LEN + EB90_FRAME_FOOTER_SIZE;
   if (tx_frame_buffer_size < max_frame_size)

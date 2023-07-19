@@ -88,6 +88,7 @@ uint32_t CTP_get_on_board_subnet_time(const CommonTlmPacket* packet);
 
 /**
  * @brief  現在の On-Board Subnetwork Time を設定
+ * @note   基本的には MOBC では主に TI を，sub OBC では主に 0xffffffff を設定する
  * @note   何を設定するかは user 定義
  * @param[in,out] packet: CTP
  * @return void

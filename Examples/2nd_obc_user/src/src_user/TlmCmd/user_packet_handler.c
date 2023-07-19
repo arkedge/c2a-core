@@ -17,7 +17,7 @@ PH_ACK PH_user_analyze_cmd(const CommonCmdPacket* packet)
   switch (CCP_get_dest_type(packet))
   {
   default:
-    // 2nd OBC なので，自分宛て以外のパケットはないはず
+    // sub OBC なので，自分宛て以外のパケットはないはず
     return PH_ACK_UNKNOWN;
   }
 }

@@ -1,9 +1,9 @@
 @echo off
 rem FIXME:
-rem 現状， 2nd obc user と minimum user で全く同じファイルが大量にあり，管理上めんどくさいため作った
+rem 現状， subobc sample と mobc sample で全く同じファイルが大量にあり，管理上めんどくさいため作った
 rem そのうちなんとかする
-echo sync_with_mobc.bat
-echo sync with minimum user...
+echo sync_with_mobc_example.bat
+echo sync with mobc sample...
 echo.
 
 call :sync_dir ".\src\s2e_mockup\" "..\mobc\src\s2e_mockup\"

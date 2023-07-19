@@ -98,8 +98,8 @@ C2A 間通信によって，以下のような機能が提供される．
     - [c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) 参照．
     - [`Examples/mobc/src/src_user/Drivers/Aocs`](/Examples/mobc/src/src_user/Drivers/Aocs/) などの多くのコードが自動生成される．
 - OBC と地上局でネットワークを形成．
-    - 地上局から MOBC をルーターとして， 2nd OBC へコマンド配送．
-    - 2nd OBC のテレメトリを MOBC を経由して地上局まで配送．
+    - 地上局から MOBC をルーターとして， sub OBC へコマンド配送．
+    - sub OBC のテレメトリを MOBC を経由して地上局まで配送．
     - OBC A から OBC B に対してコマンド発行 / テレメ送信．
     - 他
 

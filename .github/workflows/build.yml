@@ -9,7 +9,7 @@ on:
 
 jobs:
   mobc:
-    name: minimum user
+    name: mobc
     uses: arkedge/workflows-c2a/.github/workflows/build.yml@v2.5.0
     with:
       c2a_dir: Examples/mobc
@@ -23,8 +23,8 @@ jobs:
           ./setup.sh
         fi
 
-  second_obc_user:
-    name: 2nd obc user
+  subobc:
+    name: subobc
     uses: arkedge/workflows-c2a/.github/workflows/build.yml@v2.5.0
     with:
       c2a_dir: Examples/subobc
