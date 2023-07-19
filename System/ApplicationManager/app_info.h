@@ -30,4 +30,11 @@ AppInfo AI_create_app_info(const char* name,
                            RESULT (*initializer)(void),
                            RESULT (*entry_point)(void));
 
+/**
+ * @brief  AppInfo から，アプリ実行時間をクリアする
+ * @param  ai: AppInfo
+ * @return void
+ */
+void AI_clear_app_exec_time(AppInfo* ai);
+
 #endif

@@ -1,8 +1,12 @@
+/**
+ * @file
+ * @brief Application Manager
+ * @note  C2A の App を管理する
+ */
 #ifndef APP_MANAGER_H_
 #define APP_MANAGER_H_
 
-#include <stddef.h> // for size_t
-
+#include <stddef.h>
 #include "app_info.h"
 #include "../../TlmCmd/common_cmd_packet.h"
 
@@ -12,26 +16,53 @@
 
 #include <src_user/Settings/System/app_manager_params.h>
 
+/**
+ * @struct AppManager
+ * @brief  AppManager の Info 構造体
+ */
 typedef struct
 {
   AppInfo ais[AM_MAX_APPS];
   int page_no;
 } AppManager;
 
+/**
+ * @enum   AM_ACK
+ * @note   uint8_t を想定
+ * @brief  AM エラーコード
+ */
 typedef enum
 {
   AM_SUCCESS,
   AM_INVALID_ID,
-  AM_NOT_REGISTERED
+  AM_NOT_REGISTERED,
+  AM_INIT_FAILED,
+  AM_EXEC_FAILED
 } AM_ACK;
 
 extern const AppManager* const app_manager;
 
+/**
+ * @brief  App Manager の初期化
+ * @param  void
+ * @return void
+ */
 void AM_initialize(void);
 
-AM_ACK AM_register_ai(size_t id,
-                      const AppInfo* ai);
+/**
+ * @brief  AM に App を登録する
+ * @param  id: 登録する App の ID
+ * @param  ai: 登録する App の AppInfo
+ * @retval AM_SUCCESS: 成功
+ * @retval AM_INVALID_ID: ID の不正
+ */
+AM_ACK AM_register_ai(size_t id, const AppInfo* ai);
 
+/**
+ * @brief  AM に登録されたすべての App を初期化する
+ * @param  void
+ * @return void
+ */
 void AM_initialize_all_apps(void);
 
 CCP_CmdRet Cmd_AM_REGISTER_APP(const CommonCmdPacket* packet);

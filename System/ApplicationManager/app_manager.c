@@ -1,16 +1,19 @@
 #pragma section REPRO
+/**
+ * @file
+ * @brief Application Manager
+ * @note  C2A の App を管理する
+ */
 #include "app_manager.h"
 #include <src_user/Settings/sils_define.h>
 
-#include <string.h> // for memcpy
-
+#include <string.h>
 #include "../../Applications/nop.h"
 #include "../EventManager/event_logger.h"
 #include "../TimeManager/time_manager.h"
 #include "../WatchdogTimer/watchdog_timer.h"
 #include <src_user/TlmCmd/command_definitions.h>
-#include "../../Library/print.h"   // for Printf
-#include "../../Library/endian.h"
+#include "../../Library/print.h"
 #include "../../TlmCmd/common_cmd_packet_util.h"
 
 static AM_ACK AM_initialize_app_(size_t id);
@@ -18,6 +21,7 @@ static AM_ACK AM_execute_app_(size_t id);
 
 static AppManager app_manager_;
 const AppManager* const app_manager = &app_manager_;
+
 
 void AM_initialize(void)
 {
@@ -32,8 +36,8 @@ void AM_initialize(void)
   app_manager_.page_no = 0;
 }
 
-AM_ACK AM_register_ai(size_t id,
-                      const AppInfo* ai)
+
+AM_ACK AM_register_ai(size_t id, const AppInfo* ai)
 {
   if (id >= AM_MAX_APPS)
   {
@@ -45,6 +49,7 @@ AM_ACK AM_register_ai(size_t id,
   return AM_SUCCESS;
 }
 
+
 void AM_initialize_all_apps(void)
 {
   size_t i;
@@ -55,21 +60,16 @@ void AM_initialize_all_apps(void)
   }
 }
 
+
 CCP_CmdRet Cmd_AM_REGISTER_APP(const CommonCmdPacket* packet)
 {
-  const uint8_t* param = CCP_get_param_head(packet);
-  size_t id;
   AppInfo ai;
-
-  // パラメータを読み出し。
-  ENDIAN_memcpy(&id, param, 4);
-  ENDIAN_memcpy(&ai.initializer, param + 4, 4);
-  ENDIAN_memcpy(&ai.entry_point, param + 8, 4);
+  size_t id = (size_t)CCP_get_param_from_packet(packet, 0, uint32_t);
+  ai.initializer = (RESULT (*)(void))CCP_get_param_from_packet(packet, 1, uint32_t);
+  ai.entry_point = (RESULT (*)(void))CCP_get_param_from_packet(packet, 2, uint32_t);
 
   ai.name = "SPECIAL";
-  ai.prev = 0;
-  ai.max = 0;
-  ai.min = 0xffffffff;
+  AI_clear_app_exec_time(&ai);
 
   switch (AM_register_ai(id, &ai))
   {
@@ -82,30 +82,31 @@ CCP_CmdRet Cmd_AM_REGISTER_APP(const CommonCmdPacket* packet)
   }
 }
 
+
 CCP_CmdRet Cmd_AM_INITIALIZE_APP(const CommonCmdPacket* packet)
 {
-  size_t id = AM_MAX_APPS;
-
-  // パラメータ読み出し。
-  ENDIAN_memcpy(&id, CCP_get_param_head(packet), 4);
+  size_t id = (size_t)CCP_get_param_from_packet(packet, 0, uint32_t);
 
   switch (AM_initialize_app_(id))
   {
-  case AM_SUCCESS:
+  case AM_SUCCESS:          // FALLTHROUGH
   case AM_NOT_REGISTERED:
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
   case AM_INVALID_ID:
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_PARAMETER);
   default:
+    // AM_INIT_FAILED
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_CONTEXT);
   }
 }
+
 
 static AM_ACK AM_initialize_app_(size_t id)
 {
 #ifndef SILS_FW
   ObcTime start, finish;
 #endif
+  RESULT ret;
 
   if (id >= AM_MAX_APPS)
   {
@@ -118,10 +119,10 @@ static AM_ACK AM_initialize_app_(size_t id)
   }
 
 #ifdef SILS_FW
-  app_manager_.ais[id].initializer();
+  ret = app_manager_.ais[id].initializer();
 #else
   start = TMGR_get_master_clock_from_boot();
-  app_manager_.ais[id].initializer();
+  ret = app_manager_.ais[id].initializer();
   finish = TMGR_get_master_clock_from_boot();
 
   // 処理時間情報アップデート
@@ -129,34 +130,43 @@ static AM_ACK AM_initialize_app_(size_t id)
 #endif
 
   WDT_clear_wdt();
-  Printf("App: %s Init Complete !!\n", app_manager_.ais[id].name);
+
+  if (ret != RESULT_OK)
+  {
+    Printf("App: >>>>> %s Init Failed!!!!! <<<<<\n", app_manager_.ais[id].name);
+    EL_record_event((EL_GROUP)EL_CORE_GROUP_APP_MANAGER, AM_INIT_FAILED, EL_ERROR_LEVEL_HIGH, (uint32_t)id);
+    return AM_INIT_FAILED;
+  }
+
+  Printf("App: %s Init Complete !\n", app_manager_.ais[id].name);
   return AM_SUCCESS;
 }
 
+
 CCP_CmdRet Cmd_AM_EXECUTE_APP(const CommonCmdPacket* packet)
 {
-  size_t id = AM_MAX_APPS;
-
-  // パラメータ読み出し。
-  ENDIAN_memcpy(&id, CCP_get_param_head(packet), 4);
+  size_t id = (size_t)CCP_get_param_from_packet(packet, 0, uint32_t);
 
   switch (AM_execute_app_(id))
   {
   case AM_SUCCESS:
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
-  case AM_INVALID_ID:
+  case AM_INVALID_ID:     // FALLTHROUGH
   case AM_NOT_REGISTERED:
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_PARAMETER);
   default:
+    // AM_EXEC_FAILED
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_CONTEXT);
   }
 }
+
 
 static AM_ACK AM_execute_app_(size_t id)
 {
 #ifndef SILS_FW
   ObcTime start, finish;
 #endif
+  RESULT ret;
 
   if (id >= AM_MAX_APPS)
   {
@@ -170,10 +180,10 @@ static AM_ACK AM_execute_app_(size_t id)
   }
 
 #ifdef SILS_FW
-  app_manager_.ais[id].entry_point();
+  ret = app_manager_.ais[id].entry_point();
 #else
   start = TMGR_get_master_clock();
-  app_manager_.ais[id].entry_point();
+  ret = app_manager_.ais[id].entry_point();
   finish = TMGR_get_master_clock();
 
   // 処理時間情報アップデート
@@ -188,17 +198,20 @@ static AM_ACK AM_execute_app_(size_t id)
   {
     app_manager_.ais[id].min = app_manager_.ais[id].prev;
   }
-
 #endif
 
+  if (ret != RESULT_OK)
+  {
+    EL_record_event((EL_GROUP)EL_CORE_GROUP_APP_MANAGER, AM_EXEC_FAILED, EL_ERROR_LEVEL_HIGH, (uint32_t)id);
+    return AM_EXEC_FAILED;
+  }
   return AM_SUCCESS;
 }
 
+
 CCP_CmdRet Cmd_AM_SET_PAGE_FOR_TLM(const CommonCmdPacket* packet)
 {
-  uint8_t page;
-
-  page = CCP_get_param_head(packet)[0];
+  uint8_t page = CCP_get_param_from_packet(packet, 0, uint8_t);
 
   if (page >= AM_TLM_PAGE_MAX)
   {
@@ -210,6 +223,7 @@ CCP_CmdRet Cmd_AM_SET_PAGE_FOR_TLM(const CommonCmdPacket* packet)
   return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
 }
 
+
 CCP_CmdRet Cmd_AM_CLEAR_APP_INFO(const CommonCmdPacket* packet)
 {
   int i;
@@ -217,9 +231,7 @@ CCP_CmdRet Cmd_AM_CLEAR_APP_INFO(const CommonCmdPacket* packet)
 
   for (i = 0; i < AM_MAX_APPS; ++i)
   {
-    app_manager_.ais[i].prev = 0;
-    app_manager_.ais[i].max  = 0;
-    app_manager_.ais[i].min  = 0xffffffff;
+    AI_clear_app_exec_time(&app_manager_.ais[i]);
   }
 
   return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);

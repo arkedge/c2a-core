@@ -23,4 +23,11 @@ AppInfo AI_create_app_info(const char* name,
   return ai;
 }
 
+void AI_clear_app_exec_time(AppInfo* ai)
+{
+  ai->prev = 0;
+  ai->max = 0;
+  ai->min = 0xffffffff;
+}
+
 #pragma section
