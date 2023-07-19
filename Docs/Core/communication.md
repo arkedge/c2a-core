@@ -35,7 +35,7 @@ CCSDS Space Packet において， Secondary Header はユーザー定義とさ�
 ### Primary Header
 Primary Header はテレメパケット，コマンドパケットともに共通であり，また， CCSDS の規定する Space Packet と同一である．
 本ドキュメント更新時の実装は，以下である．ヘッダ構造は以下を参照すること．  
-https://github.com/ut-issl/c2a-core/blob/217c3156a07ec503cd60fc7b75978a3234ec2c5d/TlmCmd/Ccsds/space_packet.h#L1-L35
+https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/TlmCmd/Ccsds/space_packet.h#L1-L35
 
 #### 各フィールドの説明
 - Packet Version Number
@@ -68,7 +68,7 @@ https://github.com/ut-issl/c2a-core/blob/217c3156a07ec503cd60fc7b75978a3234ec2c5
 ### Secondary Header (Telemetry)
 Secondary Header は CCSDS Space Packet 定義において，ユーザー定義部分であるため，ここで定義する．
 本ドキュメント更新時の実装は，以下である．ヘッダ構造は以下を参照すること．  
-https://github.com/ut-issl/c2a-core/blob/e84ac663187adb7b9d51939f2228b9ecfa7ae292/TlmCmd/Ccsds/tlm_space_packet.h#L1-L51
+https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/TlmCmd/Ccsds/tlm_space_packet.h#L1-L51
 
 #### 各フィールドの説明
 - Secondary Header Version
@@ -110,7 +110,7 @@ https://github.com/ut-issl/c2a-core/blob/e84ac663187adb7b9d51939f2228b9ecfa7ae29
 ### Secondary Header (Command)
 Secondary Header は CCSDS Space Packet 定義において，ユーザー定義部分であるため，ここで定義する．
 本ドキュメント更新時の実装は，以下である．ヘッダ構造は以下を参照すること．  
-https://github.com/ut-issl/c2a-core/blob/b84c3d051a1e15ab62c8f1a9744957daa4a62a3f/TlmCmd/Ccsds/cmd_space_packet.h#L1-L38
+https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/TlmCmd/Ccsds/cmd_space_packet.h#L1-L38
 
 #### 各フィールドの説明
 - Secondary Header Version
@@ -147,9 +147,9 @@ https://github.com/ut-issl/c2a-core/blob/b84c3d051a1e15ab62c8f1a9744957daa4a62a3
 
 #### コマンド配送におけるルーティングについて
 - コマンドの最終的な配送先，つまり実行されるボードは APID によって規定される
-    - https://github.com/ut-issl/c2a-core/blob/5d7a9d9b878cf5ddcad4de919e77dcae13df7407/Examples/mobc/src/src_user/Settings/TlmCmd/Ccsds/apid_define.h#L9-L13
+    - https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Settings/TlmCmd/Ccsds/apid_define.h#L9-L13
 - 一方で， BC や TLC などでのキューイングは， Destination Type によって決定される
-    - https://github.com/ut-issl/c2a-core/blob/6d71249dcdb3aefa1d67ffe8ce946e8d8d8b2a33/Examples/mobc/src/src_user/Settings/TlmCmd/common_cmd_packet_define.h#L20-L27
+    - https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Settings/TlmCmd/common_cmd_packet_define.h#L20-L27
 - 具体例（GS と接続される OBC は MOBC とし，AOBC は MOBC にぶら下がってるものとする）
     - APID: MOBC, Destination Type: TO_ME or TO_APID or MOBC
         - GSC: GS から MOBC に届き， MOBC で GSC としてエンキューされる．デキューした後， MOBC 内で GSC として実行される．
@@ -178,9 +178,9 @@ https://github.com/ut-issl/c2a-core/blob/b84c3d051a1e15ab62c8f1a9744957daa4a62a3
 ## Common Packet の定義方法
 次のように，それぞれ定義する．
 
-- https://github.com/ut-issl/c2a-core/blob/f3197d549559d1f571eb3e28497c9a488611f07f/Examples/mobc/src/src_user/Settings/TlmCmd/common_tlm_cmd_packet_define.h#L10-L11
-- https://github.com/ut-issl/c2a-core/blob/f3197d549559d1f571eb3e28497c9a488611f07f/Examples/mobc/src/src_user/Settings/TlmCmd/common_tlm_packet_define.h#L10-L11
-- https://github.com/ut-issl/c2a-core/blob/f3197d549559d1f571eb3e28497c9a488611f07f/Examples/mobc/src/src_user/Settings/TlmCmd/common_cmd_packet_define.h#L10-L11
+- https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Settings/TlmCmd/common_tlm_cmd_packet_define.h#L10-L11
+- https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Settings/TlmCmd/common_tlm_packet_define.h#L10-L11
+- https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Settings/TlmCmd/common_cmd_packet_define.h#L10-L11
 
 
 ## C2A 間通信について
