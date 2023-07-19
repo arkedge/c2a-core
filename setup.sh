@@ -18,7 +18,7 @@ echo done.
 echo
 
 echo [SET UP DEVELOP ENVIRONMENT FOR C2A MINIMUM USER SAMPLE]
-make_link './Examples/minimum_user/src/src_core' '../../../'
+make_link './Examples/mobc/src/src_core' '../../../'
 echo done.
 echo
 

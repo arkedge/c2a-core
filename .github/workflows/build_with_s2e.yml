@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         example:
-          - minimum_user
+          - mobc
           - 2nd_obc_user
 
     steps:

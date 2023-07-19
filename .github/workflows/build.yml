@@ -8,11 +8,11 @@ on:
   pull_request:
 
 jobs:
-  minimum_user:
+  mobc:
     name: minimum user
     uses: arkedge/workflows-c2a/.github/workflows/build.yml@v2.5.0
     with:
-      c2a_dir: Examples/minimum_user
+      c2a_dir: Examples/mobc
       c2a_custom_setup: |
         cd ../..
         pwd

@@ -9,7 +9,7 @@ echo done.
 echo.
 
 echo [SET UP DEVELOP ENVIRONMENT FOR C2A MINIMUM USER SAMPLE]
-call :make_link ".\Examples\minimum_user\src\src_core" ".\"
+call :make_link ".\Examples\mobc\src\src_core" ".\"
 echo done.
 echo.
 

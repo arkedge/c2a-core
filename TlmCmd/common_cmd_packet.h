@@ -11,7 +11,7 @@
 
 // ここで CCP_DEST_TYPE を定義する
 // 詳細は
-// - /Examples/minimum_user/src/src_user/Settings/TlmCmd/common_cmd_packet_define.h
+// - /Examples/mobc/src/src_user/Settings/TlmCmd/common_cmd_packet_define.h
 // - https://github.com/ut-issl/c2a-core/blob/develop/Docs/Core/communication.md
 // を参照
 /* 例
