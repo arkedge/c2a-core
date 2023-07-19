@@ -50,8 +50,8 @@ CCP_CmdRet PH_user_cmd_router(const CommonCmdPacket* packet);
 
 /**
  * @brief sub OBC のテレメを転送するために， APID からテレメを判定してルーティングする  // FIXME: 命名， router ではない？
- * @param[in]  apid:    2nd OBC の Tlm APID
- * @param[in]  tlm_id:  2nd OBC の Tlm ID
+ * @param[in]  apid:    sub OBC の Tlm APID
+ * @param[in]  tlm_id:  sub OBC の Tlm ID
  * @param[out] packet:  テレメを作る uint8_t にシリアライズされた packet へのポインタ
  * @param[out] len:     転送するテレメのパケット長
  * @param[in]  max_len: 許容できる最大テレメパケット長
