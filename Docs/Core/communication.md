@@ -147,7 +147,7 @@ https://github.com/ut-issl/c2a-core/blob/b84c3d051a1e15ab62c8f1a9744957daa4a62a3
 
 #### コマンド配送におけるルーティングについて
 - コマンドの最終的な配送先，つまり実行されるボードは APID によって規定される
-    - https://github.com/ut-issl/c2a-core/blob/5d7a9d9b878cf5ddcad4de919e77dcae13df7407/Examples/mobc_for_s2e/src/src_user/Settings/TlmCmd/Ccsds/apid_define.h#L9-L13
+    - https://github.com/ut-issl/c2a-core/blob/5d7a9d9b878cf5ddcad4de919e77dcae13df7407/Examples/mobc/src/src_user/Settings/TlmCmd/Ccsds/apid_define.h#L9-L13
 - 一方で， BC や TLC などでのキューイングは， Destination Type によって決定される
     - https://github.com/ut-issl/c2a-core/blob/6d71249dcdb3aefa1d67ffe8ce946e8d8d8b2a33/Examples/mobc/src/src_user/Settings/TlmCmd/common_cmd_packet_define.h#L20-L27
 - 具体例（GS と接続される OBC は MOBC とし，AOBC は MOBC にぶら下がってるものとする）
@@ -178,9 +178,9 @@ https://github.com/ut-issl/c2a-core/blob/b84c3d051a1e15ab62c8f1a9744957daa4a62a3
 ## Common Packet の定義方法
 次のように，それぞれ定義する．
 
-- https://github.com/ut-issl/c2a-core/blob/f3197d549559d1f571eb3e28497c9a488611f07f/Examples/mobc_for_s2e/src/src_user/Settings/TlmCmd/common_tlm_cmd_packet_define.h#L10-L11
-- https://github.com/ut-issl/c2a-core/blob/f3197d549559d1f571eb3e28497c9a488611f07f/Examples/mobc_for_s2e/src/src_user/Settings/TlmCmd/common_tlm_packet_define.h#L10-L11
-- https://github.com/ut-issl/c2a-core/blob/f3197d549559d1f571eb3e28497c9a488611f07f/Examples/mobc_for_s2e/src/src_user/Settings/TlmCmd/common_cmd_packet_define.h#L10-L11
+- https://github.com/ut-issl/c2a-core/blob/f3197d549559d1f571eb3e28497c9a488611f07f/Examples/mobc/src/src_user/Settings/TlmCmd/common_tlm_cmd_packet_define.h#L10-L11
+- https://github.com/ut-issl/c2a-core/blob/f3197d549559d1f571eb3e28497c9a488611f07f/Examples/mobc/src/src_user/Settings/TlmCmd/common_tlm_packet_define.h#L10-L11
+- https://github.com/ut-issl/c2a-core/blob/f3197d549559d1f571eb3e28497c9a488611f07f/Examples/mobc/src/src_user/Settings/TlmCmd/common_cmd_packet_define.h#L10-L11
 
 
 ## C2A 間通信について
