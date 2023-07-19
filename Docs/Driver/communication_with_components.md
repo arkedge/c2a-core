@@ -106,7 +106,7 @@ C2A 間通信によって，以下のような機能が提供される．
 C2A 間通信の具体的な実装については，本リポジトリに同封されている User Sample である [`Examples/mobc`](/Examples/mobc) と [`Examples/subobc`](/Examples/subobc) での通信（前者が MOBC，後者が AOBC を想定）を参考にされたい．
 具体的なドライバのコードは以下となる．
 
-- https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Drivers/Aocs/aobc.c#L1-L164
+- https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Drivers/Aocs/aobc.c#L1-L172
 - https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/subobc/src/src_user/Drivers/Etc/mobc.c#L1-L150
 
 地上局からのコマンドルーティングについては [Core Layer/Communication#コマンド配送におけるルーティングについて](../Core/communication.md#コマンド配送におけるルーティングについて) などを参照すること．

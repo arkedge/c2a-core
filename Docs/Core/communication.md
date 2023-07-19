@@ -147,9 +147,9 @@ https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e
 
 #### コマンド配送におけるルーティングについて
 - コマンドの最終的な配送先，つまり実行されるボードは APID によって規定される
-    - https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Settings/TlmCmd/Ccsds/apid_define.h#L9-L13
+    - https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Settings/TlmCmd/Ccsds/apid_define.h#L11-L28
 - 一方で， BC や TLC などでのキューイングは， Destination Type によって決定される
-    - https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Settings/TlmCmd/common_cmd_packet_define.h#L20-L27
+    - https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Settings/TlmCmd/common_cmd_packet_define.h#L20-L34
 - 具体例（GS と接続される OBC は MOBC とし，AOBC は MOBC にぶら下がってるものとする）
     - APID: MOBC, Destination Type: TO_ME or TO_APID or MOBC
         - GSC: GS から MOBC に届き， MOBC で GSC としてエンキューされる．デキューした後， MOBC 内で GSC として実行される．
