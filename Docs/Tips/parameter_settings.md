@@ -83,7 +83,8 @@ NOTE: `sizeof(bct_id_t)` は `SIZE_OF_BCT_ID_T` にて設定可能である．
 - user: `/src_user/Settings/TlmCmd/block_command_table_params.h`，`/src_user/TlmCmd/block_command_user_settings.h`
 
 #### 詳細説明
-[`/src_core/TlmCmd/block_command_table.h`](https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/src_core/TlmCmd/block_command_executor.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_executor.h) を参照．
+[`/src_core/TlmCmd/block_command_table.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_table.h)，[`/src_core/TlmCmd/block_command_executor.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_executor.h) を参照．
+
 
 
 - - -
