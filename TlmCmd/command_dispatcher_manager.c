@@ -19,13 +19,13 @@
  * @retval RESULT_OK:  見つかった（登録されている）
  * @retval RESULT_ERR: 見つからず（登録されていない）
  */
-static CDIS_MGR_find_cdis_(const CommandDispatcher* cdis, uint8_t* idx);
+static RESULT CDIS_MGR_find_cdis_(const CommandDispatcher* cdis, uint8_t* idx);
 
 static CommandDispatcherManager command_dispatcher_manager_;
 const CommandDispatcherManager* const command_dispatcher_manager = &command_dispatcher_manager_;
 
 
-static void CDIS_MGR_initialize(void)
+void CDIS_MGR_initialize(void)
 {
   uint8_t idx;
   memset(&command_dispatcher_manager_, 0x00, sizeof(command_dispatcher_manager_));
@@ -56,7 +56,7 @@ RESULT CDIS_MGR_register_cdis(const CommandDispatcher* cdis, uint8_t* idx)
 }
 
 
-static CDIS_MGR_find_cdis_(const CommandDispatcher* cdis, uint8_t* idx)
+static RESULT CDIS_MGR_find_cdis_(const CommandDispatcher* cdis, uint8_t* idx)
 {
   uint8_t i;
   for (i = 0; i < command_dispatcher_manager_.num_of_cdis; ++i)

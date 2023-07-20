@@ -5,6 +5,7 @@
  */
 #include "command_dispatcher.h"
 #include "command_dispatcher_manager.h"
+#include <string.h>
 #include "../System/TimeManager/time_manager.h"
 #include "../System/EventManager/event_logger.h"
 #include "packet_handler.h"
@@ -34,7 +35,7 @@ typedef enum
 static void CDIS_clear_exec_info_(CDIS_ExecInfo* exec_info);
 
 
-RESULT CDIS_init(CommandDispatcher* cdis, PacketList* pl);
+RESULT CDIS_init(CommandDispatcher* cdis, PacketList* pl)
 {
   static uint8_t is_first_call_ = 1;
   static uint8_t cdis_overflow_counter_ = 0;
