@@ -17,8 +17,7 @@ AppInfo RTCD_create_app(void)
 
 static RESULT RTCD_init_(void)
 {
-  realtime_command_dispatcher_ = CDIS_init(&PH_rt_cmd_list);
-  return RESULT_OK;
+  return CDIS_init(&realtime_command_dispatcher_, &PH_rt_cmd_list);
 }
 
 static RESULT RTCD_dispatch_(void)

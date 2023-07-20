@@ -22,6 +22,7 @@ typedef enum
 {
   CDIS_EL_LOCAL_ID_NULL_PARAM,    //!< NULL 引数
   CDIS_EL_LOCAL_ID_INVALID_PL,    //!< 不正な PL
+  CDIS_EL_LOCAL_ID_CDIS_MGR_ERR,  //!< CDIS MGR キャパオーバー
   CDIS_EL_LOCAL_ID_UNKNOWN
 } CDIS_EL_LOCAL_ID;
 
@@ -33,34 +34,32 @@ typedef enum
 static void CDIS_clear_exec_info_(CDIS_ExecInfo* exec_info);
 
 
-CommandDispatcher CDIS_init(PacketList* pl)
+RESULT CDIS_init(CommandDispatcher* cdis, PacketList* pl);
 {
-  CommandDispatcher cdis;
-  static uint8_t is_first_call = 1;
-  static uint8_t init_counter_ = 0;
+  static uint8_t is_first_call_ = 1;
+  static uint8_t cdis_overflow_counter_ = 0;
+  RESULT ret;
 
-  if (is_first_call)
+  if (is_first_call_)
   {
     CDIS_MGR_initialize();
   }
-  is_first_call = 0;
+  is_first_call_ = 0;
 
-  // FIXME: カウンタやめる． mgr に登録されるものは再利用に
-  cdis.idx = init_counter_;
-  init_counter_++;
+  // 初期化
+  memset(cdis, 0x00, sizeof(CommandDispatcher));
 
   // コマンド実行情報を初期化
-  CDIS_clear_exec_info_(&cdis.prev);
-  CDIS_clear_exec_info_(&cdis.prev_err);
+  CDIS_clear_exec_info_(&cdis->prev);
+  CDIS_clear_exec_info_(&cdis->prev_err);
 
-  // 実行エラーカウンタを0に初期化
-  cdis.error_counter = 0;
+  // 実行エラーカウンタを初期化
+  CDIS_clear_error_status(cdis);
 
   // 実行中断フラグを無効に設定
-  cdis.lockout = 0;
-
+  cdis->lockout = 0;
   // 異常時実行中断フラグを無効に設定
-  cdis.stop_on_error = 0;
+  cdis->stop_on_error = 0;
 
   // 処理対象とするPacketListをクリアして登録
   if (pl == NULL)
@@ -70,7 +69,7 @@ CommandDispatcher CDIS_init(PacketList* pl)
                     CDIS_EL_LOCAL_ID_NULL_PARAM,
                     EL_ERROR_LEVEL_HIGH,
                     0);
-    return cdis;
+    return RESULT_ERR;
   }
   if (PL_get_packet_type(pl) != PL_PACKET_TYPE_CCP)
   {
@@ -79,12 +78,26 @@ CommandDispatcher CDIS_init(PacketList* pl)
                     CDIS_EL_LOCAL_ID_INVALID_PL,
                     EL_ERROR_LEVEL_HIGH,
                     (uint32_t)pl);
-    return cdis;
+    return RESULT_ERR;
   }
   PL_clear_list(pl);
-  cdis.pl = pl;
+  cdis->pl = pl;
 
-  return cdis;
+  ret = CDIS_MGR_register_cdis(cdis, &cdis->idx);
+  if (ret != RESULT_OK)
+  {
+    // CDIS MGR のキャパオーバー
+    EL_record_event((EL_GROUP)EL_CORE_GROUP_CDIS_INTERNAL_ERR,
+                    CDIS_EL_LOCAL_ID_CDIS_MGR_ERR,
+                    EL_ERROR_LEVEL_LOW,
+                    (uint32_t)cdis);
+    cdis_overflow_counter_++;
+    // 仕方がないのでユニークな idx を割り振る（同一 CDIS でも初期化のたびに異なる idx になってしまう）
+    cdis->idx = cdis_overflow_counter_ + CDIS_MGR_MAX_NUM_OF_CDIS;
+    return RESULT_ERR;
+  }
+
+  return RESULT_OK;
 }
 
 

@@ -10,6 +10,17 @@
 #include <string.h>
 #include "./common_cmd_packet_util.h"
 
+// FIXME: きちんとテストする
+/**
+ * @brief  cdis を cdis mgr に登録されているか探し，見つかった場合は idx を返す
+ * @note   CDIS_init から呼ばれることを想定
+ * @param[in]  cdis: 探す cdis のポインタ
+ * @param[out] cdis: 見つかった idx
+ * @retval RESULT_OK:  見つかった（登録されている）
+ * @retval RESULT_ERR: 見つからず（登録されていない）
+ */
+static CDIS_MGR_find_cdis_(const CommandDispatcher* cdis, uint8_t* idx);
+
 static CommandDispatcherManager command_dispatcher_manager_;
 const CommandDispatcherManager* const command_dispatcher_manager = &command_dispatcher_manager_;
 
@@ -25,9 +36,9 @@ static void CDIS_MGR_initialize(void)
 }
 
 
-RESULT CDIS_MGR_register_cdis(const CommandDispatcher* cdis)
+RESULT CDIS_MGR_register_cdis(const CommandDispatcher* cdis, uint8_t* idx)
 {
-  if (CDIS_MGR_find_cdis_(cdis) == RESULT_OK)
+  if (CDIS_MGR_find_cdis_(cdis, idx) == RESULT_OK)
   {
     return RESULT_OK;
   }
@@ -37,6 +48,7 @@ RESULT CDIS_MGR_register_cdis(const CommandDispatcher* cdis)
     return RESULT_ERR;
   }
 
+  *idx = command_dispatcher_manager_.num_of_cdis;
   command_dispatcher_manager_.cdises[command_dispatcher_manager_.num_of_cdis] = cdis;
   command_dispatcher_manager_.num_of_cdis++;
 
@@ -44,7 +56,7 @@ RESULT CDIS_MGR_register_cdis(const CommandDispatcher* cdis)
 }
 
 
-RESULT CDIS_MGR_find_cdis(const CommandDispatcher* cdis, uint8_t* idx)
+static CDIS_MGR_find_cdis_(const CommandDispatcher* cdis, uint8_t* idx)
 {
   uint8_t i;
   for (i = 0; i < command_dispatcher_manager_.num_of_cdis; ++i)

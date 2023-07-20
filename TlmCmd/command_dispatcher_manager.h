@@ -38,26 +38,16 @@ extern const CommandDispatcherManager* const command_dispatcher_manager;
  */
 void CDIS_MGR_initialize(void);
 
-// FIXME: きちんとテストする
 /**
- * @brief  cdis を cdis mgr に登録されているか探し，見つかった場合は idx を返す
- * @note   CDIS_init から呼ばれることを想定
- * @param[in]  cdis: 探す cdis のポインタ
- * @param[out] cdis: 見つかった idx
- * @retval RESULT_OK:  見つかった（登録されている）
- * @retval RESULT_ERR: 見つからず（登録されていない）
- */
-RESULT CDIS_MGR_find_cdis(const CommandDispatcher* cdis, uint8_t* idx);
-
-/**
- * @brief  cdis を cdis mgr に登録する
+ * @brief  cdis を cdis mgr に登録すし，登録した idx を返す
  * @note   CDIS_init から呼ばれることを想定
  * @note   同じアプリ内でも CDIS_init は複数回呼ばれる可能性があるので，重複登録はケアされる
- * @param  cdis: 登録する cdis のポインタ
+ * @param[in]  cdis: 登録する cdis のポインタ
+ * @param[out] cdis: 登録した idx
  * @retval RESULT_OK:  登録に成功 or すでに登録されている
  * @retval RESULT_ERR: 登録に失敗（サイズオーバー）
  */
-RESULT CDIS_MGR_register_cdis(const CommandDispatcher* cdis);
+RESULT CDIS_MGR_register_cdis(const CommandDispatcher* cdis, uint8_t* idx);
 
 CCP_CmdRet Cmd_CDIS_MGR_SET_IDX_FOR_TLM(const CommonCmdPacket* packet);
 
