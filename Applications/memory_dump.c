@@ -7,6 +7,7 @@
 #include "../TlmCmd/packet_handler.h"
 #include "../Library/endian.h"
 #include "../TlmCmd/common_cmd_packet_util.h"
+#include "../Library/result.h"
 
 static MemoryDump memory_dump_;
 const MemoryDump* const memory_dump = &memory_dump_;
@@ -17,7 +18,7 @@ const MemoryDump* const memory_dump = &memory_dump_;
 static CommonTlmPacket MEM_ctp_; // データサイズが大きいのでstatic確保
 #endif
 
-static void MEM_init_(void);
+static RESULT MEM_init_(void);
 
 static uint8_t MEM_get_next_adu_counter_(void);
 
@@ -50,13 +51,14 @@ AppInfo MEM_create_app(void)
   return AI_create_app_info("mem", MEM_init_, NULL);
 }
 
-static void MEM_init_(void)
+static RESULT MEM_init_(void)
 {
   memory_dump_.begin = 0;
   memory_dump_.end = 0;
   memory_dump_.adu_size = 0;
   memory_dump_.adu_seq = 0;
   memory_dump_.adu_counter = 0;
+  return RESULT_OK;
 }
 
 CCP_CmdRet Cmd_MEM_SET_REGION(const CommonCmdPacket* packet)

@@ -15,13 +15,13 @@
 static RESULT DI_GS_init_(void);
 
 // 以下 init と update の定義
-static void DI_GS_cmd_packet_handler_app_init_(void);
-static void DI_GS_cmd_packet_handler_app_(void);
+static RESULT DI_GS_cmd_packet_handler_app_init_(void);
+static RESULT DI_GS_cmd_packet_handler_app_(void);
 
-static void DI_GS_rt_tlm_packet_handler_app_init_(void);
-static void DI_GS_rt_tlm_packet_handler_app_(void);
-static void DI_GS_rp_tlm_packet_handler_app_init_(void);
-static void DI_GS_rp_tlm_packet_handler_app_(void);
+static RESULT DI_GS_rt_tlm_packet_handler_app_init_(void);
+static RESULT DI_GS_rt_tlm_packet_handler_app_(void);
+static RESULT DI_GS_rp_tlm_packet_handler_app_init_(void);
+static RESULT DI_GS_rp_tlm_packet_handler_app_(void);
 
 static void DI_GS_set_t2m_flush_interval_(cycle_t flush_interval, DI_GS_TlmPacketHandler* gs_tlm_packet_handler);
 
@@ -95,23 +95,26 @@ AppInfo DI_GS_rp_tlm_packet_handler_app(void)
   return AI_create_app_info("GS_RP_TLM", DI_GS_rp_tlm_packet_handler_app_init_, DI_GS_rp_tlm_packet_handler_app_);
 }
 
-static void DI_GS_cmd_packet_handler_app_init_(void)
+static RESULT DI_GS_cmd_packet_handler_app_init_(void)
 {
   DI_GS_init_();
+  return RESULT_OK;
 }
 
-static void DI_GS_cmd_packet_handler_app_(void)
+static RESULT DI_GS_cmd_packet_handler_app_(void)
 {
   GS_rec_tctf(&gs_driver_);
   // TODO: エラー処理
+  return RESULT_OK;
 }
 
-static void DI_GS_rt_tlm_packet_handler_app_init_(void)
+static RESULT DI_GS_rt_tlm_packet_handler_app_init_(void)
 {
   T2M_initialize(&DI_GS_rt_tlm_packet_handler_.tc_packet_to_m_pdu);
+  return RESULT_OK;
 }
 
-static void DI_GS_rt_tlm_packet_handler_app_(void)
+static RESULT DI_GS_rt_tlm_packet_handler_app_(void)
 {
   int i;
 
@@ -121,7 +124,7 @@ static void DI_GS_rt_tlm_packet_handler_app_(void)
     T2M_ACK ack = T2M_form_m_pdu(&DI_GS_rt_tlm_packet_handler_.tc_packet_to_m_pdu,
                                  &PH_rt_tlm_list,
                                  &DI_GS_rt_tlm_packet_handler_.vcdu.m_pdu);
-    if (ack != T2M_SUCCESS) return;
+    if (ack != T2M_SUCCESS) return RESULT_OK;
 
     // Realtime VCDU カウンタの設定
     VCDU_setup_realtime_vcdu_hdr(&DI_GS_rt_tlm_packet_handler_.vcdu, DI_GS_rt_tlm_packet_handler_.vcdu_counter);
@@ -136,14 +139,17 @@ static void DI_GS_rt_tlm_packet_handler_app_(void)
     // 完成した VCDU を RT VCDU として送出
     GS_send_vcdu(&gs_driver_, &DI_GS_rt_tlm_packet_handler_.vcdu);
   }
+
+  return RESULT_OK;
 }
 
-static void DI_GS_rp_tlm_packet_handler_app_init_(void)
+static RESULT DI_GS_rp_tlm_packet_handler_app_init_(void)
 {
   T2M_initialize(&DI_GS_rp_tlm_packet_handler_.tc_packet_to_m_pdu);
+  return RESULT_OK;
 }
 
-static void DI_GS_rp_tlm_packet_handler_app_(void)
+static RESULT DI_GS_rp_tlm_packet_handler_app_(void)
 {
   int i;
 
@@ -153,7 +159,7 @@ static void DI_GS_rp_tlm_packet_handler_app_(void)
     T2M_ACK ack = T2M_form_m_pdu(&DI_GS_rp_tlm_packet_handler_.tc_packet_to_m_pdu,
                                  &PH_rp_tlm_list,
                                  &DI_GS_rp_tlm_packet_handler_.vcdu.m_pdu);
-    if (ack != T2M_SUCCESS) return;
+    if (ack != T2M_SUCCESS) return RESULT_OK;
 
     // Replay VCDU カウンタの設定
     VCDU_setup_replay_vcdu_hdr(&DI_GS_rp_tlm_packet_handler_.vcdu, DI_GS_rp_tlm_packet_handler_.vcdu_counter);
@@ -168,6 +174,8 @@ static void DI_GS_rp_tlm_packet_handler_app_(void)
     // 完成した VCDU を RP VCDU として送出
     GS_send_vcdu(&gs_driver_, &DI_GS_rp_tlm_packet_handler_.vcdu);
   }
+
+  return RESULT_OK;
 }
 
 static void DI_GS_set_t2m_flush_interval_(cycle_t flush_interval, DI_GS_TlmPacketHandler* gs_tlm_packet_handler)

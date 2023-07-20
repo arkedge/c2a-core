@@ -5,12 +5,13 @@
 #include <src_user/Settings/port_config.h>
 #include <string.h>                     // for memcpy
 #include "../TlmCmd/common_cmd_packet_util.h"
+#include "../Library/result.h"
 
 
 static UtilityCommand utility_command_;
 const UtilityCommand* const utility_command = &utility_command_;
 
-static void UTIL_CMD_init_(void);
+static RESULT UTIL_CMD_init_(void);
 static void UTIL_CMD_reset_(void);
 static void UTIL_CMD_add_(unsigned char add_size, const unsigned char* cmd);
 static int UTIL_CMD_send_(unsigned char ch);
@@ -21,7 +22,7 @@ AppInfo UTIL_CMD_create_app(void)
   return AI_create_app_info("util_cmd", UTIL_CMD_init_, NULL);
 }
 
-static void UTIL_CMD_init_(void)
+static RESULT UTIL_CMD_init_(void)
 {
   int i;
   for (i = 0; i < UTIL_CMD_SIZE_MAX; i++)
@@ -37,6 +38,7 @@ static void UTIL_CMD_init_(void)
   utility_command_.uart_config_dummy.parity_settings = PARITY_SETTINGS_NONE;
   utility_command_.uart_config_dummy.data_length = UART_DATA_LENGTH_8BIT;
   utility_command_.uart_config_dummy.stop_bit = UART_STOP_BIT_1BIT;
+  return RESULT_OK;
 }
 
 static void UTIL_CMD_reset_(void)

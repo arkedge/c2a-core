@@ -21,14 +21,15 @@
 #include "../../Applications/DriverInstances/di_mobc.h"
 // #include <src_core/TlmCmd/telemetry_generator.h>
 #include "../../Library/vt100.h"
+#include <src_core/Library/result.h>
 
-void APP_DBG_flush_screen_(void);
-void APP_DBG_print_time_stamp_(void);
-void APP_DBG_print_cmd_status_(void);
-void APP_DBG_print_event_logger0_(void);
-void APP_DBG_print_event_logger1_(void);
-void APP_DBG_print_event_handler_(void);
-void APP_DBG_print_git_rev_(void);
+static RESULT APP_DBG_flush_screen_(void);
+static RESULT APP_DBG_print_time_stamp_(void);
+static RESULT APP_DBG_print_cmd_status_(void);
+static RESULT APP_DBG_print_event_logger0_(void);
+static RESULT APP_DBG_print_event_logger1_(void);
+static RESULT APP_DBG_print_event_handler_(void);
+static RESULT APP_DBG_print_git_rev_(void);
 
 AppInfo APP_DBG_flush_screen(void)
 {
@@ -65,7 +66,7 @@ AppInfo APP_DBG_print_git_rev(void)
   return AI_create_app_info("debug_git_rev", NULL, APP_DBG_print_git_rev_);
 }
 
-void APP_DBG_flush_screen_(void)
+static RESULT APP_DBG_flush_screen_(void)
 {
   VT100_erase_down();
   VT100_reset_cursor();
@@ -73,9 +74,10 @@ void APP_DBG_flush_screen_(void)
   Printf("-- C2A SUBOBC SAMPLE Flight S/W --\n");
   VT100_erase_line();
   Printf("BUILD: %s %s\n", __DATE__, __TIME__);
+  return RESULT_OK;
 }
 
-void APP_DBG_print_time_stamp_(void)
+static RESULT APP_DBG_print_time_stamp_(void)
 {
   VT100_erase_line();
   Printf("CYCLE: TOTAL %08d, MODE %08d\n",
@@ -83,9 +85,10 @@ void APP_DBG_print_time_stamp_(void)
   VT100_erase_line();
   Printf("MODE: STAT %d, PREV %d, CURR %d\n",
          mode_manager->stat, mode_manager->previous_id, mode_manager->current_id);
+  return RESULT_OK;
 }
 
-void APP_DBG_print_cmd_status_(void)
+static RESULT APP_DBG_print_cmd_status_(void)
 {
   VT100_erase_line();
   Printf("CMD: GS %3d, RT %3d, Ack %2d, ID 0x%02x, Sts %1d, EC %d\n",
@@ -95,9 +98,10 @@ void APP_DBG_print_cmd_status_(void)
          gs_command_dispatcher->prev.code,
          gs_command_dispatcher->prev.cmd_ret.exec_sts,
          gs_command_dispatcher->prev.cmd_ret.err_code);
+  return RESULT_OK;
 }
 
-void APP_DBG_print_event_logger0_(void)
+static RESULT APP_DBG_print_event_logger0_(void)
 {
 // 一旦めんどくさいので，以下の時のみ対応で書く
 #ifdef EL_IS_ENABLE_TLOG
@@ -122,9 +126,10 @@ void APP_DBG_print_event_logger0_(void)
 #endif
 #endif
 #endif
+  return RESULT_OK;
 }
 
-void APP_DBG_print_event_logger1_(void)
+static RESULT APP_DBG_print_event_logger1_(void)
 {
 // 一旦めんどくさいので，以下の時のみ対応で書く
 #ifdef EL_IS_ENABLE_TLOG
@@ -146,9 +151,10 @@ void APP_DBG_print_event_logger1_(void)
 #endif
 #endif
 #endif
+  return RESULT_OK;
 }
 
-void APP_DBG_print_event_handler_(void)
+static RESULT APP_DBG_print_event_handler_(void)
 {
   const EH_Log* latest = EH_get_the_nth_log_from_the_latest(0);
   const EH_Log* second = EH_get_the_nth_log_from_the_latest(1);
@@ -159,13 +165,15 @@ void APP_DBG_print_event_handler_(void)
          latest->respond_time_in_master_cycle,
          second->rule_id,
          second->respond_time_in_master_cycle);
+  return RESULT_OK;
 }
 
-void APP_DBG_print_git_rev_(void)
+static RESULT APP_DBG_print_git_rev_(void)
 {
   VT100_erase_line();
   Printf("Git rev: CORE 0x%07x, USER 0x%07x\n",
          GIT_REV_CORE_SHORT, GIT_REV_USER_SHORT);
+  return RESULT_OK;
 }
 
 #pragma section

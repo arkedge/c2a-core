@@ -8,16 +8,18 @@
 #include "nop.h"
 #include <stddef.h>
 #include "../TlmCmd/common_cmd_packet_util.h"
+#include "../Library/result.h"
 
-static void NOP_nop_(void);
+static RESULT NOP_nop_(void);
 
 AppInfo NOP_create_app(void)
 {
   return AI_create_app_info("nop", NULL, NOP_nop_);
 }
 
-static void NOP_nop_(void) {
+static RESULT NOP_nop_(void) {
   // no operation
+  return RESULT_OK;
 }
 
 CCP_CmdRet Cmd_NOP(const CommonCmdPacket* packet)

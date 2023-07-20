@@ -9,11 +9,12 @@
 #include <src_core/Library/print.h>
 #include "../../Settings/port_config.h"
 #include "../../Settings/DriverSuper/driver_buffer_define.h"
+#include <src_core/Library/result.h>
 
-static void DI_MOBC_init_(void);
-static void DI_MOBC_update_(void);
-static void DI_MOBC_rt_tlm_packet_handler_init_(void);
-static void DI_MOBC_rt_tlm_packet_handler_(void);
+static RESULT DI_MOBC_init_(void);
+static RESULT DI_MOBC_update_(void);
+static RESULT DI_MOBC_rt_tlm_packet_handler_init_(void);
+static RESULT DI_MOBC_rt_tlm_packet_handler_(void);
 
 static MOBC_Driver mobc_driver_;
 const MOBC_Driver* const mobc_driver = &mobc_driver_;
@@ -30,10 +31,11 @@ AppInfo DI_MOBC_update(void)
   return AI_create_app_info("update_MOBC", DI_MOBC_init_, DI_MOBC_update_);
 }
 
-static void DI_MOBC_init_(void)
+static RESULT DI_MOBC_init_(void)
 {
   DS_ERR_CODE ret1;
   DS_INIT_ERR_CODE ret2;
+  RESULT err = RESULT_OK;
 
   ret1 = DS_init_stream_rec_buffer(&DI_MOBC_rx_buffer_,
                                    DI_MOBC_rx_buffer_allocation_,
@@ -41,22 +43,27 @@ static void DI_MOBC_init_(void)
   if (ret1 != DS_ERR_CODE_OK)
   {
     Printf("MOBC buffer init Failed ! %d \n", ret1);
+    err = RESULT_ERR;
   }
 
   ret2 = MOBC_init(&mobc_driver_, PORT_CH_UART_MOBC, &DI_MOBC_rx_buffer_);
   if (ret2 != DS_INIT_OK)
   {
     Printf("MOBC init Failed ! %d \n", ret2);
+    err = RESULT_ERR;
   }
+
+  return err;
 }
 
-static void DI_MOBC_update_(void)
+static RESULT DI_MOBC_update_(void)
 {
   DS_REC_ERR_CODE ret;
   ret = MOBC_rec(&mobc_driver_);
 
   // TODO: 必要があればここに処理を
   (void)ret;
+  return RESULT_OK;
 }
 
 
@@ -67,12 +74,13 @@ AppInfo DI_MOBC_rt_tlm_packet_handler(void)
                             DI_MOBC_rt_tlm_packet_handler_);
 }
 
-static void DI_MOBC_rt_tlm_packet_handler_init_(void)
+static RESULT DI_MOBC_rt_tlm_packet_handler_init_(void)
 {
   // なにもしない
+  return RESULT_OK;
 }
 
-static void DI_MOBC_rt_tlm_packet_handler_(void)
+static RESULT DI_MOBC_rt_tlm_packet_handler_(void)
 {
   uint8_t i;
   CommonTlmPacket packet;   // FIXME: これは static にする？
@@ -93,7 +101,7 @@ static void DI_MOBC_rt_tlm_packet_handler_(void)
     if (PL_is_empty(&PH_rt_tlm_list))
     {
       // キューが空なら終了
-      return;
+      return RESULT_OK;
     }
 
     // 送信するパケットを取得
@@ -124,6 +132,8 @@ static void DI_MOBC_rt_tlm_packet_handler_(void)
       mobc_driver_.info.c2a.send_tlm_err_code = ret;
     }
   }
+
+  return RESULT_OK;
 }
 
 #pragma section

@@ -7,11 +7,12 @@
 #include "event_utility.h"
 #include "../System/EventManager/event_handler.h"
 #include "../TlmCmd/common_cmd_packet_util.h"
+#include "../Library/result.h"
 
 #include <stddef.h> // for NULL
 
-static void EVENT_UTIL_init_(void);
-static void EVENT_UTIL_update_(void);
+static RESULT EVENT_UTIL_init_(void);
+static RESULT EVENT_UTIL_update_(void);
 
 static EventUtility event_utility_;
 const EventUtility* const event_utility = &event_utility_;
@@ -21,17 +22,19 @@ AppInfo EVENT_UTIL_create_app(void)
   return AI_create_app_info("event_util", EVENT_UTIL_init_, EVENT_UTIL_update_);
 }
 
-static void EVENT_UTIL_init_(void)
+static RESULT EVENT_UTIL_init_(void)
 {
   event_utility_.is_enabled_eh_execution = 1;
+  return RESULT_OK;
 }
 
-static void EVENT_UTIL_update_(void)
+static RESULT EVENT_UTIL_update_(void)
 {
   if (event_utility_.is_enabled_eh_execution)
   {
     EH_execute();
   }
+  return RESULT_OK;
 }
 
 CCP_CmdRet Cmd_EVENT_UTIL_ENABLE_EH_EXEC(const CommonCmdPacket* packet)

@@ -14,11 +14,12 @@ int UTIL_COUNTER_dummy(void)
 #include "../System/AnomalyLogger/anomaly_logger.h"
 #include <string.h>   // for memcpy
 #include "../TlmCmd/common_cmd_packet_util.h"
+#include "../Library/result.h"
 
 static UtilityCounter utility_counter_;
 const UtilityCounter* const utility_counter = &utility_counter_;
 
-static void UTIL_COUNTER_all_init_(void);
+static RESULT UTIL_COUNTER_all_init_(void);
 static void UTIL_COUNTER_clear_(UTIL_COUNTER_NAME num);
 static void UTIL_COUNTER_incl_(UTIL_COUNTER_NAME num);
 
@@ -28,7 +29,7 @@ AppInfo UTIL_COUNTER_create_app(void)
   return AI_create_app_info("utility_counter", UTIL_COUNTER_all_init_, NULL);
 }
 
-static void UTIL_COUNTER_all_init_(void)
+static RESULT UTIL_COUNTER_all_init_(void)
 {
   int i;
   for (i = 0; i < UTIL_COUNTER_MAX; i++)
@@ -37,6 +38,7 @@ static void UTIL_COUNTER_all_init_(void)
     utility_counter_.cnt[i].threshold = 0;
     utility_counter_.cnt[i].anomaly_active = 0;
   }
+  return RESULT_OK;
 }
 
 static void UTIL_COUNTER_clear_(UTIL_COUNTER_NAME num)

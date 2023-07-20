@@ -12,12 +12,13 @@
 #include <src_core/TlmCmd/common_cmd_packet_util.h>
 #include "../../Settings/port_config.h"
 #include "../../Settings/DriverSuper/driver_buffer_define.h"
+#include <src_core/Library/result.h>
 
-static void DI_AOBC_init_(void);
-static void DI_AOBC_update_(void);
+static RESULT DI_AOBC_init_(void);
+static RESULT DI_AOBC_update_(void);
 
-static void DI_AOBC_cmd_dispatcher_init_(void);
-static void DI_AOBC_cmd_dispatcher_(void);
+static RESULT DI_AOBC_cmd_dispatcher_init_(void);
+static RESULT DI_AOBC_cmd_dispatcher_(void);
 
 static AOBC_Driver aobc_driver_;
 const AOBC_Driver* const aobc_driver = &aobc_driver_;
@@ -36,10 +37,11 @@ AppInfo DI_AOBC_update(void)
 }
 
 
-static void DI_AOBC_init_(void)
+static RESULT DI_AOBC_init_(void)
 {
   DS_ERR_CODE ret1;
   DS_INIT_ERR_CODE ret2;
+  RESULT err = RESULT_OK;
 
   ret1 = DS_init_stream_rec_buffer(&DI_AOBC_rx_buffer_,
                                    DI_AOBC_rx_buffer_allocation_,
@@ -47,17 +49,21 @@ static void DI_AOBC_init_(void)
   if (ret1 != DS_ERR_CODE_OK)
   {
     Printf("AOBC buffer init Failed ! %d \n", ret1);
+    err = RESULT_ERR;
   }
 
   ret2 = AOBC_init(&aobc_driver_, PORT_CH_RS422_AOBC, &DI_AOBC_rx_buffer_);
   if (ret2 != DS_INIT_OK)
   {
     Printf("AOBC init Failed ! %d \n", ret2);
+    err = RESULT_ERR;
   }
+
+  return err;
 }
 
 
-static void DI_AOBC_update_(void)
+static RESULT DI_AOBC_update_(void)
 {
   int ret;
   ret = AOBC_rec(&aobc_driver_);
@@ -65,6 +71,7 @@ static void DI_AOBC_update_(void)
   // [TODO]
   // 必要があればここに処理を
   (void)ret;
+  return RESULT_OK;
 }
 
 
@@ -76,15 +83,17 @@ AppInfo DI_AOBC_cmd_dispatcher(void)
 }
 
 
-static void DI_AOBC_cmd_dispatcher_init_(void)
+static RESULT DI_AOBC_cmd_dispatcher_init_(void)
 {
   DI_AOBC_cdis_ = CDIS_init(&PH_aobc_cmd_list);
+  return RESULT_OK;
 }
 
 
-static void DI_AOBC_cmd_dispatcher_(void)
+static RESULT DI_AOBC_cmd_dispatcher_(void)
 {
   CDIS_dispatch_command(&DI_AOBC_cdis_);
+  return RESULT_OK;
 }
 
 

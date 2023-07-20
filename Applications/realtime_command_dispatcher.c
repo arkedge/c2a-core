@@ -2,26 +2,29 @@
 #include "realtime_command_dispatcher.h"
 #include "../TlmCmd/packet_handler.h"
 #include "../TlmCmd/common_cmd_packet_util.h"
+#include "../Library/result.h"
 
 static CommandDispatcher realtime_command_dispatcher_;
 const CommandDispatcher* const realtime_command_dispatcher = &realtime_command_dispatcher_;
 
-static void RTCD_init_(void);
-static void RTCD_dispatch_(void);
+static RESULT RTCD_init_(void);
+static RESULT RTCD_dispatch_(void);
 
 AppInfo RTCD_create_app(void)
 {
   return AI_create_app_info("realtime_command_dispatcher", RTCD_init_, RTCD_dispatch_);
 }
 
-static void RTCD_init_(void)
+static RESULT RTCD_init_(void)
 {
   realtime_command_dispatcher_ = CDIS_init(&PH_rt_cmd_list);
+  return RESULT_OK;
 }
 
-static void RTCD_dispatch_(void)
+static RESULT RTCD_dispatch_(void)
 {
   CDIS_dispatch_command(&realtime_command_dispatcher_);
+  return RESULT_OK;
 }
 
 CCP_CmdRet Cmd_RTCD_CLEAR_ALL_REALTIME(const CommonCmdPacket* packet)

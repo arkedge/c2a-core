@@ -4,6 +4,7 @@
 #include "../System/TimeManager/time_manager.h"
 #include "../System/EventManager/event_logger.h"
 #include "../TlmCmd/common_cmd_packet_util.h"
+#include "../Library/result.h"
 
 #include <string.h> // for memset
 
@@ -11,15 +12,15 @@ static TimelineCommandDispatcher timeline_command_dispatcher_;
 const TimelineCommandDispatcher* const timeline_command_dispatcher = &timeline_command_dispatcher_;
 static CommonCmdPacket TLCD_null_packet_;
 
-static void TLCD_gs_init_(void);
-static void TLCD_gs_dispatch_(void);
-static void TLCD_bc_init_(void);
-static void TLCD_bc_dispatch_(void);
-static void TLCD_tlm_init_(void);
-static void TLCD_tlm_dispatch_(void);
+static RESULT TLCD_gs_init_(void);
+static RESULT TLCD_gs_dispatch_(void);
+static RESULT TLCD_bc_init_(void);
+static RESULT TLCD_bc_dispatch_(void);
+static RESULT TLCD_tlm_init_(void);
+static RESULT TLCD_tlm_dispatch_(void);
 #ifdef TLCD_ENABLE_MISSION_TL
-static void TLCD_mis_init_(void);
-static void TLCD_mis_dispatch_(void);
+static RESULT TLCD_mis_init_(void);
+static RESULT TLCD_mis_dispatch_(void);
 #endif
 
 /**
@@ -43,7 +44,7 @@ AppInfo TLCD_gs_create_app(void)
   return AI_create_app_info("tlcd_gs", TLCD_gs_init_, TLCD_gs_dispatch_);
 }
 
-static void TLCD_gs_init_(void)
+static RESULT TLCD_gs_init_(void)
 {
   timeline_command_dispatcher_.dispatcher[TLCD_ID_FROM_GS] = CDIS_init(&(PH_tl_cmd_list[TLCD_ID_FROM_GS]));
 
@@ -55,11 +56,13 @@ static void TLCD_gs_init_(void)
 
   memset(&TLCD_null_packet_, 0, sizeof(TLCD_null_packet_));
   TLCD_update_tl_list_for_tlm(TLCD_ID_FROM_GS);
+  return RESULT_OK;
 }
 
-static void TLCD_gs_dispatch_(void)
+static RESULT TLCD_gs_dispatch_(void)
 {
   TLCD_tlc_dispatcher_(TLCD_ID_FROM_GS);
+  return RESULT_OK;
 }
 
 AppInfo TLCD_bc_create_app(void)
@@ -67,14 +70,16 @@ AppInfo TLCD_bc_create_app(void)
   return AI_create_app_info("tlcd_bc", TLCD_bc_init_, TLCD_bc_dispatch_);
 }
 
-static void TLCD_bc_init_(void)
+static RESULT TLCD_bc_init_(void)
 {
   timeline_command_dispatcher_.dispatcher[TLCD_ID_DEPLOY_BC] = CDIS_init(&(PH_tl_cmd_list[TLCD_ID_DEPLOY_BC]));
+  return RESULT_OK;
 }
 
-static void TLCD_bc_dispatch_(void)
+static RESULT TLCD_bc_dispatch_(void)
 {
   TLCD_tlc_dispatcher_(TLCD_ID_DEPLOY_BC);
+  return RESULT_OK;
 }
 
 AppInfo TLCD_tlm_create_app(void)
@@ -82,14 +87,16 @@ AppInfo TLCD_tlm_create_app(void)
   return AI_create_app_info("tlcd_tlm", TLCD_tlm_init_, TLCD_tlm_dispatch_);
 }
 
-static void TLCD_tlm_init_(void)
+static RESULT TLCD_tlm_init_(void)
 {
   timeline_command_dispatcher_.dispatcher[TLCD_ID_DEPLOY_TLM] = CDIS_init(&(PH_tl_cmd_list[TLCD_ID_DEPLOY_TLM]));
+  return RESULT_OK;
 }
 
-static void TLCD_tlm_dispatch_(void)
+static RESULT TLCD_tlm_dispatch_(void)
 {
   TLCD_tlc_dispatcher_(TLCD_ID_DEPLOY_TLM);
+  return RESULT_OK;
 }
 
 #ifdef TLCD_ENABLE_MISSION_TL
@@ -98,14 +105,16 @@ AppInfo TLCD_mis_create_app(void)
   return AI_create_app_info("tlcd_mis", TLCD_mis_init_, TLCD_mis_dispatch_);
 }
 
-static void TLCD_mis_init_(void)
+static RESULT TLCD_mis_init_(void)
 {
   timeline_command_dispatcher_.dispatcher[TLCD_ID_FROM_GS_FOR_MISSION] = CDIS_init(&(PH_tl_cmd_list[TLCD_ID_FROM_GS_FOR_MISSION]));
+  return RESULT_OK;
 }
 
-static void TLCD_mis_dispatch_(void)
+static RESULT TLCD_mis_dispatch_(void)
 {
   TLCD_tlc_dispatcher_(TLCD_ID_FROM_GS_FOR_MISSION);
+  return RESULT_OK;
 }
 #endif
 
