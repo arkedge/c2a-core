@@ -18,8 +18,8 @@ jobs:
       fail-fast: false
       matrix:
         example:
-          - minimum_user
-          - 2nd_obc_user
+          - mobc
+          - subobc
 
     steps:
       - name: checkout S2E core

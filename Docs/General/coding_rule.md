@@ -408,7 +408,7 @@ TlmCmd/NormalBlockCommandDefinition
 
 
 ### Block Command のロード関数の命名
-基本的には， [Block Command Loade](https://github.com/ut-issl/c2a-core/blob/develop/TlmCmd/block_command_loader.h) を使って定義する．  
+基本的には， [Block Command Loade](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_loader.h) を使って定義する．  
 そして，関数名は `BCL_load_hoge(void)' を基本とする．
 
 Block Command は各所で定義されるため， TL, SL に関しては以下のようにする．
@@ -424,7 +424,7 @@ Settings/Modes/Transitions
 -> void BCL_load_sl_hoge(void);
 ```
 
-例として [Block Command Definitions](https://github.com/ut-issl/c2a-core/blob/develop/Examples/minimum_user/src/src_user/TlmCmd/block_command_definitions.c) を参考にすること．
+例として [Block Command Definitions](https://github.com/arkedge/c2a-core/blob/develop/Examples/mobc/src/src_user/TlmCmd/block_command_definitions.c) を参考にすること．
 
 
 ## 細かな記法 [M]

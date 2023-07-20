@@ -24,7 +24,7 @@ typedef enum
   TF_TLM_FUNC_ACK_SUCCESS,        //!< 成功
   TF_TLM_FUNC_ACK_TOO_SHORT_LEN,  //!< CommonTlmPacket が，生成されるテレメに比べて小さすぎる（定義されたテレメが大きすぎる）
   TF_TLM_FUNC_ACK_NOT_DEFINED,    //!< 定義されてないテレメ
-  TF_TLM_FUNC_ACK_NULL_PACKET,    //!< 2nd OBC などのテレメを生成する時，まだ１つもそのテレメパケットを 2nd OBC から受信していない
+  TF_TLM_FUNC_ACK_NULL_PACKET,    //!< sub OBC などのテレメを生成する時，まだ１つもそのテレメパケットを sub OBC から受信していない
   TF_TLM_FUNC_ACK_UNKNOWN_ERR     //!< その他のエラー
 } TF_TLM_FUNC_ACK;
 

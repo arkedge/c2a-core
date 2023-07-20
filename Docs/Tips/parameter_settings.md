@@ -79,11 +79,11 @@ IFはCommonTlmCmdPacket.hなどで策定される．
 NOTE: `sizeof(bct_id_t)` は `SIZE_OF_BCT_ID_T` にて設定可能である．
 
 #### 定義
-- core: [`/src_core/TlmCmd/block_command_table.h`](https://github.com/ut-issl/c2a-core/blob/develop/TlmCmd/block_command_table.h)，[`/src_core/TlmCmd/block_command_executor.h`](https://github.com/ut-issl/c2a-core/blob/develop/TlmCmd/block_command_executor.h)
+- core: [`/src_core/TlmCmd/block_command_table.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_table.h)，[`/src_core/TlmCmd/block_command_executor.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_executor.h)
 - user: `/src_user/Settings/TlmCmd/block_command_table_params.h`，`/src_user/TlmCmd/block_command_user_settings.h`
 
 #### 詳細説明
-[`/src_core/TlmCmd/block_command_table.h`](https://github.com/ut-issl/c2a-core/blob/develop/TlmCmd/block_command_table.h)，[`/src_core/TlmCmd/block_command_executor.h`](https://github.com/ut-issl/c2a-core/blob/develop/TlmCmd/block_command_executor.h) を参照．
+[`/src_core/TlmCmd/block_command_table.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_table.h)，[`/src_core/TlmCmd/block_command_executor.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_executor.h) を参照．
 
 
 - - -
@@ -115,11 +115,11 @@ struct pointer size:     4 byte
 ```
 
 #### 定義
-- core: [`/src_core/TlmCmd/PacketHandler.h`](https://github.com/ut-issl/c2a-core/blob/develop/TlmCmd/PacketHandler.h)
+- core: [`/src_core/TlmCmd/PacketHandler.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/PacketHandler.h)
 - user: `/src_user/Settings/TlmCmd/packet_handler_params.h`
 
 #### 詳細説明
-[`/src_core/TlmCmd/PacketHandler.h`](https://github.com/ut-issl/c2a-core/blob/develop/TlmCmd/PacketHandler.h) を参照．
+[`/src_core/TlmCmd/PacketHandler.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/PacketHandler.h) を参照．
 
 
 - - -
@@ -145,11 +145,11 @@ DriverSuperを継承したDriver数:           4
 ```
 
 #### 定義
-- core: [`/src_core/Drivers/Super/DriverSuper.h`](https://github.com/ut-issl/c2a-core/blob/develop/Drivers/Super/DriverSuper.h)
+- core: [`/src_core/Drivers/Super/DriverSuper.h`](https://github.com/arkedge/c2a-core/blob/develop/Drivers/Super/DriverSuper.h)
 - user: `/src_user/Settings/DriverSuper/driver_super_params.h`
 
 #### 詳細説明
-[`/src_core/Drivers/Super/DriverSuper.h`](https://github.com/ut-issl/c2a-core/blob/develop/Drivers/Super/DriverSuper.h) を参照．
+[`/src_core/Drivers/Super/DriverSuper.h`](https://github.com/arkedge/c2a-core/blob/develop/Drivers/Super/DriverSuper.h) を参照．
 
 
 ## メモリ使用量にあまり影響しない設定
@@ -167,11 +167,11 @@ DriverSuperを継承したDriver数:           4
 NOTE: つまり関数ポインタのサイズ次第（コンパイラ依存）
 
 #### 定義
-- core: [`/src_core/TlmCmd/CommandAnalyze.h`](https://github.com/ut-issl/c2a-core/blob/develop/TlmCmd/CommandAnalyze.h)
+- core: [`/src_core/TlmCmd/CommandAnalyze.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/CommandAnalyze.h)
 - user: `/src_user/Settings/TlmCmd/command_analyze_params.h`
 
 #### 詳細説明
-[`/src_core/TlmCmd/CommandAnalyze.h`](https://github.com/ut-issl/c2a-core/blob/develop/TlmCmd/CommandAnalyze.h) を参照．
+[`/src_core/TlmCmd/CommandAnalyze.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/CommandAnalyze.h) を参照．
 
 
 - - -
@@ -187,11 +187,11 @@ NOTE: つまり関数ポインタのサイズ次第（コンパイラ依存）
 NOTE: つまり関数ポインタのサイズ次第（コンパイラ依存）
 
 #### 定義
-- core: [`/src_core/TlmCmd/TelemetryFrame.h`](https://github.com/ut-issl/c2a-core/blob/develop/TlmCmd/TelemetryFrame.h)
+- core: [`/src_core/TlmCmd/TelemetryFrame.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/TelemetryFrame.h)
 - user: `/src_user/Settings/TlmCmd/telemetry_frame_params.h`
 
 #### 詳細説明
-[`/src_core/TlmCmd/TelemetryFrame.h`](https://github.com/ut-issl/c2a-core/blob/develop/TlmCmd/TelemetryFrame.h) を参照．
+[`/src_core/TlmCmd/TelemetryFrame.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/TelemetryFrame.h) を参照．
 
 
 - - -
@@ -242,11 +242,11 @@ Event Logger 全体のメモリ使用量は以下Byte.
 ```
 
 #### 定義
-- core: [`/src_core/System/EventManager/event_logger.h`](https://github.com/ut-issl/c2a-core/blob/develop/System/EventManager/event_logger.h)
+- core: [`/src_core/System/EventManager/event_logger.h`](https://github.com/arkedge/c2a-core/blob/develop/System/EventManager/event_logger.h)
 - user: `/src_user/Settings/System/event_handler_params.h`
 
 #### 詳細説明
-[`/src_core/System/EventManager/event_logger.h`](https://github.com/ut-issl/c2a-core/blob/develop/System/EventManager/event_logger.h) を参照．
+[`/src_core/System/EventManager/event_logger.h`](https://github.com/arkedge/c2a-core/blob/develop/System/EventManager/event_logger.h) を参照．
 
 
 - - -
@@ -269,11 +269,11 @@ AppManagerのAppInfo保存テーブルサイズを制御する．
 NOTE: この値が関わる部分を抽出しているため，AppManagerの他の機能のためのメモリは含まない．
 
 #### 定義
-- core: [`/src_core/System/ApplicationManager/AppManager.h`](https://github.com/ut-issl/c2a-core/blob/develop/System/ApplicationManager/AppManager.h)
+- core: [`/src_core/System/ApplicationManager/AppManager.h`](https://github.com/arkedge/c2a-core/blob/develop/System/ApplicationManager/AppManager.h)
 - user: `/src_user/Settings/System/app_manager_params.h`
 
 #### 詳細説明
-[`/src_core/System/ApplicationManager/AppManager.h`](https://github.com/ut-issl/c2a-core/blob/develop/System/ApplicationManager/AppManager.h) を参照．
+[`/src_core/System/ApplicationManager/AppManager.h`](https://github.com/arkedge/c2a-core/blob/develop/System/ApplicationManager/AppManager.h) を参照．
 
 
 - - -
@@ -284,11 +284,11 @@ cycleやstepについてはTimeManager (documentはまだ書いてない....) �
 NOTE: メモリ使用量にほぼ関係なし
 
 #### 定義
-- core: [`/src_core/System/TimeManager/obc_time.h`](https://github.com/ut-issl/c2a-core/blob/develop/System/TimeManager/obc_time.h)
+- core: [`/src_core/System/TimeManager/obc_time.h`](https://github.com/arkedge/c2a-core/blob/develop/System/TimeManager/obc_time.h)
 - user: `/src_user/Settings/System/obc_time_params.h`
 
 #### 詳細説明
-[`/src_core/System/TimeManager/obc_time.h`](https://github.com/ut-issl/c2a-core/blob/develop/System/TimeManager/obc_time.h) を参照．
+[`/src_core/System/TimeManager/obc_time.h`](https://github.com/arkedge/c2a-core/blob/develop/System/TimeManager/obc_time.h) を参照．
 
 
 

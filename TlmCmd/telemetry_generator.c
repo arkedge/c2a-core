@@ -16,7 +16,7 @@
 
 /**
  * @brief 自身のテレメを生成
- * @note  2nd OBC のテレメは生成できない
+ * @note  sub OBC のテレメは生成できない
  * @param[in] tlm_id:     Tlm ID
  * @param[in] dest_flags: Dest Flags
  * @param[in] dest_info:  Dest Info
@@ -29,9 +29,9 @@ static CCP_CmdRet TG_generate_tlm_(TLM_CODE tlm_id,
                                    uint8_t num_dumps);
 
 /**
- * @brief 2nd OBC のテレメを転送
+ * @brief sub OBC のテレメを転送
  * @note  自身の OBC のテレメは転送できない
- * @param[in] apid:       転送する 2nd OBC tlm の APID
+ * @param[in] apid:       転送する sub OBC tlm の APID
  * @param[in] tlm_id:     Tlm ID
  * @param[in] dest_flags: Dest Flags
  * @param[in] dest_info:  Dest Info
@@ -54,7 +54,7 @@ static uint16_t TG_get_next_seq_count_(void);
 static CommonTlmPacket TG_ctp_;
 
 
-// FIXME: 現在のコードは，MOBC と 2nd OBC の Tlm id がユニークであることを想定している
+// FIXME: 現在のコードは，MOBC と sub OBC の Tlm id がユニークであることを想定している
 //        本来被っても良いはず
 // DEPRECATED!!!!!
 CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
@@ -78,7 +78,7 @@ CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
   }
 
   // ctp の ヘッダ部分の APID をクリア
-  // この後で， 配送元 OBC が自身か 2nd obc かを割り出せるように
+  // この後で， 配送元 OBC が自身か sub obc かを割り出せるように
   CTP_set_apid(&TG_ctp_, (APID)(APID_UNKNOWN & 0x7ff));    // FIXME: APID_UNKNOWN = APID_FILL_PKT + 1 だと 11 bit から溢れてる...
 
   // ADU生成
@@ -96,7 +96,7 @@ CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
   // Header
   if ((APID)(CTP_get_apid(&TG_ctp_) & 0x7ff) != (APID)(APID_UNKNOWN & 0x7ff))    // FIXME: APID_UNKNOWN = APID_FILL_PKT + 1 だと 11 bit から溢れてる...
   {
-    // 2nd OBC で生成された TLM の primary header, secondary header の board time はそのまま維持
+    // sub OBC で生成された TLM の primary header, secondary header の board time はそのまま維持
   }
   else
   {
@@ -243,7 +243,7 @@ static CCP_CmdRet TG_generate_tlm_(TLM_CODE tlm_id,
   if (ack == TF_TLM_FUNC_ACK_NOT_DEFINED) return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, tlm_id);
   if (ack != TF_TLM_FUNC_ACK_SUCCESS) return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_CONTEXT, (uint32_t)ack);
 
-  // 自身の OBC のテレメ生成を前提としているので， Cmd_GENERATE_TLM のように 2nd OBC 判定はいれない
+  // 自身の OBC のテレメ生成を前提としているので， Cmd_GENERATE_TLM のように sub OBC 判定はいれない
 
   // Primary Header
   TSP_setup_primary_hdr(&TG_ctp_, CTP_APID_FROM_ME, TG_get_next_seq_count_(), packet_len);
@@ -293,7 +293,7 @@ static CCP_CmdRet TG_forward_tlm_(APID apid,
   if (ack == TF_TLM_FUNC_ACK_NOT_DEFINED) return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, ( ((uint16_t)apid << 16) | (0x0000ffff & tlm_id) ));
   if (ack != TF_TLM_FUNC_ACK_SUCCESS) return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_CONTEXT, (uint32_t)ack);
 
-  // 2nd OBC なので， Header は可能な限り維持
+  // sub OBC なので， Header は可能な限り維持
   // Primary Header → 維持
 
   // Secondary Header
@@ -305,7 +305,7 @@ static CCP_CmdRet TG_forward_tlm_(APID apid,
   if (CTP_get_on_board_subnet_time(&TG_ctp_) == 0xffffffff)
   {
     // FIXME: 本当は Driver で受信時に上書きするべき？ 一応 CTP_get_ctp_from_dssc でも対応
-    // MOBC - 2nd OBC - 3rd OBC というとき， 2nd OBC でも 0xffffffff ができるようにしている
+    // MOBC - sub OBC (2nd OBC) - 3rd OBC というとき， sub OBC でも 0xffffffff ができるようにしている
     CTP_set_on_board_subnet_time(&TG_ctp_);
   }
 

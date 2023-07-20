@@ -14,8 +14,8 @@ jobs:
       fail-fast: false
       matrix:
         example:
-          - minimum_user
-          - 2nd_obc_user
+          - mobc
+          - subobc
 
     steps:
       - uses: actions/checkout@v3
