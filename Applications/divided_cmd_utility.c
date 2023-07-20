@@ -16,13 +16,14 @@
 #include "../TlmCmd/common_cmd_packet_util.h"
 #include "../System/TimeManager/time_manager.h"
 #include "../System/EventManager/event_logger.h"
+#include "../Library/result.h"
 
 /**
  * @brief  App初期化関数
  * @param  void
- * @return void
+ * @return RESULT
  */
-static void DCU_init_(void);
+static RESULT DCU_init_(void);
 
 /**
  * @brief  ログクリア
@@ -79,9 +80,10 @@ AppInfo DCU_create_app(void)
 }
 
 
-static void DCU_init_(void)
+static RESULT DCU_init_(void)
 {
   DCU_clear_log_();
+  return RESULT_OK;
 }
 
 

@@ -9,10 +9,11 @@
 #include <src_core/TlmCmd/common_cmd_packet_util.h>
 #include "../../Settings/port_config.h"
 #include "../../Settings/DriverSuper/driver_buffer_define.h"
+#include <src_core/Library/result.h>
 
-static void UART_TEST_init_by_AM_(void);
+static RESULT UART_TEST_init_by_AM_(void);
 static void UART_TEST_init_(void);
-static void UART_TEST_update_(void);
+static RESULT UART_TEST_update_(void);
 // TODO: 実装する
 // static int  UART_TEST_fill_with_zero_(uint32_t no);
 // static int  UART_TEST_abort_fill_nodata_(uint8_t err);
@@ -39,9 +40,10 @@ AppInfo UART_TEST_update(void)
 }
 
 
-static void UART_TEST_init_by_AM_(void)
+static RESULT UART_TEST_init_by_AM_(void)
 {
   // ひとまず何もしない
+  return RESULT_OK;
 }
 
 
@@ -88,7 +90,7 @@ static void UART_TEST_init_(void)
 }
 
 
-static void UART_TEST_update_(void)
+static RESULT UART_TEST_update_(void)
 {
   DS_REC_ERR_CODE ret;
 
@@ -96,6 +98,7 @@ static void UART_TEST_update_(void)
 
   // TODO: エラー処理
   (void)ret;
+  return RESULT_OK;
 }
 
 

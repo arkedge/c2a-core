@@ -45,9 +45,9 @@
 /**
  * @brief  App初期化関数
  * @param  void
- * @return void
+ * @return RESULT
  */
-static void TLM_MGR_init_by_am_(void);
+static RESULT TLM_MGR_init_by_am_(void);
 
 /**
  * @brief  初期化（分割 1/2）
@@ -354,9 +354,10 @@ AppInfo TLM_MGR_create_app(void)
 }
 
 
-static void TLM_MGR_init_by_am_(void)
+static RESULT TLM_MGR_init_by_am_(void)
 {
   telemetry_manager_.is_inited = 0;
+  return RESULT_OK;
 }
 
 
