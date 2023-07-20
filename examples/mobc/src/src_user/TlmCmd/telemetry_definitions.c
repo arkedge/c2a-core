@@ -14,6 +14,7 @@ static TF_TLM_FUNC_ACK Tlm_TLM_MGR1_(uint8_t* packet, uint16_t* len, uint16_t ma
 static TF_TLM_FUNC_ACK Tlm_TLM_MGR2_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_TL_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_BL_(uint8_t* packet, uint16_t* len, uint16_t max_len);
+static TF_TLM_FUNC_ACK Tlm_CDIS_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_CA_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_TF_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_DCU_(uint8_t* packet, uint16_t* len, uint16_t max_len);
@@ -40,6 +41,7 @@ void TF_load_tlm_table(TF_TlmInfo tlm_table[TF_MAX_TLMS])
   tlm_table[Tlm_CODE_TLM_MGR2].tlm_func = Tlm_TLM_MGR2_;
   tlm_table[Tlm_CODE_TL].tlm_func = Tlm_TL_;
   tlm_table[Tlm_CODE_BL].tlm_func = Tlm_BL_;
+  tlm_table[Tlm_CODE_CDIS].tlm_func = Tlm_CDIS_;
   tlm_table[Tlm_CODE_CA].tlm_func = Tlm_CA_;
   tlm_table[Tlm_CODE_TF].tlm_func = Tlm_TF_;
   tlm_table[Tlm_CODE_DCU].tlm_func = Tlm_DCU_;
@@ -1233,6 +1235,38 @@ static TF_TLM_FUNC_ACK Tlm_BL_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 #endif
 
   *len = 426;
+  return TF_TLM_FUNC_ACK_SUCCESS;
+}
+
+static TF_TLM_FUNC_ACK Tlm_CDIS_(uint8_t* packet, uint16_t* len, uint16_t max_len)
+{
+  const CommandDispatcher* cdis = command_dispatcher_manager->cdises[command_dispatcher_manager->idx_for_tlm];
+
+  if (83 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+
+#ifndef BUILD_SETTINGS_FAST_BUILD
+  TF_copy_u8(&packet[26], command_dispatcher_manager->num_of_cdis);
+  TF_copy_u8(&packet[27], command_dispatcher_manager->idx_for_tlm);
+  TF_copy_u8(&packet[28], cdis->idx);
+  TF_copy_u32(&packet[29], cdis->prev.time.total_cycle);
+  TF_copy_u32(&packet[33], cdis->prev.time.mode_cycle);
+  TF_copy_u32(&packet[37], cdis->prev.time.step);
+  TF_copy_u16(&packet[41], (uint16_t)cdis->prev.code);
+  TF_copy_u8(&packet[43], (uint8_t)cdis->prev.cmd_ret.exec_sts);
+  TF_copy_u32(&packet[44], cdis->prev.cmd_ret.err_code);
+  TF_copy_u32(&packet[48], cdis->prev_err.time.total_cycle);
+  TF_copy_u32(&packet[52], cdis->prev_err.time.mode_cycle);
+  TF_copy_u32(&packet[56], cdis->prev_err.time.step);
+  TF_copy_u16(&packet[60], (uint16_t)cdis->prev_err.code);
+  TF_copy_u8(&packet[62], (uint8_t)cdis->prev_err.cmd_ret.exec_sts);
+  TF_copy_u32(&packet[63], cdis->prev_err.cmd_ret.err_code);
+  TF_copy_u32(&packet[67], cdis->error_counter);
+  TF_copy_i32(&packet[71], cdis->lockout);
+  TF_copy_i32(&packet[75], cdis->stop_on_error);
+  TF_copy_u32(&packet[79], (uint32_t)cdis->pl);
+#endif
+
+  *len = 83;
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 
