@@ -4,10 +4,11 @@
  * @brief 各種コマンドの実行管理
  */
 #include "command_dispatcher.h"
-#include <src_user/TlmCmd/command_definitions.h>
+#include "command_dispatcher_manager.h"
 #include "../System/TimeManager/time_manager.h"
 #include "../System/EventManager/event_logger.h"
 #include "packet_handler.h"
+#include <src_user/TlmCmd/command_definitions.h>
 
 // TODO: 本当は，不正な CDISは pl == NULL などにしておくのが良さそうだが，
 //       現状 PL が NULL チェックをしてないので，できない
@@ -35,10 +36,18 @@ static void CDIS_clear_exec_info_(CDIS_ExecInfo* exec_info);
 CommandDispatcher CDIS_init(PacketList* pl)
 {
   CommandDispatcher cdis;
-  static uint8_t init_counter = 0;
+  static uint8_t is_first_call = 1;
+  static uint8_t init_counter_ = 0;
 
-  cdis.idx = init_counter;
-  init_counter++;
+  if (is_first_call)
+  {
+    CDIS_MGR_initialize();
+  }
+  is_first_call = 0;
+
+  // FIXME: カウンタやめる． mgr に登録されるものは再利用に
+  cdis.idx = init_counter_;
+  init_counter_++;
 
   // コマンド実行情報を初期化
   CDIS_clear_exec_info_(&cdis.prev);

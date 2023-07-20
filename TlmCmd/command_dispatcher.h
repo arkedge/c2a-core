@@ -28,12 +28,12 @@ typedef struct
  */
 typedef struct
 {
-  uint8_t idx;              //!< CDIS のインデックス. EL で用いる
+  uint8_t idx;              //!< CDIS のインデックス. EL, command_dispatcher_manager で用いる
   CDIS_ExecInfo prev;       //!< 前回のコマンド実行情報
   CDIS_ExecInfo prev_err;   //!< 最後にエラーが出たコマンド実行情報
   uint32_t error_counter;   //!< エラーカウンタ
   int lockout;              //!< 実行中断フラグ
-  int stop_on_error;        //!< 異常時実行中断フラグ
+  int stop_on_error;        //!< 異常時実行中断フラグ   // FIXME: きちんと実装する
   PacketList* pl;           //!< コマンドキュー
 } CommandDispatcher;
 
