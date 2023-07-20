@@ -25,6 +25,7 @@ call :sync_file ".\src\src_user\Settings\TlmCmd\common_cmd_packet_define.c" "..\
 call :sync_file ".\src\src_user\Settings\TlmCmd\common_tlm_cmd_packet_define.h" "..\mobc\src\src_user\Settings\TlmCmd\common_tlm_cmd_packet_define.h"
 call :sync_file ".\src\src_user\TlmCmd\block_command_user_settings.c" "..\mobc\src\src_user\TlmCmd\block_command_user_settings.c"
 call :sync_file ".\src\src_user\TlmCmd\block_command_user_settings.h" "..\mobc\src\src_user\TlmCmd\block_command_user_settings.h"
+call :sync_file ".\src\src_user\TlmCmd\command_source.h" "..\mobc\src\src_user\TlmCmd\command_source.h"
 call :sync_file ".\src\src_user\TlmCmd\common_cmd_packet.c" "..\mobc\src\src_user\TlmCmd\common_cmd_packet.c"
 call :sync_file ".\src\src_user\TlmCmd\common_tlm_cmd_packet.c" "..\mobc\src\src_user\TlmCmd\common_tlm_cmd_packet.c"
 

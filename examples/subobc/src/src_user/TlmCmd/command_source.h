@@ -14,6 +14,7 @@
 #include <src_core/System/WatchdogTimer/watchdog_timer.h>
 #include <src_core/TlmCmd/block_command_executor.h>
 #include <src_user/TlmCmd/block_command_user_settings.h>
+#include <src_core/TlmCmd/command_dispatcher_manager.h>
 #include <src_core/TlmCmd/telemetry_generator.h>
 #include <src_core/TlmCmd/telemetry_frame.h>
 #include "../Applications/app_headers.h"
