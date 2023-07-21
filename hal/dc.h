@@ -1,10 +1,9 @@
 /**
  * @file
- * @brief  DC (Discrete, GPIO) ラッパーのクラス
+ * @brief  DC (Discrete, GPIO) のHAL
  *
- *         DriverSuper Class は
- *         DCのインターフェースを実現し，
- *          DCポートの初期化，DC信号入出力を行う．
+ * DC HAL は
+ * DCポートの初期化，DC信号入出力を行う抽象化レイヤです．
  */
 #ifndef DC_H_
 #define DC_H_
