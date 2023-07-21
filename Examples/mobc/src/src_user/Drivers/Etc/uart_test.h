@@ -5,7 +5,7 @@
 #ifndef UART_TEST_H_
 #define UART_TEST_H_
 
-#include <src_core/IfWrapper/uart.h>
+#include <src_core/hal/uart.h>
 #include <src_core/Drivers/Super/driver_super.h>
 
 /**

@@ -18,7 +18,7 @@ sub GetSetting {
 	$SETTING{'SEARCH_PATH'} = [
 		'Applications',
 		'Drivers',
-		'IfWrapper',
+		'hal',
 		'Library',
 		'Settings',
 		'TlmCmd'

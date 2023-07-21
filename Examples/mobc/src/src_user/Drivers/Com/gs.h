@@ -7,9 +7,9 @@
 
 #include <src_core/TlmCmd/packet_handler.h>
 #include <src_core/Drivers/Super/driver_super.h>
-#include <src_core/IfWrapper/uart.h>
-#include <src_core/IfWrapper/ccsds.h>
-#include "../../IfWrapper/ccsds_user.h"
+#include <src_core/hal/uart.h>
+#include <src_core/hal/ccsds.h>
+#include "../../hal/ccsds_user.h"
 #include "../../TlmCmd/Ccsds/vcdu.h"
 #include "gs_validate.h"
 
