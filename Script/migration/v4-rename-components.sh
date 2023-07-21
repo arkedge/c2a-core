@@ -2,7 +2,7 @@
 
 # IfWrapper -> hal
 ## c2a-core ref
-find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#src_core/IfWrapper/Common#src_core/hal/common#g"
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#src_core/IfWrapper/Common/i2c_common#src_core/hal/i2c_common#g"
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#src_core/IfWrapper#src_core/hal#g"
 ## c2a user code
 mkdir -p src/src_user/hal
