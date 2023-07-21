@@ -7,8 +7,8 @@
 #ifndef I2C_COMMON_H_
 #define I2C_COMMON_H_
 
-#include "../../Drivers/Super/driver_super.h"
-#include "../i2c.h"
+#include "../Drivers/Super/driver_super.h"
+#include "i2c.h"
 
 /**
  * @brief I2C_Config 構造体にて指定されたデバイスのレジスタへ 1 バイトデータを書き込む
