@@ -4,7 +4,7 @@
 //        使用する前に確認すること
 
 #include "../TlmCmd/common_cmd_packet.h"
-#include "../IfWrapper/uart.h"
+#include "../hal/uart.h"
 #include "../System/ApplicationManager/app_info.h"
 
 #define UTIL_CMD_SIZE_MAX (256) // 256Bytes以上コマンドとして送ることはないはず．．．ICOUPS_PARAM_BLより長いし
