@@ -33,7 +33,7 @@
   "target_dirs" : [
     "Applications/",
     "Drivers/",
-    "IfWrapper/",
+    "hal/",
     "Library/",
     "System/",
     "TlmCmd/",

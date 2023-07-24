@@ -32,7 +32,7 @@ static void wdt_init_(void)
 
 void WDT_clear_wdt(void)
 {
-  // IF wrapper のものをよぶ
+  // HAL のものをよぶ
   WDT_clear((void*)&wdt_config_);
 }
 

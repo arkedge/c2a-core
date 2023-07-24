@@ -7,7 +7,7 @@
 #ifndef WATCHDOG_TIMER_H_
 #define WATCHDOG_TIMER_H_
 
-#include "../../IfWrapper/wdt.h"
+#include "../../hal/wdt.h"
 #include "../../TlmCmd/common_cmd_packet.h"
 
 extern const WDT_Config* const wdt_config;

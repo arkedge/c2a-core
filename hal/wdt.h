@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief watchdog timer の IF wapper
+ * @brief watchdog timer の HAL
  */
 #ifndef WDT_H_
 #define WDT_H_

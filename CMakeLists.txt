@@ -24,7 +24,7 @@ set(C2A_SRCS
   Drivers/Protocol/eb90_frame_for_driver_super.c
   Drivers/Protocol/eb90_packet_for_driver_super.c
   Drivers/Super/driver_super.c
-  IfWrapper/Common/i2c_common.c
+  hal/i2c_common.c
   System/ApplicationManager/app_info.c
   System/ApplicationManager/app_manager.c
   System/EventManager/event_manager.c

@@ -342,7 +342,7 @@ XTX_
 [Driver/Overview](../Driver/overview.md) も参照のこと．
 
 
-### IfWrapper
+### hal
 基本的な命名は， `${IFやデバイス名}` とする．
 
 このディレクトリは大きく分けて以下の２つのケースがある．（その限りではない）
@@ -353,30 +353,30 @@ XTX_
 
 1.のケース
 ```
-IfWrapper/
+hal/
   uart.h
-  ./Common/
-  ./Issl6uMobc/
+  ./common/
+  ./issl6u_mobc/
     uart_issl6u_mobc.c        <- 名前空間： UART
-    ./HogeChipset/
+    ./hoge_chipset/
       uart_hoge_chipset.cpp   <- 名前空間： UART_HOGE_CHIPSET
-  ./Sils/
+  ./sils/
     uart_sils.c               <- 名前空間： UART
 ```
 
 2.のケース
 ```
-IfWrapper/
+hal/
   flash.h
-  ./Common/
+  ./common/
     flash_common.c            <- 名前空間： FLASH
     flash_common.h            <- より細かく切り出したHW依存の関数を宣言
     flash_hoge.c              <- 名前空間： FLASH_HOGE（不都合があったら考える）
-  ./Issl6uMobc/
+  ./issl6u_mobc/
     flash_issl6u_mobc.c       <- 名前空間： FLASH
-    ./HogeChipset/
+    ./hoge_chipset/
       flash_hoge_chipset.cpp  <- 名前空間： FLASH_HOGE_CHIPSET
-  ./Sils/
+  ./sils/
     flash_sils.c              <- 名前空間： FLASH
 ```
 
@@ -687,7 +687,7 @@ typedef enum
 
 ### 全般
 - ハードウェアに依存する書き方をしないこと．
-    - 通信や特定のデバイス利用に関しては，IfWrapper フォルダ直下の関数を用いれば問題ない．
+    - 通信や特定のデバイス利用に関しては，hal フォルダ直下の関数を用いれば問題ない．
     - もちろん，マイコンのレジスタの操作などを直接書くとパソコンでは動かせなくなる．
 - エンディアンの違い
     - ほとんどのパソコンがリトルエンディアンなのに対し，いくつかのマイコンはビッグエンディアンである．

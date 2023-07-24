@@ -1,12 +1,11 @@
 /**
  * @file
- * @brief AA(ActiveAnalog)ラッパーのクラスです。
+ * @brief AA(ActiveAnalog)のHALです。
  *
- * AA(ActiveAnalog)ラッパーは、
- * AAのインターフェースを実現し、
+ * AA(ActiveAnalog) HALは、
  * AAポートの初期化、電圧値取得を行う、
- * AAラッパーのクラスです。
- * 個々の機器のインターフェースモジュールに継承?せさて使用します。
+ * AAの抽象化レイヤです。
+ * 個々の機器でこのインターフェースを実装して使用します。
  */
 
 #ifndef AA_H_

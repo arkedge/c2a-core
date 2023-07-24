@@ -1,12 +1,11 @@
 /**
  * @file
- * @brief PA(PassiveAnalog)ラッパーのクラスです。(MOBC用)
+ * @brief PA(PassiveAnalog)のHALです。(MOBC用)
  *
- * PA(PassiveAnalog)ラッパーは、
- * PAのインターフェースを実現し、
+ * PA(PassiveAnalog) HALは、
  * PAポートの初期化、電流値取得を行う、
- * PAラッパーのクラスです。
- * 個々の機器のインターフェースモジュールに継承?せさて使用します。
+ * PAラッパーの抽象化レイヤです。
+ * 個々の機器でこのインターフェースを実装して使用します。
  */
 
 #ifndef PA_H_
