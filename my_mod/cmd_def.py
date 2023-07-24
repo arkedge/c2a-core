@@ -9,7 +9,7 @@ import sys
 
 
 def GenerateCmdDef(settings, sgc_db):
-    output_file_path = settings["c2a_root_dir"] + r"src_user/TlmCmd/"
+    output_file_path = settings["path_to_src"] + r"src_user/TlmCmd/"
     output_file_name_base = "command_definitions"
 
     DATA_SART_ROW = 3
@@ -97,7 +97,7 @@ def GenerateCmdDef(settings, sgc_db):
 
 
 def GenerateBctDef(settings, bct_db):
-    output_file_path = settings["c2a_root_dir"] + r"src_user/TlmCmd/"
+    output_file_path = settings["path_to_src"] + r"src_user/TlmCmd/"
     output_file_name = "block_command_definitions.h"
 
     DATA_SART_ROW = 2
@@ -164,7 +164,7 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
             body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
         # print(body_h)
         output_file_path = (
-            settings["c2a_root_dir"]
+            settings["path_to_src"]
             + r"src_user/Drivers/"
             + settings["other_obc_data"][i]["driver_path"]
             + name_lower

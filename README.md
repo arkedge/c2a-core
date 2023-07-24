@@ -28,7 +28,7 @@ $ python GenerateC2ACode.py
 {
   # C2A ROOTへ相対パス．
   # C2A ROOTとは， `src_core`, `src_user` のあるディレクトリ
-  "c2a_root_dir" : "../../c2a/src/",
+  "path_to_src" : "../../c2a/src/",
   # TlmCmdDBのファイル名の接頭辞
   "db_prefix" : "SAMPLE_MOBC",
   # TLM ID の定義域

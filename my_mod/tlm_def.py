@@ -7,7 +7,7 @@ import sys
 
 
 def GenerateTlmDef(settings, tlm_db):
-    output_file_path = settings["c2a_root_dir"] + r"src_user/TlmCmd/"
+    output_file_path = settings["path_to_src"] + r"src_user/TlmCmd/"
     output_file_name_base = "telemetry_definitions"
 
     DATA_START_ROW = 8
@@ -137,7 +137,7 @@ def GenerateOtherObcTlmDef(settings, other_obc_dbs):
                 + ",\n"
             )
         output_file_path = (
-            settings["c2a_root_dir"]
+            settings["path_to_src"]
             + r"src_user/Drivers/"
             + settings["other_obc_data"][i]["driver_path"]
             + obc_name.lower()
