@@ -1,5 +1,5 @@
 #pragma section REPRO
-#include <src_core/IfWrapper/i2c.h>
+#include <src_core/hal/i2c.h>
 
 int I2C_init(void* my_i2c_v)
 {

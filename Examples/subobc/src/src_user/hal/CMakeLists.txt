@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(C2A_USER_IF_WRAPPER)
+project(C2A_USER_HAL)
 
 set(C2A_COMMON_SRCS
   if_list.c
@@ -11,49 +11,37 @@ if(USE_SILS_MOCKUP)
   message("USE SILS_MOCKUP")
 
   #target_sources(${PROJECT_NAME} PRIVATE
-  set(C2A_IF_IMPL_SRCS
-    SilsMockup/ccsds_sils.c
-    SilsMockup/i2c_sils.c
-    SilsMockup/uart_sils.c
-    SilsMockup/wdt_sils.c
+  set(C2A_HAL_IMPL_SRCS
+    sils_mockup/i2c_sils.c
+    sils_mockup/uart_sils.c
+    sils_mockup/wdt_sils.c
   )
 else()
   #target_sources(${PROJECT_NAME} PUBLIC
-  set(C2A_IF_IMPL_COMMON_SRCS
-    Sils/ccsds_sils.cpp
-    Sils/i2c_sils.cpp
-    Sils/uart_sils.cpp
-    Sils/wdt_sils.cpp
+  set(C2A_HAL_IMPL_COMMON_SRCS
+    sils/i2c_sils.cpp  
+    sils/uart_sils.cpp
+    sils/wdt_sils.cpp
   )
 
-  if(USE_SCI_COM_WINGS)
+  if(USE_SCI_COM_WINGS) # TODO: これ USE_SCI_COM_UART では？
     add_definitions(-DUSE_SCI_COM_WINGS)
     #target_sources(${PROJECT_NAME} PUBLIC
-    set(C2A_IF_COM_WINGS_SRCS
-      Sils/ccsds_sils_sci_if.cpp
-    )
-    message("USE SCI_COM_WINGS")
-  endif()
-
-  if(USE_SCI_COM_UART)
-    add_definitions(-DUSE_SCI_COM_UART)
-    #target_sources(${PROJECT_NAME} PUBLIC
-    set(C2A_IF_COM_UART_SRCS
-      Sils/uart_sils_sci_if.cpp
+    set(C2A_HAL_COM_UART_SRCS
+      sils/uart_sils_sci_if.cpp
     )
     message("USE SCI_COM_UART")
   endif()
 
-  set(C2A_IF_IMPL_SRCS
-    ${C2A_IF_IMPL_COMMON_SRCS}
-    ${C2A_IF_COM_WINGS_SRCS}
-    ${C2A_IF_COM_UART_SRCS}
+  set(C2A_HAL_IMPL_SRCS
+    ${C2A_HAL_IMPL_COMMON_SRCS}
+    ${C2A_HAL_COM_UART_SRCS}
   )
 endif()
 
 set(C2A_SRCS
   ${C2A_COMMON_SRCS}
-  ${C2A_IF_IMPL_SRCS}
+  ${C2A_HAL_IMPL_SRCS}
 )
 
 if(BUILD_C2A_AS_CXX)

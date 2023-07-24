@@ -2,11 +2,12 @@
 #define IF_LIST_H_
 
 
-#include <src_core/IfWrapper/ccsds.h>
-#include <src_core/IfWrapper/uart.h>
+#include <src_core/hal/ccsds.h>
+#include <src_core/hal/uart.h>
 
 typedef enum
 {
+  CCSDS,
   UART,
   IF_LIST_MAX
 } IF_LIST_ENUM;
