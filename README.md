@@ -16,7 +16,7 @@ $ python GenerateC2ACode.py
 ## 設定
 `settings.json` にて記述する．
 
-`is_main_obc` は，MOBC（地上局と通信するOBC．2nd OBCのtlm/cmdを取りまとめる）かそれ以外のOBC（2nd OBC．MOBCと通信するOBC）かを制御する．  
+`is_main_obc` は，MOBC（地上局と通信するOBC．2nd OBCのtlm/cmdを取りまとめる）かそれ以外のOBC（2nd OBC．MOBCと通信するOBC）かを制御する．
 `1` とした場合，MOBCを意図したコードが生成され，加えて以下が生成される．
 - 2nd_obc_command_definitions.h
 - 2nd_obc_telemetry_definitions.h
@@ -26,9 +26,10 @@ $ python GenerateC2ACode.py
 
 ```
 {
-  # C2A ROOTへ相対パス．
-  # C2A ROOTとは， `src_core`, `src_user` のあるディレクトリ
+  # `src_core`, `src_user` のあるディレクトリへのパス
   "path_to_src" : "../../c2a/src/",
+  # テレコマ DB のあるディレクトリへのパス
+  "path_to_db" : "../../c2a/database/",
   # TlmCmdDBのファイル名の接頭辞
   "db_prefix" : "SAMPLE_MOBC",
   # TLM ID の定義域
@@ -54,7 +55,7 @@ $ python GenerateC2ACode.py
       "is_cmd_prefixed_in_db" : 0,
       "input_file_encoding" : "utf-8",
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
-      "db_path" : "../../c2a_sample_aobc/src/src_user/Settings/TlmCmd/DataBase/",
+      "path_to_db" : "../../c2a_sample_aobc/database/",
       # MOBC で保持するテレメの TLM ID の最大値（＝テレメ種類数）
       "max_tlm_num" : 256,
       "driver_path" : "Aocs/",
@@ -72,7 +73,7 @@ $ python GenerateC2ACode.py
       "is_cmd_prefixed_in_db" : 0,
       "input_file_encoding" : "utf-8",
       # DBがあるディレクトリへのパス（絶対でも相対でもOK）
-      "db_path" : ""../../c2a_sample_tobc/src/src_user/Settings/TlmCmd/DataBase/",
+      "path_to_db" : ""../../c2a_sample_tobc/database/",
       # MOBC で保持するテレメの TLM ID の最大値（＝テレメ種類数）
       "max_tlm_num" : 256,
       "driver_path" : "Thermal/",
