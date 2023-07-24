@@ -1,5 +1,5 @@
 #pragma section REPRO
-#include <src_core/IfWrapper/uart.h>
+#include <src_core/hal/uart.h>
 
 int UART_init(void* my_uart_v)
 {
