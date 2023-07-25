@@ -9,7 +9,7 @@
 ### C2A core
 - 各 C2A で共通利用される C2A の中核部のコード
 - 基本的には，各々の C2A user repository （サンプル： TBW） にて， git submodule で参照される．
-- core 開発のための最小限の user 部は [`Examples`](./Examples) にあり，これを用いてビルドし，検証する．
+- core 開発のための最小限の user 部は [`examples`](./examples) にあり，これを用いてビルドし，検証する．
 
 
 ## ドキュメント
@@ -27,13 +27,13 @@
 ### SILS (Software-In-the-Loop-Simulation) 環境
 - C2A は， [S2E](https://github.com/ut-issl/s2e-core) などの SILS を用いて，フライトソフトウェアがそのまま実行される SILS を構築できる．
 - つまり，ターゲットの OBC 上で動くソフトウェアが， PC などの上で，そのままエミュレートできる．
-- [`Examples/mobc`](./Examples/mobc) にある， 最小限の C2A 実行サンプルは， [S2E User for C2A Core](https://github.com/ut-issl/s2e-user-for-c2a-core) によってエミュレーション可能である．
-    - また， [`Examples/subobc`](./Examples/subobc) にある sub OBC (非 MOBC) の user 部を使うことで， C2A 間通信も模擬できる．
+- [`examples/mobc`](./examples/mobc) にある， 最小限の C2A 実行サンプルは， [S2E User for C2A Core](https://github.com/ut-issl/s2e-user-for-c2a-core) によってエミュレーション可能である．
+    - また， [`examples/subobc`](./examples/subobc) にある sub OBC (非 MOBC) の user 部を使うことで， C2A 間通信も模擬できる．
 
 ### テスト
-- 特定の user を仮定しないと，各種パラメタが確定しないため， [`Examples/mobc`](./Examples/mobc) でテストする．
-- C2A 間通信に関連する部分のテストのみは [`Examples/subobc`](./Examples/subobc) を用いる．
-- 詳細は [Test](./Examples/mobc/src/src_user/Test) 参照．
+- 特定の user を仮定しないと，各種パラメタが確定しないため， [`examples/mobc`](./examples/mobc) でテストする．
+- C2A 間通信に関連する部分のテストのみは [`examples/subobc`](./examples/subobc) を用いる．
+- 詳細は [Test](./examples/mobc/src/src_user/Test) 参照．
 
 ### ブランチ
 - `main`: リリース版（[詳細](./Docs/General/release.md)）

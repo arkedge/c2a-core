@@ -9,11 +9,11 @@ Driver とは，各コンポーネントとの通信において， HW 依存部
 
 実装方法は，基本的には [driver_super.h](https://github.com/arkedge/c2a-core/blob/develop/Drivers/Super/driver_super.h) をみればわかるようにしてあるが，現時点で
 
-- UART test: https://github.com/arkedge/c2a-core/blob/develop/Examples/mobc/src/src_user/Drivers/Etc/uart_test.c
-- GS: https://github.com/arkedge/c2a-core/blob/develop/Examples/mobc/src/src_user/Drivers/Com/gs.c
+- UART test: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/Drivers/Etc/uart_test.c
+- GS: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/Drivers/Com/gs.c
 - C2A 間通信:
-    - https://github.com/arkedge/c2a-core/blob/develop/Examples/mobc/src/src_user/Drivers/Aocs/aobc.c
-    - https://github.com/arkedge/c2a-core/blob/develop/Examples/subobc/src/src_user/Drivers/Etc/mobc.c
+    - https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/Drivers/Aocs/aobc.c
+    - https://github.com/arkedge/c2a-core/blob/develop/examples/subobc/src/src_user/Drivers/Etc/mobc.c
 
 が実装されているので，それを参考のこと．  
 `load_init_setting` については下を参照．
