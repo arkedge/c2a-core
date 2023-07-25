@@ -58,10 +58,10 @@ dkms.conf
 ._*
 
 # for c2a user sample
-Examples/mobc/src/src_core
-Examples/mobc/build
-Examples/subobc/src/src_core
-Examples/subobc/build
+examples/mobc/src/src_core
+examples/mobc/build
+examples/subobc/src/src_core
+examples/subobc/build
 *.pyc
 
 # Added by cargo
