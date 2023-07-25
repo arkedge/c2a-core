@@ -28,7 +28,7 @@ SETTING_FILE_PATH = "settings.json"
 def main():
     with open(SETTING_FILE_PATH, mode="r") as fh:
         settings = json.load(fh)
-    # print(settings["c2a_root_dir"]);
+    # print(settings["path_to_src"]);
 
     cmd_db = my_mod.load_db.LoadCmdDb(settings)
     tlm_db = my_mod.load_db.LoadTlmDb(settings)
