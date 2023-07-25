@@ -16,7 +16,7 @@ $ python GenerateC2ACode.py
 ## 設定
 `settings.json` にて記述する．
 
-`is_main_obc` は，MOBC（地上局と通信するOBC．2nd OBCのtlm/cmdを取りまとめる）かそれ以外のOBC（2nd OBC．MOBCと通信するOBC）かを制御する．
+`is_main_obc` は，MOBC（地上局と通信するOBC．2nd OBCのtlm/cmdを取りまとめる）かそれ以外のOBC（2nd OBC．MOBCと通信するOBC）かを制御する．  
 `1` とした場合，MOBCを意図したコードが生成され，加えて以下が生成される．
 - 2nd_obc_command_definitions.h
 - 2nd_obc_telemetry_definitions.h
