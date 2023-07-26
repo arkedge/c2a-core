@@ -2,7 +2,7 @@
 
 ## 概要
 コンポーネント間通信などをまとめる．  
-なお，地上局との通信関連や， CCSDS などについて，衛星内コンポーネントのネットワーク関連などについては [Core Layer/Communication](../Core/communication.md) を参照のこと．
+なお，地上局との通信関連や， CCSDS などについて，衛星内コンポーネントのネットワーク関連などについては [Core Layer/Communication](../core/communication.md) を参照のこと．
 
 
 ## 通信レイヤ
@@ -14,7 +14,7 @@ CCSDS における APID によって制御されるデータ配送はネット�
 
 この層を流れるデータ単位を `Packet` と呼ぶ．
 
-C2A では，地上局との通信や C2A 間通信において， [Core Layer/Communication](../Core/communication.md) の Common Packet が標準的に使用される．  
+C2A では，地上局との通信や C2A 間通信において， [Core Layer/Communication](../core/communication.md) の Common Packet が標準的に使用される．
 C2A を搭載した OBC と Common Packet に対応していないその他のコンポーネントでは，後述する EB90 Packet を可能な限り用いる．
 
 ### データリンク層
@@ -30,7 +30,7 @@ C2A では，CCSDS に準拠した地上局との通信では，それに準拠�
 
 ## ネットワーク層 (Packet)
 ### Common Packet
-[Core Layer/Communication](../Core/communication.md) を参照のこと．
+[Core Layer/Communication](../core/communication.md) を参照のこと．
 
 ### EB90 Packet
 Common Packet ほどリッチな情報をやり取りしない通信に用いる．
@@ -109,5 +109,5 @@ C2A 間通信の具体的な実装については，本リポジトリに同封�
 - https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Drivers/Aocs/aobc.c#L1-L172
 - https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/subobc/src/src_user/Drivers/Etc/mobc.c#L1-L150
 
-地上局からのコマンドルーティングについては [Core Layer/Communication#コマンド配送におけるルーティングについて](../Core/communication.md#コマンド配送におけるルーティングについて) などを参照すること．
+地上局からのコマンドルーティングについては [Core Layer/Communication#コマンド配送におけるルーティングについて](../core/communication.md#コマンド配送におけるルーティングについて) などを参照すること．
 

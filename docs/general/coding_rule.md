@@ -339,7 +339,7 @@ PCDU_
 XTX_
 ```
 
-[Driver/Overview](../Driver/overview.md) も参照のこと．
+[Driver/Overview](../driver/overview.md) も参照のこと．
 
 
 ### hal
