@@ -12,6 +12,9 @@ license = "MIT"
 repository = "https://github.com/arkedge/c2a-core"
 documentation = "https://ut-issl.github.io/c2a-reference/c2a-core"
 
+[lib]
+path = "c2a_core.rs"
+
 [features]
 default = ["clang-runtime"]
 std = []
