@@ -4,7 +4,7 @@ echo setting for local environment...
 echo.
 
 echo [SET USER HOOKS]
-git config --local core.hooksPath Script/GitHooks
+git config --local core.hooksPath script/git_hooks
 echo done.
 echo.
 
