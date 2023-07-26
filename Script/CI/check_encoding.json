@@ -37,6 +37,6 @@
     "Library/",
     "System/",
     "TlmCmd/",
-    "Examples/mobc/src/src_user/"
+    "examples/mobc/src/src_user/"
   ]
 }

@@ -9,12 +9,12 @@ echo done.
 echo.
 
 echo [SET UP DEVELOP ENVIRONMENT FOR C2A MOBC USER SAMPLE]
-call :make_link ".\Examples\mobc\src\src_core" ".\"
+call :make_link ".\examples\mobc\src\src_core" ".\"
 echo done.
 echo.
 
 echo [SET UP DEVELOP ENVIRONMENT FOR SUBOBC USER SAMPLE]
-call :make_link ".\Examples\subobc\src\src_core" ".\"
+call :make_link ".\examples\subobc\src\src_core" ".\"
 echo done.
 echo.
 

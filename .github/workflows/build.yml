@@ -12,7 +12,7 @@ jobs:
     name: mobc
     uses: arkedge/workflows-c2a/.github/workflows/build.yml@v2.5.0
     with:
-      c2a_dir: Examples/mobc
+      c2a_dir: examples/mobc
       c2a_custom_setup: |
         cd ../..
         pwd
@@ -27,7 +27,7 @@ jobs:
     name: subobc
     uses: arkedge/workflows-c2a/.github/workflows/build.yml@v2.5.0
     with:
-      c2a_dir: Examples/subobc
+      c2a_dir: examples/subobc
       c2a_custom_setup: |
         cd ../..
         pwd

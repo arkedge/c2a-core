@@ -96,14 +96,14 @@ C2A 間通信によって，以下のような機能が提供される．
 
 - OBC 間の簡易な Driver 実装と自動コード生成
     - [c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) 参照．
-    - [`Examples/mobc/src/src_user/Drivers/Aocs`](/Examples/mobc/src/src_user/Drivers/Aocs/) などの多くのコードが自動生成される．
+    - [`examples/mobc/src/src_user/Drivers/Aocs`](/examples/mobc/src/src_user/Drivers/Aocs/) などの多くのコードが自動生成される．
 - OBC と地上局でネットワークを形成．
     - 地上局から MOBC をルーターとして， sub OBC へコマンド配送．
     - sub OBC のテレメトリを MOBC を経由して地上局まで配送．
     - OBC A から OBC B に対してコマンド発行 / テレメ送信．
     - 他
 
-C2A 間通信の具体的な実装については，本リポジトリに同封されている User Sample である [`Examples/mobc`](/Examples/mobc) と [`Examples/subobc`](/Examples/subobc) での通信（前者が MOBC，後者が AOBC を想定）を参考にされたい．
+C2A 間通信の具体的な実装については，本リポジトリに同封されている User Sample である [`examples/mobc`](/examples/mobc) と [`examples/subobc`](/examples/subobc) での通信（前者が MOBC，後者が AOBC を想定）を参考にされたい．
 具体的なドライバのコードは以下となる．
 
 - https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/src/src_user/Drivers/Aocs/aobc.c#L1-L172
