@@ -91,6 +91,9 @@ void PL_clear_list(PacketList* pl)
   pl->inactive_list_head_ = pl->pl_node_stock_;
   pl->active_list_head_ = NULL;
   pl->active_list_tail_ = NULL;
+
+  // カウンタリセット
+  pl->executed_nodes_ = 0;
 }
 
 

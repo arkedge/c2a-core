@@ -1242,45 +1242,46 @@ static TF_TLM_FUNC_ACK Tlm_CDIS_(uint8_t* packet, uint16_t* len, uint16_t max_le
 {
   const CommandDispatcher* cdis = command_dispatcher_manager->cdises[command_dispatcher_manager->idx_for_tlm];
 
-  if (128 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+  if (132 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
 
 #ifndef BUILD_SETTINGS_FAST_BUILD
   TF_copy_u8(&packet[26], command_dispatcher_manager->num_of_cdis);
   TF_copy_u8(&packet[27], command_dispatcher_manager->idx_for_tlm);
   TF_copy_u8(&packet[28], cdis->idx);
-  TF_copy_u32(&packet[29], cdis->prev.time.total_cycle);
-  TF_copy_u32(&packet[33], cdis->prev.time.mode_cycle);
-  TF_copy_u32(&packet[37], cdis->prev.time.step);
-  TF_copy_u16(&packet[41], (uint16_t)cdis->prev.code);
-  TF_copy_u8(&packet[43], (uint8_t)cdis->prev.cmd_ret.exec_sts);
-  TF_copy_u32(&packet[44], cdis->prev.cmd_ret.err_code);
-  TF_copy_u32(&packet[48], cdis->prev_err.time.total_cycle);
-  TF_copy_u32(&packet[52], cdis->prev_err.time.mode_cycle);
-  TF_copy_u32(&packet[56], cdis->prev_err.time.step);
-  TF_copy_u16(&packet[60], (uint16_t)cdis->prev_err.code);
-  TF_copy_u8(&packet[62], (uint8_t)cdis->prev_err.cmd_ret.exec_sts);
-  TF_copy_u32(&packet[63], cdis->prev_err.cmd_ret.err_code);
-  TF_copy_u32(&packet[67], cdis->error_counter);
-  TF_copy_i32(&packet[71], cdis->lockout);
-  TF_copy_i32(&packet[75], cdis->stop_on_error);
-  TF_copy_u32(&packet[79], (uint32_t)cdis->pl);
-  TF_copy_u16(&packet[83], cdis->pl->total_nodes_);
-  TF_copy_u32(&packet[85], cdis->pl->executed_nodes_);
-  TF_copy_u16(&packet[89], cdis->pl->active_nodes_);
-  TF_copy_u16(&packet[91], cdis->pl->packet_size_);
-  TF_copy_u8(&packet[93], (uint8_t)cdis->pl->packet_type_);
-  TF_copy_u32(&packet[94], (uint32_t)cdis->pl->pl_node_stock_);
-  TF_copy_u32(&packet[98], (uint32_t)cdis->pl->packet_stock_);
-  TF_copy_u32(&packet[102], (uint32_t)cdis->pl->inactive_list_head_);
-  TF_copy_u32(&packet[106], (uint32_t)cdis->pl->active_list_head_);
-  TF_copy_u32(&packet[110], (uint32_t)cdis->pl->active_list_tail_);
-  TF_copy_u32(&packet[114], PL_count_executed_nodes(cdis->pl));
-  TF_copy_u16(&packet[118], PL_count_active_nodes(cdis->pl));
-  TF_copy_u32(&packet[120], (PL_is_empty(cdis->pl)) ? 0 : CCP_get_ti((const CommonCmdPacket*)(PL_get_head(cdis->pl))->packet));
-  TF_copy_u32(&packet[124], (PL_is_empty(cdis->pl)) ? 0 : CCP_get_id((const CommonCmdPacket*)(PL_get_head(cdis->pl))->packet));
+  TF_copy_u32(&packet[29], (uint32_t)cdis);
+  TF_copy_u32(&packet[33], cdis->prev.time.total_cycle);
+  TF_copy_u32(&packet[37], cdis->prev.time.mode_cycle);
+  TF_copy_u32(&packet[41], cdis->prev.time.step);
+  TF_copy_u16(&packet[45], (uint16_t)cdis->prev.code);
+  TF_copy_u8(&packet[47], (uint8_t)cdis->prev.cmd_ret.exec_sts);
+  TF_copy_u32(&packet[48], cdis->prev.cmd_ret.err_code);
+  TF_copy_u32(&packet[52], cdis->prev_err.time.total_cycle);
+  TF_copy_u32(&packet[56], cdis->prev_err.time.mode_cycle);
+  TF_copy_u32(&packet[60], cdis->prev_err.time.step);
+  TF_copy_u16(&packet[64], (uint16_t)cdis->prev_err.code);
+  TF_copy_u8(&packet[66], (uint8_t)cdis->prev_err.cmd_ret.exec_sts);
+  TF_copy_u32(&packet[67], cdis->prev_err.cmd_ret.err_code);
+  TF_copy_u32(&packet[71], cdis->error_counter);
+  TF_copy_i32(&packet[75], cdis->lockout);
+  TF_copy_i32(&packet[79], cdis->stop_on_error);
+  TF_copy_u32(&packet[83], (uint32_t)cdis->pl);
+  TF_copy_u16(&packet[87], cdis->pl->total_nodes_);
+  TF_copy_u32(&packet[89], cdis->pl->executed_nodes_);
+  TF_copy_u16(&packet[93], cdis->pl->active_nodes_);
+  TF_copy_u16(&packet[95], cdis->pl->packet_size_);
+  TF_copy_u8(&packet[97], (uint8_t)cdis->pl->packet_type_);
+  TF_copy_u32(&packet[98], (uint32_t)cdis->pl->pl_node_stock_);
+  TF_copy_u32(&packet[102], (uint32_t)cdis->pl->packet_stock_);
+  TF_copy_u32(&packet[106], (uint32_t)cdis->pl->inactive_list_head_);
+  TF_copy_u32(&packet[110], (uint32_t)cdis->pl->active_list_head_);
+  TF_copy_u32(&packet[114], (uint32_t)cdis->pl->active_list_tail_);
+  TF_copy_u32(&packet[118], PL_count_executed_nodes(cdis->pl));
+  TF_copy_u16(&packet[122], PL_count_active_nodes(cdis->pl));
+  TF_copy_u32(&packet[124], (PL_is_empty(cdis->pl)) ? 0 : CCP_get_ti((const CommonCmdPacket*)(PL_get_head(cdis->pl))->packet));
+  TF_copy_u32(&packet[128], (PL_is_empty(cdis->pl)) ? 0 : CCP_get_id((const CommonCmdPacket*)(PL_get_head(cdis->pl))->packet));
 #endif
 
-  *len = 128;
+  *len = 132;
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 

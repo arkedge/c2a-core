@@ -10,7 +10,6 @@
 #include <string.h>
 #include "./common_cmd_packet_util.h"
 
-// FIXME: きちんとテストする
 /**
  * @brief  cdis を cdis mgr に登録されているか探し，見つかった場合は idx を返す
  * @note   CDIS_init から呼ばれることを想定
@@ -76,7 +75,7 @@ CCP_CmdRet Cmd_CDIS_MGR_SET_IDX_FOR_TLM(const CommonCmdPacket* packet)
   uint8_t idx_for_tlm = CCP_get_param_from_packet(packet, 0, uint8_t);
   if (idx_for_tlm >= command_dispatcher_manager_.num_of_cdis)
   {
-    CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, idx_for_tlm);
+    return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, idx_for_tlm);
   }
 
   command_dispatcher_manager_.idx_for_tlm = idx_for_tlm;
