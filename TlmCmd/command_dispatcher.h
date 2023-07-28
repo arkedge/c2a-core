@@ -9,6 +9,7 @@
 #include "common_cmd_packet.h"
 #include "packet_list.h"
 #include "../System/TimeManager/obc_time.h"
+#include "../Library/result.h"
 #include <src_user/TlmCmd/command_definitions.h>
 
 /**
@@ -28,23 +29,25 @@ typedef struct
  */
 typedef struct
 {
-  uint8_t idx;              //!< CDIS のインデックス. EL で用いる
+  uint8_t idx;              //!< CDIS のインデックス. EL, command_dispatcher_manager で用いる
   CDIS_ExecInfo prev;       //!< 前回のコマンド実行情報
   CDIS_ExecInfo prev_err;   //!< 最後にエラーが出たコマンド実行情報
   uint32_t error_counter;   //!< エラーカウンタ
   int lockout;              //!< 実行中断フラグ
-  int stop_on_error;        //!< 異常時実行中断フラグ
+  int stop_on_error;        //!< 異常時実行中断フラグ   // FIXME: きちんと実装する
   PacketList* pl;           //!< コマンドキュー
 } CommandDispatcher;
 
 
 /**
- * @brief  CDIS の初期化と取得
+ * @brief  CDIS の初期化
  * @note   各種 CommandDispatcher App (Realtime Command Dispatcher とか) でこれを呼び，使う
- * @param[in] pl: この CDIS と紐付けるコマンドキューの PacketList
- * @return 初期化された CommandDispatcher
+ * @param[out] cdis: 初期化する CDIS
+ * @param[in]  pl: この CDIS と紐付けるコマンドキューの PacketList
+ * @retval RESULT_OK:  正常終了
+ * @retval RESULT_ERR: 不正入力 or CDIS の初期化はしたが， CDIS_MGR への登録に失敗した（キャパオーバー）
  */
-CommandDispatcher CDIS_init(PacketList* pl);
+RESULT CDIS_init(CommandDispatcher* cdis, PacketList* pl);
 
 /**
  * @brief  CDIS に登録されているコマンドキューからコマンドを実行

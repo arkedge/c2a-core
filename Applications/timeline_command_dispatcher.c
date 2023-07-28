@@ -46,7 +46,7 @@ AppInfo TLCD_gs_create_app(void)
 
 static RESULT TLCD_gs_init_(void)
 {
-  timeline_command_dispatcher_.dispatcher[TLCD_ID_FROM_GS] = CDIS_init(&(PH_tl_cmd_list[TLCD_ID_FROM_GS]));
+  RESULT ret = CDIS_init(&timeline_command_dispatcher_.dispatcher[TLCD_ID_FROM_GS], &(PH_tl_cmd_list[TLCD_ID_FROM_GS]));
 
   // タイムラインコマンドのテレメトリ変数初期設定
   // すべてのタイムラインで共用なので TLCD_gs で代表して初期化
@@ -56,7 +56,7 @@ static RESULT TLCD_gs_init_(void)
 
   memset(&TLCD_null_packet_, 0, sizeof(TLCD_null_packet_));
   TLCD_update_tl_list_for_tlm(TLCD_ID_FROM_GS);
-  return RESULT_OK;
+  return ret;
 }
 
 static RESULT TLCD_gs_dispatch_(void)
@@ -72,8 +72,7 @@ AppInfo TLCD_bc_create_app(void)
 
 static RESULT TLCD_bc_init_(void)
 {
-  timeline_command_dispatcher_.dispatcher[TLCD_ID_DEPLOY_BC] = CDIS_init(&(PH_tl_cmd_list[TLCD_ID_DEPLOY_BC]));
-  return RESULT_OK;
+  return CDIS_init(&timeline_command_dispatcher_.dispatcher[TLCD_ID_DEPLOY_BC], &(PH_tl_cmd_list[TLCD_ID_DEPLOY_BC]));
 }
 
 static RESULT TLCD_bc_dispatch_(void)
@@ -89,8 +88,7 @@ AppInfo TLCD_tlm_create_app(void)
 
 static RESULT TLCD_tlm_init_(void)
 {
-  timeline_command_dispatcher_.dispatcher[TLCD_ID_DEPLOY_TLM] = CDIS_init(&(PH_tl_cmd_list[TLCD_ID_DEPLOY_TLM]));
-  return RESULT_OK;
+  return CDIS_init(&timeline_command_dispatcher_.dispatcher[TLCD_ID_DEPLOY_TLM], &(PH_tl_cmd_list[TLCD_ID_DEPLOY_TLM]));
 }
 
 static RESULT TLCD_tlm_dispatch_(void)
@@ -107,8 +105,7 @@ AppInfo TLCD_mis_create_app(void)
 
 static RESULT TLCD_mis_init_(void)
 {
-  timeline_command_dispatcher_.dispatcher[TLCD_ID_FROM_GS_FOR_MISSION] = CDIS_init(&(PH_tl_cmd_list[TLCD_ID_FROM_GS_FOR_MISSION]));
-  return RESULT_OK;
+  return CDIS_init(&timeline_command_dispatcher_.dispatcher[TLCD_ID_FROM_GS_FOR_MISSION], &(PH_tl_cmd_list[TLCD_ID_FROM_GS_FOR_MISSION]));
 }
 
 static RESULT TLCD_mis_dispatch_(void)

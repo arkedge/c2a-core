@@ -85,8 +85,7 @@ AppInfo DI_AOBC_cmd_dispatcher(void)
 
 static RESULT DI_AOBC_cmd_dispatcher_init_(void)
 {
-  DI_AOBC_cdis_ = CDIS_init(&PH_aobc_cmd_list);
-  return RESULT_OK;
+  return CDIS_init(&DI_AOBC_cdis_, &PH_aobc_cmd_list);
 }
 
 

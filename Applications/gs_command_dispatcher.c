@@ -37,8 +37,7 @@ AppInfo GSCD_create_app(void)
 
 static RESULT GSCD_init_(void)
 {
-  gs_command_dispatcher_ = CDIS_init(&PH_gs_cmd_list);
-  return RESULT_OK;
+  return CDIS_init(&gs_command_dispatcher_, &PH_gs_cmd_list);
 }
 
 static RESULT GSCD_dispatch_(void)

@@ -14,6 +14,7 @@ typedef enum
   Tlm_CODE_TLM_MGR2 = 0x19,
   Tlm_CODE_TL = 0x20,
   Tlm_CODE_BL = 0x21,
+  Tlm_CODE_CDIS = 0x24,
   Tlm_CODE_CA = 0x25,
   Tlm_CODE_TF = 0x26,
   Tlm_CODE_DCU = 0x2a,

@@ -14,6 +14,7 @@
 #include <src_core/System/EventManager/event_handler.h>
 #include <src_core/System/WatchdogTimer/watchdog_timer.h>
 #include <src_core/TlmCmd/command_analyze.h>
+#include <src_core/TlmCmd/command_dispatcher_manager.h>
 #include <src_core/TlmCmd/block_command_executor.h>
 #include "../Applications/app_headers.h"
 #include "../Drivers/Aocs/aobc_telemetry_buffer.h"

@@ -52,7 +52,7 @@ void TDSP_initialize(void)
   PL_initialize_with_ccp(task_stock_, packet_stock_, TDSP_TASK_MAX, &TDSP_task_list_);
 
   // タスクリストを初期化し、INITIALモードのブロックコマンドを展開する
-  task_dispatcher_.tskd = CDIS_init(&TDSP_task_list_);
+  CDIS_init(&task_dispatcher_.tskd, &TDSP_task_list_);
   task_dispatcher_.task_list_id = MM_get_tasklist_id_of_mode(MD_MODEID_START_UP);
   TDSP_deploy_block_as_task_list_();
   task_dispatcher_.activated_at = 0;
