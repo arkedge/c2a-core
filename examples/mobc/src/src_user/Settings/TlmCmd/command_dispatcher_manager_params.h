@@ -7,6 +7,6 @@
 
 #undef CDIS_MGR_MAX_NUM_OF_CDIS
 
-#define CDIS_MGR_MAX_NUM_OF_CDIS   (8)      // core + AOBC
+#define CDIS_MGR_MAX_NUM_OF_CDIS   (8)      // core (標準的には RT, TL * 4, GS, TDSP の 7 個) + AOBC
 
 #endif
