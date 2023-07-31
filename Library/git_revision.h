@@ -26,7 +26,7 @@
 
 /**
  * @note コマンドラインオプションからのdefineが開発環境の都合などにより困難な場合は，
- *   src_user/Script/Git/revision.sh/batをビルドパイプライン上で実行するようにします．
+ *   src_user/script/git/revision.sh/batをビルドパイプライン上で実行するようにします．
  *   このスクリプトは上記の定数群をdefineしたsrc_user/Settings/git_revision_config.hを自動生成します．
  *   この場合，src_user/Settings/git_revision_config.hはcommit・ビルドの度に変更されるため，gitignoreしておいた方がよいでしょう．
  */

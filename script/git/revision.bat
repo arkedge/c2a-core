@@ -1,7 +1,7 @@
 @ECHO OFF
 REM print C2A core Git revision as C header
 
-REM current directory(src_core/Script/Git)‚ÉˆÚ“®
+REM current directory(src_core/script/git)‚ÉˆÚ“®
 cd /d %~dp0
 
 for /f "usebackq" %%a in (`"git log --pretty=format:%%H -1"`) do set git_rev_core=%%a
