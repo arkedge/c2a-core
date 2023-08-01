@@ -27,24 +27,24 @@ C2A に関する説明の棲み分けは，次のようになっています．
 ## 目次
 
 1. General Information
-    1. [Overview](./General/overview.md)
-    1. [Release](./General/release.md)
-    1. [Coding Rule](./General/coding_rule.md)
-    1. [Coding Acronyms](./General/coding_acronyms.md)
+    1. [Overview](./general/overview.md)
+    1. [Release](./general/release.md)
+    1. [Coding Rule](./general/coding_rule.md)
+    1. [Coding Acronyms](./general/coding_acronyms.md)
 1. Application Layer
-    1. [Overview](./Application/overview.md)
+    1. [Overview](./application/overview.md)
     1. How to add a application
 1. Core Layer
     1. Overview
-    1. [Communication](./Core/communication.md)
-    1. [Tips](./Core/tips.md)
+    1. [Communication](./core/communication.md)
+    1. [Tips](./core/tips.md)
 1. Driver
-    1. [Overview](./Driver/overview.md)
-    1. [Communication with Components](./Driver/communication_with_components.md)
+    1. [Overview](./driver/overview.md)
+    1. [Communication with Components](./driver/communication_with_components.md)
 1. SILS
     1. Overview
-    1. [S2E Integration](./Sils/s2e_integration.md)
+    1. [S2E Integration](./sils/s2e_integration.md)
 1. Tips
-    1. [Parameter Settings](./Tips/parameter_settings.md)
+    1. [Parameter Settings](./tips/parameter_settings.md)
 1. Tools
-    1. [Overview](./Tools/overview.md)
+    1. [Overview](./tools/overview.md)

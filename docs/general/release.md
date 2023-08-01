@@ -9,7 +9,7 @@
     - バージョンを上げる．
     - `v3.4.0` → `v3.5.0` など
 - Pre-release
-    - 主に， [Tools/Overview](../Tools/overview.md) などで非互換なアップデートが入った場合のリリース．
+    - 主に， [Tools/Overview](../tools/overview.md) などで非互換なアップデートが入った場合のリリース．
     - `beta` をリリースする．
         - `v3.4.0` → `v3.5.0-beta.0` など
 
@@ -46,7 +46,7 @@
 ただし，あるまとまった機能の実装の PR が複数に分割され，一部がまだマージされていない場合はリリースを控えること．
 
 ### Pre-release
-1.  [Tools/Overview](../Tools/overview.md) などに非互換なアップデートが含まれる PR を発行する．このとき， Pre-release PR となる．
+1.  [Tools/Overview](../tools/overview.md) などに非互換なアップデートが含まれる PR を発行する．このとき， Pre-release PR となる．
     - これは， `feature` ブランチから `develop` ブランチへの PR になるはず．
     - 対応する Tools の PR のリンクを貼る．
     - `#define C2A_CORE_VER_PRE` に `("beta.0")` などをセットする．
@@ -71,7 +71,7 @@
 
 
 ## C2A Tools との互換性について
-少なくとも， [Tools/Overview](../Tools/overview.md) の Tool に後方互換性のない更新があった場合は，新しいバージョンをリリースする．  
+少なくとも， [Tools/Overview](../tools/overview.md) の Tool に後方互換性のない更新があった場合は，新しいバージョンをリリースする．  
 Tool のリリースには，以下に注意する．
 
 - C2A と同様の規則で Relase を発行する．

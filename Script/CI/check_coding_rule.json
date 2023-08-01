@@ -7,7 +7,7 @@
   ],
   "ignore_dirs" : [
     "src_core/examples",
-    "src_core/Docs",
+    "src_core/docs",
     "src_core/Script"
   ],
   "ignore_files" : [
