@@ -19,7 +19,7 @@
 
 1. バージョン番号をインクリメントする PR (Pull Request) を発行し，`develop` ブランチへマージする．
     - [c2a_core_main.h](https://github.com/arkedge/c2a-core/blob/develop/c2a_core_main.h) 内の `C2A_CORE_VER_*` をインクリメントする．
-    - [Cargo.toml](https://github.com/arkedge/c2a-core/blob/develop/Cargo.toml) 内の `package.version` をインクリメントする．
+    - [Cargo.toml](https://github.com/arkedge/c2a-core/blob/develop/Cargo.toml) 内の `workspace.package.version` をインクリメントする．
     - この後リリースを控えるので，念の為すべてのテストを再度回す．
     - `#define C2A_CORE_VER_PRE` は `("")` とする．
     - PR 名は `Update version (v3.4.0)` のようにする．
