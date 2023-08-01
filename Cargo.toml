@@ -30,8 +30,13 @@ default = ["clang-runtime"]
 std = []
 export-src = ["std"]
 clang-runtime = ["clang/runtime"]
+no-c2a-link = []
 
 [build-dependencies]
 semver = "1.0.18"
 clang = "2.0.0"
 c2a-bind-utils = { path = "./Library/bind-utils" }
+
+[dev-dependencies]
+# unit test 時に libC2A.a を要求しないようにする
+c2a-core = { path = ".", features = ["no-c2a-link"] }
