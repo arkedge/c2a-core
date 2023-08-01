@@ -1,5 +1,6 @@
 [package]
 name = "c2a-bind-utils"
+description = "C2Aのモジュールをbindgenするときのユーティリティ"
 version.workspace = true
 edition = "2021"
 
