@@ -1,0 +1,8 @@
+[package]
+name = "c2a-bind-utils"
+version.workspace = true
+edition = "2021"
+
+[dependencies]
+bindgen = "0.66.1"
+doxygen-rs = "0.4.2"

@@ -5,6 +5,7 @@ version = "3.10.0"
 resolver = "2"
 
 members = [
+  "./Library/bind-utils",
 ]
 
 [package]
@@ -33,3 +34,4 @@ clang-runtime = ["clang/runtime"]
 [build-dependencies]
 semver = "1.0.18"
 clang = "2.0.0"
+c2a-bind-utils = { path = "./Library/bind-utils" }
