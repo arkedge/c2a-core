@@ -32,5 +32,8 @@ jobs:
           reporter: ${{ github.event_name == 'pull_request' && 'github-pr-review' || 'github-check' }}
           clippy_flags: --all-features
 
+      - name: format
+        run: cargo fmt --all -- --check
+
       - name: unit test
         run: cargo test
