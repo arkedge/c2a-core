@@ -1,5 +1,6 @@
 [package]
 name = "c2a-wdt-noop"
+description = "No-op c2a-hal WDT implementation for mock"
 version.workspace = true
 edition = "2021"
 
