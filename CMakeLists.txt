@@ -79,12 +79,12 @@ endif()
 add_library(${PROJECT_NAME} OBJECT ${C2A_SRCS})
 
 if(USE_ALL_C2A_CORE_APPS)
-  add_subdirectory(Applications)
+  add_subdirectory(applications)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_APPS>)
 endif()
 
 if(USE_ALL_C2A_CORE_TEST_APPS)
-  add_subdirectory(Applications/TestApp)
+  add_subdirectory(applications/test_app)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_TEST_APPS>)
 endif()
 

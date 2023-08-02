@@ -213,14 +213,14 @@ typedef uint32_t flash_block_t;
 
 
 ## 個別箇所についての命名など [M]
-### Applications/UserDefined
+### applications/user_defined
 - ファイル名と AppInfo 構造体名を一致させる（スタイルを除く）
 - AppInfo 構造体名とそのインスタンス名を一致させる（スタイルを除く）
 - 接頭辞は， `APP_HOGE` で `HOGE` 部分はケースバイケース．
 
 例：
 
-Applications/UserDefined/data_recorder.c
+applications/user_defined/data_recorder.c
 ```cpp
 static DataRecorder data_recorder_;
 const DataRecorder* const data_recorder = &data_recorder_;
@@ -232,7 +232,7 @@ AppInfo APP_DR_create_app(void)
 }
 ```
 
-Applications/UserDefined/data_recorder.h
+applications/user_defined/data_recorder.h
 ```cpp
 #ifndef DATA_RECORDER_H_
 #define DATA_RECORDER_H_
@@ -253,7 +253,7 @@ int Cmd_APP_DR_SET_PARAMS(const CommonCmdPacket* packet);
 ```
 
 
-### Applications/DriverInstances
+### applications/driver_instances
 - ファイル名は `di_${IFやデバイス名}`
 - Driver 構造体名とそのインスタンス名を一致させる（スタイルを除く）
     - 特定のドライバ構造体のインスタンスが複数ある場合は，配列にまとめる．
@@ -292,7 +292,7 @@ RM3100_Driver rm3100_driver[RM3100_IDX_MAX];
 ```
 
 
-### Applications/Middleware
+### applications/middleware
 - ファイル名は `mw_${IFやデバイス名}`
 - 接頭辞は `MW_${IFやデバイス名}`
 
@@ -312,7 +312,7 @@ const MwFlash* const mw_flash = &mw_flash_;
 ```
 
 
-### Applications その他
+### applications その他
 `AR_APP_ID` enumの接頭辞は，
 - `AR_NOP`: NOP
 - `AR_APP_HOGE`: UserDefined
@@ -322,8 +322,8 @@ const MwFlash* const mw_flash = &mw_flash_;
 とし，基本的には `HOGE` は ファイル名にする．
 
 つまり， 
-- Applications/UserDefined/data_recorder.h → `AR_APP_DATA_RECORDER`
-- Applications/DriverInstances/di_pcdu.h → `AR_DI_PCDU`
+- applications/user_defined/data_recorder.h → `AR_APP_DATA_RECORDER`
+- applications/driver_instances/di_pcdu.h → `AR_DI_PCDU`
 
 となる．
 

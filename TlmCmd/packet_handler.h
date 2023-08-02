@@ -7,7 +7,7 @@
 
 #include "common_tlm_cmd_packet.h"
 #include "packet_list.h"
-#include "../Applications/timeline_command_dispatcher_id_define.h"
+#include "../applications/timeline_command_dispatcher_id_define.h"
 
 #define TL_TLM_PAGE_SIZE  (32)
 #define TL_TLM_PAGE_MAX   (8)
