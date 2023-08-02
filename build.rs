@@ -119,7 +119,11 @@ fn get_definitions(src_file: &str) -> HashMap<String, Option<String>> {
 
                 let first = token.first().unwrap();
                 let last = token.last().unwrap();
-                if first.get_kind() == Punctuation && last.get_kind() == Punctuation && first.get_spelling() == "(" && last.get_spelling() == ")" {
+                if first.get_kind() == Punctuation
+                    && last.get_kind() == Punctuation
+                    && first.get_spelling() == "("
+                    && last.get_spelling() == ")"
+                {
                     token.remove(0);
                     token.remove(token.len() - 1);
                 }
