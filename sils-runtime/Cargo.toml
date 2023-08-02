@@ -1,0 +1,12 @@
+[package]
+name = "c2a-sils-runtime"
+description = "common C2A runtime for SILS"
+version.workspace = true
+edition = "2021"
+
+[lib]
+test = false   # 呼んでいる C2A の関数をリンクできないので，unit test はしない（できない）
+# TODO: 適切な c2a-core とマッチした example user をリンクしたテスト
+
+[dependencies]
+c2a-core.workspace = true

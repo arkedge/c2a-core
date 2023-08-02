@@ -5,8 +5,12 @@ version = "3.10.0"
 resolver = "2"
 
 members = [
+  "./sils-runtime",
   "./Library/bind-utils",
 ]
+
+[workspace.dependencies]
+c2a-core = { path = "." }
 
 [package]
 name = "c2a-core"
