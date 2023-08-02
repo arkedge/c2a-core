@@ -9,6 +9,7 @@ members = [
   "./Library/bind-utils",
 
   "./hal/i2c_noop",
+  "./hal/spi_noop",
 ]
 
 [workspace.dependencies]
