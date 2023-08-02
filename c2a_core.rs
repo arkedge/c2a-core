@@ -7,6 +7,7 @@
 use core::*;
 include!(concat!(env!("OUT_DIR"), "/c2a_core_main.rs"));
 
+pub mod System;
 pub mod hal;
 
 #[cfg(feature = "export-src")]
