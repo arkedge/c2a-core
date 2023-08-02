@@ -1,3 +1,6 @@
+//! **c2a-uart-kble** provides [kble](https://github.com/arkedge/kble) based c2a-hal UART
+//! emulation for C2A
+
 mod buffer;
 mod kble;
 
