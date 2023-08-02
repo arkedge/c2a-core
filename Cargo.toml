@@ -12,6 +12,8 @@ members = [
   "./hal/spi-noop",
   "./hal/uart-noop",
   "./hal/wdt-noop",
+
+  "./hal/uart-kble",
 ]
 
 [workspace.dependencies]
