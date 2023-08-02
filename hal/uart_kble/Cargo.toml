@@ -1,0 +1,17 @@
+[package]
+name = "c2a-uart-kble"
+description = "kble-based UART emulation for C2A"
+version.workspace = true
+edition = "2021"
+
+[dependencies]
+c2a-core.workspace = true
+once_cell = "1"
+futures = "0.3"
+kble-socket = { version = "0.2.0", features = ["axum"] }
+tokio = { version = "1", features = ["sync", "rt"] }
+axum = { version = "0.6", default-features = false, features = ["tokio", "http1", "ws"] }
+anyhow = "1"
+
+[dev-dependencies]
+c2a-core = { workspace = true, features = ["no-c2a-link"] }
