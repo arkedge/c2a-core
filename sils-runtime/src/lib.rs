@@ -38,6 +38,6 @@ pub fn c2a_main() {
             let duration_to_sleep = UPDATE_BATCH_IN_REALTIME - elapsed_time;
             thread::sleep(duration_to_sleep);
         }
-        // 時間がめっちゃ遅れてたときの時間回復は一旦しない
+        // FIXME: 時間がめっちゃ遅れてたときの時間回復は一旦しない
     }
 }
