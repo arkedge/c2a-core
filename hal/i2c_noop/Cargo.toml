@@ -1,0 +1,7 @@
+[package]
+name = "c2a-i2c-noop"
+version.workspace = true
+edition = "2021"
+
+[dependencies]
+c2a-core.workspace = true

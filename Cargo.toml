@@ -7,6 +7,8 @@ resolver = "2"
 members = [
   "./sils-runtime",
   "./Library/bind-utils",
+
+  "./hal/i2c_noop",
 ]
 
 [workspace.dependencies]
