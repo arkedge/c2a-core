@@ -9,7 +9,7 @@
 #include "packet_handler.h"
 #include "../applications/timeline_command_dispatcher_id_define.h"
 #include "block_command_table.h" // for bct_id
-#include <src_user/Applications/app_registry.h>
+#include <src_user/applications/app_registry.h>
 
 /**
  * @enum   CCP_UTIL_ACK

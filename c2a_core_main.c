@@ -14,7 +14,7 @@
 #include "./TlmCmd/command_analyze.h"
 #include "./TlmCmd/telemetry_frame.h"
 
-#include <src_user/Applications/app_registry.h>
+#include <src_user/applications/app_registry.h>
 
 // git revisionをコードに埋め込む
 const char GIT_REV_CORE[41]         = GIT_REVISION_C2A_CORE;
