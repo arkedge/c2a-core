@@ -2,7 +2,7 @@
 #define REALTIME_COMMAND_DISPATCHER_H_
 
 #include "../TlmCmd/command_dispatcher.h"
-#include "../System/ApplicationManager/app_info.h"
+#include "../system/application_manager/app_info.h"
 #include "../TlmCmd/common_cmd_packet.h"
 
 extern const CommandDispatcher* const realtime_command_dispatcher;

@@ -1,7 +1,7 @@
 #ifndef MEMORY_DUMP_H_
 #define MEMORY_DUMP_H_
 
-#include "../System/ApplicationManager/app_info.h"
+#include "../system/application_manager/app_info.h"
 #include "../TlmCmd/common_cmd_packet.h"
 
 #define MEM_TLM_ID      (0xff)

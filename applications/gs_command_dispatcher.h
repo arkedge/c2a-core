@@ -6,7 +6,7 @@
 #define GS_COMMAND_DISPATCHER_H_
 
 #include "../TlmCmd/command_dispatcher.h"
-#include "../System/ApplicationManager/app_info.h"
+#include "../system/application_manager/app_info.h"
 
 extern const CommandDispatcher* const gs_command_dispatcher;
 

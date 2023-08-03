@@ -6,7 +6,7 @@
 #ifndef TELEMETRY_MANAGER_H_
 #define TELEMETRY_MANAGER_H_
 
-#include "../System/ApplicationManager/app_info.h"
+#include "../system/application_manager/app_info.h"
 #include "../TlmCmd/common_cmd_packet.h"
 #include "../TlmCmd/common_cmd_packet_util.h"
 #include "../TlmCmd/block_command_table.h"

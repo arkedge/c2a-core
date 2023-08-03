@@ -5,7 +5,7 @@
 #include "../TlmCmd/command_dispatcher.h"
 #include "../TlmCmd/common_cmd_packet.h"
 #include "../TlmCmd/packet_handler.h"
-#include "../System/ApplicationManager/app_info.h"
+#include "../system/application_manager/app_info.h"
 
 /**
  * @struct TimelineCommandDispatcher

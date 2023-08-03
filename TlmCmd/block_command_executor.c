@@ -13,7 +13,7 @@
 #include "block_command_executor.h"
 #include "packet_handler.h"
 #include "../library/endian.h"
-#include "../System/TimeManager/time_manager.h"
+#include "../system/time_manager/time_manager.h"
 #include "common_cmd_packet_util.h"
 
 static CommonCmdPacket BCE_packet_;

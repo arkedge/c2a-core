@@ -8,7 +8,7 @@
 #include <src_user/Settings/System/anomaly_logger_define.h>
 #ifdef AL_ENABLE
 
-#include "../System/ApplicationManager/app_info.h"
+#include "../system/application_manager/app_info.h"
 #include "../System/AnomalyLogger/anomaly_logger.h"
 #include "../TlmCmd/common_cmd_packet.h"
 

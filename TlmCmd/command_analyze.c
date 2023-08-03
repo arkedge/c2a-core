@@ -7,7 +7,7 @@
 #include "common_cmd_packet_util.h"
 #include <src_user/TlmCmd/command_definitions.h>
 #include "../library/print.h"
- #include "../System/EventManager/event_logger.h"
+ #include "../system/event_manager/event_logger.h"
 #include <string.h>
 
 /**

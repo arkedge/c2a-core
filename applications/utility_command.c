@@ -1,6 +1,6 @@
 #pragma section REPRO
 #include "utility_command.h"
-#include "../System/ApplicationManager/app_info.h"
+#include "../system/application_manager/app_info.h"
 #include "../hal/uart.h"
 #include <src_user/Settings/port_config.h>
 #include <string.h>                     // for memcpy
