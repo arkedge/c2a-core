@@ -7,8 +7,8 @@ pub fn c2a_init() {
     use c2a_core::*;
 
     unsafe {
-        System::WatchdogTimer::WDT_init();
-        System::TimeManager::TMGR_init(); // Time Manager
+        system::watchdog_timer::WDT_init();
+        system::time_manager::TMGR_init(); // Time Manager
     }
 
     unsafe {
@@ -17,7 +17,7 @@ pub fn c2a_init() {
 
     // TaskDispatcherでの大量のアノマリを避けるために、一度時刻を初期化する。
     unsafe {
-        System::TimeManager::TMGR_clear();
+        system::time_manager::TMGR_clear();
     }
     println!("C2A_init: TMGR_init done.");
 }
@@ -29,7 +29,7 @@ pub fn c2a_main() {
         let start = time::Instant::now();
         for _ in 0..UPDATE_BATCH_SIZE {
             unsafe {
-                System::TimeManager::TMGR_count_up_master_clock();
+                system::time_manager::TMGR_count_up_master_clock();
                 C2A_core_main();
             }
         }

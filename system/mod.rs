@@ -1,5 +1,5 @@
 #[doc = "FIXME: watchdog_timer.h が単体で bindgen 不可能だったので自前定義したもの"]
-pub mod WatchdogTimer {
+pub mod watchdog_timer {
     extern "C" {
         pub fn WDT_init();
 
@@ -8,7 +8,7 @@ pub mod WatchdogTimer {
 }
 
 #[doc = "FIXME: time_manager.h が単体で bindgen 不可能だったので自前定義したもの"]
-pub mod TimeManager {
+pub mod time_manager {
     extern "C" {
         pub fn TMGR_init();
 

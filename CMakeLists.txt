@@ -25,16 +25,16 @@ set(C2A_SRCS
   Drivers/Protocol/eb90_packet_for_driver_super.c
   Drivers/Super/driver_super.c
   hal/i2c_common.c
-  System/ApplicationManager/app_info.c
-  System/ApplicationManager/app_manager.c
-  System/EventManager/event_manager.c
-  System/EventManager/event_logger.c
-  System/EventManager/event_handler.c
-  System/ModeManager/mode_manager.c
-  System/TaskManager/task_dispatcher.c
-  System/TimeManager/obc_time.c
-  System/TimeManager/time_manager.c
-  System/WatchdogTimer/watchdog_timer.c
+  system/application_manager/app_info.c
+  system/application_manager/app_manager.c
+  system/event_manager/event_manager.c
+  system/event_manager/event_logger.c
+  system/event_manager/event_handler.c
+  system/mode_manager/mode_manager.c
+  system/task_manager/task_dispatcher.c
+  system/time_manager/obc_time.c
+  system/time_manager/time_manager.c
+  system/watchdog_timer/watchdog_timer.c
   TlmCmd/block_command_loader.c
   TlmCmd/block_command_table.c
   TlmCmd/block_command_executor.c

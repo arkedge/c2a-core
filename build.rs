@@ -20,8 +20,8 @@ fn main() {
 
     bind(".".into(), "c2a_core_main.h");
 
-    //bind("System/TimeManager".into(), "time_manager.h");
-    //bind("System/WatchdogTimer".into(), "watchdog_timer.h");
+    //bind("system/time_manager".into(), "time_manager.h");
+    //bind("system/watchdog_timer".into(), "watchdog_timer.h");
 
     bind("hal".into(), "aa.h");
     bind("hal".into(), "ccsds.h");
