@@ -6,8 +6,8 @@
 #include "di_gs.h"
 #include <src_core/TlmCmd/packet_handler.h>
 #include <src_core/TlmCmd/common_cmd_packet_util.h>
-#include <src_core/Library/print.h>
-#include <src_core/Library/result.h>
+#include <src_core/library/print.h>
+#include <src_core/library/result.h>
 #include "../../Drivers/Com/gs_validate.h"
 #include "../../Settings/port_config.h"
 #include "../../Settings/DriverSuper/driver_buffer_define.h"
