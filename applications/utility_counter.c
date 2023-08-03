@@ -14,7 +14,7 @@ int UTIL_COUNTER_dummy(void)
 #include "../System/AnomalyLogger/anomaly_logger.h"
 #include <string.h>   // for memcpy
 #include "../TlmCmd/common_cmd_packet_util.h"
-#include "../Library/result.h"
+#include "../library/result.h"
 
 static UtilityCounter utility_counter_;
 const UtilityCounter* const utility_counter = &utility_counter_;

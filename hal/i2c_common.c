@@ -6,7 +6,7 @@
  */
 
 #include "i2c_common.h"
-#include "../Library/endian.h"
+#include "../library/endian.h"
 #include <string.h>
 
 /**

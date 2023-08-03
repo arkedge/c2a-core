@@ -5,7 +5,7 @@
  */
 #include "obc_time.h"
 #include "obc_time_config.h"
-#include "../../Library/print.h"
+#include "../../library/print.h"
 
 ObcTime OBCT_create(cycle_t total_cycle,
                     cycle_t mode_cycle,

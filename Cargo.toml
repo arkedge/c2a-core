@@ -6,7 +6,7 @@ resolver = "2"
 
 members = [
   "./sils-runtime",
-  "./Library/bind-utils",
+  "./library/bind-utils",
 
   "./hal/i2c-noop",
   "./hal/spi-noop",
@@ -46,7 +46,7 @@ no-c2a-link = []
 [build-dependencies]
 semver = "1.0.18"
 clang = "2.0.0"
-c2a-bind-utils = { path = "./Library/bind-utils", version = "3.10" }    # TODO: release
+c2a-bind-utils = { path = "./library/bind-utils", version = "3.10" }    # TODO: release
 
 [dev-dependencies]
 # unit test 時に libC2A.a を要求しないようにする

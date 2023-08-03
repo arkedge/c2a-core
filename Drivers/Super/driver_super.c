@@ -10,7 +10,7 @@
  */
 
 #include "driver_super.h"
-#include "../../Library/print.h"
+#include "../../library/print.h"
 #include <string.h>     // for memset などの mem 系
 #include <stddef.h>     // for NULL
 #include "../../TlmCmd/common_cmd_packet_util.h"

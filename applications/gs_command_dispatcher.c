@@ -7,7 +7,7 @@
 #include "gs_command_dispatcher.h"
 #include "../TlmCmd/packet_handler.h"
 #include "../TlmCmd/common_cmd_packet_util.h"
-#include "../Library/result.h"
+#include "../library/result.h"
 
 static CommandDispatcher gs_command_dispatcher_;
 const CommandDispatcher* const gs_command_dispatcher = &gs_command_dispatcher_;

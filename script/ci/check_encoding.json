@@ -34,7 +34,7 @@
     "applications/",
     "Drivers/",
     "hal/",
-    "Library/",
+    "library/",
     "System/",
     "TlmCmd/",
     "examples/mobc/src/src_user/",

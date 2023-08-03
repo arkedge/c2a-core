@@ -5,7 +5,7 @@ project(C2A_CORE)
 # user config
 option(USE_ALL_C2A_CORE_APPS        "use C2A-core all Applications" ON)
 option(USE_ALL_C2A_CORE_TEST_APPS   "use C2A-core all Test Applications" ON)
-option(USE_ALL_C2A_CORE_LIB         "use C2A-core all Library" ON)
+option(USE_ALL_C2A_CORE_LIB         "use C2A-core all library" ON)
 option(USE_32BIT_COMPILER           "use 32bit compiler" OFF)
 
 option(C2A_USE_SIMPLE_LIBC          "use C2A-core hosted simple libc implementation" OFF)
@@ -54,7 +54,7 @@ set(C2A_SRCS
 
 if(NOT C2A_USE_C99_STDINT)
   message("Use stdint.h wrapper")
-  include_directories(Library/stdint_wrapper)
+  include_directories(library/stdint_wrapper)
 endif()
 
 execute_process(
@@ -89,7 +89,7 @@ if(USE_ALL_C2A_CORE_TEST_APPS)
 endif()
 
 if(USE_ALL_C2A_CORE_LIB)
-  add_subdirectory(Library)
+  add_subdirectory(library)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_LIB>)
 endif()
 

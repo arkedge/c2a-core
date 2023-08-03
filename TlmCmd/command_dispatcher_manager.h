@@ -9,7 +9,7 @@
 
 #include "./common_cmd_packet.h"
 #include "./command_dispatcher.h"
-#include "../Library/result.h"
+#include "../library/result.h"
 
 #define CDIS_MGR_MAX_NUM_OF_CDIS    (7)    /*!< 保持する CDIS の最大数
                                                 RT, TL * 4, GS, TDSP */
