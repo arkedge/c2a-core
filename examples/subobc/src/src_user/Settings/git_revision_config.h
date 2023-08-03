@@ -39,7 +39,7 @@
 
 #if 0
 /*!< @brief commit hashを埋め込まない場合の設定
- * 実際には0が埋め込まれます．詳細はsrc/src_core/Library/git_revision.hを参照してください．
+ * 実際には0が埋め込まれます．詳細はsrc/src_core/library/git_revision.hを参照してください．
  */
 
 #define C2A_GIT_REVISION_IGNORE

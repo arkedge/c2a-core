@@ -4,8 +4,8 @@
 #include <stddef.h> // for NULL
 #include <stdint.h>
 
-#include <src_core/Library/git_revision.h>
-#include <src_core/Library/print.h>
+#include <src_core/library/git_revision.h>
+#include <src_core/library/print.h>
 #include <src_core/System/TimeManager/time_manager.h>
 #include <src_core/System/ModeManager/mode_manager.h>
 #include <src_core/System/TaskManager/task_dispatcher.h>
@@ -20,8 +20,8 @@
 #include <src_core/applications/timeline_command_dispatcher.h>
 #include "../../applications/driver_instances/di_mobc.h"
 // #include <src_core/TlmCmd/telemetry_generator.h>
-#include "../../Library/vt100.h"
-#include <src_core/Library/result.h>
+#include "../../library/vt100.h"
+#include <src_core/library/result.h>
 
 static RESULT APP_DBG_flush_screen_(void);
 static RESULT APP_DBG_print_time_stamp_(void);

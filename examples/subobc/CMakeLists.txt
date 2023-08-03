@@ -59,7 +59,7 @@ add_subdirectory(${C2A_CORE_DIR})
 add_subdirectory(${C2A_USER_DIR}/applications)
 add_subdirectory(${C2A_USER_DIR}/Drivers)
 add_subdirectory(${C2A_USER_DIR}/hal)
-add_subdirectory(${C2A_USER_DIR}/Library)
+add_subdirectory(${C2A_USER_DIR}/library)
 add_subdirectory(${C2A_USER_DIR}/Settings)
 add_subdirectory(${C2A_USER_DIR}/TlmCmd)
 

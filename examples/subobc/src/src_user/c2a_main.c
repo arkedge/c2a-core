@@ -1,5 +1,5 @@
-#include <src_core/Library/git_revision.h>
-#include <src_core/Library/print.h>
+#include <src_core/library/git_revision.h>
+#include <src_core/library/print.h>
 #include <src_core/c2a_core_main.h>
 #include <src_core/System/TimeManager/time_manager.h>
 #include <src_core/System/WatchdogTimer/watchdog_timer.h>

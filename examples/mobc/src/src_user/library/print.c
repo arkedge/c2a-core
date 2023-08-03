@@ -6,7 +6,7 @@
 
 // printはHW依存性が強いため，ヘッダーはcoreにおき，オーバーライドする
 // ビルド対象にて選択する
-#include <src_core/Library/print.h>
+#include <src_core/library/print.h>
 
 #include <stdio.h>
 #include <stdarg.h>
