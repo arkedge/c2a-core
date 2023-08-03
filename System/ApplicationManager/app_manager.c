@@ -8,7 +8,7 @@
 #include <src_user/Settings/sils_define.h>
 
 #include <string.h>
-#include "../../Applications/nop.h"
+#include "../../applications/nop.h"
 #include "../EventManager/event_logger.h"
 #include "../TimeManager/time_manager.h"
 #include "../WatchdogTimer/watchdog_timer.h"

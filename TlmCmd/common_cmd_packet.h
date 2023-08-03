@@ -33,7 +33,7 @@ typedef enum
 #include <src_user/Settings/TlmCmd/Ccsds/apid_define.h>
 
 // TL_MIS を有効にするかどうか
-#include <src_user/Settings/Applications/timeline_command_dispatcher_define.h>
+#include <src_user/Settings/applications/timeline_command_dispatcher_define.h>
 
 /**
  * @enum   CCP_EXEC_STS

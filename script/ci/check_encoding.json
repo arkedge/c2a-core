@@ -31,7 +31,7 @@
     ]
   },
   "target_dirs" : [
-    "Applications/",
+    "applications/",
     "Drivers/",
     "hal/",
     "Library/",

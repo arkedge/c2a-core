@@ -9,9 +9,9 @@
 #define BLOCK_COMMAND_LOADER_H_
 
 #include "./block_command_table.h"
-#include "../Applications/timeline_command_dispatcher_id_define.h"
+#include "../applications/timeline_command_dispatcher_id_define.h"
 #include "../System/TimeManager/obc_time.h"
-#include <src_user/Applications/app_registry.h>
+#include <src_user/applications/app_registry.h>
 
 
 /**

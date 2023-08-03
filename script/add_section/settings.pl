@@ -16,7 +16,7 @@ sub GetSetting {
 	$SETTING{'FILE_ENCODING'} = 'utf8';
 	$SETTING{'LOG_FILE'}  = './log.log';
 	$SETTING{'SEARCH_PATH'} = [
-		'Applications',
+		'applications',
 		'Drivers',
 		'hal',
 		'Library',
