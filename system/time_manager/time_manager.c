@@ -7,7 +7,7 @@
 #include "obc_time_config.h"
 #include <string.h>
 #include "../../library/c2a_round.h"
-#include "../TaskManager/task_dispatcher.h"
+#include "../task_manager/task_dispatcher.h"
 #include "../../TlmCmd/common_cmd_packet_util.h"
 
 static TimeManager time_manager_;

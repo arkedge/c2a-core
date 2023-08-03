@@ -101,7 +101,7 @@
 #ifdef EL_IS_ENABLE_TLOG
 
 #include <stddef.h>
-#include "../TimeManager/obc_time.h"
+#include "../time_manager/obc_time.h"
 #include "../../TlmCmd/block_command_table.h"
 #include <src_user/Settings/System/EventHandlerRules/event_handler_rules.h>
 

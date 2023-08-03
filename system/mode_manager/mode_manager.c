@@ -7,9 +7,9 @@
 
 #include <string.h>
 
-#include "../TimeManager/time_manager.h"
-#include "../TaskManager/task_dispatcher.h"
-#include "../EventManager/event_logger.h"
+#include "../time_manager/time_manager.h"
+#include "../task_manager/task_dispatcher.h"
+#include "../event_manager/event_logger.h"
 #include "../../TlmCmd/block_command_executor.h"
 #include "../../TlmCmd/common_cmd_packet_util.h"
 #include <src_user/TlmCmd/command_definitions.h>

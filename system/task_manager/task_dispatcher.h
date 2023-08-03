@@ -9,7 +9,7 @@
 
 #include "../../TlmCmd/block_command_table.h"
 #include "../../TlmCmd/command_dispatcher.h"
-#include "../ApplicationManager/app_info.h"
+#include "../application_manager/app_info.h"
 
 /**
  * @struct TaskDsipatcher

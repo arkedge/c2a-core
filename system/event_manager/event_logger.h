@@ -43,7 +43,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "../../TlmCmd/common_cmd_packet.h"
-#include "../TimeManager/obc_time.h"
+#include "../time_manager/obc_time.h"
 
 // EL_GROUP (uint32_t を想定) をここで定義する
 #include <src_user/Settings/System/event_logger_group.h>

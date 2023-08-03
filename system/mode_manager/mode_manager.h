@@ -5,7 +5,7 @@
 #ifndef MODE_MANAGER_H_
 #define MODE_MANAGER_H_
 
-#include "../TimeManager/obc_time.h"
+#include "../time_manager/obc_time.h"
 #include <src_user/Settings/Modes/mode_definitions.h>
 #include "../../TlmCmd/common_cmd_packet.h"
 #include "../../TlmCmd/block_command_table.h"

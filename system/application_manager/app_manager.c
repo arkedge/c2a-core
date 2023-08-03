@@ -9,9 +9,9 @@
 
 #include <string.h>
 #include "../../applications/nop.h"
-#include "../EventManager/event_logger.h"
-#include "../TimeManager/time_manager.h"
-#include "../WatchdogTimer/watchdog_timer.h"
+#include "../event_manager/event_logger.h"
+#include "../time_manager/time_manager.h"
+#include "../watchdog_timer/watchdog_timer.h"
 #include <src_user/TlmCmd/command_definitions.h>
 #include "../../library/print.h"
 #include "../../TlmCmd/common_cmd_packet_util.h"
