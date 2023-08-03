@@ -103,7 +103,7 @@
 #include <stddef.h>
 #include "../time_manager/obc_time.h"
 #include "../../TlmCmd/block_command_table.h"
-#include <src_user/Settings/System/EventHandlerRules/event_handler_rules.h>
+#include <src_user/Settings/system/event_handler_rules/event_handler_rules.h>
 
 #define EH_RULE_TLM_PAGE_SIZE (20)  //!< event_handler のルールテーブルの1テレメトリパケット(=1ページ)に格納されるルール数（ページネーション用）
 #define EH_RULE_TLM_PAGE_MAX  (8)   //!< event_handler のルールテーブルのページ数（ページネーション用）
@@ -126,7 +126,7 @@
 // EH_MAX_RESPONSE_NUM_DEFAULT
 // EH_MAX_CHECK_EVENT_NUM_DEFAULT
 // EH_MAX_MULTI_LEVEL_NUM_DEFAULT
-#include <src_user/Settings/System/event_handler_params.h>
+#include <src_user/Settings/system/event_handler_params.h>
 
 #define EH_RULE_MAX   (EH_RULE_ID)(EH_RULE_TLM_PAGE_SIZE * EH_RULE_TLM_PAGE_MAX)
                                               /*!< 最大何個のルール ( EL_Event - EH_Rule 対応) を保持できるか

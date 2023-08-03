@@ -12,7 +12,7 @@
 #include <string.h>
 #include "../time_manager/time_manager.h"
 #include "../watchdog_timer/watchdog_timer.h"
-#include <src_user/Settings/System/event_logger_settings.h>
+#include <src_user/Settings/system/event_logger_settings.h>
 #include "../../TlmCmd/common_cmd_packet_util.h"
 
 
