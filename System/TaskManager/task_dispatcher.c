@@ -37,7 +37,7 @@ static void TDSP_deploy_block_as_task_list_(void);
 // debug_apps にあるべき & 今はつわかないので無効化
 #if 0
 #include "../../library/print.h"
-#include <src_user/Library/vt100.h>
+#include <src_user/library/vt100.h>
 /**
  * @brief デバッグ情報表示
  */
