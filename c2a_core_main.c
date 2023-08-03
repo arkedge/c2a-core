@@ -1,8 +1,8 @@
 #pragma section REPRO
 #include "c2a_core_main.h"
 
-#include "./Library/git_revision.h"
-#include "./Library/print.h"
+#include "./library/git_revision.h"
+#include "./library/print.h"
 #include "./System/TaskManager/task_dispatcher.h"
 #include "./System/ApplicationManager/app_manager.h"
 #include "./System/EventManager/event_manager.h"

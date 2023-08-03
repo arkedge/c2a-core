@@ -6,8 +6,8 @@
 #include "telemetry_frame.h"
 
 #include <stdint.h>
-#include "../Library/print.h"
-#include "../Library/endian.h"
+#include "../library/print.h"
+#include "../library/endian.h"
 #include "./common_cmd_packet_util.h"
 
 static void initialize_tlm_table_(void);

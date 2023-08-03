@@ -5,7 +5,7 @@
  */
 #include "common_cmd_packet_util.h"
 #include "command_analyze.h"
-#include "../Library/endian.h"
+#include "../library/endian.h"
 #include <stddef.h>     // for NULL
 #include <string.h>
 

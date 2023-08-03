@@ -6,7 +6,7 @@
 #define APP_INFO_H_
 
 #include "../TimeManager/obc_time.h"
-#include "../../Library/result.h"
+#include "../../library/result.h"
 
 typedef struct
 {

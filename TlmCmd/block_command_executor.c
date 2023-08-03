@@ -12,7 +12,7 @@
 
 #include "block_command_executor.h"
 #include "packet_handler.h"
-#include "../Library/endian.h"
+#include "../library/endian.h"
 #include "../System/TimeManager/time_manager.h"
 #include "common_cmd_packet_util.h"
 

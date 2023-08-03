@@ -12,9 +12,9 @@
 #include "../TlmCmd/block_command_loader.h"
 #include "../TlmCmd/block_command_executor.h"
 #include "../TlmCmd/command_analyze.h"
-#include "../Library/print.h"
-#include "../Library/endian.h"
-#include "../Library/result.h"
+#include "../library/print.h"
+#include "../library/endian.h"
+#include "../library/result.h"
 #include "../TlmCmd/common_cmd_packet_util.h"
 #include <src_user/TlmCmd/block_command_definitions.h>
 #include <src_user/TlmCmd/command_definitions.h>

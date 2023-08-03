@@ -25,7 +25,7 @@
 
 #include <src_user/hal/if_list.h>
 #include <stdint.h>
-#include "../../Library/endian.h"        // パスが不定な自動生成コード類で使えるように
+#include "../../library/endian.h"        // パスが不定な自動生成コード類で使えるように
 #include "../../System/TimeManager/time_manager.h"
 
 #define DS_STREAM_MAX                 (3)         /*!< DS_StreamConfig の最大数

@@ -5,7 +5,7 @@
  *        なお，CMDはリプロ対象内！！
  */
 #include "watchdog_timer.h"
-#include "../../Library/print.h"
+#include "../../library/print.h"
 #include "../../TlmCmd/common_cmd_packet_util.h"
 
 static WDT_Config wdt_config_;

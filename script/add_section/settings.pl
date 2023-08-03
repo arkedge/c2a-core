@@ -19,7 +19,7 @@ sub GetSetting {
 		'applications',
 		'Drivers',
 		'hal',
-		'Library',
+		'library',
 		'System',
 		'TlmCmd'
 	];
