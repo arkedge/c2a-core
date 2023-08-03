@@ -93,6 +93,12 @@ jobs:
       run: |
         npm ci
 
+    - name: build mobc C2A
+      if: matrix.c2a_user == 'subobc'
+      working-directory: ./examples/mobc
+      run: |
+        cargo build
+
     - name: build C2A
       working-directory: ./examples/${{ matrix.c2a_user }}
       run: |
