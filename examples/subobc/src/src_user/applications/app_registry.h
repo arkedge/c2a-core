@@ -1,6 +1,6 @@
 #ifndef APP_REGISTRY_H_
 #define APP_REGISTRY_H_
-#include <src_user/Settings/Applications/timeline_command_dispatcher_define.h>
+#include <src_user/Settings/applications/timeline_command_dispatcher_define.h>
 
 // こいつの自動生成がほしい．．．
 typedef enum

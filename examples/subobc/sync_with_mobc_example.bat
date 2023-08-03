@@ -13,7 +13,7 @@ call :sync_dir ".\src\src_user\ReProgramming\" "..\mobc\src\src_user\ReProgrammi
 call :sync_dir ".\src\src_user\script\" "..\mobc\src\src_user\script\"
 call :sync_dir ".\src\src_user\Settings\TlmCmd\Ccsds\" "..\mobc\src\src_user\Settings\TlmCmd\Ccsds\"
 
-call :sync_file ".\src\src_user\Applications\UserDefined\debug_apps.h" "..\mobc\src\src_user\Applications\UserDefined\debug_apps.h"
+call :sync_file ".\src\src_user\applications\user_defined\debug_apps.h" "..\mobc\src\src_user\applications\user_defined\debug_apps.h"
 call :sync_file ".\src\src_user\hal\sils\uart_sils_sci_if.hpp" "..\mobc\src\src_user\hal\sils\uart_sils_sci_if.hpp"
 call :sync_file ".\src\src_user\hal\sils\wdt_sils.cpp" "..\mobc\src\src_user\hal\sils\wdt_sils.cpp"
 call :sync_file ".\src\src_user\hal\sils_mockup\README.md" "..\mobc\src\src_user\hal\sils_mockup\README.md"
