@@ -99,13 +99,13 @@ jobs:
         cargo build
 
     - name: run mobc C2A
-      if: matrix.c2a_user == './mobc'
+      if: matrix.c2a_user == 'mobc'
       working-directory: ./examples/mobc
       run: |
         npm run devtools:sils &
         sleep 3
     - name: run C2A (mobc & subobc)
-      if: matrix.c2a_user == './subobc'
+      if: matrix.c2a_user == 'subobc'
       working-directory: ./examples/mobc
       run: |
         npm run devtools:sils-2nd &
