@@ -37,5 +37,13 @@ find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#U
 # Settings
 mv src/src_user/Settings/Applications src/src_user/Settings/applications
 
+# Test
+mv src/src_user/Test/test/src_core/Applications src/src_user/Test/test/src_core/applications
+
+mv src/src_user/Test/test/src_user/Applications src/src_user/Test/test/src_user/applications
+mv src/src_user/Test/test/src_user/Applications/DriverInstances src/src_user/Test/test/src_user/applications/driver_instances
+mv src/src_user/Test/test/src_user/Applications/Middleware src/src_user/Test/test/src_user/applications/middleware
+mv src/src_user/Test/test/src_user/Applications/UserDefined src/src_user/Test/test/src_user/applications/user_defined
+
 # Script
 find src/src_user/script -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#Applications#applications#g"
