@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import isslwings as wings
+import json
+from c2a_pytest_gaia import wings_compat
 
 
 def get_wings_operation():
-    return wings.Operation()
+    tlmcmddb = json.load(open("../../../../mobc/tlmcmddb.json"))
+    return wings_compat.Operation(tlmcmddb)
