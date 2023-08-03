@@ -15,11 +15,13 @@ members = [
 
   "./hal/uart-kble",
 
+  "./examples/mobc",
   "./examples/subobc",
 ]
 
 [workspace.dependencies]
 c2a-core = { path = "." }
+c2a-bind-utils = { path = "./Library/bind-utils" }
 
 c2a-sils-runtime = { path = "./sils-runtime" }
 c2a-wdt-noop = { path = "./hal/wdt-noop" }

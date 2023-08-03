@@ -1,0 +1,18 @@
+[package]
+name = "c2a-example-mobc"
+version.workspace = true
+edition = "2021"
+
+[dependencies]
+c2a-core.workspace = true
+
+# runtime
+c2a-sils-runtime.workspace = true
+
+# c2a-hal impl
+c2a-example-mobc-ccsds-kble = { path = "./src/src_user/hal/ccsds-kble" }
+c2a-uart-kble.workspace = true
+c2a-wdt-noop.workspace = true
+
+[build-dependencies]
+cmake = "0.1"
