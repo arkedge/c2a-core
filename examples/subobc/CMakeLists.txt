@@ -15,7 +15,7 @@ option(USE_SILS_MOCKUP "Use SILS mockup for build C2A with minimal user in C89 o
 option(BUILD_C2A_AS_SILS_FW "Build C2A as SILS firmware" ON)
 
 set(USE_ALL_C2A_CORE_APPS OFF)
-# Core App のターゲット追加は src_user/Applications/CMakeLists.txt で行う
+# Core App のターゲット追加は src_user/applications/CMakeLists.txt で行う
 set(USE_ALL_C2A_CORE_TEST_APPS OFF)
 
 if(USE_SILS_MOCKUP)
@@ -56,7 +56,7 @@ add_definitions("-DGIT_REVISION_C2A_USER_SHORT=0x${GIT_REVISION_C2A_USER_SHORT}"
 
 add_subdirectory(${C2A_CORE_DIR})
 
-add_subdirectory(${C2A_USER_DIR}/Applications)
+add_subdirectory(${C2A_USER_DIR}/applications)
 add_subdirectory(${C2A_USER_DIR}/Drivers)
 add_subdirectory(${C2A_USER_DIR}/hal)
 add_subdirectory(${C2A_USER_DIR}/Library)

@@ -14,11 +14,11 @@
 #include <src_core/TlmCmd/packet_handler.h>
 #include "../../TlmCmd/telemetry_definitions.h"
 #include <src_core/TlmCmd/block_command_table.h>
-#include <src_core/Applications/memory_dump.h>
-#include <src_core/Applications/gs_command_dispatcher.h>
-#include <src_core/Applications/realtime_command_dispatcher.h>
-#include <src_core/Applications/timeline_command_dispatcher.h>
-#include "../../Applications/DriverInstances/di_mobc.h"
+#include <src_core/applications/memory_dump.h>
+#include <src_core/applications/gs_command_dispatcher.h>
+#include <src_core/applications/realtime_command_dispatcher.h>
+#include <src_core/applications/timeline_command_dispatcher.h>
+#include "../../applications/driver_instances/di_mobc.h"
 // #include <src_core/TlmCmd/telemetry_generator.h>
 #include "../../Library/vt100.h"
 #include <src_core/Library/result.h>
