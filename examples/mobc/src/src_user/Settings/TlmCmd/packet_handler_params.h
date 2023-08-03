@@ -6,8 +6,8 @@
 #define PACKET_HANDLER_PARAMS_H_
 
 // TL_MIS, DR の利用の有無で必要な PL が変わるので， include する
-#include "../Applications/timeline_command_dispatcher_define.h"
-#include "../Applications/data_recorder_define.h"
+#include "../applications/timeline_command_dispatcher_define.h"
+#include "../applications/data_recorder_define.h"
 
 
 #undef TL_TLM_PAGE_SIZE
