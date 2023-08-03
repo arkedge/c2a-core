@@ -1,0 +1,17 @@
+[package]
+name = "c2a-example-subobc"
+version.workspace = true
+edition = "2021"
+
+[dependencies]
+c2a-core.workspace = true
+
+# runtime
+c2a-sils-runtime.workspace = true
+
+# ifimpl
+c2a-uart-kble.workspace = true
+c2a-wdt-noop.workspace = true
+
+[build-dependencies]
+cmake = "0.1"

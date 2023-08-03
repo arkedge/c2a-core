@@ -14,10 +14,16 @@ members = [
   "./hal/wdt-noop",
 
   "./hal/uart-kble",
+
+  "./examples/subobc",
 ]
 
 [workspace.dependencies]
 c2a-core = { path = "." }
+
+c2a-sils-runtime = { path = "./sils-runtime" }
+c2a-wdt-noop = { path = "./hal/wdt-noop" }
+c2a-uart-kble = { path = "./hal/uart-kble" }
 
 [package]
 name = "c2a-core"
