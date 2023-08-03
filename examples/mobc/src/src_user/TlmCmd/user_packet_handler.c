@@ -5,8 +5,8 @@
  */
 #include "user_packet_handler.h"
 #include <src_core/TlmCmd/packet_list_util.h>
-#include "../Applications/DriverInstances/di_aobc.h"
-// #include "../Applications/DriverInstances/di_tobc.h"
+#include "../applications/driver_instances/di_aobc.h"
+// #include "../applications/driver_instances/di_tobc.h"
 
 #define PH_AOBC_CMD_LIST_MAX   (16)          //!< AOBC CMD QUEUEサイズ
 #define PH_TOBC_CMD_LIST_MAX   (16)          //!< TOBC CMD QUEUEサイズ

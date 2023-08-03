@@ -14,8 +14,8 @@
 ### フォルダ構成
 - C2A と揃える．
 - ファイル名は， `test_${c2a_src_filename}.py`．例えば次のようなもの．
-    - './test/src_core/Applications/test_nop.py'
-    - './test/src_user/Applications/UserDefined/test_tlm_mem_dump.py'
+    - './test/src_core/applications/test_nop.py'
+    - './test/src_user/applications/user_defined/test_tlm_mem_dump.py'
 
 ### 関数名
 `test_hoge` という関数を定義すれば，それが実行される．
@@ -41,10 +41,10 @@ pytest -m sils -v ./test/  # SILSの場合
 
 個別ファイルをテストしたい場合は，以下などでOK．
 ```
-pytest -m real -v ./test/src_user/Applications/UserDefined/test_tlm_mem_dump.py
+pytest -m real -v ./test/src_user/applications/user_defined/test_tlm_mem_dump.py
 
 or
 
-cd ./test/src_user/Applications/UserDefined/
+cd ./test/src_user/applications/user_defined/
 pytest -m real -v test_tlm_mem_dump.py
 ```
