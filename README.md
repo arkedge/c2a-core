@@ -25,10 +25,16 @@
 - https://github.com/orgs/arkedge/projects/43/views/1
 
 ### SILS (Software-In-the-Loop-Simulation) 環境
-- C2A は， [S2E](https://github.com/ut-issl/s2e-core) などの SILS を用いて，フライトソフトウェアがそのまま実行される SILS を構築できる．
+- C2A は，フライトソフトウェアがそのまま実行できる SILS 環境を構築できる．
 - つまり，ターゲットの OBC 上で動くソフトウェアが， PC などの上で，そのままエミュレートできる．
-- [`examples/mobc`](./examples/mobc) にある， 最小限の C2A 実行サンプルは， [S2E User for C2A Core](https://github.com/ut-issl/s2e-user-for-c2a-core) によってエミュレーション可能である．
-    - また， [`examples/subobc`](./examples/subobc) にある sub OBC (非 MOBC) の user 部を使うことで， C2A 間通信も模擬できる．
+- C2A の SILS runtime として，以下のような実装が存在する．
+  - [c2a-sils-runtime](./sils-runtime)
+    - 今後の標準的な C2A の SILS runtime．これが導入済みの C2A user は基本的に `cargo run` すれば動作する．
+  - [S2E](https://github.com/ut-issl/s2e-core)
+    - 宇宙環境シミュレータ．元々の SILS runtime 実装であり，姿勢制御モジュールなど，宇宙環境模擬が必要な C2A user についてはこちらを用いて検証を行う．
+    - 最小限の SILS-S2E は [S2E User for C2A Core](https://github.com/ut-issl/s2e-user-for-c2a-core) で実行可能．
+- [`examples`](./examples) の C2A user は [c2a-sils-runtime](./sils-runtime) と [S2E User for C2A Core](https://github.com/ut-issl/s2e-user-for-c2a-core) での模擬に対応．
+- [`examples/mobc`](./examples/mobc)（MOBC: Main OBC） と [`examples/subobc`](./examples/subobc)（非 MOBC）を SILS 環境で動作させて接続させることで，C2A 間通信の模擬・検証も行うことができる．
 
 ### テスト
 - 特定の user を仮定しないと，各種パラメタが確定しないため， [`examples/mobc`](./examples/mobc) でテストする．
