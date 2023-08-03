@@ -242,11 +242,11 @@ Event Logger 全体のメモリ使用量は以下Byte.
 ```
 
 #### 定義
-- core: [`/src_core/System/EventManager/event_logger.h`](https://github.com/arkedge/c2a-core/blob/develop/System/EventManager/event_logger.h)
+- core: [`/src_core/system/event_manager/event_logger.h`](https://github.com/arkedge/c2a-core/blob/develop/system/event_manager/event_logger.h)
 - user: `/src_user/Settings/System/event_handler_params.h`
 
 #### 詳細説明
-[`/src_core/System/EventManager/event_logger.h`](https://github.com/arkedge/c2a-core/blob/develop/System/EventManager/event_logger.h) を参照．
+[`/src_core/system/event_manager/event_logger.h`](https://github.com/arkedge/c2a-core/blob/develop/system/event_manager/event_logger.h) を参照．
 
 
 - - -
@@ -269,11 +269,11 @@ AppManagerのAppInfo保存テーブルサイズを制御する．
 NOTE: この値が関わる部分を抽出しているため，AppManagerの他の機能のためのメモリは含まない．
 
 #### 定義
-- core: [`/src_core/System/ApplicationManager/AppManager.h`](https://github.com/arkedge/c2a-core/blob/develop/System/ApplicationManager/AppManager.h)
+- core: [`/src_core/system/application_manager/AppManager.h`](https://github.com/arkedge/c2a-core/blob/develop/system/application_manager/AppManager.h)
 - user: `/src_user/Settings/System/app_manager_params.h`
 
 #### 詳細説明
-[`/src_core/System/ApplicationManager/AppManager.h`](https://github.com/arkedge/c2a-core/blob/develop/System/ApplicationManager/AppManager.h) を参照．
+[`/src_core/system/application_manager/AppManager.h`](https://github.com/arkedge/c2a-core/blob/develop/system/application_manager/AppManager.h) を参照．
 
 
 - - -
@@ -284,11 +284,11 @@ cycleやstepについてはTimeManager (documentはまだ書いてない....) �
 NOTE: メモリ使用量にほぼ関係なし
 
 #### 定義
-- core: [`/src_core/System/TimeManager/obc_time.h`](https://github.com/arkedge/c2a-core/blob/develop/System/TimeManager/obc_time.h)
+- core: [`/src_core/system/time_manager/obc_time.h`](https://github.com/arkedge/c2a-core/blob/develop/system/time_manager/obc_time.h)
 - user: `/src_user/Settings/System/obc_time_params.h`
 
 #### 詳細説明
-[`/src_core/System/TimeManager/obc_time.h`](https://github.com/arkedge/c2a-core/blob/develop/System/TimeManager/obc_time.h) を参照．
+[`/src_core/system/time_manager/obc_time.h`](https://github.com/arkedge/c2a-core/blob/develop/system/time_manager/obc_time.h) を参照．
 
 
 
