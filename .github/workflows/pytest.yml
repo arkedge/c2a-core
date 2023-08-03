@@ -1,0 +1,120 @@
+name: pytest
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  pytest:
+    permissions:
+      contents: read
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # mobc pytest matrix(splitted because super-slow)
+          - c2a_user: mobc
+            test_dir: src_core/Applications
+          - c2a_user: mobc
+            test_dir: src_core/System/EventManager/test_event_handler.py
+          - c2a_user: mobc
+            test_dir: src_core/System/EventManager/test_event_handler.py
+          - c2a_user: mobc
+            test_dir: src_core/System/EventManager/test_event_logger.py
+          - c2a_user: mobc
+            test_dir: src_core/System/TaskManager
+          - c2a_user: mobc
+            test_dir: src_core/System/WatchdogTimer
+          - c2a_user: mobc
+            test_dir: src_core/System/ModeManager
+          - c2a_user: mobc
+            test_dir: src_core/System/TimeManager
+          - c2a_user: mobc
+            test_dir: src_core/TlmCmd
+          # 2nd_obc_user
+          - c2a_user: subobc
+            test_dir: .
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3.5.3
+      with:
+        submodules: recursive
+
+    - uses: actions/setup-node@v3.7.0
+      with:
+        cache: npm
+        cache-dependency-path: examples/${{ matrix.c2a_user }}/package-lock.json
+
+    - name: Cache C2A devtools
+      id: cache-c2a-devtools
+      uses: actions/cache@v3
+      with:
+        path: |
+          ./examples/mobc/tools/bin
+          ./examples/mobc/tools/.crates.toml
+          ./examples/mobc/tools/.crates2.json
+        key: ${{ matrix.c2a_user }}-${{ runner.os }}-tools-${{ hashFiles('${{ matrix.c2a_user }}/tools/install.sh', '${{ matrix.c2a_user }}/tools/package.json') }}
+
+    - name: Get Rust toolchain
+      id: toolchain
+      run: |
+        awk -F'[ ="]+' '$1 == "channel" { print "toolchain=" $2 }' rust-toolchain >> "$GITHUB_OUTPUT"
+
+    - uses: dtolnay/rust-toolchain@v1
+      with:
+        toolchain: ${{ steps.toolchain.outputs.toolchain }}
+        components: clippy, rustfmt
+
+    - name: cache Rust dependencies
+      uses: Swatinem/rust-cache@v2.5.1
+
+    - name: Install Protoc
+      uses: arduino/setup-protoc@v1
+      with:
+        version: '3.x'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: sksat/setup-rye@v0.5.0
+
+    - name: install pytest deps
+      working-directory: examples/${{ matrix.c2a_user }}/src/src_user/Test
+      run: |
+        rye sync
+
+    - name: the heaviest objects in universe
+      working-directory: ./examples/mobc
+      run: |
+        npm ci
+
+    - name: build C2A
+      working-directory: ./examples/${{ matrix.c2a_user }}
+      run: |
+        cargo build
+
+    - name: run mobc C2A
+      if: matrix.c2a_user == './mobc'
+      working-directory: ./examples/mobc
+      run: |
+        npm run devtools:sils &
+        sleep 3
+    - name: run C2A (mobc & subobc)
+      if: matrix.c2a_user == './subobc'
+      working-directory: ./examples/mobc
+      run: |
+        npm run devtools:sils-2nd &
+        sleep 3
+
+    - name: run pytest
+      working-directory: ./examples/${{ matrix.c2a_user }}/src/src_user/Test
+      run: |
+        rye run pytest -m sils -v ./test/${{ matrix.test_dir }}
