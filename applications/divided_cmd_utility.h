@@ -21,7 +21,7 @@
 #define DCU_LOG_MAX    (16)    //!< 保存するログの最大数
 
 // DCU_LOG_MAX の user オーバーライド
-#include <src_user/Settings/Applications/divided_cmd_utility_params.h>
+#include <src_user/Settings/applications/divided_cmd_utility_params.h>
 
 // key が uint8_t なので，それ以下を要請する
 #if DCU_LOG_MAX > 255
