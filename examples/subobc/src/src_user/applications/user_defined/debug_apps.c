@@ -14,11 +14,11 @@
 #include <src_core/TlmCmd/packet_handler.h>
 #include "../../TlmCmd/telemetry_definitions.h"
 #include <src_core/TlmCmd/block_command_table.h>
-#include <src_core/Applications/memory_dump.h>
-#include <src_core/Applications/gs_command_dispatcher.h>
-#include <src_core/Applications/realtime_command_dispatcher.h>
-#include <src_core/Applications/timeline_command_dispatcher.h>
-#include "../../Applications/DriverInstances/di_gs.h"
+#include <src_core/applications/memory_dump.h>
+#include <src_core/applications/gs_command_dispatcher.h>
+#include <src_core/applications/realtime_command_dispatcher.h>
+#include <src_core/applications/timeline_command_dispatcher.h>
+#include "../../applications/driver_instances/di_mobc.h"
 // #include <src_core/TlmCmd/telemetry_generator.h>
 #include "../../Library/vt100.h"
 #include <src_core/Library/result.h>
@@ -71,7 +71,7 @@ static RESULT APP_DBG_flush_screen_(void)
   VT100_erase_down();
   VT100_reset_cursor();
   VT100_erase_line();
-  Printf("-- C2A SAMPLE Flight S/W (H-ON, F-ON) --\n");
+  Printf("-- C2A SUBOBC SAMPLE Flight S/W --\n");
   VT100_erase_line();
   Printf("BUILD: %s %s\n", __DATE__, __TIME__);
   return RESULT_OK;
@@ -94,7 +94,7 @@ static RESULT APP_DBG_print_cmd_status_(void)
   Printf("CMD: GS %3d, RT %3d, Ack %2d, ID 0x%02x, Sts %1d, EC %d\n",
          (PL_count_executed_nodes(&PH_gs_cmd_list) & 0xff),
          (PL_count_executed_nodes(&PH_rt_cmd_list) & 0xff),
-         gs_driver->info[gs_driver->tlm_tx_port_type].rx.cmd_ack,
+         mobc_driver->info.c2a.ph_ack,
          gs_command_dispatcher->prev.code,
          gs_command_dispatcher->prev.cmd_ret.exec_sts,
          gs_command_dispatcher->prev.cmd_ret.err_code);

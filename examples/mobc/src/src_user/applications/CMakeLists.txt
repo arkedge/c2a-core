@@ -4,10 +4,10 @@ project(C2A_USER_APPS)
 
 set(C2A_SRCS
   app_registry.c
-  DriverInstances/di_aobc.c
-  DriverInstances/di_gs.c
-  DriverInstances/di_uart_test.c
-  UserDefined/debug_apps.c
+  driver_instances/di_aobc.c
+  driver_instances/di_gs.c
+  driver_instances/di_uart_test.c
+  user_defined/debug_apps.c
 )
 
 if(BUILD_C2A_AS_CXX)

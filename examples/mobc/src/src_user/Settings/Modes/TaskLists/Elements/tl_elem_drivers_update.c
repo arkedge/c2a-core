@@ -1,7 +1,7 @@
 #pragma section REPRO
 #include "tl_elem_drivers_update.h"
 
-#include "../../../../Applications/app_registry.h"
+#include "../../../../applications/app_registry.h"
 #include "../../../../TlmCmd/block_command_definitions.h"
 
 #include <src_core/TlmCmd/block_command_loader.h>

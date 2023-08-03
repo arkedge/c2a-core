@@ -1,13 +1,17 @@
 #ifndef APP_REGISTRY_H_
 #define APP_REGISTRY_H_
-#include <src_user/Settings/Applications/timeline_command_dispatcher_define.h>
+#include <src_user/Settings/applications/timeline_command_dispatcher_define.h>
 
 // こいつの自動生成がほしい．．．
 typedef enum
 {
   AR_NOP,
-  AR_DI_MOBC_CMD_PH,
-  AR_DI_MOBC_RT_TLM_PH,
+  AR_DI_GS_CMD_PH,
+  AR_DI_GS_RT_TLM_PH,
+  AR_DI_GS_RP_TLM_PH,
+  AR_DI_AOBC,
+  AR_DI_AOBC_CDIS,
+  AR_DI_UART_TEST,
   AR_GSC_DISPATCHER,
   AR_RTC_DISPATCHER,
   AR_TLC_DISPATCHER_GS,
@@ -17,6 +21,11 @@ typedef enum
   AR_TLC_DISPATCHER_MIS,
 #endif
   AR_EVENT_UTILITY,
+  AR_MEM_DUMP,
+  AR_TELEMETRY_MANAGER,
+  AR_DIVIDED_CMD_UTILITY,
+  AR_UTILITY_CMD,
+  AR_UTILITY_COUNTER,
   AR_APP_DBG_FLUSH_SCREEN,
   AR_APP_DBG_PRINT_TIMESTAMP,
   AR_APP_DBG_PRINT_CMD_STATUS,
