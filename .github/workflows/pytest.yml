@@ -50,6 +50,9 @@ jobs:
       with:
         submodules: recursive
 
+    - name: setup c2a-core
+      run: ./setup.sh
+
     - uses: actions/setup-node@v3.7.0
       with:
         cache: npm
