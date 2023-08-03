@@ -1,0 +1,26 @@
+[project]
+name = "c2a-example-mobc-pytest"
+version = "0.1.0"
+description = ""
+authors = []
+readme = "README.md"
+
+requires-python = ">= 3.7"
+dependencies = [
+  "c2aenum @ git+https://github.com/ut-issl/c2a-enum-loader@ae-v4",
+  "isslwings @ git+https://github.com/ut-issl/python-wings-interface@v1.5.1",
+  "c2a-pytest-gaia @ git+https://github.com/arkedge/c2a-pytest-gaia@v0.1.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+  "black~=23.1.0",
+  "pytest~=7.2.2",
+]
+[tool.hatch.metadata]
+allow-direct-references = true
