@@ -22,7 +22,7 @@ jobs:
         include:
           # mobc pytest matrix(splitted because super-slow)
           - c2a_user: mobc
-            test_dir: src_core/Applications
+            test_dir: src_core/applications
           - c2a_user: mobc
             test_dir: src_core/System/EventManager/test_event_handler.py
           - c2a_user: mobc
@@ -108,7 +108,7 @@ jobs:
       if: matrix.c2a_user == 'subobc'
       working-directory: ./examples/mobc
       run: |
-        npm run devtools:sils-2nd &
+        npm run devtools:sils-subobc &
         sleep 3
 
     - name: run pytest
