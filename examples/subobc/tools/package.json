@@ -1,0 +1,15 @@
+{
+  "name": "tools",
+  "scripts": {
+    "preinstall": "./install.sh"
+  },
+  "bin": {
+    "tmtc-c2a": "./bin/tmtc-c2a",
+    "tlmcmddb-cli": "./bin/tlmcmddb-cli",
+    "kble": "./bin/kble",
+    "kble-serialport": "./bin/kble-serialport",
+    "kble-c2a": "./bin/kble-c2a",
+    "kble-eb90": "./bin/kble-eb90",
+    "jrsonnet": "./bin/jrsonnet"
+  }
+}

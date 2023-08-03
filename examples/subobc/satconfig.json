@@ -1,0 +1,62 @@
+{
+  "aos_scid": 0,
+  "tc_scid": 0,
+  "tlm_apid_map": {
+    "1297": "AOBC"
+  },
+  "cmd_apid_map": {
+    "AOBC": 529
+  },
+  "tlm_channel_map": {
+    "RT": {
+      "destination_flag_mask": 3
+    },
+    "DR": {
+      "destination_flag_mask": 8
+    }
+  },
+  "cmd_prefix_map": {
+    "RT": {
+      "AOBC": {
+        "has_time_indicator": false,
+        "destination_type": 0,
+        "execution_type": 0
+      }
+    },
+    "TL": {
+      "AOBC": {
+        "has_time_indicator": true,
+        "destination_type": 0,
+        "execution_type": 1
+      }
+    },
+    "BL": {
+      "AOBC": {
+        "has_time_indicator": true,
+        "destination_type": 0,
+        "execution_type": 2
+      }
+    },
+    "UTL": {
+      "AOBC": {
+        "has_time_indicator": true,
+        "destination_type": 0,
+        "execution_type": 4
+      }
+    },
+    "TL_MIS": {
+      "AOBC": {
+        "has_time_indicator": true,
+        "destination_type": 0,
+        "execution_type": 7
+      }
+    },
+    "UTL_MIS": {
+      "AOBC": {
+        "has_time_indicator": true,
+        "destination_type": 0,
+        "execution_type": 8
+      }
+    }
+  }
+}

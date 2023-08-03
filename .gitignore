@@ -63,6 +63,7 @@ examples/mobc/build
 examples/subobc/src/src_core
 examples/subobc/build
 *.pyc
+tlmcmddb.json
 
 # Added by cargo
 /target
