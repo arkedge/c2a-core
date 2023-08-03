@@ -11,10 +11,10 @@ class C2aEnum:
         self.encoding = encoding
         self.search_dirs = [
             "/src_user/",
-            "/src_core/Applications/",
+            "/src_core/applications/",
             "/src_core/Drivers/",
-            "/src_core/IfWrapper/",
-            "/src_core/Library/",
+            "/src_core/hal/",
+            "/src_core/library/",
             "/src_core/System/",
             "/src_core/TlmCmd/",
         ]
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     # 単なる動作確認用
     # c2a_enum = load_enum(os.path.dirname(__file__) + "/../../..", "utf-8")
     c2a_enum = load_enum(
-        os.path.dirname(__file__) + "/../../c2a-core/Examples/minimum_user/src", "utf-8"
+        os.path.dirname(__file__) + "/../../c2a-core/examples/mobc/src", "utf-8"
     )
     for key, value in c2a_enum.__dict__.items():
         print(key, " : \t", value)
