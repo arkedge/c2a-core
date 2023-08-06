@@ -7,9 +7,9 @@ void C2A_core_main(void);
 // C2A の バージョンは Semantic Versioning を採用する
 // これらの番号は，リリース時に手動で合わせる
 // 詳細: docs/general/release.md
-#define C2A_CORE_VER_MAJOR (3)
-#define C2A_CORE_VER_MINOR (10)
+#define C2A_CORE_VER_MAJOR (4)
+#define C2A_CORE_VER_MINOR (0)
 #define C2A_CORE_VER_PATCH (0)
-#define C2A_CORE_VER_PRE   ("")
+#define C2A_CORE_VER_PRE   ("beta.0")
 
 #endif
