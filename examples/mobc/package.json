@@ -1,0 +1,24 @@
+{
+  "name": "c2a-example-mobc",
+  "scripts": {
+    "build:tlmcmddb": "tlmcmddb-cli bundle --pretty src/src_user/Settings/TlmCmd/DataBase/TLM_DB/calced_data src/src_user/Settings/TlmCmd/DataBase/CMD_DB tlmcmddb.json",
+    "run:c2a": "cargo run",
+    "run:gaia": "tmtc-c2a --satconfig satconfig.json --tlmcmddb tlmcmddb.json",
+    "run:kble": "bash -c 'while :; do kble -s <(jrsonnet spaghetti.jsonnet); sleep 1; done'",
+    "run-all": "run-p run:*",
+    "devtools:sils": "run-s build:* run-all",
+    "build:tlmcmddb-sub": "tlmcmddb-cli bundle --pretty ../subobc/src/src_user/Settings/TlmCmd/DataBase/TLM_DB/calced_data ../subobc/src/src_user/Settings/TlmCmd/DataBase/CMD_DB tlmcmddb-subobc.json",
+    "tlmcmddb-merge": "tlmcmddb-cli merge --pretty --output tlmcmddb.json tlmcmddb.json tlmcmddb-subobc.json",
+    "run-subobc:c2a-subobc": "env UART_KBLE_PORT=9697 cargo run --manifest-path ../subobc/Cargo.toml",
+    "run-subobc:c2a": "run-s run:c2a",
+    "run-subobc:gaia": "tmtc-c2a --satconfig satconfig.json --tlmcmddb tlmcmddb.json",
+    "run:kble": "bash -c 'while :; do kble -s <(jrsonnet spaghetti.jsonnet); sleep 1; done'",
+    "run-subobc:kble": "bash -c 'while :; do kble -s <(jrsonnet spaghetti-subobc.jsonnet); sleep 1; done'",
+    "run-subobc-all": "run-p run-subobc:*",
+    "devtools:sils-subobc": "run-s build:* tlmcmddb-merge run-subobc-all"
+  },
+  "devDependencies": {
+    "npm-run-all": "4.1.5",
+    "tools": "file:./tools"
+  }
+}

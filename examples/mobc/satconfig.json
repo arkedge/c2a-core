@@ -1,0 +1,122 @@
+{
+  "aos_scid": 0,
+  "tc_scid": 343,
+  "tlm_apid_map": {
+    "1296": "MOBC",
+    "1297": "AOBC",
+    "1298": "TOBC"
+  },
+  "cmd_apid_map": {
+    "MOBC": 528,
+    "AOBC": 529,
+    "TOBC": 530
+  },
+  "tlm_channel_map": {
+    "RT": {
+      "destination_flag_mask": 3
+    },
+    "DR": {
+      "destination_flag_mask": 8
+    }
+  },
+  "cmd_prefix_map": {
+    "RT": {
+      "MOBC": {
+        "has_time_indicator": false,
+        "destination_type": 15,
+        "execution_type": 0
+      },
+      "AOBC": {
+        "has_time_indicator": false,
+        "destination_type": 15,
+        "execution_type": 0
+      }
+    },
+    "TL": {
+      "MOBC": {
+        "has_time_indicator": true,
+        "destination_type": 15,
+        "execution_type": 1
+      },
+      "AOBC": {
+        "has_time_indicator": true,
+        "destination_type": 15,
+        "execution_type": 1
+      }
+    },
+    "BL": {
+      "MOBC": {
+        "has_time_indicator": true,
+        "destination_type": 15,
+        "execution_type": 2
+      },
+      "AOBC": {
+        "has_time_indicator": true,
+        "destination_type": 15,
+        "execution_type": 2
+      }
+    },
+    "UTL": {
+      "MOBC": {
+        "has_time_indicator": true,
+        "destination_type": 15,
+        "execution_type": 4
+      },
+      "AOBC": {
+        "has_time_indicator": true,
+        "destination_type": 15,
+        "execution_type": 4
+      }
+    },
+    "TL_MIS": {
+      "MOBC": {
+        "has_time_indicator": true,
+        "destination_type": 15,
+        "execution_type": 7
+      }
+    },
+    "UTL_MIS": {
+      "MOBC": {
+        "has_time_indicator": true,
+        "destination_type": 15,
+        "execution_type": 8
+      }
+    },
+    "MOBC_RT": {
+      "MOBC": {
+        "has_time_indicator": false,
+        "destination_type": 1,
+        "execution_type": 0
+      },
+      "AOBC": {
+        "has_time_indicator": false,
+        "destination_type": 1,
+        "execution_type": 0
+      }
+    },
+    "MOBC_TL": {
+      "MOBC": {
+        "has_time_indicator": true,
+        "destination_type": 1,
+        "execution_type": 1
+      },
+      "AOBC": {
+        "has_time_indicator": true,
+        "destination_type": 1,
+        "execution_type": 1
+      }
+    },
+    "MOBC_BL": {
+      "MOBC": {
+        "has_time_indicator": true,
+        "destination_type": 1,
+        "execution_type": 2
+      },
+      "AOBC": {
+        "has_time_indicator": true,
+        "destination_type": 1,
+        "execution_type": 2
+      }
+    }
+  }
+}
