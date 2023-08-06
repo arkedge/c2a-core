@@ -11,7 +11,7 @@ npm run devtools:sils-subobc    # examples/mobc, examples/subobc, tmtc-c2a な�
 
 pytest は subobc 側（このディレクトリ）で実行する．
 
-## テスト用 SILS 構成（WINGS 版）
+## テスト用の S2E を用いた SILS 構成（WINGS 版）
 - WINGS に， MOBC と AOBC の両方の TlmCmd DB を登録する．
     - WINGS の使い方は WINGS Document を参照すること．
 - SILS 環境 [S2E User for C2A Core](https://github.com/ut-issl/s2e-user-for-c2a-core) を 2 セット準備し， MOBC，AOBC それぞれを立ち上げる．
