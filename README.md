@@ -77,11 +77,11 @@ C2A Core の採用実績のある衛星 OBC や動作実績のあるボードの
 | [ut-issl/c2a-enum-loader](https://github.com/ut-issl/c2a-enum-loader) | python で C2A の enum を読み込み利用するためのライブラリ． |
 | [ut-issl/s2e-user-for-c2a-core](https://github.com/ut-issl/s2e-user-for-c2a-core) | C2A Core 開発用 SILS に用いる S2E． |
 | [arkedge/c2a-tlmcmddb](https://github.com/arkedge/c2a-tlmcmddb) | TlmCmd DB data model and CSV parser. |
-| [arkedge/arkedge/c2a-devtools](https://github.com/arkedge/arkedge/c2a-devtools) | C2A development tool based on Gaia tmtc-c2a. |
+| [arkedge/c2a-devtools](https://github.com/arkedge/c2a-devtools) | C2A development tool based on Gaia tmtc-c2a. |
 | [arkedge/workflows-c2a](https://github.com/arkedge/workflows-c2a) | Common GitHub Actions workflows for C2A. |
-| [arkedge/arkedge/gaia](https://github.com/arkedge/arkedge/gaia) | A command and control system for C2A-based satellites. |
+| [arkedge/gaia](https://github.com/arkedge/gaia) | A command and control system for C2A-based satellites. |
 | [arkedge/c2a-pytest-gaia](https://github.com/arkedge/c2a-pytest-gaia) | The Gaia (tmtc-c2a) version of python-wings-interface. |
-| [arkedge/arkedge/kble](https://github.com/arkedge/arkedge/kble) | Virtual Harness Toolkit. |
+| [arkedge/kble](https://github.com/arkedge/kble) | Virtual Harness Toolkit. |
 
 
 ### User 実装例
