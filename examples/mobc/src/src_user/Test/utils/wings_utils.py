@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import isslwings as wings
+import json
+from c2a_pytest_gaia import wings_compat
 
 
+# WINGS API 互換の c2a-pytest-gaia を使用
 def get_wings_operation():
-    return wings.Operation()
+    tlmcmddb = json.load(open("../../../tlmcmddb.json"))
+    return wings_compat.Operation(tlmcmddb)

@@ -7,8 +7,10 @@
 - python3 系列と以下のライブラリ
     - [python-wings-interface](https://github.com/ut-issl/python-wings-interface)
     - [c2a-enum-loader](https://github.com/ut-issl/c2a-enum-loader)
+    - [c2a-pytest-gaia](https://github.com/arkedge/c2a-pytest-gaia)
+- 上記の Python 環境は [rye](https://rye-up.com/) を用いてセットアップすること
 - C2A実行環境（特定のボードでもSILSでも可）
-- WINGS
+- Gaia or WINGS（`utils/wings_utils.py` を以前のものに戻せばまだ使える）
 
 ## 構成
 ### フォルダ構成
@@ -31,9 +33,16 @@
 - HKが0.5Hzで降りてくるのは前提として良い．
 
 ## 実行
+C2A は c2a-sils-runtime に載せたものを使う．
 ```
-pytest -m real -v ./test/  # 実機の場合
-pytest -m sils -v ./test/  # SILSの場合
+cd examples/mobc
+npm run devtools:sils   # C2A 本体と必要なもの（tmtc-c2a など）がすべて走る
+```
+
+```
+rye sync
+rye run pytest -m real -v ./test/  # 実機の場合
+rye run pytest -m sils -v ./test/  # SILSの場合
 # --capture=no オプションをつけると，print なども表示される
 # 簡易表示にするには -v を取り除く
 ```
@@ -41,10 +50,10 @@ pytest -m sils -v ./test/  # SILSの場合
 
 個別ファイルをテストしたい場合は，以下などでOK．
 ```
-pytest -m real -v ./test/src_user/applications/user_defined/test_tlm_mem_dump.py
+rye run pytest -m real -v ./test/src_user/applications/user_defined/test_tlm_mem_dump.py
 
 or
 
 cd ./test/src_user/applications/user_defined/
-pytest -m real -v test_tlm_mem_dump.py
+rye run pytest -m real -v test_tlm_mem_dump.py
 ```
