@@ -7,15 +7,8 @@ on:
       - develop
   pull_request:
 
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   pytest:
-    permissions:
-      contents: read
-      id-token: write
     strategy:
       fail-fast: false
       matrix:
