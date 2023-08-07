@@ -69,19 +69,17 @@ C2A Core の採用実績のある衛星 OBC や動作実績のあるボードの
 
 ## 関連リンク
 ### C2A 関連ツール
-| Repository | Description |
-| -- | -- |
-| [ut-issl/tlm-cmd-db](https://github.com/ut-issl/tlm-cmd-db) | TlmCmd DB．C2A 搭載 / 互換 OBC のテレメトリとコマンドの定義． |
-| [ut-issl/c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) | TlmCmd DB から C2A のソースコードを自動生成するジェネレータ． |
-| [ut-issl/python-wings-interface](https://github.com/ut-issl/python-wings-interface) | localhost で立ち上げた WINGS を用いて C2A の pytest を実行するためのライブラリ． |
-| [ut-issl/c2a-enum-loader](https://github.com/ut-issl/c2a-enum-loader) | python で C2A の enum を読み込み利用するためのライブラリ． |
-| [ut-issl/s2e-user-for-c2a-core](https://github.com/ut-issl/s2e-user-for-c2a-core) | C2A Core 開発用 SILS に用いる S2E． |
-| [arkedge/c2a-tlmcmddb](https://github.com/arkedge/c2a-tlmcmddb) | TlmCmd DB data model and CSV parser. |
-| [arkedge/c2a-devtools](https://github.com/arkedge/c2a-devtools) | C2A development tool based on Gaia tmtc-c2a. |
-| [arkedge/workflows-c2a](https://github.com/arkedge/workflows-c2a) | Common GitHub Actions workflows for C2A. |
-| [arkedge/gaia](https://github.com/arkedge/gaia) | A command and control system for C2A-based satellites. |
-| [arkedge/c2a-pytest-gaia](https://github.com/arkedge/c2a-pytest-gaia) | The Gaia (tmtc-c2a) version of python-wings-interface. |
-| [arkedge/kble](https://github.com/arkedge/kble) | Virtual Harness Toolkit. |
+- https://github.com/ut-issl/tlm-cmd-db
+- https://github.com/ut-issl/c2a-tlm-cmd-code-generator
+- https://github.com/ut-issl/python-wings-interface
+- https://github.com/ut-issl/c2a-enum-loader
+- https://github.com/ut-issl/s2e-user-for-c2a-core
+- https://github.com/arkedge/c2a-tlmcmddb
+- https://github.com/arkedge/c2a-devtools
+- https://github.com/arkedge/workflows-c2a
+- https://github.com/arkedge/gaia
+- https://github.com/arkedge/c2a-pytest-gaia
+- https://github.com/arkedge/kble
 
 
 ### User 実装例
