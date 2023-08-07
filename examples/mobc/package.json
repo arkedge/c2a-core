@@ -13,7 +13,7 @@
     "run-subobc:c2a": "run-s run:c2a",
     "run-subobc:gaia": "tmtc-c2a --satconfig satconfig.json --tlmcmddb tlmcmddb.json",
     "run:kble": "bash -c 'while :; do kble -s <(jrsonnet spaghetti.jsonnet); sleep 1; done'",
-    "run-subobc:kble": "bash -c 'while :; do kble -s <(jrsonnet spaghetti-subobc.jsonnet); sleep 1; done'",
+    "run-subobc:kble": "bash -c 'while :; do kble -s <(jrsonnet spaghetti.subobc.jsonnet); sleep 1; done'",
     "run-subobc-all": "run-p run-subobc:*",
     "devtools:sils-subobc": "run-s build:* tlmcmddb-merge run-subobc-all"
   },
