@@ -14,7 +14,7 @@ CCSDS における APID によって制御されるデータ配送はネット�
 
 この層を流れるデータ単位を `Packet` と呼ぶ．
 
-C2A では，地上局との通信や C2A 間通信において， [Core Layer/Communication](../core/communication.md) の Common Packet が標準的に使用される．
+C2A では，地上局との通信や C2A 間通信において， [Core Layer/Communication](../core/communication.md) の Common Packet (C2A 標準 Space Packet) が標準的に使用される．
 C2A を搭載した OBC と Common Packet に対応していないその他のコンポーネントでは，後述する EB90 Packet を可能な限り用いる．
 
 ### データリンク層
@@ -29,7 +29,7 @@ C2A では，CCSDS に準拠した地上局との通信では，それに準拠�
 
 
 ## ネットワーク層 (Packet)
-### Common Packet
+### Common Packet (C2A 標準 Space Packet)
 [Core Layer/Communication](../core/communication.md) を参照のこと．
 
 ### EB90 Packet
