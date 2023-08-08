@@ -4,6 +4,8 @@ description = "C2Aのモジュールをbindgenするときのユーティリテ�
 version.workspace = true
 edition = "2021"
 
+license = "MIT"
+
 [dependencies]
 bindgen = "0.66.1"
 doxygen-rs = "0.4.2"
