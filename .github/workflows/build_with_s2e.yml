@@ -8,6 +8,7 @@ on:
   pull_request:
 
 env:
+  # renovate: datasource=github-releases depName=ut-issl/s2e-core
   S2E_CORE_VERSION: v6.0.0
 
 jobs:
