@@ -15,7 +15,7 @@
                                                 RT, TL * 4, GS, TDSP */
 
 // CDIS_MGR_MAX_NUM_OF_CDIS の user オーバーライド
-#include <src_user/Settings/TlmCmd/command_dispatcher_manager_params.h>
+#include <Settings/TlmCmd/command_dispatcher_manager_params.h>
 
 /**
  * @struct CommandDispatcherManager
