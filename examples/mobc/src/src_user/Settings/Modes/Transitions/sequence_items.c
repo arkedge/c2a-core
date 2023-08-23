@@ -1,7 +1,7 @@
 #pragma section REPRO
 #include "sequence_items.h"
 #include "../../../TlmCmd/block_command_definitions.h"
-#include <src_core/TlmCmd/common_cmd_packet_util.h>
+#include <c2a-core/TlmCmd/common_cmd_packet_util.h>
 #include "../mode_definitions.h"
 
 

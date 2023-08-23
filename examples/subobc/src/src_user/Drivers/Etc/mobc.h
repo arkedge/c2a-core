@@ -5,11 +5,11 @@
 #ifndef MOBC_H_
 #define MOBC_H_
 
-#include <src_core/hal/uart.h>
-#include <src_core/Drivers/Super/driver_super.h>
-#include <src_core/System/TimeManager/obc_time.h>
-#include <src_core/TlmCmd/common_tlm_packet.h>
-#include <src_core/TlmCmd/packet_handler.h>
+#include <c2a-core/hal/uart.h>
+#include <c2a-core/Drivers/Super/driver_super.h>
+#include <c2a-core/System/TimeManager/obc_time.h>
+#include <c2a-core/TlmCmd/common_tlm_packet.h>
+#include <c2a-core/TlmCmd/packet_handler.h>
 
 /**
  * @enum   MOBC_TX_ERR_CODE

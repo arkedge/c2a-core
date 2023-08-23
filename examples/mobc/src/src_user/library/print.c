@@ -6,7 +6,7 @@
 
 // printはHW依存性が強いため，ヘッダーはcoreにおき，オーバーライドする
 // ビルド対象にて選択する
-#include <src_core/library/print.h>
+#include <c2a-core/library/print.h>
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -18,7 +18,7 @@ static char PRINT_buffer_[512];
 
 #ifndef SILS_FW
 
-#include <src_core/System/WatchdogTimer/watchdog_timer.h>
+#include <c2a-core/System/WatchdogTimer/watchdog_timer.h>
 
 void Printf(const char* format, ...)
 {

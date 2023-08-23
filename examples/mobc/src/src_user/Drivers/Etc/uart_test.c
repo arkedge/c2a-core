@@ -5,8 +5,8 @@
  */
 
 #include "uart_test.h"
-#include <src_core/TlmCmd/common_cmd_packet.h>
-#include <src_core/library/print.h>
+#include <c2a-core/TlmCmd/common_cmd_packet.h>
+#include <c2a-core/library/print.h>
 #include "../../Settings/sils_define.h"
 #include "string.h"   // for memcpy
 #include <stdio.h>    // SILSでのprint

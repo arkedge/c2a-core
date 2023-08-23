@@ -6,7 +6,7 @@
 #define CCSDS_USER_H_
 
 #include <stdint.h>
-#include <src_core/hal/ccsds.h>
+#include <c2a-core/hal/ccsds.h>
 
 #define CCSDS_FIFO_SIZE (8) // 現在使っている CCSDS API の設計上決まっている
 

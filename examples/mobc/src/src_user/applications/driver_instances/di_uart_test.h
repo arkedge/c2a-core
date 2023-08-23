@@ -6,8 +6,8 @@
 #define DI_UART_TEST_H_
 
 #include "../../Drivers/Etc/uart_test.h"
-#include <src_core/System/ApplicationManager/app_info.h>
-#include <src_core/TlmCmd/common_cmd_packet.h>
+#include <c2a-core/System/ApplicationManager/app_info.h>
+#include <c2a-core/TlmCmd/common_cmd_packet.h>
 
 extern const UART_TEST_Driver* const uart_test_driver;
 

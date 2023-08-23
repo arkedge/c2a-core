@@ -4,24 +4,24 @@
 #include <stddef.h> // for NULL
 #include <stdint.h>
 
-#include <src_core/library/git_revision.h>
-#include <src_core/library/print.h>
-#include <src_core/System/TimeManager/time_manager.h>
-#include <src_core/System/ModeManager/mode_manager.h>
-#include <src_core/System/TaskManager/task_dispatcher.h>
-#include <src_core/System/EventManager/event_logger.h>
-#include <src_core/System/EventManager/event_handler.h>
-#include <src_core/TlmCmd/packet_handler.h>
+#include <c2a-core/library/git_revision.h>
+#include <c2a-core/library/print.h>
+#include <c2a-core/System/TimeManager/time_manager.h>
+#include <c2a-core/System/ModeManager/mode_manager.h>
+#include <c2a-core/System/TaskManager/task_dispatcher.h>
+#include <c2a-core/System/EventManager/event_logger.h>
+#include <c2a-core/System/EventManager/event_handler.h>
+#include <c2a-core/TlmCmd/packet_handler.h>
 #include "../../TlmCmd/telemetry_definitions.h"
-#include <src_core/TlmCmd/block_command_table.h>
-#include <src_core/applications/memory_dump.h>
-#include <src_core/applications/gs_command_dispatcher.h>
-#include <src_core/applications/realtime_command_dispatcher.h>
-#include <src_core/applications/timeline_command_dispatcher.h>
+#include <c2a-core/TlmCmd/block_command_table.h>
+#include <c2a-core/applications/memory_dump.h>
+#include <c2a-core/applications/gs_command_dispatcher.h>
+#include <c2a-core/applications/realtime_command_dispatcher.h>
+#include <c2a-core/applications/timeline_command_dispatcher.h>
 #include "../../applications/driver_instances/di_gs.h"
-// #include <src_core/TlmCmd/telemetry_generator.h>
+// #include <c2a-core/TlmCmd/telemetry_generator.h>
 #include "../../library/vt100.h"
-#include <src_core/library/result.h>
+#include <c2a-core/library/result.h>
 
 static RESULT APP_DBG_flush_screen_(void);
 static RESULT APP_DBG_print_time_stamp_(void);

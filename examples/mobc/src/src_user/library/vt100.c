@@ -1,7 +1,7 @@
 #pragma section REPRO
 #include "vt100.h"
 
-#include <src_core/library/print.h>
+#include <c2a-core/library/print.h>
 
 void VT100_erase_down(void)
 {

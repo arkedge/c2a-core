@@ -7,9 +7,9 @@
 // FIXME: DS 側の TCP が整理されたら， TCP 関連を撲滅し， CTCP に統一する
 
 #include "./mobc.h"
-#include <src_core/TlmCmd/common_tlm_cmd_packet.h>
-#include <src_core/Drivers/Protocol/eb90_frame_for_driver_super.h>
-#include <src_core/Drivers/Protocol/common_tlm_cmd_packet_for_driver_super.h>
+#include <c2a-core/TlmCmd/common_tlm_cmd_packet.h>
+#include <c2a-core/Drivers/Protocol/eb90_frame_for_driver_super.h>
+#include <c2a-core/Drivers/Protocol/common_tlm_cmd_packet_for_driver_super.h>
 #include <string.h>
 
 #define MOBC_STREAM_TLM_CMD   (0)   //!< テレコマで使うストリーム

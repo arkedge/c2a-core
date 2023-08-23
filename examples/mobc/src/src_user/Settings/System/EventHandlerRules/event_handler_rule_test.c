@@ -4,7 +4,7 @@
  * @brief  EH の テスト用 Rule
  */
 #include "event_handler_rules.h"
-#include <src_core/System/EventManager/event_handler.h>
+#include <c2a-core/System/EventManager/event_handler.h>
 #include "../../../TlmCmd/block_command_definitions.h"
 
 void EH_load_rule_test(void)

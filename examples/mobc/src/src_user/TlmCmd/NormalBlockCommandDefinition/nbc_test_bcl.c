@@ -5,7 +5,7 @@
  */
 #include "nbc_header.h"
 
-#include <src_core/TlmCmd/block_command_loader.h>
+#include <c2a-core/TlmCmd/block_command_loader.h>
 
 #include "../command_definitions.h"
 #include "../../Drivers/Aocs/aobc_command_definitions.h"

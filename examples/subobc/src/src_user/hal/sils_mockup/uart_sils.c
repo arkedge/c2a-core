@@ -1,5 +1,5 @@
 #pragma section REPRO
-#include <src_core/hal/uart.h>
+#include <c2a-core/hal/uart.h>
 
 int UART_init(void* my_uart_v)
 {

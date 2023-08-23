@@ -2,8 +2,8 @@
 #define IF_LIST_H_
 
 
-#include <src_core/hal/ccsds.h>
-#include <src_core/hal/uart.h>
+#include <c2a-core/hal/ccsds.h>
+#include <c2a-core/hal/uart.h>
 
 typedef enum
 {

@@ -3,8 +3,8 @@
 
 #include "../../../TlmCmd/command_definitions.h"
 
-#include <src_core/TlmCmd/block_command_loader.h>
-#include <src_core/System/TimeManager/obc_time.h>
+#include <c2a-core/TlmCmd/block_command_loader.h>
+#include <c2a-core/System/TimeManager/obc_time.h>
 
 void BCL_load_sl_nop(void)
 {

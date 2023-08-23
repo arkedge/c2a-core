@@ -7,9 +7,9 @@
 #define AOBC_TELEMETRY_BUFFER_H_
 
 #include "./aobc_telemetry_definitions.h"
-#include <src_core/Drivers/Super/driver_super.h>
-#include <src_core/TlmCmd/common_tlm_packet.h>
-#include <src_core/TlmCmd/telemetry_frame.h>
+#include <c2a-core/Drivers/Super/driver_super.h>
+#include <c2a-core/TlmCmd/common_tlm_packet.h>
+#include <c2a-core/TlmCmd/telemetry_frame.h>
 
 typedef struct AOBC_Driver AOBC_Driver;
 

@@ -4,7 +4,7 @@
  * @brief  packet_handlerのコマンドルーター，コマンドアナライザのユーザー定義部分
  */
 #include "user_packet_handler.h"
-#include <src_core/TlmCmd/packet_list_util.h>
+#include <c2a-core/TlmCmd/packet_list_util.h>
 
 
 void PH_user_init(void)

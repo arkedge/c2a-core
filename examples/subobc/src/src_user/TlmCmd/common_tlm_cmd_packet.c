@@ -6,8 +6,8 @@
  * @note   CTP:  CommonTlmPacket
  * @note   CCP:  CommonCmdPacket
  */
-#include <src_core/TlmCmd/common_tlm_cmd_packet.h>
-#include <src_core/TlmCmd/Ccsds/space_packet.h>
+#include <c2a-core/TlmCmd/common_tlm_cmd_packet.h>
+#include <c2a-core/TlmCmd/Ccsds/space_packet.h>
 #include <string.h>
 
 

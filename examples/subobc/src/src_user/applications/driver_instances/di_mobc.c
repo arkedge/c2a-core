@@ -5,11 +5,11 @@
  */
 
 #include "di_mobc.h"
-#include <src_core/TlmCmd/packet_handler.h>
-#include <src_core/library/print.h>
+#include <c2a-core/TlmCmd/packet_handler.h>
+#include <c2a-core/library/print.h>
 #include "../../Settings/port_config.h"
 #include "../../Settings/DriverSuper/driver_buffer_define.h"
-#include <src_core/library/result.h>
+#include <c2a-core/library/result.h>
 
 static RESULT DI_MOBC_init_(void);
 static RESULT DI_MOBC_update_(void);

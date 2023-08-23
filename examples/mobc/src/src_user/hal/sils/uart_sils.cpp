@@ -1,5 +1,5 @@
 #pragma section REPRO
-#include <src_core/hal/uart.h>
+#include <c2a-core/hal/uart.h>
 #include "../../Settings/port_config.h"
 
 #ifdef USE_SCI_COM_UART

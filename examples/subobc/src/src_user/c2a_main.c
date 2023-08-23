@@ -1,8 +1,8 @@
-#include <src_core/library/git_revision.h>
-#include <src_core/library/print.h>
-#include <src_core/c2a_core_main.h>
-#include <src_core/System/TimeManager/time_manager.h>
-#include <src_core/System/WatchdogTimer/watchdog_timer.h>
+#include <c2a-core/library/git_revision.h>
+#include <c2a-core/library/print.h>
+#include <c2a-core/c2a_core_main.h>
+#include <c2a-core/System/TimeManager/time_manager.h>
+#include <c2a-core/System/WatchdogTimer/watchdog_timer.h>
 #include "./Settings/sils_define.h"
 
 // SILSの時，通常main関数はC2A外にある

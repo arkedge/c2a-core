@@ -5,11 +5,11 @@
 #ifndef USER_PACKET_HANDLER_H_
 #define USER_PACKET_HANDLER_H_
 
-#include <src_core/TlmCmd/packet_list.h>
-#include <src_core/TlmCmd/common_tlm_cmd_packet.h>
-#include <src_core/TlmCmd/common_cmd_packet_util.h>
-#include <src_core/TlmCmd/packet_handler.h>
-#include <src_core/TlmCmd/telemetry_frame.h>
+#include <c2a-core/TlmCmd/packet_list.h>
+#include <c2a-core/TlmCmd/common_tlm_cmd_packet.h>
+#include <c2a-core/TlmCmd/common_cmd_packet_util.h>
+#include <c2a-core/TlmCmd/packet_handler.h>
+#include <c2a-core/TlmCmd/telemetry_frame.h>
 #include "telemetry_definitions.h"
 #include "../Settings/TlmCmd/Ccsds/apid_define.h"
 

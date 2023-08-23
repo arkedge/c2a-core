@@ -6,7 +6,7 @@
 #include "tc_transfer_frame.h"
 
 #include <string.h>
-#include <src_core/library/crc.h>
+#include <c2a-core/library/crc.h>
 
 TCTF_VER TCTF_get_ver(const TcTransferFrame* tctf)
 {

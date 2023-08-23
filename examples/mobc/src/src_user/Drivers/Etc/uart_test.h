@@ -5,8 +5,8 @@
 #ifndef UART_TEST_H_
 #define UART_TEST_H_
 
-#include <src_core/hal/uart.h>
-#include <src_core/Drivers/Super/driver_super.h>
+#include <c2a-core/hal/uart.h>
+#include <c2a-core/Drivers/Super/driver_super.h>
 
 /**
  * @struct UART_TEST_Info

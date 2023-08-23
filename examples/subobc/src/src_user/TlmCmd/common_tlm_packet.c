@@ -4,8 +4,8 @@
  * @brief  CTP 関連基本関数の定義
  * @note   CTP:  CommonTlmPacket
  */
-#include <src_core/TlmCmd/common_tlm_packet.h>
-#include <src_core/TlmCmd/Ccsds/tlm_space_packet.h>
+#include <c2a-core/TlmCmd/common_tlm_packet.h>
+#include <c2a-core/TlmCmd/Ccsds/tlm_space_packet.h>
 #include <string.h>
 
 

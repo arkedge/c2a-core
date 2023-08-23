@@ -1,4 +1,4 @@
-#include <src_core/hal/wdt.h>
+#include <c2a-core/hal/wdt.h>
 
 int WDT_initialize(void* wdt_config)
 {

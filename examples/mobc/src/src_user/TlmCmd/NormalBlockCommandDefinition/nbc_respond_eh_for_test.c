@@ -5,11 +5,11 @@
  */
 #include "nbc_header.h"
 
-#include <src_core/TlmCmd/block_command_loader.h>
+#include <c2a-core/TlmCmd/block_command_loader.h>
 
 #include "../command_definitions.h"
 #include "../block_command_definitions.h"
-#include <src_core/System/EventManager/event_logger.h>
+#include <c2a-core/System/EventManager/event_logger.h>
 
 typedef enum
 {
