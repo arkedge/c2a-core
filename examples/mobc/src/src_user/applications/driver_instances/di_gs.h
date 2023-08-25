@@ -10,7 +10,7 @@
 #include "../../Drivers/Com/gs.h"
 #include "../../TlmCmd/Ccsds/tcp_to_m_pdu.h"
 #include "../../TlmCmd/Ccsds/vcdu.h"
-#include <src_core/System/ApplicationManager/app_info.h>
+#include <src_core/system/application_manager/app_info.h>
 
 /**
  * @struct DI_GS_TlmPacketHandler

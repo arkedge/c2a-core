@@ -6,7 +6,7 @@
  */
 #include <src_core/TlmCmd/common_tlm_packet.h>
 #include <src_core/TlmCmd/Ccsds/tlm_space_packet.h>
-#include <src_core/System/TimeManager/time_manager.h>
+#include <src_core/system/time_manager/time_manager.h>
 #include <string.h>
 
 
