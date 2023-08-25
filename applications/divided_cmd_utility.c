@@ -14,8 +14,8 @@
 #include "divided_cmd_utility.h"
 #include "../TlmCmd/packet_handler.h"
 #include "../TlmCmd/common_cmd_packet_util.h"
-#include "../System/TimeManager/time_manager.h"
-#include "../System/EventManager/event_logger.h"
+#include "../system/time_manager/time_manager.h"
+#include "../system/event_manager/event_logger.h"
 #include "../library/result.h"
 
 /**

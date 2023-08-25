@@ -8,7 +8,7 @@
 #include <stddef.h>
 #include <string.h>
 
-#include "../System/TimeManager/time_manager.h"
+#include "../system/time_manager/time_manager.h"
 #include "command_analyze.h"
 #include "block_command_table.h"
 #include <src_user/TlmCmd/user_packet_handler.h>

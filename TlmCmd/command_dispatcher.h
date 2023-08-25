@@ -8,7 +8,7 @@
 #include "common_cmd_packet_util.h"
 #include "common_cmd_packet.h"
 #include "packet_list.h"
-#include "../System/TimeManager/obc_time.h"
+#include "../system/time_manager/obc_time.h"
 #include "../library/result.h"
 #include <src_user/TlmCmd/command_definitions.h>
 

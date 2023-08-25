@@ -15,9 +15,9 @@
 #include "packet_handler.h"
 #include "command_analyze.h"
 #include <src_user/TlmCmd/command_definitions.h>
-#include "../System/TimeManager/time_manager.h"
+#include "../system/time_manager/time_manager.h"
 #include "../library/endian.h"
-#include "../System/WatchdogTimer/watchdog_timer.h"
+#include "../system/watchdog_timer/watchdog_timer.h"
 #include "common_cmd_packet_util.h"
 
 // FIXME: この include は依存的にダメなので， TCP → Space Packet 大工事が終わったら直す

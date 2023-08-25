@@ -5,7 +5,7 @@
 #ifndef APP_INFO_H_
 #define APP_INFO_H_
 
-#include "../TimeManager/obc_time.h"
+#include "../time_manager/obc_time.h"
 #include "../../library/result.h"
 
 typedef struct

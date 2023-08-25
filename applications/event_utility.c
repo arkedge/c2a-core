@@ -5,7 +5,7 @@
  * @note  実質的には event_handler を定期実行するだけ
  */
 #include "event_utility.h"
-#include "../System/EventManager/event_handler.h"
+#include "../system/event_manager/event_handler.h"
 #include "../TlmCmd/common_cmd_packet_util.h"
 #include "../library/result.h"
 

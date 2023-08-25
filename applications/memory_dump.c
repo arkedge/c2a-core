@@ -3,7 +3,7 @@
 
 #include <string.h> // for memcpy
 
-#include "../System/TimeManager/time_manager.h"
+#include "../system/time_manager/time_manager.h"
 #include "../TlmCmd/packet_handler.h"
 #include "../library/endian.h"
 #include "../TlmCmd/common_cmd_packet_util.h"

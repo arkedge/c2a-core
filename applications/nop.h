@@ -7,7 +7,7 @@
 #ifndef NOP_H_
 #define NOP_H_
 
-#include "../System/ApplicationManager/app_info.h"
+#include "../system/application_manager/app_info.h"
 #include "../TlmCmd/common_cmd_packet.h"
 
 AppInfo NOP_create_app(void);

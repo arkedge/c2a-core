@@ -7,8 +7,8 @@
 use core::*;
 include!(concat!(env!("OUT_DIR"), "/c2a_core_main.rs"));
 
-pub mod System;
 pub mod hal;
+pub mod system;
 
 #[cfg(feature = "export-src")]
 pub fn source_dir() -> std::path::PathBuf {

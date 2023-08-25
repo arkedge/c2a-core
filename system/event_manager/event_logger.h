@@ -43,10 +43,10 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "../../TlmCmd/common_cmd_packet.h"
-#include "../TimeManager/obc_time.h"
+#include "../time_manager/obc_time.h"
 
 // EL_GROUP (uint32_t を想定) をここで定義する
-#include <src_user/Settings/System/event_logger_group.h>
+#include <src_user/Settings/system/event_logger_group.h>
 
 #define EL_TLOG_TLM_PAGE_SIZE         (28)    //!< TLogにて，テレメ１ページにおろせるlog数
 #define EL_TLOG_TLM_PAGE_MAX_HIGH     (4)     //!< TLogで保存するログのページ数 (EL_ERROR_LEVEL_HIGH)
@@ -82,7 +82,7 @@
 // #define EL_IS_ENABLE_EL_ERROR_LEVEL: EL_ERROR_LEVEL_EL を使えるようにするか？
 // SIZE_OF_EL_CLOG_COUNTER_T: el_clog_counter_t の型サイズ
 // 上部で定義されている，各種tableサイズ
-#include <src_user/Settings/System/event_logger_params.h>
+#include <src_user/Settings/system/event_logger_params.h>
 
 #define EL_LOG_MINIMUM_REQUIRED           (2)   //!< ログに求められる最小要素数
 #define EL_LOG_MINIMUM_REQUIRED_EL_LOG    (4)   //!< ELログに求められる最小要素数

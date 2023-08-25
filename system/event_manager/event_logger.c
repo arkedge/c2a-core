@@ -10,9 +10,9 @@
 #include "event_logger.h"
 #include "event_handler.h"
 #include <string.h>
-#include "../TimeManager/time_manager.h"
-#include "../WatchdogTimer/watchdog_timer.h"
-#include <src_user/Settings/System/event_logger_settings.h>
+#include "../time_manager/time_manager.h"
+#include "../watchdog_timer/watchdog_timer.h"
+#include <src_user/Settings/system/event_logger_settings.h>
 #include "../../TlmCmd/common_cmd_packet_util.h"
 
 

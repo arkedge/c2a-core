@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include "../../TlmCmd/common_cmd_packet_util.h"
 #include "../../applications/timeline_command_dispatcher_id_define.h"
-#include "../TimeManager/time_manager.h"
+#include "../time_manager/time_manager.h"
 
 #ifdef EL_IS_ENABLE_TLOG
 

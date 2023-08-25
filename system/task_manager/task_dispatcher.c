@@ -13,10 +13,10 @@
 #include "../../TlmCmd/packet_list_util.h"
 #include "../../TlmCmd/block_command_executor.h"
 #include "../../TlmCmd/common_cmd_packet_util.h"
-#include "../ModeManager/mode_manager.h"
-#include "../TimeManager/time_manager.h"
-#include "../TimeManager/obc_time_config.h"
-#include "../EventManager/event_logger.h"
+#include "../mode_manager/mode_manager.h"
+#include "../time_manager/time_manager.h"
+#include "../time_manager/obc_time_config.h"
+#include "../event_manager/event_logger.h"
 #include <src_user/TlmCmd/block_command_definitions.h>
 #include <src_user/TlmCmd/command_definitions.h>
 

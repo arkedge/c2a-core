@@ -6,8 +6,8 @@
 #include "command_dispatcher.h"
 #include "command_dispatcher_manager.h"
 #include <string.h>
-#include "../System/TimeManager/time_manager.h"
-#include "../System/EventManager/event_logger.h"
+#include "../system/time_manager/time_manager.h"
+#include "../system/event_manager/event_logger.h"
 #include "packet_handler.h"
 #include <src_user/TlmCmd/command_definitions.h>
 
