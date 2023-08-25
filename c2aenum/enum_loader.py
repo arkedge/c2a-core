@@ -15,7 +15,7 @@ class C2aEnum:
             "/src_core/Drivers/",
             "/src_core/hal/",
             "/src_core/library/",
-            "/src_core/System/",
+            "/src_core/system/",
             "/src_core/TlmCmd/",
         ]
 
