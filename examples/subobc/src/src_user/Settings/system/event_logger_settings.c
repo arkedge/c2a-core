@@ -4,7 +4,7 @@
  * @brief event_logger の設定
  */
 
-#include <src_core/System/EventManager/event_logger.h>
+#include <src_core/system/event_manager/event_logger.h>
 #include "event_logger_settings.h"
 #include "event_logger_group.h"
 

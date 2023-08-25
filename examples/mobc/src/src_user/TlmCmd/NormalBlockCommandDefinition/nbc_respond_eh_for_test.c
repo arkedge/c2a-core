@@ -9,7 +9,7 @@
 
 #include "../command_definitions.h"
 #include "../block_command_definitions.h"
-#include <src_core/System/EventManager/event_logger.h>
+#include <src_core/system/event_manager/event_logger.h>
 
 typedef enum
 {

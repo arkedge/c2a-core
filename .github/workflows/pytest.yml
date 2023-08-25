@@ -17,19 +17,19 @@ jobs:
           - c2a_user: mobc
             test_dir: src_core/applications
           - c2a_user: mobc
-            test_dir: src_core/System/EventManager/test_event_handler.py
+            test_dir: src_core/system/event_manager/test_event_handler.py
           - c2a_user: mobc
-            test_dir: src_core/System/EventManager/test_event_handler.py
+            test_dir: src_core/system/event_manager/test_event_handler.py
           - c2a_user: mobc
-            test_dir: src_core/System/EventManager/test_event_logger.py
+            test_dir: src_core/system/event_manager/test_event_logger.py
           - c2a_user: mobc
-            test_dir: src_core/System/TaskManager
+            test_dir: src_core/system/task_manager
           - c2a_user: mobc
-            test_dir: src_core/System/WatchdogTimer
+            test_dir: src_core/system/watchdog_timer
           - c2a_user: mobc
-            test_dir: src_core/System/ModeManager
+            test_dir: src_core/system/mode_manager
           - c2a_user: mobc
-            test_dir: src_core/System/TimeManager
+            test_dir: src_core/system/time_manager
           - c2a_user: mobc
             test_dir: src_core/TlmCmd
           # 2nd_obc_user

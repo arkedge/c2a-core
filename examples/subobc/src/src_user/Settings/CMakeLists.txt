@@ -10,8 +10,8 @@ set(C2A_SRCS
   Modes/TaskLists/Elements/tl_elem_tlm_cmd_hirate.c
   Modes/Transitions/sl_initial.c
   Modes/Transitions/sl_nop.c
-  System/event_logger_settings.c
-  System/EventHandlerRules/event_handler_rules.c
+  system/event_logger_settings.c
+  system/event_handler_rules/event_handler_rules.c
   TlmCmd/common_cmd_packet_define.c
   TlmCmd/Ccsds/apid_define.c
 )

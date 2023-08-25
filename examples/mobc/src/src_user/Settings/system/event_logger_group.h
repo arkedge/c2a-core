@@ -15,7 +15,18 @@
 typedef enum
 {
   // C2A CORE: 0-49
-  // src_core/System/EventManager/event_logger.h の EL_CORE_GROUP にて定義
+  // src_core/system/event_manager/event_logger.h の EL_CORE_GROUP にて定義
+
+  // CDH: 50-69
+  EL_GROUP_UART = 50,         // TODO
+  EL_GROUP_UART_REOPEN,
+
+  // TEST
+  EL_GROUP_TEST             = 0xf0,        // pytest用
+  EL_GROUP_TEST1            = 0xf1,        // pytest用
+  EL_GROUP_TEST_EH          = 0xf2,        // pytest用 EH
+  EL_GROUP_TEST_EH_RESPOND  = 0xf3,        // pytest用 EHの対応検知用
+  EL_GROUP_TEST_EH1         = 0xf4,        // pytest用 EH
 
   // とりあえず最大値は0xffに！
   EL_GROUP_MAX = 0x100       // これはいじらない！

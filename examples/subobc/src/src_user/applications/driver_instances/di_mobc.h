@@ -6,7 +6,7 @@
 #define DI_MOBC_H_
 
 #include "../../Drivers/Etc/mobc.h"
-#include <src_core/System/ApplicationManager/app_info.h>
+#include <src_core/system/application_manager/app_info.h>
 #include <src_core/TlmCmd/common_cmd_packet.h>
 
 extern const MOBC_Driver* const mobc_driver;           //!< MOBC driver

@@ -6,11 +6,11 @@
 
 #include <src_core/library/git_revision.h>
 #include <src_core/library/print.h>
-#include <src_core/System/TimeManager/time_manager.h>
-#include <src_core/System/ModeManager/mode_manager.h>
-#include <src_core/System/TaskManager/task_dispatcher.h>
-#include <src_core/System/EventManager/event_logger.h>
-#include <src_core/System/EventManager/event_handler.h>
+#include <src_core/system/time_manager/time_manager.h>
+#include <src_core/system/mode_manager/mode_manager.h>
+#include <src_core/system/task_manager/task_dispatcher.h>
+#include <src_core/system/event_manager/event_logger.h>
+#include <src_core/system/event_manager/event_handler.h>
 #include <src_core/TlmCmd/packet_handler.h>
 #include "../../TlmCmd/telemetry_definitions.h"
 #include <src_core/TlmCmd/block_command_table.h>

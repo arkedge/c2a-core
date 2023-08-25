@@ -18,7 +18,7 @@ static char PRINT_buffer_[512];
 
 #ifndef SILS_FW
 
-#include <src_core/System/WatchdogTimer/watchdog_timer.h>
+#include <src_core/system/watchdog_timer/watchdog_timer.h>
 
 void Printf(const char* format, ...)
 {

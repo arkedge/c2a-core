@@ -1,7 +1,7 @@
 #include "src_core/c2a_core_main.h"
-#include "src_core/System/TaskManager/task_dispatcher.h"
-#include "src_core/System/TimeManager/time_manager.h"
-#include "src_core/System/WatchdogTimer/watchdog_timer.h"
+#include "src_core/system/task_manager/task_dispatcher.h"
+#include "src_core/system/time_manager/time_manager.h"
+#include "src_core/system/watchdog_timer/watchdog_timer.h"
 
 int main(){
   TMGR_init();                //Time Manager

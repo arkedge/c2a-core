@@ -12,9 +12,9 @@ set(C2A_SRCS
   Modes/Transitions/sl_initial.c
   Modes/Transitions/sl_nop.c
   Modes/Transitions/sequence_items.c
-  System/event_logger_settings.c
-  System/EventHandlerRules/event_handler_rules.c
-  System/EventHandlerRules/event_handler_rule_test.c
+  system/event_logger_settings.c
+  system/event_handler_rules/event_handler_rules.c
+  system/event_handler_rules/event_handler_rule_test.c
   TlmCmd/common_cmd_packet_define.c
   TlmCmd/Ccsds/apid_define.c
 )

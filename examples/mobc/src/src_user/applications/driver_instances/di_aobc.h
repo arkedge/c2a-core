@@ -9,7 +9,7 @@
 #include "../../Drivers/Aocs/aobc.h"
 #include "../../Drivers/Aocs/aobc_command_definitions.h"
 #include "../../Drivers/Aocs/aobc_telemetry_definitions.h"
-#include <src_core/System/ApplicationManager/app_info.h>
+#include <src_core/system/application_manager/app_info.h>
 #include <src_core/TlmCmd/command_dispatcher.h>
 #include <src_core/TlmCmd/common_cmd_packet.h>
 

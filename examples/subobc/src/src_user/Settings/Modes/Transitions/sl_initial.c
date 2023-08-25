@@ -6,7 +6,7 @@
 
 #include <src_core/applications/timeline_command_dispatcher_id_define.h>
 #include <src_core/TlmCmd/block_command_loader.h>
-#include <src_core/System/TimeManager/obc_time.h>
+#include <src_core/system/time_manager/obc_time.h>
 
 void BCL_load_sl_start_up_to_initial(void)
 {

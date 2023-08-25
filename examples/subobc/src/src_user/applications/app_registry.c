@@ -1,7 +1,7 @@
 #pragma section REPRO
 #include "app_registry.h"
 
-#include <src_core/System/ApplicationManager/app_manager.h>
+#include <src_core/system/application_manager/app_manager.h>
 
 #include "app_headers.h"
 

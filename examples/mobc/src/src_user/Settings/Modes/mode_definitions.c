@@ -5,7 +5,7 @@
  */
 #include "mode_definitions.h"
 
-#include <src_core/System/ModeManager/mode_manager.h>
+#include <src_core/system/mode_manager/mode_manager.h>
 
 #include "../../TlmCmd/block_command_definitions.h"
 
