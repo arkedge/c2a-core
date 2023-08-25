@@ -19,8 +19,6 @@ jobs:
           - c2a_user: mobc
             test_dir: src_core/system/event_manager/test_event_handler.py
           - c2a_user: mobc
-            test_dir: src_core/system/event_manager/test_event_handler.py
-          - c2a_user: mobc
             test_dir: src_core/system/event_manager/test_event_logger.py
           - c2a_user: mobc
             test_dir: src_core/system/task_manager
