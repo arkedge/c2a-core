@@ -16,7 +16,7 @@ class C2aEnum:
             "/src_core/hal/",
             "/src_core/library/",
             "/src_core/system/",
-            "/src_core/TlmCmd/",
+            "/src_core/tlm_cmd/",
         ]
 
         self._get_all_enum()
