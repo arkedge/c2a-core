@@ -16,9 +16,9 @@
 #include "../library/endian.h"
 #include "../library/result.h"
 #include "../tlm_cmd/common_cmd_packet_util.h"
-#include <src_user/TlmCmd/block_command_definitions.h>
-#include <src_user/TlmCmd/command_definitions.h>
-#include <src_user/TlmCmd/telemetry_definitions.h>
+#include <src_user/tlm_cmd/block_command_definitions.h>
+#include <src_user/tlm_cmd/command_definitions.h>
+#include <src_user/tlm_cmd/telemetry_definitions.h>
 
 // default 設定
 // BC にどの TLM_MGR_BC_ROLE を割り当てるか

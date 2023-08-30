@@ -5,7 +5,7 @@
  */
 #include "command_analyze.h"
 #include "common_cmd_packet_util.h"
-#include <src_user/TlmCmd/command_definitions.h>
+#include <src_user/tlm_cmd/command_definitions.h>
 #include "../library/print.h"
  #include "../system/event_manager/event_logger.h"
 #include <string.h>

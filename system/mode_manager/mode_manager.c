@@ -12,7 +12,7 @@
 #include "../event_manager/event_logger.h"
 #include "../../tlm_cmd/block_command_executor.h"
 #include "../../tlm_cmd/common_cmd_packet_util.h"
-#include <src_user/TlmCmd/command_definitions.h>
+#include <src_user/tlm_cmd/command_definitions.h>
 #include "../../tlm_cmd/packet_handler.h"
 #include "../../applications/timeline_command_dispatcher_id_define.h"
 #include "../../library/endian.h"

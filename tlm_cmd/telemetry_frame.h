@@ -6,7 +6,7 @@
 #define TELEMETRY_FRAME_H_
 
 #include "./common_cmd_packet.h"
-#include <src_user/TlmCmd/telemetry_definitions.h>
+#include <src_user/tlm_cmd/telemetry_definitions.h>
 
 #define TF_TLM_PAGE_SIZE (64)                                    //!< テレメテーブルの1テレメトリパケット(=1ページ)に格納されるテレメ数
 #define TF_TLM_PAGE_MAX  (4)                                     //!< テレメテーブルページ数（ページネーション用）
@@ -72,7 +72,7 @@ TF_TLM_FUNC_ACK TF_generate_contents(TLM_CODE tlm_id,
 
 /**
  * @brief  Tlm Tableのロード
- * @note   定義は /src_user/TlmCmd/TelemetryDefinitions.c にある
+ * @note   定義は /src_user/tlm_cmd/telemetry_definitions.c にある
  * @param  tlm_table: Tlm Tableの実体
  * @return void
  */

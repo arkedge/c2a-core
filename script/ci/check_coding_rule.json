@@ -11,7 +11,7 @@
     "src_core/script"
   ],
   "ignore_files" : [
-    "src_user/TlmCmd/telemetry_definitions.c"
+    "src_user/tlm_cmd/telemetry_definitions.c"
   ],
   "ignore_rules" : [
   ],

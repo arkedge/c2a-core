@@ -17,8 +17,8 @@
 #include "../time_manager/time_manager.h"
 #include "../time_manager/obc_time_config.h"
 #include "../event_manager/event_logger.h"
-#include <src_user/TlmCmd/block_command_definitions.h>
-#include <src_user/TlmCmd/command_definitions.h>
+#include <src_user/tlm_cmd/block_command_definitions.h>
+#include <src_user/tlm_cmd/command_definitions.h>
 
 #define TDSP_TASK_MAX BCT_MAX_CMD_NUM
 

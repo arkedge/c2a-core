@@ -10,7 +10,7 @@
 #include "../tlm_cmd/common_cmd_packet.h"
 #include "../tlm_cmd/common_cmd_packet_util.h"
 #include "../tlm_cmd/block_command_table.h"
-#include <src_user/TlmCmd/telemetry_definitions.h>
+#include <src_user/tlm_cmd/telemetry_definitions.h>
 #include <src_user/Settings/TlmCmd/Ccsds/apid_define.h>
 
 

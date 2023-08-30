@@ -10,7 +10,7 @@
 #include "packet_list.h"
 #include "../system/time_manager/obc_time.h"
 #include "../library/result.h"
-#include <src_user/TlmCmd/command_definitions.h>
+#include <src_user/tlm_cmd/command_definitions.h>
 
 /**
  * @struct CDIS_ExecInfo

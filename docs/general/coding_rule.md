@@ -431,7 +431,7 @@ Settings/Modes/Transitions
 -> void BCL_load_sl_hoge(void);
 ```
 
-例として [Block Command Definitions](https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/TlmCmd/block_command_definitions.c) を参考にすること．
+例として [Block Command Definitions](https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/tlm_cmd/block_command_definitions.c) を参考にすること．
 
 
 ## 細かな記法 [M]

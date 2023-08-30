@@ -7,7 +7,7 @@
 #define COMMON_CMD_PACKET_H_
 
 #include "../system/time_manager/obc_time.h"
-#include <src_user/TlmCmd/command_definitions.h>
+#include <src_user/tlm_cmd/command_definitions.h>
 
 // ここで CCP_DEST_TYPE を定義する
 // 詳細は
