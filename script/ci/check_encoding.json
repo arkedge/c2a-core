@@ -36,7 +36,7 @@
     "hal/",
     "library/",
     "System/",
-    "TlmCmd/",
+    "tlm_cmd/",
     "examples/mobc/src/src_user/",
     "examples/subobc/src/src_user/"
   ]
