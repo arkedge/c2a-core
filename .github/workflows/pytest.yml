@@ -29,7 +29,7 @@ jobs:
           - c2a_user: mobc
             test_dir: src_core/system/time_manager
           - c2a_user: mobc
-            test_dir: src_core/TlmCmd
+            test_dir: src_core/tlm_cmd
           # 2nd_obc_user
           - c2a_user: subobc
             test_dir: .
