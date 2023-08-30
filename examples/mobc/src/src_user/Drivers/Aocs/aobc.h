@@ -8,7 +8,7 @@
 #include <src_core/hal/uart.h>
 #include <src_core/Drivers/Super/driver_super.h>
 #include <src_core/system/time_manager/obc_time.h>
-#include <src_core/TlmCmd/common_cmd_packet.h>
+#include <src_core/tlm_cmd/common_cmd_packet.h>
 #include "./aobc_telemetry_data_definitions.h"
 #include "./aobc_telemetry_buffer.h"
 

@@ -20,8 +20,8 @@
 #define TC_SEGMENT_H_
 
 #include <stdint.h>
-#include <src_core/TlmCmd/Ccsds/cmd_space_packet.h>
-#include <src_user/Settings/TlmCmd/Ccsds/space_packet_typedef_params.h>
+#include <src_core/tlm_cmd/ccsds/cmd_space_packet.h>
+#include <src_user/Settings/tlm_cmd/ccsds/space_packet_typedef_params.h>
 
 #define TCS_HEADER_SIZE (1)
 #define TCS_PACKET_MAX_LENGTH (TCS_HEADER_SIZE + CSP_MAX_LEN)

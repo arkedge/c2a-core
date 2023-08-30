@@ -2,9 +2,9 @@
 #include "tl_elem_drivers_update.h"
 
 #include "../../../../applications/app_registry.h"
-#include "../../../../TlmCmd/block_command_definitions.h"
+#include "../../../../tlm_cmd/block_command_definitions.h"
 
-#include <src_core/TlmCmd/block_command_loader.h>
+#include <src_core/tlm_cmd/block_command_loader.h>
 
 
 void BCL_load_tl_elem_drivers_update_initial(void)

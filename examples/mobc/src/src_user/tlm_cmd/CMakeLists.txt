@@ -11,14 +11,14 @@ set(C2A_SRCS
   common_tlm_packet.c
   telemetry_definitions.c
   user_packet_handler.c
-  NormalBlockCommandDefinition/nbc_start_hk_tlm.c
-  NormalBlockCommandDefinition/nbc_respond_eh_for_test.c
-  NormalBlockCommandDefinition/nbc_test_bcl.c
-  Ccsds/m_pdu.c
-  Ccsds/tc_transfer_frame.c
-  Ccsds/tcp_to_m_pdu.c
-  Ccsds/tc_segment.c
-  Ccsds/vcdu.c
+  normal_block_command_definition/nbc_start_hk_tlm.c
+  normal_block_command_definition/nbc_respond_eh_for_test.c
+  normal_block_command_definition/nbc_test_bcl.c
+  ccsds/m_pdu.c
+  ccsds/tc_transfer_frame.c
+  ccsds/tcp_to_m_pdu.c
+  ccsds/tc_segment.c
+  ccsds/vcdu.c
 )
 
 if(BUILD_C2A_AS_CXX)

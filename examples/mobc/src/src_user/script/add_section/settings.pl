@@ -21,7 +21,7 @@ sub GetSetting {
 		'hal',
 		'library',
 		'Settings',
-		'TlmCmd'
+		'tlm_cmd'
 	];
 
 	# スキップファイル
