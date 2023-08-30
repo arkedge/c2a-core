@@ -33,7 +33,7 @@ typedef enum
   APID_UNKNOWN
 } APID;
 */
-#include <src_user/Settings/TlmCmd/Ccsds/apid_define.h>
+#include <src_user/Settings/tlm_cmd/ccsds/apid_define.h>
 
 
 /**

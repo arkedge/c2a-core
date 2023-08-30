@@ -30,7 +30,7 @@ typedef enum
 
 // ここで APID を定義する
 // 詳細は common_tlm_cmd_packet.h を参照
-#include <src_user/Settings/TlmCmd/Ccsds/apid_define.h>
+#include <src_user/Settings/tlm_cmd/ccsds/apid_define.h>
 
 // TL_MIS を有効にするかどうか
 #include <src_user/Settings/applications/timeline_command_dispatcher_define.h>

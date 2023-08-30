@@ -14,7 +14,7 @@
 
 // ここで APID を定義する
 // 詳細は common_tlm_cmd_packet.h を参照
-#include <src_user/Settings/TlmCmd/Ccsds/apid_define.h>
+#include <src_user/Settings/tlm_cmd/ccsds/apid_define.h>
 
 typedef uint8_t ctp_dest_flags_t;     //!< CTP_DEST_FLAG の & をとったフラグのための型
 
