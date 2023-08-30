@@ -35,21 +35,21 @@ set(C2A_SRCS
   system/time_manager/obc_time.c
   system/time_manager/time_manager.c
   system/watchdog_timer/watchdog_timer.c
-  TlmCmd/block_command_loader.c
-  TlmCmd/block_command_table.c
-  TlmCmd/block_command_executor.c
-  TlmCmd/command_analyze.c
-  TlmCmd/command_dispatcher.c
-  TlmCmd/command_dispatcher_manager.c
-  TlmCmd/common_cmd_packet_util.c
-  TlmCmd/packet_handler.c
-  TlmCmd/packet_list_util.c
-  TlmCmd/packet_list.c
-  TlmCmd/telemetry_frame.c
-  TlmCmd/telemetry_generator.c
-  TlmCmd/Ccsds/cmd_space_packet.c
-  TlmCmd/Ccsds/space_packet.c
-  TlmCmd/Ccsds/tlm_space_packet.c
+  tlm_cmd/block_command_loader.c
+  tlm_cmd/block_command_table.c
+  tlm_cmd/block_command_executor.c
+  tlm_cmd/command_analyze.c
+  tlm_cmd/command_dispatcher.c
+  tlm_cmd/command_dispatcher_manager.c
+  tlm_cmd/common_cmd_packet_util.c
+  tlm_cmd/packet_handler.c
+  tlm_cmd/packet_list_util.c
+  tlm_cmd/packet_list.c
+  tlm_cmd/telemetry_frame.c
+  tlm_cmd/telemetry_generator.c
+  tlm_cmd/ccsds/cmd_space_packet.c
+  tlm_cmd/ccsds/space_packet.c
+  tlm_cmd/ccsds/tlm_space_packet.c
 )
 
 if(NOT C2A_USE_C99_STDINT)
