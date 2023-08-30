@@ -4,7 +4,7 @@
  * @brief コンポ間通信などで標準的に使う ネットワーク層 の Common Tlm Cmd Packet (概ね Space Packet)
  * @note  ここでは，データリンク層は CCSDS ではなく EB90 Frame を使うことを想定 (TODO: 今後拡張予定)
  * @note  データリンク層は DS_StreamConfig.data_link_layer_ で規定する
- * @note  packet 構造 などは TlmCmd/common_tlm_cmd_packet.h を参照のこと
+ * @note  packet 構造 などは tlm_cmd/common_tlm_cmd_packet.h を参照のこと
  */
 #include "common_tlm_cmd_packet_for_driver_super.h"
 #include "eb90_frame_for_driver_super.h"

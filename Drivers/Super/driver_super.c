@@ -13,7 +13,7 @@
 #include "../../library/print.h"
 #include <string.h>     // for memset などの mem 系
 #include <stddef.h>     // for NULL
-#include "../../TlmCmd/common_cmd_packet_util.h"
+#include "../../tlm_cmd/common_cmd_packet_util.h"
 
 // #define DS_DEBUG                       // 適切なときにコメントアウトする
 // #define DS_DEBUG_SHOW_REC_DATA         // 適切なときにコメントアウトする
