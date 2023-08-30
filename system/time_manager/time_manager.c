@@ -8,7 +8,7 @@
 #include <string.h>
 #include "../../library/c2a_round.h"
 #include "../task_manager/task_dispatcher.h"
-#include "../../TlmCmd/common_cmd_packet_util.h"
+#include "../../tlm_cmd/common_cmd_packet_util.h"
 
 static TimeManager time_manager_;
 const TimeManager* const time_manager = &time_manager_;

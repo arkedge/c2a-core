@@ -7,8 +7,8 @@
 
 #include "../time_manager/obc_time.h"
 #include <src_user/Settings/Modes/mode_definitions.h>
-#include "../../TlmCmd/common_cmd_packet.h"
-#include "../../TlmCmd/block_command_table.h"
+#include "../../tlm_cmd/common_cmd_packet.h"
+#include "../../tlm_cmd/block_command_table.h"
 
 #define MM_NOT_DEFINED (BCT_MAX_BLOCKS)
 
