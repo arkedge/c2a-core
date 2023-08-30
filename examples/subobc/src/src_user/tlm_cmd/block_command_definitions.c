@@ -1,7 +1,7 @@
 #pragma section REPRO
 #include "block_command_definitions.h"
-#include <src_core/TlmCmd/block_command_loader.h>
-#include <src_core/TlmCmd/block_command_table.h>
+#include <src_core/tlm_cmd/block_command_loader.h>
+#include <src_core/tlm_cmd/block_command_table.h>
 #include <string.h> // for memcpy
 #include "command_definitions.h"
 
@@ -11,7 +11,7 @@
 #include "../Settings/Modes/TaskLists/Elements/tl_elem_tlm_cmd_hirate.h"
 #include "../Settings/Modes/TaskLists/Elements/tl_elem_debug_display.h"
 #include "../Settings/Modes/TaskLists/Elements/tl_elem_gs_related_process.h"
-#include "./NormalBlockCommandDefinition/nbc_header.h"
+#include "./normal_block_command_definition/nbc_header.h"
 
 /**
  * @brief

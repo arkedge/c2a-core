@@ -12,11 +12,11 @@
 #include <src_core/system/application_manager/app_manager.h>
 #include <src_core/system/task_manager/task_dispatcher.h>
 #include <src_core/system/watchdog_timer/watchdog_timer.h>
-#include <src_core/TlmCmd/block_command_executor.h>
-#include <src_user/TlmCmd/block_command_user_settings.h>
-#include <src_core/TlmCmd/command_dispatcher_manager.h>
-#include <src_core/TlmCmd/telemetry_generator.h>
-#include <src_core/TlmCmd/telemetry_frame.h>
+#include <src_core/tlm_cmd/block_command_executor.h>
+#include <src_user/tlm_cmd/block_command_user_settings.h>
+#include <src_core/tlm_cmd/command_dispatcher_manager.h>
+#include <src_core/tlm_cmd/telemetry_generator.h>
+#include <src_core/tlm_cmd/telemetry_frame.h>
 #include "../applications/app_headers.h"
 
 #endif

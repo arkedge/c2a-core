@@ -14,9 +14,9 @@
 #include <src_core/system/event_manager/event_handler.h>
 #include <src_core/system/watchdog_timer/watchdog_timer.h>
 #include <src_core/system/time_manager/time_manager.h>
-#include <src_core/TlmCmd/command_analyze.h>
-#include <src_core/TlmCmd/command_dispatcher_manager.h>
-#include <src_core/TlmCmd/block_command_executor.h>
+#include <src_core/tlm_cmd/command_analyze.h>
+#include <src_core/tlm_cmd/command_dispatcher_manager.h>
+#include <src_core/tlm_cmd/block_command_executor.h>
 #include "../applications/app_headers.h"
 #include "../Settings/build_settings.h"
 

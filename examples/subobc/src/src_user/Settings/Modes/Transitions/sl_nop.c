@@ -1,9 +1,9 @@
 #pragma section REPRO
 #include "sl_nop.h"
 
-#include "../../../TlmCmd/command_definitions.h"
+#include "../../../tlm_cmd/command_definitions.h"
 
-#include <src_core/TlmCmd/block_command_loader.h>
+#include <src_core/tlm_cmd/block_command_loader.h>
 #include <src_core/system/time_manager/obc_time.h>
 
 void BCL_load_sl_nop(void)

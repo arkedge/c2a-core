@@ -11,7 +11,7 @@ set(C2A_SRCS
   common_tlm_packet.c
   telemetry_definitions.c
   user_packet_handler.c
-  NormalBlockCommandDefinition/nbc_start_hk_tlm.c
+  normal_block_command_definition/nbc_start_hk_tlm.c
 )
 
 if(BUILD_C2A_AS_CXX)

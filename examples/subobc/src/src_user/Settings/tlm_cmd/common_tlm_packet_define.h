@@ -5,8 +5,8 @@
 #ifndef COMMON_TLM_PACKET_DEFINE_H_
 #define COMMON_TLM_PACKET_DEFINE_H_
 
-#include <src_core/TlmCmd/Ccsds/space_packet_typedef.h>
-#include "./Ccsds/apid_define.h"
+#include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>
+#include "./ccsds/apid_define.h"
 
 // CommonTlmPacket として TlmSpacePacket をつかう
 typedef TlmSpacePacket CommonTlmPacket;
