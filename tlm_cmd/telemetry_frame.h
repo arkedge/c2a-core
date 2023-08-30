@@ -12,7 +12,7 @@
 #define TF_TLM_PAGE_MAX  (4)                                     //!< テレメテーブルページ数（ページネーション用）
 #define TF_MAX_TLMS      (TF_TLM_PAGE_SIZE * TF_TLM_PAGE_MAX)    //!< テレメテーブルサイズ．すなわち登録できる最大テレメ数
 
-#include <src_user/Settings/TlmCmd/telemetry_frame_params.h>
+#include <src_user/Settings/tlm_cmd/telemetry_frame_params.h>
 
 /**
  * @enum   TF_TLM_FUNC_ACK

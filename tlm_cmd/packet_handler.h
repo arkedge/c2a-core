@@ -26,7 +26,7 @@
 // 以下で，上記の PL のキューサイズを再定義する
 // また， data_recorder_define.h の #define DR_ENABLE をコメントアウトすると，
 // DR 関連 PL がすべて無効となり，メモリが節約できる
-#include <src_user/Settings/TlmCmd/packet_handler_params.h>
+#include <src_user/Settings/tlm_cmd/packet_handler_params.h>
 
 #ifndef DR_ENABLE
 #ifdef PH_ST_TLM_LIST_MAX

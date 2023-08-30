@@ -80,7 +80,7 @@ NOTE: `sizeof(bct_id_t)` は `SIZE_OF_BCT_ID_T` にて設定可能である．
 
 #### 定義
 - core: [`/src_core/tlm_cmd/block_command_table.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/block_command_table.h)，[`/src_core/tlm_cmd/block_command_executor.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/block_command_executor.h)
-- user: `/src_user/Settings/TlmCmd/block_command_table_params.h`，`/src_user/tlm_cmd/block_command_user_settings.h`
+- user: `/src_user/Settings/tlm_cmd/block_command_table_params.h`，`/src_user/tlm_cmd/block_command_user_settings.h`
 
 #### 詳細説明
 [`/src_core/tlm_cmd/block_command_table.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/block_command_table.h)，[`/src_core/tlm_cmd/block_command_executor.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/block_command_executor.h) を参照．
@@ -116,7 +116,7 @@ struct pointer size:     4 byte
 
 #### 定義
 - core: [`/src_core/tlm_cmd/PacketHandler.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/PacketHandler.h)
-- user: `/src_user/Settings/TlmCmd/packet_handler_params.h`
+- user: `/src_user/Settings/tlm_cmd/packet_handler_params.h`
 
 #### 詳細説明
 [`/src_core/tlm_cmd/PacketHandler.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/PacketHandler.h) を参照．
@@ -168,7 +168,7 @@ NOTE: つまり関数ポインタのサイズ次第（コンパイラ依存）
 
 #### 定義
 - core: [`/src_core/tlm_cmd/CommandAnalyze.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/CommandAnalyze.h)
-- user: `/src_user/Settings/TlmCmd/command_analyze_params.h`
+- user: `/src_user/Settings/tlm_cmd/command_analyze_params.h`
 
 #### 詳細説明
 [`/src_core/tlm_cmd/CommandAnalyze.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/CommandAnalyze.h) を参照．
@@ -188,7 +188,7 @@ NOTE: つまり関数ポインタのサイズ次第（コンパイラ依存）
 
 #### 定義
 - core: [`/src_core/tlm_cmd/TelemetryFrame.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/TelemetryFrame.h)
-- user: `/src_user/Settings/TlmCmd/telemetry_frame_params.h`
+- user: `/src_user/Settings/tlm_cmd/telemetry_frame_params.h`
 
 #### 詳細説明
 [`/src_core/tlm_cmd/TelemetryFrame.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/TelemetryFrame.h) を参照．
