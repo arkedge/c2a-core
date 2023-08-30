@@ -9,13 +9,13 @@
 #include <string.h>     // for memsetなどのmem系
 
 #include "./divided_cmd_utility.h"
-#include "../TlmCmd/block_command_loader.h"
-#include "../TlmCmd/block_command_executor.h"
-#include "../TlmCmd/command_analyze.h"
+#include "../tlm_cmd/block_command_loader.h"
+#include "../tlm_cmd/block_command_executor.h"
+#include "../tlm_cmd/command_analyze.h"
 #include "../library/print.h"
 #include "../library/endian.h"
 #include "../library/result.h"
-#include "../TlmCmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/common_cmd_packet_util.h"
 #include <src_user/TlmCmd/block_command_definitions.h>
 #include <src_user/TlmCmd/command_definitions.h>
 #include <src_user/TlmCmd/telemetry_definitions.h>

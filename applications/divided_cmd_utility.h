@@ -14,7 +14,7 @@
 #define DIVIDED_CMD_UTILITY_H_
 
 #include "../system/application_manager/app_info.h"
-#include "../TlmCmd/common_cmd_packet.h"
+#include "../tlm_cmd/common_cmd_packet.h"
 #include "../system/time_manager/obc_time.h"
 #include <src_user/TlmCmd/command_definitions.h>
 

@@ -10,10 +10,10 @@ int UTIL_COUNTER_dummy(void)
 }
 #if 0
 
-#include "../TlmCmd/packet_handler.h"
+#include "../tlm_cmd/packet_handler.h"
 #include "../System/AnomalyLogger/anomaly_logger.h"
 #include <string.h>   // for memcpy
-#include "../TlmCmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/common_cmd_packet_util.h"
 #include "../library/result.h"
 
 static UtilityCounter utility_counter_;

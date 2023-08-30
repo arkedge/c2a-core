@@ -2,9 +2,9 @@
 #define TIMELINE_COMMAND_DISPATCHER_H_
 
 #include "timeline_command_dispatcher_id_define.h"
-#include "../TlmCmd/command_dispatcher.h"
-#include "../TlmCmd/common_cmd_packet.h"
-#include "../TlmCmd/packet_handler.h"
+#include "../tlm_cmd/command_dispatcher.h"
+#include "../tlm_cmd/common_cmd_packet.h"
+#include "../tlm_cmd/packet_handler.h"
 #include "../system/application_manager/app_info.h"
 
 /**

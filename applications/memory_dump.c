@@ -4,9 +4,9 @@
 #include <string.h> // for memcpy
 
 #include "../system/time_manager/time_manager.h"
-#include "../TlmCmd/packet_handler.h"
+#include "../tlm_cmd/packet_handler.h"
 #include "../library/endian.h"
-#include "../TlmCmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/common_cmd_packet_util.h"
 #include "../library/result.h"
 
 static MemoryDump memory_dump_;
