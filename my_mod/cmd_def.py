@@ -9,7 +9,7 @@ import sys
 
 
 def GenerateCmdDef(settings, sgc_db):
-    output_file_path = settings["path_to_src"] + r"src_user/TlmCmd/"
+    output_file_path = settings["path_to_src"] + r"src_user/tlm_cmd/"
     output_file_name_base = "command_definitions"
 
     DATA_SART_ROW = 3
@@ -97,7 +97,7 @@ def GenerateCmdDef(settings, sgc_db):
 
 
 def GenerateBctDef(settings, bct_db):
-    output_file_path = settings["path_to_src"] + r"src_user/TlmCmd/"
+    output_file_path = settings["path_to_src"] + r"src_user/tlm_cmd/"
     output_file_name = "block_command_definitions.h"
 
     DATA_SART_ROW = 2
@@ -191,7 +191,7 @@ def OutputCmdDefC_(file_path, body, settings):
  * @brief  コマンド定義
  * @note   このコードは自動生成されています！
  */
-#include <src_core/TlmCmd/command_analyze.h>
+#include <src_core/tlm_cmd/command_analyze.h>
 #include "command_definitions.h"
 #include "command_source.h"
 
