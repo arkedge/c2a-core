@@ -10,19 +10,19 @@
 
 #include "block_command_executor.h"
 
-#include <src_user/TlmCmd/block_command_user_settings.h>
-#include <src_user/TlmCmd/block_command_definitions.h>
+#include <src_user/tlm_cmd/block_command_user_settings.h>
+#include <src_user/tlm_cmd/block_command_definitions.h>
 #include "packet_handler.h"
 #include "command_analyze.h"
-#include <src_user/TlmCmd/command_definitions.h>
+#include <src_user/tlm_cmd/command_definitions.h>
 #include "../system/time_manager/time_manager.h"
 #include "../library/endian.h"
 #include "../system/watchdog_timer/watchdog_timer.h"
 #include "common_cmd_packet_util.h"
 
 // FIXME: この include は依存的にダメなので， TCP → Space Packet 大工事が終わったら直す
-#include "./Ccsds/space_packet.h"
-#include "./Ccsds/cmd_space_packet.h"
+#include "./ccsds/space_packet.h"
+#include "./ccsds/cmd_space_packet.h"
 
 static BlockCommandTable block_command_table_;
 const BlockCommandTable* const block_command_table = &block_command_table_;

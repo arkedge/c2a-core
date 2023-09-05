@@ -7,8 +7,8 @@
 #ifndef TASK_DISPATCHER_H_
 #define TASK_DISPATCHER_H_
 
-#include "../../TlmCmd/block_command_table.h"
-#include "../../TlmCmd/command_dispatcher.h"
+#include "../../tlm_cmd/block_command_table.h"
+#include "../../tlm_cmd/command_dispatcher.h"
 #include "../application_manager/app_info.h"
 
 /**

@@ -9,7 +9,7 @@
 #include "../system/time_manager/time_manager.h"
 #include "../system/event_manager/event_logger.h"
 #include "packet_handler.h"
-#include <src_user/TlmCmd/command_definitions.h>
+#include <src_user/tlm_cmd/command_definitions.h>
 
 // TODO: 本当は，不正な CDISは pl == NULL などにしておくのが良さそうだが，
 //       現状 PL が NULL チェックをしてないので，できない

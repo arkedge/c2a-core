@@ -12,9 +12,9 @@
 #include "../event_manager/event_logger.h"
 #include "../time_manager/time_manager.h"
 #include "../watchdog_timer/watchdog_timer.h"
-#include <src_user/TlmCmd/command_definitions.h>
+#include <src_user/tlm_cmd/command_definitions.h>
 #include "../../library/print.h"
-#include "../../TlmCmd/common_cmd_packet_util.h"
+#include "../../tlm_cmd/common_cmd_packet_util.h"
 
 static AM_ACK AM_initialize_app_(size_t id);
 static AM_ACK AM_execute_app_(size_t id);

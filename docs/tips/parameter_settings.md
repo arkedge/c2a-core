@@ -70,8 +70,8 @@ NOTE: おおよそと言っているのは，structのpaddingサイズはコン�
 したがって，最大コマンド長に合わせるか，メモリ使用量と対応コマンド種類のトレードオフをとることになる．
 
 NOTE:  
-コマンドの情報自体は `/src_core/TlmCmd/block_command_table.h` に，BC の実行パラメーター，状態などは `block_command_executor.h` に保存されている．コマンドの最大サイズやフォーマットなどの定義は user 依存である．
-更に言えばコマンドの実体自体は `/src_user/TlmCmd/block_command_user_settings.c` で定義されているため実体をどこに置くかは user 側で自由に定義出来る．
+コマンドの情報自体は `/src_core/tlm_cmd/block_command_table.h` に，BC の実行パラメーター，状態などは `block_command_executor.h` に保存されている．コマンドの最大サイズやフォーマットなどの定義は user 依存である．
+更に言えばコマンドの実体自体は `/src_user/tlm_cmd/block_command_user_settings.c` で定義されているため実体をどこに置くかは user 側で自由に定義出来る．
 そのため例えば普通の揮発メモリ上だけでなく不揮発メモリ上やFLASH上に載せることも可能．  
 IFはCommonTlmCmdPacket.hなどで策定される．  
 （現状，coreとuserの分離が雑なので，近いうちに改良予定）
@@ -79,11 +79,11 @@ IFはCommonTlmCmdPacket.hなどで策定される．
 NOTE: `sizeof(bct_id_t)` は `SIZE_OF_BCT_ID_T` にて設定可能である．
 
 #### 定義
-- core: [`/src_core/TlmCmd/block_command_table.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_table.h)，[`/src_core/TlmCmd/block_command_executor.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_executor.h)
-- user: `/src_user/Settings/TlmCmd/block_command_table_params.h`，`/src_user/TlmCmd/block_command_user_settings.h`
+- core: [`/src_core/tlm_cmd/block_command_table.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/block_command_table.h)，[`/src_core/tlm_cmd/block_command_executor.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/block_command_executor.h)
+- user: `/src_user/Settings/tlm_cmd/block_command_table_params.h`，`/src_user/tlm_cmd/block_command_user_settings.h`
 
 #### 詳細説明
-[`/src_core/TlmCmd/block_command_table.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_table.h)，[`/src_core/TlmCmd/block_command_executor.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/block_command_executor.h) を参照．
+[`/src_core/tlm_cmd/block_command_table.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/block_command_table.h)，[`/src_core/tlm_cmd/block_command_executor.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/block_command_executor.h) を参照．
 
 
 - - -
@@ -115,11 +115,11 @@ struct pointer size:     4 byte
 ```
 
 #### 定義
-- core: [`/src_core/TlmCmd/PacketHandler.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/PacketHandler.h)
-- user: `/src_user/Settings/TlmCmd/packet_handler_params.h`
+- core: [`/src_core/tlm_cmd/PacketHandler.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/PacketHandler.h)
+- user: `/src_user/Settings/tlm_cmd/packet_handler_params.h`
 
 #### 詳細説明
-[`/src_core/TlmCmd/PacketHandler.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/PacketHandler.h) を参照．
+[`/src_core/tlm_cmd/PacketHandler.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/PacketHandler.h) を参照．
 
 
 - - -
@@ -167,11 +167,11 @@ DriverSuperを継承したDriver数:           4
 NOTE: つまり関数ポインタのサイズ次第（コンパイラ依存）
 
 #### 定義
-- core: [`/src_core/TlmCmd/CommandAnalyze.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/CommandAnalyze.h)
-- user: `/src_user/Settings/TlmCmd/command_analyze_params.h`
+- core: [`/src_core/tlm_cmd/CommandAnalyze.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/CommandAnalyze.h)
+- user: `/src_user/Settings/tlm_cmd/command_analyze_params.h`
 
 #### 詳細説明
-[`/src_core/TlmCmd/CommandAnalyze.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/CommandAnalyze.h) を参照．
+[`/src_core/tlm_cmd/CommandAnalyze.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/CommandAnalyze.h) を参照．
 
 
 - - -
@@ -187,11 +187,11 @@ NOTE: つまり関数ポインタのサイズ次第（コンパイラ依存）
 NOTE: つまり関数ポインタのサイズ次第（コンパイラ依存）
 
 #### 定義
-- core: [`/src_core/TlmCmd/TelemetryFrame.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/TelemetryFrame.h)
-- user: `/src_user/Settings/TlmCmd/telemetry_frame_params.h`
+- core: [`/src_core/tlm_cmd/TelemetryFrame.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/TelemetryFrame.h)
+- user: `/src_user/Settings/tlm_cmd/telemetry_frame_params.h`
 
 #### 詳細説明
-[`/src_core/TlmCmd/TelemetryFrame.h`](https://github.com/arkedge/c2a-core/blob/develop/TlmCmd/TelemetryFrame.h) を参照．
+[`/src_core/tlm_cmd/TelemetryFrame.h`](https://github.com/arkedge/c2a-core/blob/develop/tlm_cmd/TelemetryFrame.h) を参照．
 
 
 - - -

@@ -5,8 +5,8 @@
  */
 
 #include "gs_command_dispatcher.h"
-#include "../TlmCmd/packet_handler.h"
-#include "../TlmCmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/packet_handler.h"
+#include "../tlm_cmd/common_cmd_packet_util.h"
 #include "../library/result.h"
 
 static CommandDispatcher gs_command_dispatcher_;

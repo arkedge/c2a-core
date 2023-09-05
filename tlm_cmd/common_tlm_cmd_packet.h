@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 // ここで， CTCP_MAX_LEN, CommonTlmCmdPacket として使うパケット型を指定する
-#include <src_user/Settings/TlmCmd/common_tlm_cmd_packet_define.h>
+#include <src_user/Settings/tlm_cmd/common_tlm_cmd_packet_define.h>
 #include "./common_tlm_packet.h"
 #include "./common_cmd_packet.h"
 
@@ -33,7 +33,7 @@ typedef enum
   APID_UNKNOWN
 } APID;
 */
-#include <src_user/Settings/TlmCmd/Ccsds/apid_define.h>
+#include <src_user/Settings/tlm_cmd/ccsds/apid_define.h>
 
 
 /**

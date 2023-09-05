@@ -6,7 +6,7 @@
  */
 #include "event_utility.h"
 #include "../system/event_manager/event_handler.h"
-#include "../TlmCmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/common_cmd_packet_util.h"
 #include "../library/result.h"
 
 #include <stddef.h> // for NULL

@@ -7,11 +7,11 @@
 #define TELEMETRY_MANAGER_H_
 
 #include "../system/application_manager/app_info.h"
-#include "../TlmCmd/common_cmd_packet.h"
-#include "../TlmCmd/common_cmd_packet_util.h"
-#include "../TlmCmd/block_command_table.h"
-#include <src_user/TlmCmd/telemetry_definitions.h>
-#include <src_user/Settings/TlmCmd/Ccsds/apid_define.h>
+#include "../tlm_cmd/common_cmd_packet.h"
+#include "../tlm_cmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/block_command_table.h"
+#include <src_user/tlm_cmd/telemetry_definitions.h>
+#include <src_user/Settings/tlm_cmd/ccsds/apid_define.h>
 
 
 // 以下がともに 10 であることで， 10 x 10 x cycle で 10 秒周期に最大 100 個の tlm を登録できる．

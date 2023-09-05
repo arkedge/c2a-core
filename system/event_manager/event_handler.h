@@ -102,7 +102,7 @@
 
 #include <stddef.h>
 #include "../time_manager/obc_time.h"
-#include "../../TlmCmd/block_command_table.h"
+#include "../../tlm_cmd/block_command_table.h"
 #include <src_user/Settings/system/event_handler_rules/event_handler_rules.h>
 
 #define EH_RULE_TLM_PAGE_SIZE (20)  //!< event_handler のルールテーブルの1テレメトリパケット(=1ページ)に格納されるルール数（ページネーション用）
