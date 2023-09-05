@@ -15,8 +15,8 @@ set(C2A_SRCS
   system/event_logger_settings.c
   system/event_handler_rules/event_handler_rules.c
   system/event_handler_rules/event_handler_rule_test.c
-  TlmCmd/common_cmd_packet_define.c
-  TlmCmd/Ccsds/apid_define.c
+  tlm_cmd/common_cmd_packet_define.c
+  tlm_cmd/ccsds/apid_define.c
 )
 
 if(BUILD_C2A_AS_CXX)

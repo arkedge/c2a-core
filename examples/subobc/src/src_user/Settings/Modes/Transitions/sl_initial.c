@@ -1,11 +1,11 @@
 #pragma section REPRO
 #include "sl_initial.h"
 
-#include "../../../TlmCmd/block_command_definitions.h"
-#include "../../../TlmCmd/command_definitions.h"
+#include "../../../tlm_cmd/block_command_definitions.h"
+#include "../../../tlm_cmd/command_definitions.h"
 
 #include <src_core/applications/timeline_command_dispatcher_id_define.h>
-#include <src_core/TlmCmd/block_command_loader.h>
+#include <src_core/tlm_cmd/block_command_loader.h>
 #include <src_core/system/time_manager/obc_time.h>
 
 void BCL_load_sl_start_up_to_initial(void)

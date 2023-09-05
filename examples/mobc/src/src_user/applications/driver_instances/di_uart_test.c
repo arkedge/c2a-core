@@ -6,7 +6,7 @@
 #include "di_uart_test.h"
 #include <stddef.h> // for NULL
 #include <src_core/library/print.h>
-#include <src_core/TlmCmd/common_cmd_packet_util.h>
+#include <src_core/tlm_cmd/common_cmd_packet_util.h>
 #include "../../Settings/port_config.h"
 #include "../../Settings/DriverSuper/driver_buffer_define.h"
 #include <src_core/library/result.h>

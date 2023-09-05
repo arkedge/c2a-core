@@ -5,7 +5,7 @@
  */
 
 #include "di_mobc.h"
-#include <src_core/TlmCmd/packet_handler.h>
+#include <src_core/tlm_cmd/packet_handler.h>
 #include <src_core/library/print.h>
 #include "../../Settings/port_config.h"
 #include "../../Settings/DriverSuper/driver_buffer_define.h"

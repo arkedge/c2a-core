@@ -5,12 +5,12 @@
 #ifndef GS_H_
 #define GS_H_
 
-#include <src_core/TlmCmd/packet_handler.h>
+#include <src_core/tlm_cmd/packet_handler.h>
 #include <src_core/Drivers/Super/driver_super.h>
 #include <src_core/hal/uart.h>
 #include <src_core/hal/ccsds.h>
 #include "../../hal/ccsds_user.h"
-#include "../../TlmCmd/Ccsds/vcdu.h"
+#include "../../tlm_cmd/ccsds/vcdu.h"
 #include "gs_validate.h"
 
 #define GS_RX_HEADER_NUM (3)

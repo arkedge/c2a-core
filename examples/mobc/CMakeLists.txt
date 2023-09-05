@@ -63,7 +63,7 @@ add_subdirectory(${C2A_USER_DIR}/Drivers)
 add_subdirectory(${C2A_USER_DIR}/hal)
 add_subdirectory(${C2A_USER_DIR}/library)
 add_subdirectory(${C2A_USER_DIR}/Settings)
-add_subdirectory(${C2A_USER_DIR}/TlmCmd)
+add_subdirectory(${C2A_USER_DIR}/tlm_cmd)
 
 set(C2A_SRCS
   ${C2A_USER_DIR}/c2a_main.c

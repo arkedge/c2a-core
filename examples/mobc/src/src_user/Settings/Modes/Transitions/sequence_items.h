@@ -1,7 +1,7 @@
 #ifndef SEQUENCE_ITEMS_H_
 #define SEQUENCE_ITEMS_H_
 
-#include <src_core/TlmCmd/block_command_table.h>
+#include <src_core/tlm_cmd/block_command_table.h>
 #include <src_core/applications/timeline_command_dispatcher_id_define.h>
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

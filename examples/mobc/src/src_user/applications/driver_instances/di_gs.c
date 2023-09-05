@@ -4,8 +4,8 @@
  * @brief GS Driver のインスタンス化
  */
 #include "di_gs.h"
-#include <src_core/TlmCmd/packet_handler.h>
-#include <src_core/TlmCmd/common_cmd_packet_util.h>
+#include <src_core/tlm_cmd/packet_handler.h>
+#include <src_core/tlm_cmd/common_cmd_packet_util.h>
 #include <src_core/library/print.h>
 #include <src_core/library/result.h>
 #include "../../Drivers/Com/gs_validate.h"

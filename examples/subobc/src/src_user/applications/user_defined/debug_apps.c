@@ -11,15 +11,15 @@
 #include <src_core/system/task_manager/task_dispatcher.h>
 #include <src_core/system/event_manager/event_logger.h>
 #include <src_core/system/event_manager/event_handler.h>
-#include <src_core/TlmCmd/packet_handler.h>
-#include "../../TlmCmd/telemetry_definitions.h"
-#include <src_core/TlmCmd/block_command_table.h>
+#include <src_core/tlm_cmd/packet_handler.h>
+#include "../../tlm_cmd/telemetry_definitions.h"
+#include <src_core/tlm_cmd/block_command_table.h>
 #include <src_core/applications/memory_dump.h>
 #include <src_core/applications/gs_command_dispatcher.h>
 #include <src_core/applications/realtime_command_dispatcher.h>
 #include <src_core/applications/timeline_command_dispatcher.h>
 #include "../../applications/driver_instances/di_mobc.h"
-// #include <src_core/TlmCmd/telemetry_generator.h>
+// #include <src_core/tlm_cmd/telemetry_generator.h>
 #include "../../library/vt100.h"
 #include <src_core/library/result.h>
 
