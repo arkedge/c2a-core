@@ -8,11 +8,12 @@ option(C2A_BUILD_AS_UTF8            "Build C2A as UTF-8" ON)
 option(C2A_BUILD_AS_C99             "Build C2A as C99" OFF)
 option(C2A_BUILD_AS_CXX             "Build C2A as C++" OFF)
 
+option(C2A_BUILD_FOR_32BIT          "Build C2A for 32bit target(this will add -m32 option)" ON)
+
 # user config
 option(USE_ALL_C2A_CORE_APPS        "use C2A-core all Applications" ON)
 option(USE_ALL_C2A_CORE_TEST_APPS   "use C2A-core all Test Applications" ON)
 option(USE_ALL_C2A_CORE_LIB         "use C2A-core all library" ON)
-option(USE_32BIT_COMPILER           "use 32bit compiler" OFF)
 
 option(C2A_USE_SIMPLE_LIBC          "use C2A-core hosted simple libc implementation" OFF)
 option(C2A_USE_C99_STDINT           "use C99 standard stdint.h" ON)
