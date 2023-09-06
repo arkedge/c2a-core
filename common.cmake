@@ -20,7 +20,7 @@ else()
   endif()
 endif()
 
-if(BUILD_C2A_AS_SILS_FW)
+if(C2A_BUILD_FOR_SILS )
   target_compile_definitions(${PROJECT_NAME} PUBLIC SILS_FW)
 endif()
 

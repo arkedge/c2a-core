@@ -5,7 +5,7 @@ fn main() {
         .very_verbose(true)
         .define("C2A_BUILD_FOR_32BIT", "OFF")
         .define("C2A_BUILD_AS_C99", "ON")
-        .define("BUILD_C2A_AS_SILS_FW", "ON")
+        .define("C2A_BUILD_FOR_SILS", "ON")
         .define("USE_SCI_COM_WINGS", "OFF")
         .build_target("C2A");
 

@@ -13,14 +13,14 @@ option(C2A_BUILD_FOR_32BIT          "Build C2A for 32bit target(this will add -m
 ## C2A
 option(C2A_USE_STDINT_WRAPPER       "Use stdint.h wrapper for C89" OFF)
 
+option(C2A_BUILD_FOR_SILS           "Build C2A for SILS target" ON)
+
 # user config
 option(USE_ALL_C2A_CORE_APPS        "use C2A-core all Applications" ON)
 option(USE_ALL_C2A_CORE_TEST_APPS   "use C2A-core all Test Applications" ON)
 option(USE_ALL_C2A_CORE_LIB         "use C2A-core all library" ON)
 
 option(C2A_USE_SIMPLE_LIBC          "use C2A-core hosted simple libc implementation" OFF)
-
-option(BUILD_C2A_AS_SILS_FW         "build C2A as SILS firmware" ON)
 
 set(C2A_CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
