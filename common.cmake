@@ -31,7 +31,7 @@ if(MSVC)
   if(BUILD_C2A_AS_CXX)
     target_compile_options(${PROJECT_NAME} PUBLIC "/TP") # Compile C codes as C++
   endif()
-  if(BUILD_C2A_AS_UTF8)
+  if(C2A_BUILD_AS_UTF8)
     target_compile_options(${PROJECT_NAME} PUBLIC "/source-charset:utf-8")
   endif()
 

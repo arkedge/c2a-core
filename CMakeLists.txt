@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.13)
 
 project(C2A_CORE)
 
+# Build option
+## C2A compile config
+option(C2A_BUILD_AS_UTF8            "Build C2A as UTF-8" ON)
+
 # user config
 option(USE_ALL_C2A_CORE_APPS        "use C2A-core all Applications" ON)
 option(USE_ALL_C2A_CORE_TEST_APPS   "use C2A-core all Test Applications" ON)
@@ -14,7 +18,6 @@ option(C2A_USE_C99_STDINT           "use C99 standard stdint.h" ON)
 option(BUILD_C2A_AS_SILS_FW         "build C2A as SILS firmware" ON)
 option(BUILD_C2A_AS_C99             "build C2A as C99" OFF)
 option(BUILD_C2A_AS_CXX             "build C2A as C++" OFF)
-option(BUILD_C2A_AS_UTF8            "build C2A as UTF-8" ON)
 
 set(C2A_CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
