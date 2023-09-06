@@ -4,7 +4,7 @@ fn main() {
     let libc2a = c2a_cmake
         .very_verbose(true)
         .define("USE_32BIT_COMPILER", "ON")
-        .define("BUILD_C2A_AS_C99", "ON")
+        .define("C2A_BUILD_AS_C99", "ON")
         .define("BUILD_C2A_AS_SILS_FW", "ON")
         .define("USE_SCI_COM_WINGS", "OFF")
         .build_target("C2A");
