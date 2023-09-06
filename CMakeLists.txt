@@ -18,11 +18,9 @@ option(C2A_BUILD_FOR_SILS           "Build C2A for SILS target" ON)
 ## C2A core library select
 option(C2A_USE_ALL_CORE_APPS        "Use C2A-core all Applications" ON)
 option(C2A_USE_ALL_CORE_TEST_APPS   "Use C2A-core all Test Applications" ON)
+option(C2A_USE_ALL_CORE_LIB         "Use C2A-core all library" ON)
 
-# user config
-option(USE_ALL_C2A_CORE_LIB         "use C2A-core all library" ON)
-
-option(C2A_USE_SIMPLE_LIBC          "use C2A-core hosted simple libc implementation" OFF)
+option(C2A_USE_SIMPLE_LIBC          "Use C2A-core hosted simple libc implementation" OFF)
 
 set(C2A_CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -96,7 +94,7 @@ if(C2A_USE_ALL_CORE_TEST_APPS)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_TEST_APPS>)
 endif()
 
-if(USE_ALL_C2A_CORE_LIB)
+if(C2A_USE_ALL_CORE_LIB)
   add_subdirectory(library)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_LIB>)
 endif()
