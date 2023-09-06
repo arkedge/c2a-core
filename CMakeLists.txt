@@ -17,9 +17,9 @@ option(C2A_BUILD_FOR_SILS           "Build C2A for SILS target" ON)
 
 ## C2A core library select
 option(C2A_USE_ALL_CORE_APPS        "Use C2A-core all Applications" ON)
+option(C2A_USE_ALL_CORE_TEST_APPS   "Use C2A-core all Test Applications" ON)
 
 # user config
-option(USE_ALL_C2A_CORE_TEST_APPS   "use C2A-core all Test Applications" ON)
 option(USE_ALL_C2A_CORE_LIB         "use C2A-core all library" ON)
 
 option(C2A_USE_SIMPLE_LIBC          "use C2A-core hosted simple libc implementation" OFF)
@@ -91,7 +91,7 @@ if(C2A_USE_ALL_CORE_APPS)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_APPS>)
 endif()
 
-if(USE_ALL_C2A_CORE_TEST_APPS)
+if(C2A_USE_ALL_CORE_TEST_APPS)
   add_subdirectory(applications/test_app)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_TEST_APPS>)
 endif()
