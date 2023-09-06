@@ -1,4 +1,4 @@
-if(BUILD_C2A_AS_CXX)
+if(C2A_BUILD_AS_CXX)
   # memo: set_source_files_properties() must be set before add_library/add_executable on Visual Studio CMake
   set_source_files_properties(${C2A_SRCS} PROPERTIES LANGUAGE CXX)  # C++
 else()
@@ -28,7 +28,7 @@ endif()
 if(MSVC)
   target_compile_options(${PROJECT_NAME} PUBLIC "/W4")
   target_compile_options(${PROJECT_NAME} PUBLIC "/MT")
-  if(BUILD_C2A_AS_CXX)
+  if(C2A_BUILD_AS_CXX)
     target_compile_options(${PROJECT_NAME} PUBLIC "/TP") # Compile C codes as C++
   endif()
   if(C2A_BUILD_AS_UTF8)

@@ -13,7 +13,7 @@ set(C2A_SRCS
   ${C2A_CORE_DIR}/applications/timeline_command_dispatcher.c
 )
 
-if(BUILD_C2A_AS_CXX)
+if(C2A_BUILD_AS_CXX)
   set_source_files_properties(${C2A_SRCS} PROPERTIES LANGUAGE CXX)  # C++
 endif()
 

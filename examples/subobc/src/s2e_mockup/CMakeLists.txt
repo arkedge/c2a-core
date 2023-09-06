@@ -15,7 +15,7 @@ set(C2A_DIR ../..)
 # include_directories
 include_directories(${C2A_DIR}/src)
 # add subdirectory
-set(BUILD_C2A_AS_CXX ON)    # Build C2A as C++
+set(C2A_BUILD_AS_CXX ON)    # Build C2A as C++
 add_subdirectory(${C2A_DIR} C2A)
 
 add_executable(${PROJECT_NAME} main.cpp)

@@ -19,10 +19,10 @@ set(USE_ALL_C2A_CORE_APPS OFF)
 set(USE_ALL_C2A_CORE_TEST_APPS OFF)
 
 if(USE_SILS_MOCKUP)
-  set(BUILD_C2A_AS_CXX OFF)
+  set(C2A_BUILD_AS_CXX OFF)
 endif()
 
-if(BUILD_C2A_AS_CXX)
+if(C2A_BUILD_AS_CXX)
   message("build C2A as C++!")
 endif()
 
@@ -67,7 +67,7 @@ set(C2A_SRCS
   ${C2A_USER_DIR}/c2a_main.c
 )
 
-if(BUILD_C2A_AS_CXX)
+if(C2A_BUILD_AS_CXX)
   message("Build as C++!!!")
   set_source_files_properties(${C2A_SRCS} PROPERTIES LANGUAGE CXX)  # C++
 endif()
