@@ -14,8 +14,8 @@ option(USE_SILS_MOCKUP "Use SILS mockup for build C2A with minimal user in C89 o
 
 option(C2A_BUILD_FOR_SILS "Build C2A for SILS target" ON)
 
-set(USE_ALL_C2A_CORE_APPS OFF)
 # Core App のターゲット追加は src_user/applications/CMakeLists.txt で行う
+set(C2A_USE_ALL_CORE_APPS OFF)
 set(USE_ALL_C2A_CORE_TEST_APPS OFF)
 
 if(USE_SILS_MOCKUP)

@@ -15,8 +15,10 @@ option(C2A_USE_STDINT_WRAPPER       "Use stdint.h wrapper for C89" OFF)
 
 option(C2A_BUILD_FOR_SILS           "Build C2A for SILS target" ON)
 
+## C2A core library select
+option(C2A_USE_ALL_CORE_APPS        "Use C2A-core all Applications" ON)
+
 # user config
-option(USE_ALL_C2A_CORE_APPS        "use C2A-core all Applications" ON)
 option(USE_ALL_C2A_CORE_TEST_APPS   "use C2A-core all Test Applications" ON)
 option(USE_ALL_C2A_CORE_LIB         "use C2A-core all library" ON)
 
@@ -84,7 +86,7 @@ endif()
 
 add_library(${PROJECT_NAME} OBJECT ${C2A_SRCS})
 
-if(USE_ALL_C2A_CORE_APPS)
+if(C2A_USE_ALL_CORE_APPS)
   add_subdirectory(applications)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_APPS>)
 endif()
