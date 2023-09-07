@@ -15,6 +15,7 @@
 ## ドキュメント
 - ドキュメント:  https://github.com/arkedge/c2a-core/tree/develop/docs
 - リファレンス (TBD):  https://github.com/ut-issl/c2a-reference
+- [CHANGELOG](./CHANGELOG.md)
 
 
 ## 開発
