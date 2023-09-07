@@ -44,7 +44,7 @@ jobs:
     - name: setup c2a-core
       run: ./setup.sh
 
-    - uses: actions/setup-node@v3.7.0
+    - uses: actions/setup-node@v3.8.1
       with:
         cache: npm
         cache-dependency-path: examples/${{ matrix.c2a_user }}/package-lock.json
