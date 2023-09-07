@@ -213,6 +213,11 @@ typedef uint32_t flash_block_t;
 
 
 ## 個別箇所についての命名など [M]
+### CMake option
+- 接頭辞は `C2A_` で統一する
+  - 特定の C2A user 固有のものや，C2A 以外の文脈が含まれる場合は必須ではない
+
+
 ### applications/user_defined
 - ファイル名と AppInfo 構造体名を一致させる（スタイルを除く）
 - AppInfo 構造体名とそのインスタンス名を一致させる（スタイルを除く）

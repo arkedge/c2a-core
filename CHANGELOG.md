@@ -30,7 +30,8 @@
 - [ut-issl/c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) を c2a-core リポジトリで管理するように変更: [#111](https://github.com/arkedge/c2a-core/pull/111)
   - import したバージョン: [ut-issl/c2a-tlm-cmd-code-generator ae-v2.0.0](https://github.com/ut-issl/c2a-tlm-cmd-code-generator/releases/tag/ae-v2.0.0)
 - CMake option の整理: [#86](https://github.com/arkedge/c2a-core/pull/86)
-  - `C2A_` prefix に統一した他，意味が分かりにくい命名の変更，今後 optional としていく挙動を default OFF とした
+  - `C2A_` prefix に統一した（これはコーディング規約にも追加）
+  - 意味が分かりにくい命名の変更，今後 optional としていく挙動を default OFF とした
   - `option()` の挙動はユーザ指定によってかなり変わるため，該当する変更は単なるビルドチェックなどではなくすべて grep して変更すること
   - `BUILD_C2A_AS_UTF8` -> `C2A_BUILD_AS_UTF8`
   - `BUILD_C2A_AS_C99` -> `C2A_BUILD_AS_C99`
