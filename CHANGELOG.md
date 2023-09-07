@@ -29,6 +29,18 @@
   - import したバージョン: [ut-issl/c2a-enum-loader ae-v2.0.0](https://github.com/ut-issl/c2a-enum-loader/releases/tag/ae-v2.0.0)
 - [ut-issl/c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) を c2a-core リポジトリで管理するように変更: [#111](https://github.com/arkedge/c2a-core/pull/111)
   - import したバージョン: [ut-issl/c2a-tlm-cmd-code-generator ae-v2.0.0](https://github.com/ut-issl/c2a-tlm-cmd-code-generator/releases/tag/ae-v2.0.0)
+- CMake option の整理: [#86](https://github.com/arkedge/c2a-core/pull/86)
+  - `C2A_` prefix に統一した他，意味が分かりにくい命名の変更，今後 optional としていく挙動を default OFF とした
+  - `option()` の挙動はユーザ指定によってかなり変わるため，該当する変更は単なるビルドチェックなどではなくすべて grep して変更すること
+  - `BUILD_C2A_AS_UTF8` -> `C2A_BUILD_AS_UTF8`
+  - `BUILD_C2A_AS_C99` -> `C2A_BUILD_AS_C99`
+  - `BUILD_C2A_AS_CXX` -> `C2A_BUILD_AS_CXX`
+  - `(NOT USE_32BIT_COMPILER)` -> `C2A_BUILD_FOR_32BIT`: `ON` の時に明示的に 32bit ターゲットとしてビルドする（`-m32` をつける）
+  - `(NOT C2A_USE_STDINT_WRAPPER)` -> `C2A_USE_STDINT_WRAPPER`: C89 ターゲットでビルドする際に `ON` にすることでユーザ定義の `stdint.h` を使う
+  - `BUILD_C2A_AS_SILS_FW` -> `C2A_BUILD_FOR_SILS`
+  - `USE_ALL_C2A_CORE_APPS` -> `C2A_USE_ALL_CORE_APPS`
+  - `USE_ALL_C2A_CORE_TEST_APPS` -> `C2A_USE_ALL_CORE_TEST_APPS`
+  - `USE_ALL_C2A_CORE_LIB` -> `C2A_USE_ALL_CORE_LIB`
 
 
 ### Enhancements
