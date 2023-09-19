@@ -63,6 +63,8 @@
         - `develop` に merge したときの PR のリンク
 1. `cargo publish` する．
 
+なお，メジャーバージョンアップ中では，様々な破壊的な変更が連続するため，煩雑さ低減のためにツール等の互換性維持のための Pre-release は，一定程度免除することが可能である．
+
 
 ## バージョニング
 [Semantic Versioning](https://semver.org) を採用する．
