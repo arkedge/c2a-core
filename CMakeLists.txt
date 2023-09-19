@@ -20,7 +20,7 @@ option(C2A_USE_ALL_CORE_APPS        "Use C2A-core all Applications" ON)
 option(C2A_USE_ALL_CORE_TEST_APPS   "Use C2A-core all Test Applications" ON)
 option(C2A_USE_ALL_CORE_LIB         "Use C2A-core all library" ON)
 
-option(C2A_USE_SIMPLE_LIBC          "Use C2A-core hosted simple libc implementation" OFF)
+option(C2A_USE_SIMPLE_LIBC          "Use C2A-core hosted simple libc (c2a-core/library/libc) implementation" OFF)
 
 set(C2A_CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
