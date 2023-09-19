@@ -19,6 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: install dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y gcc-multilib g++-multilib
+
       - uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: stable
