@@ -61,6 +61,7 @@ jobs:
 
     - uses: dtolnay/rust-toolchain@stable
       with:
+        targets: i686-unknown-linux-gnu
         components: clippy, rustfmt
 
     - name: cache Rust dependencies
