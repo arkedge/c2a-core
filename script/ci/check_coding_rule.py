@@ -59,7 +59,10 @@ def main():
             print("WARNING: " + rule_name + " rule is ignored!!")
     settings["check_funcs"] = check_funcs  # ここだけ， settings に追記している
 
-    check_root_dir = os.path.dirname(setting_file_path) + r"/"
+    dname = os.path.dirname(setting_file_path)
+    if not dname:
+        dname = os.getcwd()
+    check_root_dir = dname + r"/"
 
     if not check_coding_rule(check_root_dir, settings):
         print("The above files are invalid coding rule.")
