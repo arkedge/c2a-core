@@ -9,7 +9,7 @@
 -e file:.
 anyio==3.7.1
 c2a-pytest-gaia @ git+https://github.com/arkedge/c2a-pytest-gaia@v0.1.0
-c2aenum @ git+https://github.com/ut-issl/c2a-enum-loader@ae-v4
+c2aenum @ git+https://github.com/ut-issl/c2a-enum-loader@ae-v2.0.0
 certifi==2023.7.22
 charset-normalizer==3.2.0
 grpcio==1.54.3
