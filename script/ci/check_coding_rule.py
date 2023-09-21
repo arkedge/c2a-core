@@ -59,7 +59,12 @@ def main():
             print("WARNING: " + rule_name + " rule is ignored!!")
     settings["check_funcs"] = check_funcs  # ここだけ， settings に追記している
 
-    if not check_coding_rule(settings):
+    dname = os.path.dirname(setting_file_path)
+    if not dname:
+        dname = os.getcwd()
+    check_root_dir = dname + r"/"
+
+    if not check_coding_rule(check_root_dir, settings):
         print("The above files are invalid coding rule.")
         sys.exit(1)
     print("Completed!")
@@ -67,18 +72,18 @@ def main():
 
 
 # True: OK, False: NG
-def check_coding_rule(settings: dict) -> bool:
+def check_coding_rule(check_root_dir: str, settings: dict) -> bool:
     flag = True
 
     target_dirs = []
     for target_dir in settings["target_dirs"]:
-        target_dirs.append(settings["c2a_root_dir"] + target_dir)
+        target_dirs.append(check_root_dir + target_dir)
     ignore_dirs = []
     for ignore_dir in settings["ignore_dirs"]:
-        ignore_dirs.append(settings["c2a_root_dir"] + ignore_dir)
+        ignore_dirs.append(check_root_dir + ignore_dir)
     ignore_files = []
     for ignore_file in settings["ignore_files"]:
-        ignore_files.append(settings["c2a_root_dir"] + ignore_file)
+        ignore_files.append(check_root_dir + ignore_file)
 
     preprocess_(target_dirs, ignore_dirs, ignore_files, settings)
 

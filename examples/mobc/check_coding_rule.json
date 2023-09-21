@@ -1,17 +1,16 @@
 {
-  "c2a_root_dir" : "./",
   "input_file_encoding" : "utf-8",
   "target_dirs" : [
-    "src_core/",
-    "src_user/"
+    "src/src_core/",
+    "src/src_user/"
   ],
   "ignore_dirs" : [
-    "src_core/examples",
-    "src_core/docs",
-    "src_core/script"
+    "src/src_core/examples",
+    "src/src_core/docs",
+    "src/src_core/script"
   ],
   "ignore_files" : [
-    "src_user/tlm_cmd/telemetry_definitions.c"
+    "src/src_user/tlm_cmd/telemetry_definitions.c"
   ],
   "ignore_rules" : [
   ],
