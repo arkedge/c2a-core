@@ -20,6 +20,11 @@
     - example user についてはこの migration script のみで移行しているが，あらゆる C2A user の状況について考慮できているわけではないため，適宜対応が必要
 - `hal`（旧 `IfWrapper`）のうち，古すぎるインターフェースを排除: [#23](https://github.com/arkedge/c2a-core/issues/23), [#25](https://github.com/arkedge/c2a-core/pull/25)
   - 既に使われてしまっているものについては，各 C2A user で一旦雑に古いヘッダファイルを各々で持って対応可能（今後再設計する予定）
+- `check_coding_rule.py` の設定ファイルである `check_coding_rule.json` の場所を C2A user のトップディレクトリに変更: [#97](https://github.com/arkedge/c2a-core/pull/97)
+  - 対応方法
+    - `Script/CI/check_coding_rule.json` ないし `script/ci/check_coding_rule.json` を C2A user のトップディレクトリに移動
+    - 設定ファイルから `c2a_root_dir` を削除
+    - 設定ファイル中のディレクトリの設定を C2A user のトップディレクトリからの相対パスに変更
 
 
 ### Enhancements
