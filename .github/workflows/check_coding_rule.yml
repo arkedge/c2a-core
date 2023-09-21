@@ -8,6 +8,21 @@ on:
   pull_request:
 
 jobs:
+  check_coding_rule_v4:
+    strategy:
+      fail-fast: false
+      matrix:
+        user:
+          - mobc
+          - subobc
+    uses: arkedge/workflows-c2a/.github/workflows/check-coding-rule-v4.yml@add-v4-check-coding-rule-workflow
+    with:
+      c2a_dir: examples/${{ matrix.user }}
+      c2a_custom_setup: |
+        cd ../..
+        pwd
+        ./setup.sh
+
   check_coding_rule:
     runs-on: ubuntu-latest
     strategy:
