@@ -11,7 +11,7 @@ anyio==3.7.1
 attrs==23.1.0
 black==23.1.0
 c2a-pytest-gaia @ git+https://github.com/arkedge/c2a-pytest-gaia@v0.1.0
-c2aenum @ git+https://github.com/ut-issl/c2a-enum-loader@ae-v2.0.0
+c2aenum @ file:///home/sksat/work/arkedge/c2a-core/examples/mobc/src/src_user/Test/../../src_core/enum-loader
 certifi==2023.7.22
 charset-normalizer==3.2.0
 click==8.1.6
