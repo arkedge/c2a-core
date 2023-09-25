@@ -126,8 +126,6 @@ def load_enum(c2a_src_path, encoding) -> C2aEnum:
 if __name__ == "__main__":
     # 単なる動作確認用
     # c2a_enum = load_enum(os.path.dirname(__file__) + "/../../..", "utf-8")
-    c2a_enum = load_enum(
-        os.path.dirname(__file__) + "/../../c2a-core/examples/mobc/src", "utf-8"
-    )
+    c2a_enum = load_enum(os.path.dirname(__file__) + "/../../c2a-core/examples/mobc/src", "utf-8")
     for key, value in c2a_enum.__dict__.items():
         print(key, " : \t", value)
