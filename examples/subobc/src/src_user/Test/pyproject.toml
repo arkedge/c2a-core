@@ -7,7 +7,7 @@ readme = "README.md"
 
 requires-python = ">= 3.7"
 dependencies = [
-  "c2aenum @ git+https://github.com/ut-issl/c2a-enum-loader@ae-v2.0.0",
+  "c2aenum @ file:///${PROJECT_ROOT}/../../src_core/enum-loader",
   "isslwings @ git+https://github.com/ut-issl/python-wings-interface@v1.5.1",
   "c2a-pytest-gaia @ git+https://github.com/arkedge/c2a-pytest-gaia@v0.1.0",
 ]
