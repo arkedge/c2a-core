@@ -73,7 +73,6 @@ C2A Core の採用実績のある衛星 OBC や動作実績のあるボードの
 - https://github.com/ut-issl/tlm-cmd-db
 - https://github.com/ut-issl/c2a-tlm-cmd-code-generator
 - https://github.com/ut-issl/python-wings-interface
-- https://github.com/ut-issl/c2a-enum-loader
 - https://github.com/ut-issl/s2e-user-for-c2a-core
 - https://github.com/arkedge/c2a-tlmcmddb
 - https://github.com/arkedge/c2a-devtools

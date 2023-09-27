@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 100
+ignore =
+    # black と競合するので
+    E203,
+    E501,
+    W503,
+    W504

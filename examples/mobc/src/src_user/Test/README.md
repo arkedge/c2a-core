@@ -6,7 +6,7 @@
 ## 環境
 - python3 系列と以下のライブラリ
     - [python-wings-interface](https://github.com/ut-issl/python-wings-interface)
-    - [c2a-enum-loader](https://github.com/ut-issl/c2a-enum-loader)
+    - [c2a-enum-loader](../../../../../enum-loader/)
     - [c2a-pytest-gaia](https://github.com/arkedge/c2a-pytest-gaia)
 - 上記の Python 環境は [rye](https://rye-up.com/) を用いてセットアップすること
 - C2A実行環境（特定のボードでもSILSでも可）
