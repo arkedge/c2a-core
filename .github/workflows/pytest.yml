@@ -78,7 +78,7 @@ jobs:
         version: '3.x'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-    - uses: sksat/setup-rye@v0.7.0
+    - uses: sksat/setup-rye@v0.8.0
 
     - name: install pytest deps
       working-directory: examples/${{ matrix.c2a_user }}/src/src_user/Test
