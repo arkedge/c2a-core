@@ -27,6 +27,8 @@
     - 設定ファイル中のディレクトリの設定を C2A user のトップディレクトリからの相対パスに変更
 - [ut-issl/c2a-enum-loader](https://github.com/ut-issl/c2a-enum-loader) を c2a-core リポジトリで管理するように変更: [#99](https://github.com/arkedge/c2a-core/pull/99)
   - import したバージョン: [ut-issl/c2a-enum-loader ae-v2.0.0](https://github.com/ut-issl/c2a-enum-loader/releases/tag/ae-v2.0.0)
+- [ut-issl/c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) を c2a-core リポジトリで管理するように変更: [#111](https://github.com/arkedge/c2a-core/pull/111)
+  - import したバージョン: [ut-issl/c2a-tlm-cmd-code-generator ae-v2.0.0](https://github.com/ut-issl/c2a-tlm-cmd-code-generator/releases/tag/ae-v2.0.0)
 
 
 ### Enhancements
@@ -56,7 +58,6 @@
 
 - [ut-issl/tlm-cmd-db v2.4.0](https://github.com/ut-issl/tlm-cmd-db/releases/tag/v2.4.0)
 - [ut-issl/python-wings-interface v1.5.1](https://github.com/ut-issl/python-wings-interface/releases/tag/v1.5.1)
-- [ut-issl/c2a-tlm-cmd-code-generator ae-v2.0.0](https://github.com/ut-issl/c2a-tlm-cmd-code-generator/releases/tag/ae-v2.0.0)
 - [arkedge/gaia v0.5.0](https://github.com/arkedge/gaia/releases/tag/v0.5.0)
 - [tlmcmddb-cli 0.2.0](https://crates.io/crates/tlmcmddb-cli/0.2.0)
 - [kble 0.2.0](https://crates.io/crates/kble/0.2.0)

@@ -81,6 +81,5 @@ Tool のリリースには，以下に注意する．
 
 例:
 
-- https://github.com/ut-issl/c2a-tlm-cmd-code-generator/releases
 - https://github.com/ut-issl/python-wings-interface/releases
 - https://github.com/ut-issl/tlm-cmd-db/releases

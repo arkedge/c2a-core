@@ -95,7 +95,7 @@ https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e
 C2A 間通信によって，以下のような機能が提供される．
 
 - OBC 間の簡易な Driver 実装と自動コード生成
-    - [c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) 参照．
+    - [c2a-tlm-cmd-code-generator](../../tlm-cmd-code-generator/) 参照．
     - [`examples/mobc/src/src_user/Drivers/Aocs`](/examples/mobc/src/src_user/Drivers/Aocs/) などの多くのコードが自動生成される．
 - OBC と地上局でネットワークを形成．
     - 地上局から MOBC をルーターとして， sub OBC へコマンド配送．
