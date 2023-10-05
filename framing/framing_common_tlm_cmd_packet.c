@@ -3,39 +3,39 @@
  * @file
  * @brief コンポ間通信などで標準的に使う ネットワーク層 の Common Tlm Cmd Packet (概ね Space Packet)
  * @note  ここでは，データリンク層は CCSDS ではなく EB90 Frame を使うことを想定 (TODO: 今後拡張予定)
- * @note  データリンク層は DS_StreamConfig.data_link_layer_ で規定する
+ * @note  データリンク層は FRM_StreamConfig.data_link_layer_ で規定する
  * @note  packet 構造 などは tlm_cmd/common_tlm_cmd_packet.h を参照のこと
  */
 #include "framing_common_tlm_cmd_packet.h"
 #include "eb90_frame_for_driver_super.h"
 #include <string.h>
 
-// FIXME: DS_StreamConfig.data_link_layer_ をちゃんと見る！
+// FIXME: FRM_StreamConfig.data_link_layer_ をちゃんと見る！
 
-DS_ERR_CODE CTCP_get_ctcp_from_dssc(const DS_StreamConfig* p_stream_config, CommonTlmCmdPacket* received_packet)
+FRM_ERR_CODE CTCP_get_ctcp_from_dssc(const FRM_StreamConfig* p_stream_config, CommonTlmCmdPacket* received_packet)
 {
   const uint16_t packet_len = EB90_FRAME_get_packet_length_from_dssc(p_stream_config);
 
-  if (packet_len > CTCP_MAX_LEN) return DS_ERR_CODE_ERR;
+  if (packet_len > CTCP_MAX_LEN) return FRM_ERR_CODE_ERR;
 
   // まず， 受信データ長だけコピーしてしまってから，アサーションする（効率のため）
   memcpy(&received_packet->packet, EB90_FRAME_get_packet_head_from_dssc(p_stream_config), (size_t)packet_len);
-  if (CTCP_get_packet_len(received_packet) != packet_len) return DS_ERR_CODE_ERR;
-  if (!CTCP_is_valid_packet(received_packet)) return DS_ERR_CODE_ERR;
-  return DS_ERR_CODE_OK;
+  if (CTCP_get_packet_len(received_packet) != packet_len) return FRM_ERR_CODE_ERR;
+  if (!CTCP_is_valid_packet(received_packet)) return FRM_ERR_CODE_ERR;
+  return FRM_ERR_CODE_OK;
 }
 
 
-DS_ERR_CODE CTP_get_ctp_from_dssc(const DS_StreamConfig* p_stream_config, CommonTlmPacket* received_packet)
+FRM_ERR_CODE CTP_get_ctp_from_dssc(const FRM_StreamConfig* p_stream_config, CommonTlmPacket* received_packet)
 {
   const uint16_t packet_len = EB90_FRAME_get_packet_length_from_dssc(p_stream_config);
 
-  if (packet_len > CTP_MAX_LEN) return DS_ERR_CODE_ERR;
+  if (packet_len > CTP_MAX_LEN) return FRM_ERR_CODE_ERR;
 
   // まず， 受信データ長だけコピーしてしまってから，アサーションする（効率のため）
   memcpy(&received_packet->packet, EB90_FRAME_get_packet_head_from_dssc(p_stream_config), (size_t)packet_len);
-  if (CTP_get_packet_len(received_packet) != packet_len) return DS_ERR_CODE_ERR;
-  if (!CTP_is_valid_packet(received_packet)) return DS_ERR_CODE_ERR;
+  if (CTP_get_packet_len(received_packet) != packet_len) return FRM_ERR_CODE_ERR;
+  if (!CTP_is_valid_packet(received_packet)) return FRM_ERR_CODE_ERR;
 
   // On-Board Subnetwork Time を設定
   if (CTP_get_on_board_subnet_time(received_packet) == 0xffffffff)
@@ -45,35 +45,35 @@ DS_ERR_CODE CTP_get_ctp_from_dssc(const DS_StreamConfig* p_stream_config, Common
     // MOBC - sub OBC (2nd OBC) - 3rd OBC というとき， 2nd OBC でも 0xffffffff ができるようにしている
     CTP_set_on_board_subnet_time(received_packet);
   }
-  return DS_ERR_CODE_OK;
+  return FRM_ERR_CODE_OK;
 }
 
 
-DS_ERR_CODE CCP_get_ccp_from_dssc(const DS_StreamConfig* p_stream_config, CommonCmdPacket* received_packet)
+FRM_ERR_CODE CCP_get_ccp_from_dssc(const FRM_StreamConfig* p_stream_config, CommonCmdPacket* received_packet)
 {
   const uint16_t packet_len = EB90_FRAME_get_packet_length_from_dssc(p_stream_config);
 
-  if (packet_len > CCP_MAX_LEN) return DS_ERR_CODE_ERR;
+  if (packet_len > CCP_MAX_LEN) return FRM_ERR_CODE_ERR;
 
   // まず， 受信データ長だけコピーしてしまってから，アサーションする（効率のため）
   memcpy(&received_packet->packet, EB90_FRAME_get_packet_head_from_dssc(p_stream_config), (size_t)packet_len);
-  if (CCP_get_packet_len(received_packet) != packet_len) return DS_ERR_CODE_ERR;
-  if (!CCP_is_valid_packet(received_packet)) return DS_ERR_CODE_ERR;
-  return DS_ERR_CODE_OK;
+  if (CCP_get_packet_len(received_packet) != packet_len) return FRM_ERR_CODE_ERR;
+  if (!CCP_is_valid_packet(received_packet)) return FRM_ERR_CODE_ERR;
+  return FRM_ERR_CODE_OK;
 }
 
 
-DS_ERR_CODE CTCP_init_dssc(DS_StreamConfig* p_stream_config,
+FRM_ERR_CODE CTCP_init_dssc(FRM_StreamConfig* p_stream_config,
                            uint8_t* tx_frame_buffer,
                            int16_t tx_frame_buffer_size,
-                           DS_ERR_CODE (*data_analyzer)(DS_StreamConfig* p_stream_config, void* p_driver))
+                           FRM_ERR_CODE (*data_analyzer)(FRM_StreamConfig* p_stream_config, void* p_driver))
 {
   // MOBC か sub OBC かによって，送信側 (tx 側) が CTP になるか CCP になるかは不明なため，ひとまず CTCP に
   // メモリが苦しい OBC もあるので，考えてもいいかも
   const uint16_t max_frame_size = EB90_FRAME_HEADER_SIZE + CTCP_MAX_LEN + EB90_FRAME_FOOTER_SIZE;
   if (tx_frame_buffer_size < max_frame_size)
   {
-    return DS_ERR_CODE_ERR;
+    return FRM_ERR_CODE_ERR;
   }
 
   // 送信はする
@@ -95,11 +95,11 @@ DS_ERR_CODE CTCP_init_dssc(DS_StreamConfig* p_stream_config,
   // 定期 TLM の監視機能の有効化はここではしないので， Driver 側でやる
   // enable もここではしない
 
-  return DS_ERR_CODE_OK;
+  return FRM_ERR_CODE_OK;
 }
 
 
-DS_ERR_CODE CTCP_set_tx_frame_to_dssc(DS_StreamConfig* p_stream_config,
+FRM_ERR_CODE CTCP_set_tx_frame_to_dssc(FRM_StreamConfig* p_stream_config,
                                       const CommonTlmCmdPacket* send_packet)
 {
   size_t pos;
@@ -109,7 +109,7 @@ DS_ERR_CODE CTCP_set_tx_frame_to_dssc(DS_StreamConfig* p_stream_config,
   uint16_t frame_len = (uint16_t)(packet_len + EB90_FRAME_HEADER_SIZE + EB90_FRAME_FOOTER_SIZE);
   uint8_t* tx_frame = DSSC_get_tx_frame_as_non_const_pointer(p_stream_config);
 
-  if (frame_len > DSSC_get_tx_frame_buffer_size(p_stream_config)) return DS_ERR_CODE_ERR;
+  if (frame_len > DSSC_get_tx_frame_buffer_size(p_stream_config)) return FRM_ERR_CODE_ERR;
 
   DSSC_set_tx_frame_size(p_stream_config, frame_len);
 
@@ -132,24 +132,24 @@ DS_ERR_CODE CTCP_set_tx_frame_to_dssc(DS_StreamConfig* p_stream_config,
   size = EB90_FRAME_ETX_SIZE;
   memcpy(&(tx_frame[pos]), EB90_FRAME_kEtx, size);
 
-  return DS_ERR_CODE_OK;
+  return FRM_ERR_CODE_OK;
 }
 
 
-DS_ERR_CODE CTP_set_tx_frame_to_dssc(DS_StreamConfig* p_stream_config,
+FRM_ERR_CODE CTP_set_tx_frame_to_dssc(FRM_StreamConfig* p_stream_config,
                                      const CommonTlmPacket* send_packet)
 {
   const CommonTlmCmdPacket* ctcp = CTCP_convert_from_ctp(send_packet);
-  if (ctcp == NULL) return DS_ERR_CODE_ERR;
+  if (ctcp == NULL) return FRM_ERR_CODE_ERR;
   return CTCP_set_tx_frame_to_dssc(p_stream_config, ctcp);
 }
 
 
-DS_ERR_CODE CCP_set_tx_frame_to_dssc(DS_StreamConfig* p_stream_config,
+FRM_ERR_CODE CCP_set_tx_frame_to_dssc(FRM_StreamConfig* p_stream_config,
                                      const CommonCmdPacket* send_packet)
 {
   const CommonTlmCmdPacket* ctcp = CTCP_convert_from_ccp(send_packet);
-  if (ctcp == NULL) return DS_ERR_CODE_ERR;
+  if (ctcp == NULL) return FRM_ERR_CODE_ERR;
   return CTCP_set_tx_frame_to_dssc(p_stream_config, ctcp);
 }
 
