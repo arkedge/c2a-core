@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 #include "framing.h"
-#include "../../tlm_cmd/common_tlm_cmd_packet.h"
+#include "../tlm_cmd/common_tlm_cmd_packet.h"
 
 /**
  * @brief  CommonTlmCmdPacket を受信データからコピーして取得する

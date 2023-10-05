@@ -7,7 +7,7 @@
  * @note  packet 構造 などは tlm_cmd/common_tlm_cmd_packet.h を参照のこと
  */
 #include "framing_common_tlm_cmd_packet.h"
-#include "eb90_frame_for_driver_super.h"
+#include "framing_eb90_frame.h"
 #include <string.h>
 
 // FIXME: FRM_StreamConfig.data_link_layer_ をちゃんと見る！

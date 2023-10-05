@@ -8,7 +8,7 @@
  */
 #include "framing_eb90_packet.h"
 #include "framing_eb90_frame.h"
-#include "../../library/endian.h"
+#include "../library/endian.h"
 
 // FIXME: FRM_StreamConfig.data_link_layer_ をちゃんと見る！
 

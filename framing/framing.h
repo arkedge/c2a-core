@@ -25,8 +25,8 @@
 
 #include <src_user/hal/if_list.h>
 #include <stdint.h>
-#include "../../library/endian.h"        // パスが不定な自動生成コード類で使えるように
-#include "../../system/time_manager/time_manager.h"
+#include "../library/endian.h"        // パスが不定な自動生成コード類で使えるように
+#include "../system/time_manager/time_manager.h"
 
 #define FRM_STREAM_MAX                 (3)         /*!< FRM_StreamConfig の最大数
                                                        uint8_t を想定          */
@@ -34,7 +34,7 @@
                                                        IF_RX から受信できる最大数を規定する
                                                        OBC の物理的な信号ラインのバッファサイズ以上とするともっともパフォーマンスが出る */
 
-#include <src_user/Settings/DriverSuper/driver_super_params.h>
+#include <src_user/Settings/framing/framing_params.h>
 
 typedef struct Framing Framing;
 typedef struct FRM_StreamConfig FRM_StreamConfig;
