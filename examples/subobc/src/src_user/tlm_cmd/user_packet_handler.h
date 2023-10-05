@@ -44,7 +44,7 @@ PH_ACK PH_user_analyze_cmd(const CommonCmdPacket* packet);
  *         ここから Driver を叩いて送信まで行うことになる（実行時間は CA_execute_cmd と同じだけ許容されているので OK）
  * @param  packet: CCP
  * @retval CCP_CmdRet{CCP_EXEC_SUCCESS, *} など:   無事に転送された．転送先の結果を返す
- * @retval CCP_CmdRet{CCP_EXEC_ROUTING_FAILED, *}: 転送失敗（詳細エラーは DriverSuper を参照）
+ * @retval CCP_CmdRet{CCP_EXEC_ROUTING_FAILED, *}: 転送失敗（詳細エラーは Framing を参照）
  */
 CCP_CmdRet PH_user_cmd_router(const CommonCmdPacket* packet);
 

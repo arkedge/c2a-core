@@ -20,7 +20,7 @@ call :sync_file ".\src\src_user\hal\sils_mockup\README.md" "..\mobc\src\src_user
 call :sync_file ".\src\src_user\hal\sils_mockup\uart_sils.c" "..\mobc\src\src_user\hal\sils_mockup\uart_sils.c"
 call :sync_file ".\src\src_user\hal\sils_mockup\wdt_sils.c" "..\mobc\src\src_user\hal\sils_mockup\wdt_sils.c"
 call :sync_file ".\src\src_user\Settings\git_revision_config.h" "..\mobc\src\src_user\Settings\git_revision_config.h"
-call :sync_file ".\src\src_user\Settings\DriverSuper\driver_buffer_define.h" "..\mobc\src\src_user\Settings\DriverSuper\driver_buffer_define.h"
+call :sync_file ".\src\src_user\Settings\framing\driver_buffer_define.h" "..\mobc\src\src_user\Settings\framing\driver_buffer_define.h"
 call :sync_file ".\src\src_user\Settings\tlm_cmd\common_cmd_packet_define.c" "..\mobc\src\src_user\Settings\tlm_cmd\common_cmd_packet_define.c"
 call :sync_file ".\src\src_user\Settings\tlm_cmd\common_tlm_cmd_packet_define.h" "..\mobc\src\src_user\Settings\tlm_cmd\common_tlm_cmd_packet_define.h"
 call :sync_file ".\src\src_user\tlm_cmd\block_command_user_settings.c" "..\mobc\src\src_user\tlm_cmd\block_command_user_settings.c"
