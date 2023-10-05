@@ -11,7 +11,7 @@
 
 #include "../../hal/ccsds_user.h"
 #include "../../tlm_cmd/ccsds/tc_transfer_frame.h"
-#include <src_core/Drivers/Super/driver_super.h>
+#include <src_core/framing/framing.h>
 #include <src_core/tlm_cmd/packet_handler.h>
 #include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>
 
@@ -20,7 +20,7 @@
 #define GS_RX_FRAMELENGTH_TYPE_SIZE (2)
 #define GS_TX_STREAM (0) // どれでも良いがとりあえず 0 で
 
-#if GS_RX_HEADER_NUM > DS_STREAM_MAX
+#if GS_RX_HEADER_NUM > FRM_STREAM_MAX
 #error GS RX HEADER NUM TOO MANY
 #endif
 
@@ -30,38 +30,38 @@ static uint8_t GS_tx_frame_[VCDU_LEN];
 
 /**
  * @brief CCSDS 側 Driver の DS 上での初期化設定
- * @param[in] p_super: DriverSuper
- * @return DS_ERR_CODE
+ * @param[in] p_framing: Framing
+ * @return FRM_ERR_CODE
  */
-static DS_ERR_CODE GS_load_ccsds_driver_super_init_settings_(DriverSuper* p_super);
+static FRM_ERR_CODE GS_load_ccsds_driver_super_init_settings_(Framing* p_framing);
 
 /**
  * @brief UART 側 Driver の DS 上での初期化設定
- * @param[in] p_super: DriverSuper
- * @return DS_ERR_CODE
+ * @param[in] p_framing: Framing
+ * @return FRM_ERR_CODE
  */
-static DS_ERR_CODE GS_load_uart_driver_super_init_settings_(DriverSuper* p_super);
+static FRM_ERR_CODE GS_load_uart_driver_super_init_settings_(Framing* p_framing);
 
 /**
  * @brief 上記初期化の共通部分をまとめた関数
- * @param[in] p_super: DriverSuper
+ * @param[in] p_framing: Framing
  */
-static void GS_load_default_driver_super_init_settings_(DriverSuper* p_super);
+static void GS_load_default_driver_super_init_settings_(Framing* p_framing);
 
 /**
  * @brief 地上からの受信データ解析関数
- * @param[in] p_stream_config: DS_StreamConfig
+ * @param[in] p_stream_config: FRM_StreamConfig
  * @param[in] p_driver: GS_Driver
  * @param[in]
  */
-static DS_ERR_CODE GS_analyze_rec_data_(DS_StreamConfig* p_stream_config, void* p_driver);
+static FRM_ERR_CODE GS_analyze_rec_data_(FRM_StreamConfig* p_stream_config, void* p_driver);
 
-DS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
+FRM_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
                          uint8_t uart_ch,
-                         DS_StreamRecBuffer* ccsds_rx_buffers[DS_STREAM_MAX],
-                         DS_StreamRecBuffer* uart_rx_buffers[DS_STREAM_MAX])
+                         FRM_StreamRecBuffer* ccsds_rx_buffers[FRM_STREAM_MAX],
+                         FRM_StreamRecBuffer* uart_rx_buffers[FRM_STREAM_MAX])
 {
-  DS_ERR_CODE ret_uart, ret_ccsds;
+  FRM_ERR_CODE ret_uart, ret_ccsds;
   int i;
   int stream;
 
@@ -88,21 +88,21 @@ DS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
     GS_rx_header_[stream][1] |= (uint8_t)(TCTF_SCID_SAMPLE_SATELLITE & 0xff);
   }
 
-  ret_ccsds = DS_init_streams(&gs_driver->driver_ccsds.super,
+  ret_ccsds = FRM_init_streams(&gs_driver->driver_ccsds.super,
                               &gs_driver->driver_ccsds.ccsds_config,
                               ccsds_rx_buffers,
                               GS_load_ccsds_driver_super_init_settings_);
-  ret_uart  = DS_init_streams(&gs_driver->driver_uart.super,
+  ret_uart  = FRM_init_streams(&gs_driver->driver_uart.super,
                               &gs_driver->driver_uart.uart_config,
                               uart_rx_buffers,
                               GS_load_uart_driver_super_init_settings_);
-  if (ret_ccsds != DS_ERR_CODE_OK || ret_uart != DS_ERR_CODE_OK) return DS_INIT_DS_INIT_ERR;
+  if (ret_ccsds != FRM_ERR_CODE_OK || ret_uart != FRM_ERR_CODE_OK) return FRM_INIT_FRM_INIT_ERR;
   gs_driver->latest_info = &gs_driver->info[GS_PORT_TYPE_CCSDS];
   gs_driver->tlm_tx_port_type = GS_PORT_TYPE_CCSDS;
 
   for (i = 0; i < GS_PORT_TYPE_NUM; ++i)
   {
-    gs_driver->info[i].rx.rec_status = DS_ERR_CODE_OK;
+    gs_driver->info[i].rx.rec_status = FRM_ERR_CODE_OK;
     gs_driver->info[i].rx.ret_from_if_rx = 0;
     gs_driver->info[i].rx.last_dest_type = CCP_DEST_TYPE_TO_UNKOWN;
     gs_driver->info[i].rx.last_rec_time = 0;
@@ -121,55 +121,55 @@ DS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
   gs_driver->ccsds_info.buffer_num = 8;
   gs_driver->driver_uart.is_tlm_on = 1;
 
-  return DS_INIT_OK;
+  return FRM_INIT_OK;
 }
 
-static DS_ERR_CODE GS_load_ccsds_driver_super_init_settings_(DriverSuper* p_super)
+static FRM_ERR_CODE GS_load_ccsds_driver_super_init_settings_(Framing* p_framing)
 {
-  p_super->interface = CCSDS;
-  GS_load_default_driver_super_init_settings_(p_super);
+  p_framing->interface = CCSDS;
+  GS_load_default_driver_super_init_settings_(p_framing);
 
-  return DS_ERR_CODE_OK;
+  return FRM_ERR_CODE_OK;
 }
 
-static DS_ERR_CODE GS_load_uart_driver_super_init_settings_(DriverSuper* p_super)
+static FRM_ERR_CODE GS_load_uart_driver_super_init_settings_(Framing* p_framing)
 {
-  p_super->interface = UART;
-  GS_load_default_driver_super_init_settings_(p_super);
+  p_framing->interface = UART;
+  GS_load_default_driver_super_init_settings_(p_framing);
 
-  return DS_ERR_CODE_OK;
+  return FRM_ERR_CODE_OK;
 }
 
-static void GS_load_default_driver_super_init_settings_(DriverSuper* p_super)
+static void GS_load_default_driver_super_init_settings_(Framing* p_framing)
 {
-  DS_StreamConfig* p_stream_config;
+  FRM_StreamConfig* p_stream_config;
   int stream;
 
   for (stream = 0; stream < GS_RX_HEADER_NUM; ++stream)
   {
-    p_stream_config = &(p_super->stream_config[stream]);
-    DSSC_enable(p_stream_config);
-    DSSC_enable_strict_frame_search(p_stream_config);   // 複数ストリームがあり，かつ論理的な受信漏れを0にするため．
+    p_stream_config = &(p_framing->stream_config[stream]);
+    FRMSC_enable(p_stream_config);
+    FRMSC_enable_strict_frame_search(p_stream_config);   // 複数ストリームがあり，かつ論理的な受信漏れを0にするため．
 
-    DSSC_set_tx_frame(p_stream_config, GS_tx_frame_); // 全 stream, uart, ccsds に関わらず共通
-    DSSC_set_tx_frame_size(p_stream_config, VCDU_LEN); // VCDU を送信
+    FRMSC_set_tx_frame(p_stream_config, GS_tx_frame_); // 全 stream, uart, ccsds に関わらず共通
+    FRMSC_set_tx_frame_size(p_stream_config, VCDU_LEN); // VCDU を送信
 
-    DSSC_set_rx_header(p_stream_config, GS_rx_header_[stream], GS_RX_HEADER_SIZE);
-    DSSC_set_rx_frame_size(p_stream_config, -1); // 可変長
-    DSSC_set_rx_framelength_pos(p_stream_config, GS_RX_HEADER_SIZE);
-    DSSC_set_rx_framelength_type_size(p_stream_config, GS_RX_FRAMELENGTH_TYPE_SIZE);
-    DSSC_set_rx_framelength_offset(p_stream_config, 1); // TCTF の framelength は 0 起算
-    DSSC_set_data_analyzer(p_stream_config, GS_analyze_rec_data_);
+    FRMSC_set_rx_header(p_stream_config, GS_rx_header_[stream], GS_RX_HEADER_SIZE);
+    FRMSC_set_rx_frame_size(p_stream_config, -1); // 可変長
+    FRMSC_set_rx_framelength_pos(p_stream_config, GS_RX_HEADER_SIZE);
+    FRMSC_set_rx_framelength_type_size(p_stream_config, GS_RX_FRAMELENGTH_TYPE_SIZE);
+    FRMSC_set_rx_framelength_offset(p_stream_config, 1); // TCTF の framelength は 0 起算
+    FRMSC_set_data_analyzer(p_stream_config, GS_analyze_rec_data_);
   }
 }
 
-DS_REC_ERR_CODE GS_rec_tctf(GS_Driver* gs_driver)
+FRM_REC_ERR_CODE GS_rec_tctf(GS_Driver* gs_driver)
 {
   uint8_t i, stream;
 
   for (i = 0; i < GS_PORT_TYPE_NUM; ++i)
   {
-    DriverSuper* ds;
+    Framing* ds;
 
     if (i == GS_PORT_TYPE_CCSDS)
     {
@@ -181,29 +181,29 @@ DS_REC_ERR_CODE GS_rec_tctf(GS_Driver* gs_driver)
     }
 
     // TODO: これはエラー情報をきちんと把握したいので，アノマリ発行を入れる
-    gs_driver->info[i].rx.rec_status = DS_receive(ds);
+    gs_driver->info[i].rx.rec_status = FRM_receive(ds);
     gs_driver->info[i].rx.ret_from_if_rx = DSC_get_rec_status(ds)->ret_from_if_rx;
 
-    if (gs_driver->info[i].rx.rec_status != DS_ERR_CODE_OK) continue;
+    if (gs_driver->info[i].rx.rec_status != FRM_ERR_CODE_OK) continue;
 
     for (stream = 0; stream < GS_RX_HEADER_NUM; ++stream)
     {
-      DS_StreamConfig* p_stream_config;
+      FRM_StreamConfig* p_stream_config;
 
       p_stream_config = &ds->stream_config[stream];
-      if (DSSC_get_rec_status(p_stream_config)->status_code != DS_STREAM_REC_STATUS_FIXED_FRAME) continue;
+      if (FRMSC_get_rec_status(p_stream_config)->status_code != FRM_STREAM_REC_STATUS_FIXED_FRAME) continue;
 
-      gs_driver->info[i].rx.rec_status = DS_analyze_rec_data(ds, stream, gs_driver);
+      gs_driver->info[i].rx.rec_status = FRM_analyze_rec_data(ds, stream, gs_driver);
     }
   }
 
   // TODO: 常に OK を返すのでいいのか検討
-  return DS_REC_OK;
+  return FRM_REC_OK;
 }
 
-static DS_ERR_CODE GS_analyze_rec_data_(DS_StreamConfig* p_stream_config, void* p_driver)
+static FRM_ERR_CODE GS_analyze_rec_data_(FRM_StreamConfig* p_stream_config, void* p_driver)
 {
-  const uint8_t* gs_rx_data = DSSC_get_rx_frame(p_stream_config);
+  const uint8_t* gs_rx_data = FRMSC_get_rx_frame(p_stream_config);
   const TcTransferFrame* tctf = TCTF_convert_from_bytes_to_tctf(gs_rx_data);
   GS_Driver* gs_driver = (GS_Driver*)p_driver;
   GS_PORT_TYPE driver_index;
@@ -243,7 +243,7 @@ static DS_ERR_CODE GS_analyze_rec_data_(DS_StreamConfig* p_stream_config, void* 
     break;
   }
 
-  if (tctf_validate_status != GS_VALIDATE_ERR_OK) return DS_ERR_CODE_ERR;
+  if (tctf_validate_status != GS_VALIDATE_ERR_OK) return FRM_ERR_CODE_ERR;
 
   tcs = TCTF_get_tc_segment(tctf);
   csp = TCS_get_command_space_packet(tcs);
@@ -251,26 +251,26 @@ static DS_ERR_CODE GS_analyze_rec_data_(DS_StreamConfig* p_stream_config, void* 
   gs_driver->info[driver_index].rx.last_rec_time = TMGR_get_master_total_cycle();
   gs_driver->info[driver_index].rx.cmd_ack = PH_analyze_cmd_packet(csp);  // 受信コマンドパケット解析
 
-  return DS_ERR_CODE_OK;
+  return FRM_ERR_CODE_OK;
 }
 
-DS_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const VCDU* vcdu)
+FRM_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const VCDU* vcdu)
 {
-  DS_ERR_CODE ret_ccsds = DS_ERR_CODE_OK;
-  DS_ERR_CODE ret_uart  = DS_ERR_CODE_OK;
+  FRM_ERR_CODE ret_ccsds = FRM_ERR_CODE_OK;
+  FRM_ERR_CODE ret_uart  = FRM_ERR_CODE_OK;
   size_t vcdu_size = sizeof(VCDU);
 
   // パディングが無ければ元を GS_tx_frame_ にコピーさせる (444Byte) のコピーが無駄
   if (vcdu_size == VCDU_LEN)
   {
-    DSSC_set_tx_frame(&gs_driver->driver_ccsds.super.stream_config[GS_TX_STREAM], (uint8_t*)vcdu);
-    DSSC_set_tx_frame(&gs_driver->driver_uart.super.stream_config[GS_TX_STREAM], (uint8_t*)vcdu);
+    FRMSC_set_tx_frame(&gs_driver->driver_ccsds.super.stream_config[GS_TX_STREAM], (uint8_t*)vcdu);
+    FRMSC_set_tx_frame(&gs_driver->driver_uart.super.stream_config[GS_TX_STREAM], (uint8_t*)vcdu);
   }
   else
   {
     VCDU_generate_byte_stream(vcdu, GS_tx_frame_); // 送信元にセット 消したいなぁ...
-    DSSC_set_tx_frame(&gs_driver->driver_ccsds.super.stream_config[GS_TX_STREAM], GS_tx_frame_);
-    DSSC_set_tx_frame(&gs_driver->driver_uart.super.stream_config[GS_TX_STREAM], GS_tx_frame_);
+    FRMSC_set_tx_frame(&gs_driver->driver_ccsds.super.stream_config[GS_TX_STREAM], GS_tx_frame_);
+    FRMSC_set_tx_frame(&gs_driver->driver_uart.super.stream_config[GS_TX_STREAM], GS_tx_frame_);
   }
 
   // CCSDS
@@ -282,7 +282,7 @@ DS_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const VCDU* vcdu)
     gs_driver->info[GS_PORT_TYPE_CCSDS].tx.vcdu_counter = VCDU_get_vcdu_counter(vcdu);
 
     // DS 側の名称が cmd なだけで送信しているのは TLM
-    ret_ccsds = DS_send_general_cmd(&gs_driver->driver_ccsds.super, GS_TX_STREAM);
+    ret_ccsds = FRM_send_general_cmd(&gs_driver->driver_ccsds.super, GS_TX_STREAM);
   }
 
   // UART
@@ -293,15 +293,15 @@ DS_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const VCDU* vcdu)
     gs_driver->info[GS_PORT_TYPE_UART].tx.vcdu_counter = VCDU_get_vcdu_counter(vcdu);
 
     // DS 側の名称が cmd なだけで送信しているのは TLM
-    ret_uart  = DS_send_general_cmd(&gs_driver->driver_uart.super,  GS_TX_STREAM);
+    ret_uart  = FRM_send_general_cmd(&gs_driver->driver_uart.super,  GS_TX_STREAM);
   }
 
-  if (ret_ccsds != DS_ERR_CODE_OK || ret_uart != DS_ERR_CODE_OK)
+  if (ret_ccsds != FRM_ERR_CODE_OK || ret_uart != FRM_ERR_CODE_OK)
   {
-    return DS_CMD_DRIVER_SUPER_ERR;
+    return FRM_CMD_DRIVER_SUPER_ERR;
   }
 
-  return DS_CMD_OK;
+  return FRM_CMD_OK;
 }
 
 #pragma section

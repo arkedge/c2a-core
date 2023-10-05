@@ -6,7 +6,7 @@
 #define GS_H_
 
 #include <src_core/tlm_cmd/packet_handler.h>
-#include <src_core/Drivers/Super/driver_super.h>
+#include <src_core/framing/framing.h>
 #include <src_core/hal/uart.h>
 #include <src_core/hal/ccsds.h>
 #include "../../hal/ccsds_user.h"
@@ -35,7 +35,7 @@ typedef struct
 {
   struct
   {
-    DS_ERR_CODE rec_status;                   //!< DriverSuper からの受信結果
+    FRM_ERR_CODE rec_status;                   //!< Framing からの受信結果
     int ret_from_if_rx;                       //!< UART or CCSDS からの返り値
     CCP_DEST_TYPE last_dest_type;             //!< 最後に受信したパケットの dest type
     cycle_t last_rec_time;                    //!< 最後に受信した時刻
@@ -67,14 +67,14 @@ typedef struct
   // CCSDS 側の Driver
   struct
   {
-    DriverSuper  super;
+    Framing  super;
     CCSDS_Config ccsds_config;
   } driver_ccsds;
 
   // UART 側の Driver
   struct
   {
-    DriverSuper super;
+    Framing super;
     UART_Config uart_config;
     uint8_t is_tlm_on;            //!< UART に TLM を流すかどうか, CCSDS では許容でも UART に TLM を送りすぎると詰まってしまうため
   } driver_uart;
@@ -91,28 +91,28 @@ typedef struct
  * @param[in] uart_ch:          有線通信時の CH
  * @param[in] ccsds_rx_buffers: CCSDS 用受信バッファ
  * @param[in] uart_rx_buffers:  UART 用受信バッファ
- * @return DS_INIT_ERR_CODE
+ * @return FRM_INIT_ERR_CODE
  */
-DS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
+FRM_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
                          uint8_t uart_ch,
-                         DS_StreamRecBuffer* ccsds_rx_buffers[DS_STREAM_MAX],
-                         DS_StreamRecBuffer* uart_rx_buffers[DS_STREAM_MAX]);
+                         FRM_StreamRecBuffer* ccsds_rx_buffers[FRM_STREAM_MAX],
+                         FRM_StreamRecBuffer* uart_rx_buffers[FRM_STREAM_MAX]);
 
 /**
  * @brief 地上から CMD を受信する. 形式は TC Transer Frame
  * @param[in] gs_driver: ドライバー
- * @return DS_REC_ERR_CODE
+ * @return FRM_REC_ERR_CODE
  */
-DS_REC_ERR_CODE GS_rec_tctf(GS_Driver* gs_driver);
+FRM_REC_ERR_CODE GS_rec_tctf(GS_Driver* gs_driver);
 
 /**
  * @brief 地上に向けて TLM を送信. 形式は VCDU
- * @note  DS_send_general_cmd が使われているが, これは DS は MOBC コンポ間を想定しているため, MOBC から見るとコンポに cmd を送信している様に見える, が 今回は MOBC から地上に TLM を送信している
+ * @note  FRM_send_general_cmd が使われているが, これは DS は MOBC コンポ間を想定しているため, MOBC から見るとコンポに cmd を送信している様に見える, が 今回は MOBC から地上に TLM を送信している
  * @note TLM 送信, 形式は VCDU
  * @param[in] gs_driver: ドライバー
  * @param[in] vcdu:      送信する VCDU. 場合によってはそのまま DS に渡すので， local変数ではなくstaticな変数を渡すこと
- * @return DS_CMD_ERR_CODE: 送信結果
+ * @return FRM_CMD_ERR_CODE: 送信結果
  */
-DS_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const VCDU* vcdu);
+FRM_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const VCDU* vcdu);
 
 #endif

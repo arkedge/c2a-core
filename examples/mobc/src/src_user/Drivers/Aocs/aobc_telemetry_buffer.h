@@ -7,7 +7,7 @@
 #define AOBC_TELEMETRY_BUFFER_H_
 
 #include "./aobc_telemetry_definitions.h"
-#include <src_core/Drivers/Super/driver_super.h>
+#include <src_core/framing/framing.h>
 #include <src_core/tlm_cmd/common_tlm_packet.h>
 #include <src_core/tlm_cmd/telemetry_frame.h>
 
@@ -28,7 +28,7 @@ typedef struct
 
 void AOBC_init_tlm_buffer(AOBC_Driver* aobc_driver);
 
-DS_ERR_CODE AOBC_buffer_tlm_packet(DS_StreamConfig* p_stream_config, AOBC_Driver* aobc_driver);
+FRM_ERR_CODE AOBC_buffer_tlm_packet(FRM_StreamConfig* p_stream_config, AOBC_Driver* aobc_driver);
 
 TF_TLM_FUNC_ACK AOBC_pick_up_tlm_buffer(const AOBC_Driver* aobc_driver, AOBC_TLM_CODE tlm_id, uint8_t* packet, uint16_t* len, uint16_t max_len);
 

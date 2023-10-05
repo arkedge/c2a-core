@@ -4,14 +4,14 @@
  * @brief  テレメトリバッファー（テレメ中継）
  * @note   このコードは自動生成されています！
  */
-#include <src_core/Drivers/Protocol/common_tlm_cmd_packet_for_driver_super.h>
+#include <src_core/framing/framing_common_tlm_cmd_packet.h>
 #include "./aobc_telemetry_definitions.h"
 #include "./aobc_telemetry_buffer.h"
 #include "./aobc.h"
 #include <string.h>
 
-static DS_ERR_CODE AOBC_analyze_tlm_aobc_aobc_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver);
-static DS_ERR_CODE AOBC_analyze_tlm_aobc_hk_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver);
+static FRM_ERR_CODE AOBC_analyze_tlm_aobc_aobc_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver);
+static FRM_ERR_CODE AOBC_analyze_tlm_aobc_hk_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver);
 
 static CommonTlmPacket AOBC_ctp_;
 
@@ -25,13 +25,13 @@ void AOBC_init_tlm_buffer(AOBC_Driver* aobc_driver)
   }
 }
 
-DS_ERR_CODE AOBC_buffer_tlm_packet(DS_StreamConfig* p_stream_config, AOBC_Driver* aobc_driver)
+FRM_ERR_CODE AOBC_buffer_tlm_packet(FRM_StreamConfig* p_stream_config, AOBC_Driver* aobc_driver)
 {
   AOBC_TLM_CODE tlm_id;
-  DS_ERR_CODE ret;
+  FRM_ERR_CODE ret;
 
   ret = CTP_get_ctp_from_dssc(p_stream_config, &AOBC_ctp_);
-  if (ret != DS_ERR_CODE_OK) return ret;
+  if (ret != FRM_ERR_CODE_OK) return ret;
 
   tlm_id  = (AOBC_TLM_CODE)CTP_get_id(&AOBC_ctp_);
 
@@ -43,11 +43,11 @@ DS_ERR_CODE AOBC_buffer_tlm_packet(DS_StreamConfig* p_stream_config, AOBC_Driver
     return AOBC_analyze_tlm_aobc_hk_(&AOBC_ctp_, tlm_id, aobc_driver);
   default:
     aobc_driver->info.comm.rx_err_code = AOBC_RX_ERR_CODE_TLM_NOT_FOUND;
-    return DS_ERR_CODE_ERR;
+    return FRM_ERR_CODE_ERR;
   }
 }
 
-static DS_ERR_CODE AOBC_analyze_tlm_aobc_aobc_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver)
+static FRM_ERR_CODE AOBC_analyze_tlm_aobc_aobc_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver)
 {
   const uint8_t* f = packet->packet;
   int8_t temp_i8 = 0;
@@ -192,10 +192,10 @@ static DS_ERR_CODE AOBC_analyze_tlm_aobc_aobc_(const CommonTlmPacket* packet, AO
   (void)temp_f;
   (void)temp_d;
 
-  return DS_ERR_CODE_OK;
+  return FRM_ERR_CODE_OK;
 }
 
-static DS_ERR_CODE AOBC_analyze_tlm_aobc_hk_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver)
+static FRM_ERR_CODE AOBC_analyze_tlm_aobc_hk_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver)
 {
   const uint8_t* f = packet->packet;
   int8_t temp_i8 = 0;
@@ -421,7 +421,7 @@ static DS_ERR_CODE AOBC_analyze_tlm_aobc_hk_(const CommonTlmPacket* packet, AOBC
   (void)temp_f;
   (void)temp_d;
 
-  return DS_ERR_CODE_OK;
+  return FRM_ERR_CODE_OK;
 }
 
 TF_TLM_FUNC_ACK AOBC_pick_up_tlm_buffer(const AOBC_Driver* aobc_driver, AOBC_TLM_CODE tlm_id, uint8_t* packet, uint16_t* len, uint16_t max_len)

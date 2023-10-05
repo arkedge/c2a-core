@@ -6,7 +6,7 @@
 #define AOBC_H_
 
 #include <src_core/hal/uart.h>
-#include <src_core/Drivers/Super/driver_super.h>
+#include <src_core/framing/framing.h>
 #include <src_core/system/time_manager/obc_time.h>
 #include <src_core/tlm_cmd/common_cmd_packet.h>
 #include "./aobc_telemetry_data_definitions.h"
@@ -64,7 +64,7 @@ struct AOBC_Driver
 {
   struct
   {
-    DriverSuper super;        //!< DriverSuper class
+    Framing super;        //!< Framing class
     UART_Config uart_config;  //!< RS422 class
   } driver;
   AOBC_Info info;
@@ -80,24 +80,24 @@ struct AOBC_Driver
  * @param  aobc_driver: 初期化する AOBC_Driver 構造体へのポインタ
  * @param  ch:          AOBC が接続されている UART ポート番号
  * @param  rx_buffer:   受信バッファ
- * @return DS_INIT_ERR_CODE
+ * @return FRM_INIT_ERR_CODE
  */
-DS_INIT_ERR_CODE AOBC_init(AOBC_Driver* aobc_driver, uint8_t ch, DS_StreamRecBuffer* rx_buffer);
+FRM_INIT_ERR_CODE AOBC_init(AOBC_Driver* aobc_driver, uint8_t ch, FRM_StreamRecBuffer* rx_buffer);
 
 /**
  * @brief  AOBC のデータ（テレメ）受信
  * @param  aobc_driver: AOBC_Driver 構造体へのポインタ
- * @return DS_REC_ERR_CODE
+ * @return FRM_REC_ERR_CODE
  */
-DS_REC_ERR_CODE AOBC_rec(AOBC_Driver* aobc_driver);
+FRM_REC_ERR_CODE AOBC_rec(AOBC_Driver* aobc_driver);
 
 /**
  * @brief  AOBC へのコマンド送信
  * @param  aobc_driver: AOBC_Driver 構造体へのポインタ
  * @param  packet:      送信する packet
- * @return DS_CMD_ERR_CODE
+ * @return FRM_CMD_ERR_CODE
  * @note   これを受信した AOBC C2A は， packet をそのまま PH_analyze_cmd_packet に流せばよい．
  */
-DS_CMD_ERR_CODE AOBC_send_cmd(AOBC_Driver* aobc_driver, const CommonCmdPacket* packet);
+FRM_CMD_ERR_CODE AOBC_send_cmd(AOBC_Driver* aobc_driver, const CommonCmdPacket* packet);
 
 #endif

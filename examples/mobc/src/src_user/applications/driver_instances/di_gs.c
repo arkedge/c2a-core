@@ -10,7 +10,7 @@
 #include <src_core/library/result.h>
 #include "../../Drivers/Com/gs_validate.h"
 #include "../../Settings/port_config.h"
-#include "../../Settings/DriverSuper/driver_buffer_define.h"
+#include "../../Settings/framing/framing_buffer_define.h"
 
 static RESULT DI_GS_init_(void);
 
@@ -34,33 +34,33 @@ static DI_GS_TlmPacketHandler DI_GS_rp_tlm_packet_handler_;
 const DI_GS_TlmPacketHandler* const DI_GS_rp_tlm_packet_handler = &DI_GS_rp_tlm_packet_handler_;
 
 // バッファ
-static DS_StreamRecBuffer DI_GS_ccsds_rx_buffer_[GS_RX_HEADER_NUM];
-static uint8_t DI_GS_ccsds_rx_buffer_allocation_[GS_RX_HEADER_NUM][DS_STREAM_REC_BUFFER_SIZE_DEFAULT];
-static DS_StreamRecBuffer DI_GS_uart_rx_buffer_[GS_RX_HEADER_NUM];
-static uint8_t DI_GS_uart_rx_buffer_allocation_[GS_RX_HEADER_NUM][DS_STREAM_REC_BUFFER_SIZE_DEFAULT];
+static FRM_StreamRecBuffer DI_GS_ccsds_rx_buffer_[GS_RX_HEADER_NUM];
+static uint8_t DI_GS_ccsds_rx_buffer_allocation_[GS_RX_HEADER_NUM][FRM_STREAM_REC_BUFFER_SIZE_DEFAULT];
+static FRM_StreamRecBuffer DI_GS_uart_rx_buffer_[GS_RX_HEADER_NUM];
+static uint8_t DI_GS_uart_rx_buffer_allocation_[GS_RX_HEADER_NUM][FRM_STREAM_REC_BUFFER_SIZE_DEFAULT];
 
 
 static RESULT DI_GS_init_(void)
 {
   int stream;
-  DS_INIT_ERR_CODE ret;
-  DS_StreamRecBuffer* ccsds_rx_buffers[DS_STREAM_MAX];
-  DS_StreamRecBuffer* uart_rx_buffers[DS_STREAM_MAX];
-  DS_nullify_stream_rec_buffers(ccsds_rx_buffers);
-  DS_nullify_stream_rec_buffers(uart_rx_buffers);
+  FRM_INIT_ERR_CODE ret;
+  FRM_StreamRecBuffer* ccsds_rx_buffers[FRM_STREAM_MAX];
+  FRM_StreamRecBuffer* uart_rx_buffers[FRM_STREAM_MAX];
+  FRM_nullify_stream_rec_buffers(ccsds_rx_buffers);
+  FRM_nullify_stream_rec_buffers(uart_rx_buffers);
 
-  // GS_RX_HEADER_NUM > DS_STREAM_MAX のアサーションは gs.c でやっているのでここではしない
+  // GS_RX_HEADER_NUM > FRM_STREAM_MAX のアサーションは gs.c でやっているのでここではしない
   for (stream = 0; stream < GS_RX_HEADER_NUM; ++stream)
   {
-    DS_ERR_CODE ret1;
-    DS_ERR_CODE ret2;
-    ret1 = DS_init_stream_rec_buffer(&DI_GS_ccsds_rx_buffer_[stream],
+    FRM_ERR_CODE ret1;
+    FRM_ERR_CODE ret2;
+    ret1 = FRM_init_stream_rec_buffer(&DI_GS_ccsds_rx_buffer_[stream],
                                      DI_GS_ccsds_rx_buffer_allocation_[stream],
                                      sizeof(DI_GS_ccsds_rx_buffer_allocation_[stream]));
-    ret2 = DS_init_stream_rec_buffer(&DI_GS_uart_rx_buffer_[stream],
+    ret2 = FRM_init_stream_rec_buffer(&DI_GS_uart_rx_buffer_[stream],
                                      DI_GS_uart_rx_buffer_allocation_[stream],
                                      sizeof(DI_GS_uart_rx_buffer_allocation_[stream]));
-    if (ret1 != DS_ERR_CODE_OK || ret2 != DS_ERR_CODE_OK)
+    if (ret1 != FRM_ERR_CODE_OK || ret2 != FRM_ERR_CODE_OK)
     {
       Printf("GS buffer init Failed ! %d, %d \n", ret1, ret2);
       return RESULT_ERR;
@@ -71,7 +71,7 @@ static RESULT DI_GS_init_(void)
 
   ret = GS_init(&gs_driver_, PORT_CH_RS422_MOBC_EXT, ccsds_rx_buffers, uart_rx_buffers);
 
-  if (ret != DS_INIT_OK)
+  if (ret != FRM_INIT_OK)
   {
     Printf("!! GS Init Error %d !!\n", ret);
     return RESULT_ERR;

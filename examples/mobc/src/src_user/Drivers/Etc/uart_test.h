@@ -6,7 +6,7 @@
 #define UART_TEST_H_
 
 #include <src_core/hal/uart.h>
-#include <src_core/Drivers/Super/driver_super.h>
+#include <src_core/framing/framing.h>
 
 /**
  * @struct UART_TEST_Info
@@ -25,7 +25,7 @@ typedef struct
 {
   struct
   {
-    DriverSuper super;                  //!< DriverSuper class
+    Framing super;                  //!< Framing class
     UART_Config uart_config;           //!< RS422 class
   } driver;
   UART_TEST_Info info;
@@ -41,23 +41,23 @@ typedef struct
  * @param  uart_test_driver: 初期化するUART_TEST_Driver構造体へのポインタ
  * @param  ch:               UART_TESTが接続されているUARTポート番号
  * @param  rx_buffers:       受信バッファ
- * @return DS_INIT_ERR_CODE
+ * @return FRM_INIT_ERR_CODE
  */
-DS_INIT_ERR_CODE UART_TEST_init(UART_TEST_Driver* uart_test_driver, uint8_t ch, DS_StreamRecBuffer* rx_buffers[DS_STREAM_MAX]);
+FRM_INIT_ERR_CODE UART_TEST_init(UART_TEST_Driver* uart_test_driver, uint8_t ch, FRM_StreamRecBuffer* rx_buffers[FRM_STREAM_MAX]);
 
 /**
  * @brief  UART_TESTのデータ（テレメ）受信
  * @param  uart_test_driver: UART_TEST_Driver構造体へのポインタ
- * @return DS_REC_ERR_CODE
+ * @return FRM_REC_ERR_CODE
  */
-DS_REC_ERR_CODE UART_TEST_rec(UART_TEST_Driver* uart_test_driver);
+FRM_REC_ERR_CODE UART_TEST_rec(UART_TEST_Driver* uart_test_driver);
 
 /**
  * @brief  UART_TESTへのコマンド送信
  * @param  uart_test_driver: UART_TEST_Driver構造体へのポインタ
  * @param  id:               Cmd id
- * @return DS_CMD_ERR_CODE
+ * @return FRM_CMD_ERR_CODE
  */
-DS_CMD_ERR_CODE UART_TEST_send(UART_TEST_Driver* uart_test_driver, uint8_t id);
+FRM_CMD_ERR_CODE UART_TEST_send(UART_TEST_Driver* uart_test_driver, uint8_t id);
 
 #endif
