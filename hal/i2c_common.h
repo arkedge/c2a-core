@@ -17,9 +17,9 @@
  * @param[in] p_i2c_config : 対象とする I2C_Config 構造体へのポインタ
  * @param[in] register_address : 書き込むレジスタのアドレス
  * @param[in] data     : 書き込むデータ
- * @retval DS_ERR_CODE (DS_send_general_cmd の返り値)
+ * @retval FRM_ERR_CODE (FRM_send_general_cmd の返り値)
  */
-DS_ERR_CODE I2C_write_byte(Framing* p_super, uint8_t stream, I2C_Config* p_i2c_config,
+FRM_ERR_CODE I2C_write_byte(Framing* p_super, uint8_t stream, I2C_Config* p_i2c_config,
                            uint8_t register_address, uint8_t data);
 
 /**
@@ -29,9 +29,9 @@ DS_ERR_CODE I2C_write_byte(Framing* p_super, uint8_t stream, I2C_Config* p_i2c_c
  * @param[in] p_i2c_config : 対象とする I2C_Config 構造体へのポインタ
  * @param[in] register_address : 書き込むレジスタのアドレス
  * @param[in] data     : 書き込むデータ
- * @retval DS_ERR_CODE (DS_send_general_cmd の返り値)
+ * @retval FRM_ERR_CODE (FRM_send_general_cmd の返り値)
  */
-DS_ERR_CODE I2C_write_2bytes(Framing* p_super, uint8_t stream, I2C_Config* p_i2c_config,
+FRM_ERR_CODE I2C_write_2bytes(Framing* p_super, uint8_t stream, I2C_Config* p_i2c_config,
                              uint8_t register_address, uint16_t data);
 
 /**
@@ -41,9 +41,9 @@ DS_ERR_CODE I2C_write_2bytes(Framing* p_super, uint8_t stream, I2C_Config* p_i2c
  * @param[in] p_i2c_config : 対象とする I2C_Config 構造体へのポインタ
  * @param[in] register_address : 読み込むレジスタのアドレス
  * @param[out] data_v  : データ格納先へのポインタ
- * @retval DS_ERR_CODE
+ * @retval FRM_ERR_CODE
  */
-DS_ERR_CODE I2C_read_byte(Framing* p_super, uint8_t stream, I2C_Config* p_i2c_config,
+FRM_ERR_CODE I2C_read_byte(Framing* p_super, uint8_t stream, I2C_Config* p_i2c_config,
                           uint8_t register_address, uint8_t* data_v);
 
 /**
@@ -53,9 +53,9 @@ DS_ERR_CODE I2C_read_byte(Framing* p_super, uint8_t stream, I2C_Config* p_i2c_co
  * @param[in] p_i2c_config : 対象とする I2C_Config 構造体へのポインタ
  * @param[in] register_address : 読み込むレジスタのアドレス
  * @param[out] data_v  : データ格納先へのポインタ
- * @retval DS_ERR_CODE
+ * @retval FRM_ERR_CODE
  */
-DS_ERR_CODE I2C_read_2bytes(Framing* p_super, uint8_t stream, I2C_Config* p_i2c_config,
+FRM_ERR_CODE I2C_read_2bytes(Framing* p_super, uint8_t stream, I2C_Config* p_i2c_config,
                             uint8_t register_address, uint16_t* data_v);
 
 #endif
