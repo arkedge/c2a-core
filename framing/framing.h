@@ -265,7 +265,7 @@ typedef struct
 
   struct
   {
-    FRM_ERR_CODE (*load_init_setting)(Framing* p_super);   /*!< FRM_init でロードする，ドライバの初期設定の設定関数
+    FRM_ERR_CODE (*load_init_setting)(Framing* p_framing);   /*!< FRM_init でロードする，ドライバの初期設定の設定関数
                                                                    FRM_reset_config での設定をオーバーロードする
                                                                    返り値は FRM_ERR_CODE */
   } internal;       //!< 内部処理用
@@ -428,16 +428,16 @@ struct Framing
  *         そして，構造体内の初期化が必要な変数を初期化する．
  *         デフォルト値の上書きは load_init_setting で行う
  * @note   Framing を使用する時は起動時に必ず実施すること
- * @param  p_super:           初期化する Framing 構造体へのポインタ
+ * @param  p_framing:           初期化する Framing 構造体へのポインタ
  * @param  if_config:         初期化する Driverで用いられている IF の config 構造体
  * @param  rx_buffer:         初期化する Framing の stream 0 で用いられるフレーム受信バッファ
  * @param  load_init_setting: Framing の初期設定ロード関数ポインタ
  * @return FRM_ERR_CODE
  */
-FRM_ERR_CODE FRM_init(Framing* p_super,
+FRM_ERR_CODE FRM_init(Framing* p_framing,
                     void* if_config,
                     FRM_StreamRecBuffer* rx_buffer,
-                    FRM_ERR_CODE (*load_init_setting)(Framing* p_super));
+                    FRM_ERR_CODE (*load_init_setting)(Framing* p_framing));
 
 /**
  * @brief  継承先の機器より Framing を初期化する（複数の stream を使用する場合）
@@ -446,35 +446,35 @@ FRM_ERR_CODE FRM_init(Framing* p_super,
  *         そして，構造体内の初期化が必要な変数を初期化する．
  *         デフォルト値の上書きは load_init_setting で行う
  * @note   Framing を使用する時は起動時に必ず実施すること
- * @param  p_super:           初期化する Framing 構造体へのポインタ
+ * @param  p_framing:           初期化する Framing 構造体へのポインタ
  * @param  if_config:         初期化する Driverで用いられている IF の config 構造体
  * @param  rx_buffers:        初期化する Framing で用いられるフレーム受信バッファ．使用しない stream は NULL を設定しておく
  * @param  load_init_setting: Framing の初期設定ロード関数ポインタ
  * @return FRM_ERR_CODE
  */
-FRM_ERR_CODE FRM_init_streams(Framing* p_super,
+FRM_ERR_CODE FRM_init_streams(Framing* p_framing,
                             void* if_config,
                             FRM_StreamRecBuffer* rx_buffers[FRM_STREAM_MAX],
-                            FRM_ERR_CODE (*load_init_setting)(Framing* p_super));
+                            FRM_ERR_CODE (*load_init_setting)(Framing* p_framing));
 
 /**
  * @brief  Framing のリセット
  * @note   FRM_init 内で呼ばれている．
- * @param  p_super: Framing 構造体へのポインタ
+ * @param  p_framing: Framing 構造体へのポインタ
  * @return FRM_ERR_CODE
  */
-FRM_ERR_CODE FRM_reset(Framing* p_super);
+FRM_ERR_CODE FRM_reset(Framing* p_framing);
 
 /**
  * @brief  Framing の設定に不整合が生じていないかチェックする
  *
  *         Driver の設定を変えた場合は毎回呼び出すことを推奨する
  * @note   FRM_init 内で呼ばれている．
- * @note   内部の管理フラグを変更しているので， p_super に厳密な const 性はない
- * @param  p_super: Framing 構造体へのポインタ
+ * @note   内部の管理フラグを変更しているので， p_framing に厳密な const 性はない
+ * @param  p_framing: Framing 構造体へのポインタ
  * @return FRM_ERR_CODE
  */
-FRM_ERR_CODE FRM_validate_config(Framing* p_super);
+FRM_ERR_CODE FRM_validate_config(Framing* p_framing);
 
 /**
  * @brief  受信バッファをクリアする
@@ -482,10 +482,10 @@ FRM_ERR_CODE FRM_validate_config(Framing* p_super);
  *         例えば，ヘッダなしテレメの場合，途中でゴミデータが入ると以後すべてのフレームがずれてしまう．
  *         そのようなとき（CRC エラーがでるとか，受信データが明らかにおかしい場合）に，buffer を一度クリアし，
  *         次に届くデータからフレーム解析を先頭から行うようにするために用いる．
- * @param  p_super: Framing 構造体へのポインタ
+ * @param  p_framing: Framing 構造体へのポインタ
  * @return FRM_ERR_CODE
  */
-FRM_ERR_CODE FRM_clear_rx_buffer(Framing* p_super);
+FRM_ERR_CODE FRM_clear_rx_buffer(Framing* p_framing);
 
 /**
  * @brief  継承先の機器からテレメトリを受信する
@@ -493,24 +493,24 @@ FRM_ERR_CODE FRM_clear_rx_buffer(Framing* p_super);
  *         フレームを確定させて，rx_frame_ にいれるまで．解析 (data_analyzer_) はしないのでドライバで FRM_analyze_rec_data を呼び出すこと
  *         これは，同じ stream でもテレメ内部の ID などで解析を変えたいときなどが想定されるため
  * @note   継承先の機器のデータ出力周期より早い周期で定期的に実行すること
- * @param  p_super: Framing 構造体へのポインタ
+ * @param  p_framing: Framing 構造体へのポインタ
  * @retval FRM_ERR_CODE_OK:  IF_RX でのエラーなし
  * @retval FRM_ERR_CODE_ERR: IF_RX でのエラーあり
  * @note   受信状況やエラー情報は rec_status_ に格納されている
  */
-FRM_ERR_CODE FRM_receive(Framing* p_super);
+FRM_ERR_CODE FRM_receive(Framing* p_framing);
 
 /**
  * @brief  data_analyzer_ を呼び出し，受信データを解析する．
  *
  *         FRM_receive にてデータを受信した後， FRMSC_get_rec_status(p_stream_config)->status_code が FRM_STREAM_REC_STATUS_FIXED_FRAME ならば呼び出す．
- * @param  p_super:  Framing 構造体へのポインタ
+ * @param  p_framing:  Framing 構造体へのポインタ
  * @param  stream:   どの stream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @param  p_driver: 継承先機器のドライバ構造体など．data_analyzer_ の第二引数．
  * @return FRM_ERR_CODE: data_analyzer_ の返り値をそのまま返す
  * @note   data_analyzer_ の返り値は， ret_from_data_analyzer_ にも保存される．
  */
-FRM_ERR_CODE FRM_analyze_rec_data(Framing* p_super, uint8_t stream, void* p_driver);
+FRM_ERR_CODE FRM_analyze_rec_data(Framing* p_framing, uint8_t stream, void* p_driver);
 
 /**
  * @brief  継承先の機器に一般コマンドを発行する
@@ -518,47 +518,47 @@ FRM_ERR_CODE FRM_analyze_rec_data(Framing* p_super, uint8_t stream, void* p_driv
  *         このコマンドを送ったことによってレスポンスが返ってくることを想定していない（その場合は FRM_send_req_tlm_cmd を使う）
  * @note   この関数の実行前に，tx_frame, tx_frame_size の設定が必要である
  * @note   これは基底クラスなため，アノマリ発行は行わない．継承先で返り値を見て適切にアノマリ発行すること
- * @param  p_super: Framing 構造体へのポインタ
+ * @param  p_framing: Framing 構造体へのポインタ
  * @param  stream:  どのstream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval FRM_ERR_CODE_OK:  正常終了
  * @retval FRM_ERR_CODE_ERR: IF_TX でのエラーあり
  * @note   受信状況やエラー情報は send_status_ に格納されている
  */
-FRM_ERR_CODE FRM_send_general_cmd(Framing* p_super, uint8_t stream);
+FRM_ERR_CODE FRM_send_general_cmd(Framing* p_framing, uint8_t stream);
 
 /**
  * @brief  継承先の機器にテレメ要求コマンドを発行する
  *
  *         テレメについては FRM_receive で受け取る．
  * @note   この関数の実行前に，tx_frame, tx_frame_sizeの設定が必要である
- * @param  p_super: Framing 構造体へのポインタ
+ * @param  p_framing: Framing 構造体へのポインタ
  * @param  stream:  どのstream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval FRM_ERR_CODE_OK:  正常終了
  * @retval FRM_ERR_CODE_ERR: IF_TX でのエラーあり
  * @note   受信状況やエラー情報は send_status_ に格納されている
  */
-FRM_ERR_CODE FRM_send_req_tlm_cmd(Framing* p_super, uint8_t stream);
+FRM_ERR_CODE FRM_send_req_tlm_cmd(Framing* p_framing, uint8_t stream);
 
 
 // ###### FRM_Config Getter/Setter of Settings ######
-uint16_t DSC_get_rx_buffer_size_in_if_rx(const Framing* p_super);
-FRM_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(Framing* p_super,
+uint16_t DSC_get_rx_buffer_size_in_if_rx(const Framing* p_framing);
+FRM_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(Framing* p_framing,
                                             const uint16_t rx_buffer_size_in_if_rx);
-uint8_t DSC_get_should_monitor_for_rx_disruption(const Framing* p_super);
-void DSC_enable_monitor_for_rx_disruption(Framing* p_super);
-void DSC_disable_monitor_for_rx_disruption(Framing* p_super);
-uint32_t DSC_get_time_threshold_for_rx_disruption(const Framing* p_super);
-void DSC_set_time_threshold_for_rx_disruption(Framing* p_super,
+uint8_t DSC_get_should_monitor_for_rx_disruption(const Framing* p_framing);
+void DSC_enable_monitor_for_rx_disruption(Framing* p_framing);
+void DSC_disable_monitor_for_rx_disruption(Framing* p_framing);
+uint32_t DSC_get_time_threshold_for_rx_disruption(const Framing* p_framing);
+void DSC_set_time_threshold_for_rx_disruption(Framing* p_framing,
                                               const uint32_t time_threshold_for_rx_disruption);
 
 
 // ###### FRM_Config Getter of Info ######
-const FRM_RecStatus* DSC_get_rec_status(const Framing* p_super);
-uint32_t DSC_get_rx_count(const Framing* p_super);
-uint32_t DSC_get_rx_call_count(const Framing* p_super);
-const ObcTime* DSC_get_rx_time(const Framing* p_super);
+const FRM_RecStatus* DSC_get_rec_status(const Framing* p_framing);
+uint32_t DSC_get_rx_count(const Framing* p_framing);
+uint32_t DSC_get_rx_call_count(const Framing* p_framing);
+const ObcTime* DSC_get_rx_time(const Framing* p_framing);
 
-FRM_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const Framing* p_super);
+FRM_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const Framing* p_framing);
 
 
 // ###### FRM_StreamConfig Getter/Setter of Settings ######

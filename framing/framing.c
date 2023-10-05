@@ -24,32 +24,32 @@ static uint8_t FRM_if_rx_buffer_[FRM_IF_RX_BUFFER_SIZE];    //!< IF_RX で受信
  * @brief  コマンド送信処理
  *
  *         FRM_send_general_cmd と FRM_send_req_tlm_cmdの共通部分
- * @param  p_super: Framing 構造体へのポインタ
+ * @param  p_framing: Framing 構造体へのポインタ
  * @param  stream:  どの config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval FRM_ERR_CODE_OK:  正常終了
  * @retval FRM_ERR_CODE_ERR: IF_TX でのエラーあり
  * @note   受信状況やエラー情報は send_status_ に格納されている
  */
-static FRM_ERR_CODE FRM_send_cmd_(Framing* p_super, uint8_t stream);
+static FRM_ERR_CODE FRM_send_cmd_(Framing* p_framing, uint8_t stream);
 
 /**
  * @brief  継承先の機器にコマンドを発行する
  * @note   この関数の実行前に，tx_frame_, tx_frame_size_の設定が必要である
- * @param  p_super: Framing 構造体へのポインタ
+ * @param  p_framing: Framing 構造体へのポインタ
  * @param  stream:  どの config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval FRM_ERR_CODE_OK (0): 正常終了
  * @retval 0 以外: IF_TX の戻り値
  */
-static int FRM_tx_(Framing* p_super, uint8_t stream);
+static int FRM_tx_(Framing* p_framing, uint8_t stream);
 
 /**
  * @brief  継承先の機器からの受信データがあるか確認し，受信する
- * @param  p_super: Framing 構造体へのポインタ
+ * @param  p_framing: Framing 構造体へのポインタ
  * @retval 0:    受信データなし
  * @retval 正数: 受信データ長 [Byte]
  * @retval 負数: IF_RXのエラー
  */
-static int FRM_rx_(Framing* p_super);
+static int FRM_rx_(Framing* p_framing);
 
 /**
  * @brief  受信フレーム解析関数
@@ -165,15 +165,15 @@ static FRM_ERR_CODE FRM_reset_stream_config_(FRM_StreamConfig* p_stream_config);
 
 /**
  * @brief  FRM_StreamConfig 構造体のバリデーション
- * @param  p_super:         Framing 構造体へのポインタ
+ * @param  p_framing:         Framing 構造体へのポインタ
  * @param  p_stream_config: Framing 構造体の FRM_StreamConfig
  * @return FRM_ERR_CODE
  */
-static FRM_ERR_CODE FRM_validate_stream_config_(const Framing* p_super, FRM_StreamConfig* p_stream_config);
+static FRM_ERR_CODE FRM_validate_stream_config_(const Framing* p_framing, FRM_StreamConfig* p_stream_config);
 
 // ダミー関数
 // EQU だと関数ポインタの初期値を NULL にしていたためにぬるぽで事故ったので
-static FRM_ERR_CODE FRM_load_init_setting_dummy_(Framing* p_super);
+static FRM_ERR_CODE FRM_load_init_setting_dummy_(Framing* p_framing);
 static FRM_ERR_CODE FRM_data_analyzer_dummy_(FRM_StreamConfig* p_stream_config, void* p_driver);
 
 // ###### FRM_StreamRecBuffer 関連関数 ######
@@ -239,108 +239,108 @@ void FRM_move_forward_frame_head_candidate_of_stream_rec_buffer_(FRM_StreamRecBu
 
 // ###### Framing基本関数 ######
 
-FRM_ERR_CODE FRM_init(Framing* p_super,
+FRM_ERR_CODE FRM_init(Framing* p_framing,
                     void* if_config,
                     FRM_StreamRecBuffer* rx_buffer,
-                    FRM_ERR_CODE (*load_init_setting)(Framing* p_super))
+                    FRM_ERR_CODE (*load_init_setting)(Framing* p_framing))
 {
   FRM_StreamRecBuffer* rx_buffers[FRM_STREAM_MAX];
   FRM_nullify_stream_rec_buffers(rx_buffers);
   rx_buffers[0] = rx_buffer;
-  return FRM_init_streams(p_super, if_config, rx_buffers, load_init_setting);
+  return FRM_init_streams(p_framing, if_config, rx_buffers, load_init_setting);
 }
 
 
-FRM_ERR_CODE FRM_init_streams(Framing* p_super,
+FRM_ERR_CODE FRM_init_streams(Framing* p_framing,
                             void* if_config,
                             FRM_StreamRecBuffer* rx_buffers[FRM_STREAM_MAX],
-                            FRM_ERR_CODE (*load_init_setting)(Framing* p_super))
+                            FRM_ERR_CODE (*load_init_setting)(Framing* p_framing))
 {
   uint8_t stream;
 
-  if (FRM_reset(p_super) != FRM_ERR_CODE_OK) return FRM_ERR_CODE_ERR;
+  if (FRM_reset(p_framing) != FRM_ERR_CODE_OK) return FRM_ERR_CODE_ERR;
 
-  p_super->if_config = if_config;
+  p_framing->if_config = if_config;
 
   // load_init_setting で上書きできるようにここで設定
   for (stream = 0; stream < FRM_STREAM_MAX; ++stream)
   {
     if (rx_buffers[stream] != NULL)
     {
-      FRMSC_set_rx_buffer(&(p_super->stream_config[stream]), rx_buffers[stream]);
+      FRMSC_set_rx_buffer(&(p_framing->stream_config[stream]), rx_buffers[stream]);
     }
   }
 
-  p_super->config.internal.load_init_setting = load_init_setting;
-  if (p_super->config.internal.load_init_setting(p_super) != FRM_ERR_CODE_OK) return FRM_ERR_CODE_ERR;
+  p_framing->config.internal.load_init_setting = load_init_setting;
+  if (p_framing->config.internal.load_init_setting(p_framing) != FRM_ERR_CODE_OK) return FRM_ERR_CODE_ERR;
 
-  if (FRM_validate_config(p_super) != FRM_ERR_CODE_OK) return FRM_ERR_CODE_ERR;
+  if (FRM_validate_config(p_framing) != FRM_ERR_CODE_OK) return FRM_ERR_CODE_ERR;
 
   // IF の初期化
   // 一旦シンプルに IF_init のエラーコードは無視する（実機でここでエラー出る場合はコードがおかしいので．必要があれば将来実装．）
-  if ( (*IF_init[p_super->interface])(p_super->if_config) != 0 ) return FRM_ERR_CODE_ERR;
+  if ( (*IF_init[p_framing->interface])(p_framing->if_config) != 0 ) return FRM_ERR_CODE_ERR;
 
   return FRM_ERR_CODE_OK;
 }
 
 
-FRM_ERR_CODE FRM_reset(Framing* p_super)
+FRM_ERR_CODE FRM_reset(Framing* p_framing)
 {
   uint8_t stream;
 
-  p_super->interface = IF_LIST_MAX; // FIXME: (*IF_init[p_super->interface])(p_super->if_config) の様な使い方をするのでセグフォが起こる可能性があり
-  p_super->if_config = NULL;        // FIXME: NULL ポインタはこの関数が Reset 単体で使われるとマズい
+  p_framing->interface = IF_LIST_MAX; // FIXME: (*IF_init[p_framing->interface])(p_framing->if_config) の様な使い方をするのでセグフォが起こる可能性があり
+  p_framing->if_config = NULL;        // FIXME: NULL ポインタはこの関数が Reset 単体で使われるとマズい
 
-  p_super->config.settings.rx_buffer_size_in_if_rx_          = FRM_IF_RX_BUFFER_SIZE;
-  p_super->config.settings.should_monitor_for_rx_disruption_ = 0;
-  p_super->config.settings.time_threshold_for_rx_disruption_ = 60 * 1000;      // この値はよく考えること
+  p_framing->config.settings.rx_buffer_size_in_if_rx_          = FRM_IF_RX_BUFFER_SIZE;
+  p_framing->config.settings.should_monitor_for_rx_disruption_ = 0;
+  p_framing->config.settings.time_threshold_for_rx_disruption_ = 60 * 1000;      // この値はよく考えること
 
-  p_super->config.info.rec_status_.ret_from_if_rx       = 0;
-  p_super->config.info.rec_status_.rx_disruption_status = FRM_RX_DISRUPTION_STATUS_OK;
+  p_framing->config.info.rec_status_.ret_from_if_rx       = 0;
+  p_framing->config.info.rec_status_.rx_disruption_status = FRM_RX_DISRUPTION_STATUS_OK;
 
-  p_super->config.info.rx_count_      = 0;
-  p_super->config.info.rx_call_count_ = 0;
-  p_super->config.info.rx_time_       = TMGR_get_master_clock();
+  p_framing->config.info.rx_count_      = 0;
+  p_framing->config.info.rx_call_count_ = 0;
+  p_framing->config.info.rx_time_       = TMGR_get_master_clock();
 
-  p_super->config.internal.load_init_setting = FRM_load_init_setting_dummy_;
+  p_framing->config.internal.load_init_setting = FRM_load_init_setting_dummy_;
 
   for (stream = 0; stream < FRM_STREAM_MAX; ++stream)
   {
-    FRM_ERR_CODE ret = FRM_reset_stream_config_(&p_super->stream_config[stream]);
+    FRM_ERR_CODE ret = FRM_reset_stream_config_(&p_framing->stream_config[stream]);
     if (ret != FRM_ERR_CODE_OK) return ret;
   }
 
-  FRM_clear_rx_buffer(p_super);
+  FRM_clear_rx_buffer(p_framing);
 
   return FRM_ERR_CODE_OK;
 }
 
 
-FRM_ERR_CODE FRM_validate_config(Framing* p_super)
+FRM_ERR_CODE FRM_validate_config(Framing* p_framing)
 {
   uint8_t stream;
 
-  if (p_super->interface < 0 || p_super->interface >= IF_LIST_MAX) return FRM_ERR_CODE_ERR;
-  if (p_super->if_config == NULL) return FRM_ERR_CODE_ERR;
+  if (p_framing->interface < 0 || p_framing->interface >= IF_LIST_MAX) return FRM_ERR_CODE_ERR;
+  if (p_framing->if_config == NULL) return FRM_ERR_CODE_ERR;
 
-  if (p_super->config.settings.rx_buffer_size_in_if_rx_ > FRM_IF_RX_BUFFER_SIZE) return FRM_ERR_CODE_ERR;
+  if (p_framing->config.settings.rx_buffer_size_in_if_rx_ > FRM_IF_RX_BUFFER_SIZE) return FRM_ERR_CODE_ERR;
 
   for (stream = 0; stream < FRM_STREAM_MAX; ++stream)
   {
-    FRM_ERR_CODE ret = FRM_validate_stream_config_(p_super, &p_super->stream_config[stream]);
+    FRM_ERR_CODE ret = FRM_validate_stream_config_(p_framing, &p_framing->stream_config[stream]);
     if (ret != FRM_ERR_CODE_OK) return ret;
   }
 
   return FRM_ERR_CODE_OK;
 }
 
-FRM_ERR_CODE FRM_clear_rx_buffer(Framing* p_super)
+FRM_ERR_CODE FRM_clear_rx_buffer(Framing* p_framing)
 {
   uint8_t stream;
 
   for (stream = 0; stream < FRM_STREAM_MAX; ++stream)
   {
-    FRM_clear_stream_rec_buffer_(p_super->stream_config[stream].settings.rx_buffer_);
+    FRM_clear_stream_rec_buffer_(p_framing->stream_config[stream].settings.rx_buffer_);
   }
 
   // FIXME: すべての Driver の初期化で呼ばれ，無駄
@@ -352,43 +352,43 @@ FRM_ERR_CODE FRM_clear_rx_buffer(Framing* p_super)
 }
 
 
-FRM_ERR_CODE FRM_receive(Framing* p_super)
+FRM_ERR_CODE FRM_receive(Framing* p_framing)
 {
   uint8_t  stream;
   uint16_t rec_data_len;
   int      ret_rx;
 
-  p_super->config.info.rx_call_count_++;
+  p_framing->config.info.rx_call_count_++;
 
   // 各 Driver で物理的に接続されている wire は１本なので，それをここで受信する．
   // 後段の stream では，その受信したビット列に対して，複数のフレーム種類に対して，フレーム探索，確定処理を走らす．
-  ret_rx = FRM_rx_(p_super);
-  p_super->config.info.rec_status_.ret_from_if_rx = ret_rx;
+  ret_rx = FRM_rx_(p_framing);
+  p_framing->config.info.rec_status_.ret_from_if_rx = ret_rx;
 
   if (ret_rx > 0)
   {
     // なにかしらの受信データあり
-    p_super->config.info.rx_count_++;
-    p_super->config.info.rx_time_ = TMGR_get_master_clock();
+    p_framing->config.info.rx_count_++;
+    p_framing->config.info.rx_time_ = TMGR_get_master_clock();
   }
 
   // 受信途絶判定
   // テレメなどで見るときにノイズになるので，判定しないときは OK にしておく
-  p_super->config.info.rec_status_.rx_disruption_status = FRM_RX_DISRUPTION_STATUS_OK;
-  if (p_super->config.settings.should_monitor_for_rx_disruption_)
+  p_framing->config.info.rec_status_.rx_disruption_status = FRM_RX_DISRUPTION_STATUS_OK;
+  if (p_framing->config.settings.should_monitor_for_rx_disruption_)
   {
     ObcTime now = TMGR_get_master_clock();
-    uint32_t last_rx_ago = OBCT_diff_in_msec(&p_super->config.info.rx_time_, &now);
+    uint32_t last_rx_ago = OBCT_diff_in_msec(&p_framing->config.info.rx_time_, &now);
 
-    if (last_rx_ago > p_super->config.settings.time_threshold_for_rx_disruption_)
+    if (last_rx_ago > p_framing->config.settings.time_threshold_for_rx_disruption_)
     {
-      p_super->config.info.rec_status_.rx_disruption_status = FRM_RX_DISRUPTION_STATUS_LOST;
+      p_framing->config.info.rec_status_.rx_disruption_status = FRM_RX_DISRUPTION_STATUS_LOST;
     }
   }
 
   for (stream = 0; stream < FRM_STREAM_MAX; ++stream)
   {
-    FRM_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
+    FRM_StreamConfig* p_stream_config = &(p_framing->stream_config[stream]);
     if (!p_stream_config->settings.is_enabled_)
     {
       p_stream_config->info.rec_status_.status_code = FRM_STREAM_REC_STATUS_DISABLE;
@@ -399,7 +399,7 @@ FRM_ERR_CODE FRM_receive(Framing* p_super)
     // そもそもこの validation は打ち上げ時というよりむしろ地上試験時に有用なので，ここに置く
     if (p_stream_config->internal.is_validation_needed_for_rec_)
     {
-      FRM_ERR_CODE ret = FRM_validate_stream_config_(p_super, p_stream_config);
+      FRM_ERR_CODE ret = FRM_validate_stream_config_(p_framing, p_stream_config);
       if (ret != FRM_ERR_CODE_OK)
       {
         p_stream_config->info.rec_status_.status_code = FRM_STREAM_REC_STATUS_VALIDATE_ERR;
@@ -458,7 +458,7 @@ FRM_ERR_CODE FRM_receive(Framing* p_super)
   // streamのテレメ途絶判定（テレメフレーム確定途絶判定）
   for (stream = 0; stream < FRM_STREAM_MAX; ++stream)
   {
-    FRM_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
+    FRM_StreamConfig* p_stream_config = &(p_framing->stream_config[stream]);
     ObcTime now;
     uint32_t last_tlm_fix_ago;
 
@@ -483,9 +483,9 @@ FRM_ERR_CODE FRM_receive(Framing* p_super)
 }
 
 
-FRM_ERR_CODE FRM_analyze_rec_data(Framing* p_super, uint8_t stream, void* p_driver)
+FRM_ERR_CODE FRM_analyze_rec_data(Framing* p_framing, uint8_t stream, void* p_driver)
 {
-  FRM_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
+  FRM_StreamConfig* p_stream_config = &(p_framing->stream_config[stream]);
 
   p_stream_config->info.ret_from_data_analyzer_ = p_stream_config->settings.data_analyzer_(p_stream_config, p_driver);
 
@@ -493,9 +493,9 @@ FRM_ERR_CODE FRM_analyze_rec_data(Framing* p_super, uint8_t stream, void* p_driv
 }
 
 
-FRM_ERR_CODE FRM_send_general_cmd(Framing* p_super, uint8_t stream)
+FRM_ERR_CODE FRM_send_general_cmd(Framing* p_framing, uint8_t stream)
 {
-  FRM_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
+  FRM_StreamConfig* p_stream_config = &(p_framing->stream_config[stream]);
 
   if (!p_stream_config->settings.is_enabled_)
   {
@@ -510,13 +510,13 @@ FRM_ERR_CODE FRM_send_general_cmd(Framing* p_super, uint8_t stream)
   Printf("DS: send_general_cmd\n");
 #endif
 
-  return FRM_send_cmd_(p_super, stream);
+  return FRM_send_cmd_(p_framing, stream);
 }
 
 
-FRM_ERR_CODE FRM_send_req_tlm_cmd(Framing* p_super, uint8_t stream)
+FRM_ERR_CODE FRM_send_req_tlm_cmd(Framing* p_framing, uint8_t stream)
 {
-  FRM_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
+  FRM_StreamConfig* p_stream_config = &(p_framing->stream_config[stream]);
 
   if (!p_stream_config->settings.is_enabled_)
   {
@@ -532,19 +532,19 @@ FRM_ERR_CODE FRM_send_req_tlm_cmd(Framing* p_super, uint8_t stream)
   Printf("DS: send_req_tlm_cmd\n");
 #endif
 
-  return FRM_send_cmd_(p_super, stream);
+  return FRM_send_cmd_(p_framing, stream);
 }
 
 
-static FRM_ERR_CODE FRM_send_cmd_(Framing* p_super, uint8_t stream)
+static FRM_ERR_CODE FRM_send_cmd_(Framing* p_framing, uint8_t stream)
 {
-  FRM_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
+  FRM_StreamConfig* p_stream_config = &(p_framing->stream_config[stream]);
 
   // setter で validation かけると，初期化などで何度もかかることや，
   // そもそもこの validation は打ち上げじというよりむしろ地上試験時に有用なので，ここに置く
   if (p_stream_config->internal.is_validation_needed_for_send_)
   {
-    FRM_ERR_CODE ret = FRM_validate_stream_config_(p_super, p_stream_config);
+    FRM_ERR_CODE ret = FRM_validate_stream_config_(p_framing, p_stream_config);
     if (ret != FRM_ERR_CODE_OK)
     {
       p_stream_config->info.send_status_.status_code = FRM_STREAM_SEND_STATUS_VALIDATE_ERR;
@@ -552,7 +552,7 @@ static FRM_ERR_CODE FRM_send_cmd_(Framing* p_super, uint8_t stream)
     }
   }
 
-  p_stream_config->info.send_status_.ret_from_if_tx = FRM_tx_(p_super, stream);
+  p_stream_config->info.send_status_.ret_from_if_tx = FRM_tx_(p_framing, stream);
 
   if (p_stream_config->info.send_status_.ret_from_if_tx != 0)
   {
@@ -565,10 +565,10 @@ static FRM_ERR_CODE FRM_send_cmd_(Framing* p_super, uint8_t stream)
 }
 
 
-static int FRM_tx_(Framing* p_super, uint8_t stream)
+static int FRM_tx_(Framing* p_framing, uint8_t stream)
 {
   int ret;
-  FRM_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
+  FRM_StreamConfig* p_stream_config = &(p_framing->stream_config[stream]);
 
   if (p_stream_config->settings.tx_frame_size_ == 0) return FRM_ERR_CODE_OK;
   if (p_stream_config->settings.tx_frame_ == NULL) return FRM_ERR_CODE_OK;
@@ -577,7 +577,7 @@ static int FRM_tx_(Framing* p_super, uint8_t stream)
   Printf("DS: tx_\n");
 #endif
 
-  ret = (*IF_TX[p_super->interface])(p_super->if_config,
+  ret = (*IF_TX[p_framing->interface])(p_framing->if_config,
                                      p_stream_config->settings.tx_frame_,
                                      (int)p_stream_config->settings.tx_frame_size_);
 
@@ -586,7 +586,7 @@ static int FRM_tx_(Framing* p_super, uint8_t stream)
 }
 
 
-static int FRM_rx_(Framing* p_super)
+static int FRM_rx_(Framing* p_framing)
 {
   int flag;
   int rec_data_len;
@@ -599,17 +599,17 @@ static int FRM_rx_(Framing* p_super)
   flag = 0;
   for (stream = 0; stream < FRM_STREAM_MAX; ++stream)
   {
-    if (! (p_super->stream_config[stream].settings.is_enabled_) ) continue;
-    if (p_super->stream_config[stream].settings.rx_frame_size_ != 0)
+    if (! (p_framing->stream_config[stream].settings.is_enabled_) ) continue;
+    if (p_framing->stream_config[stream].settings.rx_frame_size_ != 0)
     {
       flag = 1;
     }
   }
   if (flag == 0) return 0;
 
-  rec_data_len = (*IF_RX[p_super->interface])(p_super->if_config,
+  rec_data_len = (*IF_RX[p_framing->interface])(p_framing->if_config,
                                               FRM_if_rx_buffer_,
-                                              p_super->config.settings.rx_buffer_size_in_if_rx_);
+                                              p_framing->config.settings.rx_buffer_size_in_if_rx_);
 
 #ifdef FRM_DEBUG
   Printf("DS: rx_\n");
@@ -1231,7 +1231,7 @@ static FRM_ERR_CODE FRM_reset_stream_config_(FRM_StreamConfig* p_stream_config)
 }
 
 
-static FRM_ERR_CODE FRM_validate_stream_config_(const Framing* p_super, FRM_StreamConfig* p_stream_config)
+static FRM_ERR_CODE FRM_validate_stream_config_(const Framing* p_framing, FRM_StreamConfig* p_stream_config)
 {
   FRM_StreamConfig* p = p_stream_config;
 
@@ -1289,7 +1289,7 @@ static FRM_ERR_CODE FRM_validate_stream_config_(const Framing* p_super, FRM_Stre
 
   if (p->settings.rx_buffer_ == NULL) return FRM_ERR_CODE_ERR;
   if (p->settings.rx_buffer_->buffer == NULL) return FRM_ERR_CODE_ERR;
-  if (p->settings.rx_buffer_->capacity < p_super->config.settings.rx_buffer_size_in_if_rx_) return FRM_ERR_CODE_ERR;
+  if (p->settings.rx_buffer_->capacity < p_framing->config.settings.rx_buffer_size_in_if_rx_) return FRM_ERR_CODE_ERR;
   if (p->settings.rx_buffer_->capacity < p->settings.rx_frame_size_) return FRM_ERR_CODE_ERR;
   if (p->settings.rx_buffer_->capacity < p->settings.rx_header_size_ + p->settings.rx_footer_size_) return FRM_ERR_CODE_ERR;
 
@@ -1300,9 +1300,9 @@ static FRM_ERR_CODE FRM_validate_stream_config_(const Framing* p_super, FRM_Stre
 }
 
 
-static FRM_ERR_CODE FRM_load_init_setting_dummy_(Framing* p_super)
+static FRM_ERR_CODE FRM_load_init_setting_dummy_(Framing* p_framing)
 {
-  (void)p_super;
+  (void)p_framing;
   return FRM_ERR_CODE_OK;
 }
 
@@ -1315,71 +1315,71 @@ static FRM_ERR_CODE FRM_data_analyzer_dummy_(FRM_StreamConfig* p_stream_config, 
 
 
 // ###### FRM_Config Getter/Setter of Settings ######
-uint16_t DSC_get_rx_buffer_size_in_if_rx(const Framing* p_super)
+uint16_t DSC_get_rx_buffer_size_in_if_rx(const Framing* p_framing)
 {
-  return (uint16_t)p_super->config.settings.rx_buffer_size_in_if_rx_;
+  return (uint16_t)p_framing->config.settings.rx_buffer_size_in_if_rx_;
 }
 
-FRM_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(Framing* p_super,
+FRM_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(Framing* p_framing,
                                             const uint16_t rx_buffer_size_in_if_rx)
 {
   if (rx_buffer_size_in_if_rx > FRM_IF_RX_BUFFER_SIZE) return FRM_ERR_CODE_ERR;
-  p_super->config.settings.rx_buffer_size_in_if_rx_ = rx_buffer_size_in_if_rx;
+  p_framing->config.settings.rx_buffer_size_in_if_rx_ = rx_buffer_size_in_if_rx;
   return FRM_ERR_CODE_OK;
 }
 
-uint8_t DSC_get_should_monitor_for_rx_disruption(const Framing* p_super)
+uint8_t DSC_get_should_monitor_for_rx_disruption(const Framing* p_framing)
 {
-  return (uint8_t)p_super->config.settings.should_monitor_for_rx_disruption_;
+  return (uint8_t)p_framing->config.settings.should_monitor_for_rx_disruption_;
 }
 
-void DSC_enable_monitor_for_rx_disruption(Framing* p_super)
+void DSC_enable_monitor_for_rx_disruption(Framing* p_framing)
 {
-  p_super->config.settings.should_monitor_for_rx_disruption_ = 1;
+  p_framing->config.settings.should_monitor_for_rx_disruption_ = 1;
 }
 
-void DSC_disable_monitor_for_rx_disruption(Framing* p_super)
+void DSC_disable_monitor_for_rx_disruption(Framing* p_framing)
 {
-  p_super->config.settings.should_monitor_for_rx_disruption_ = 0;
+  p_framing->config.settings.should_monitor_for_rx_disruption_ = 0;
 }
 
-uint32_t DSC_get_time_threshold_for_rx_disruption(const Framing* p_super)
+uint32_t DSC_get_time_threshold_for_rx_disruption(const Framing* p_framing)
 {
-  return (uint32_t)p_super->config.settings.time_threshold_for_rx_disruption_;
+  return (uint32_t)p_framing->config.settings.time_threshold_for_rx_disruption_;
 }
 
-void DSC_set_time_threshold_for_rx_disruption(Framing* p_super,
+void DSC_set_time_threshold_for_rx_disruption(Framing* p_framing,
                                               const uint32_t time_threshold_for_rx_disruption)
 {
-  p_super->config.settings.time_threshold_for_rx_disruption_ = time_threshold_for_rx_disruption;
+  p_framing->config.settings.time_threshold_for_rx_disruption_ = time_threshold_for_rx_disruption;
 }
 
 
 // ###### FRM_Config Getter/Setter of Info ######
 // FIXME: HEW で Warning が出てしまう（gcc ではでない）ので，キャストしている関数がいくつかある
-const FRM_RecStatus* DSC_get_rec_status(const Framing* p_super)
+const FRM_RecStatus* DSC_get_rec_status(const Framing* p_framing)
 {
-  return &p_super->config.info.rec_status_;
+  return &p_framing->config.info.rec_status_;
 }
 
-uint32_t DSC_get_rx_count(const Framing* p_super)
+uint32_t DSC_get_rx_count(const Framing* p_framing)
 {
-  return (uint32_t)p_super->config.info.rx_count_;
+  return (uint32_t)p_framing->config.info.rx_count_;
 }
 
-uint32_t DSC_get_rx_call_count(const Framing* p_super)
+uint32_t DSC_get_rx_call_count(const Framing* p_framing)
 {
-  return (uint32_t)p_super->config.info.rx_call_count_;
+  return (uint32_t)p_framing->config.info.rx_call_count_;
 }
 
-const ObcTime* DSC_get_rx_time(const Framing* p_super)
+const ObcTime* DSC_get_rx_time(const Framing* p_framing)
 {
-  return &p_super->config.info.rx_time_;
+  return &p_framing->config.info.rx_time_;
 }
 
-FRM_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const Framing* p_super)
+FRM_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const Framing* p_framing)
 {
-  return (FRM_RX_DISRUPTION_STATUS_CODE)p_super->config.info.rec_status_.rx_disruption_status;
+  return (FRM_RX_DISRUPTION_STATUS_CODE)p_framing->config.info.rec_status_.rx_disruption_status;
 }
 
 
