@@ -34,7 +34,7 @@
 /**
  * @brief  Version ID の取得
  * @note   フレームが確定しているときに呼び出すこと
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: Framing 構造体の DS_StreamConfig
  * @return Version ID （バージョン 0x01 では uint8_t だが将来性のために uint32_t で返す）
  */
 uint32_t EB90_PACKET_get_version_from_dssc(const DS_StreamConfig* p_stream_config);
@@ -42,7 +42,7 @@ uint32_t EB90_PACKET_get_version_from_dssc(const DS_StreamConfig* p_stream_confi
 /**
  * @brief  Tlm / Cmd Count の取得
  * @note   フレームが確定しているときに呼び出すこと
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: Framing 構造体の DS_StreamConfig
  * @retval Tlm / Cmd Count （バージョン 0x01 では uint8_t だが将来性のために uint32_t で返す）
  * @retval 0 (入力が不正な場合)
  */
@@ -52,7 +52,7 @@ uint32_t EB90_PACKET_get_count_from_dssc(const DS_StreamConfig* p_stream_config)
  * @brief  Tlm / Cmd ID の取得
  * @note   フレームが確定しているときに呼び出すこと
  * @note   これは非 C2A 形式で使われる TLM HEADER 仕様である
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: Framing 構造体の DS_StreamConfig
  * @retval Tlm / Cmd ID （バージョン 0x01 では uint16_t だが将来性のために uint32_t で返す）
  * @retval 0 (入力が不正な場合)
  */
@@ -61,7 +61,7 @@ uint32_t EB90_PACKET_get_id_from_dssc(const DS_StreamConfig* p_stream_config);
 /**
  * @brief  受信フレームからPacket Field の先頭ポインタを取得する
  * @note   フレームが確定しているときに呼び出すこと
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: Framing 構造体の DS_StreamConfig
  * @retval Packet Field の先頭ポインタ
  * @retval NULL (入力が不正な場合)
  */
