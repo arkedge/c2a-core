@@ -77,20 +77,20 @@ FRM_ERR_CODE CTCP_init_dssc(FRM_StreamConfig* p_stream_config,
   }
 
   // 送信はする
-  DSSC_set_tx_frame(p_stream_config, tx_frame_buffer);  // 送る直前に中身を memcpy する
-  DSSC_set_tx_frame_buffer_size(p_stream_config, tx_frame_buffer_size);
-  DSSC_set_tx_frame_size(p_stream_config, 0);           // 送る直前に値をセットする
+  FRMSC_set_tx_frame(p_stream_config, tx_frame_buffer);  // 送る直前に中身を memcpy する
+  FRMSC_set_tx_frame_buffer_size(p_stream_config, tx_frame_buffer_size);
+  FRMSC_set_tx_frame_size(p_stream_config, 0);           // 送る直前に値をセットする
 
   // 定期的な受信はする
-  DSSC_set_rx_header(p_stream_config, EB90_FRAME_kStx, EB90_FRAME_STX_SIZE);
-  DSSC_set_rx_footer(p_stream_config, EB90_FRAME_kEtx, EB90_FRAME_ETX_SIZE);
-  DSSC_set_rx_frame_size(p_stream_config, -1);          // 可変
-  DSSC_set_max_rx_frame_size(p_stream_config, max_frame_size);
-  DSSC_set_rx_framelength_pos(p_stream_config, EB90_FRAME_STX_SIZE);
-  DSSC_set_rx_framelength_type_size(p_stream_config, 2);
-  DSSC_set_rx_framelength_offset(p_stream_config,
+  FRMSC_set_rx_header(p_stream_config, EB90_FRAME_kStx, EB90_FRAME_STX_SIZE);
+  FRMSC_set_rx_footer(p_stream_config, EB90_FRAME_kEtx, EB90_FRAME_ETX_SIZE);
+  FRMSC_set_rx_frame_size(p_stream_config, -1);          // 可変
+  FRMSC_set_max_rx_frame_size(p_stream_config, max_frame_size);
+  FRMSC_set_rx_framelength_pos(p_stream_config, EB90_FRAME_STX_SIZE);
+  FRMSC_set_rx_framelength_type_size(p_stream_config, 2);
+  FRMSC_set_rx_framelength_offset(p_stream_config,
                                  EB90_FRAME_HEADER_SIZE + EB90_FRAME_FOOTER_SIZE);
-  DSSC_set_data_analyzer(p_stream_config, data_analyzer);
+  FRMSC_set_data_analyzer(p_stream_config, data_analyzer);
 
   // 定期 TLM の監視機能の有効化はここではしないので， Driver 側でやる
   // enable もここではしない
@@ -107,11 +107,11 @@ FRM_ERR_CODE CTCP_set_tx_frame_to_dssc(FRM_StreamConfig* p_stream_config,
   uint16_t crc;
   uint16_t packet_len = CTCP_get_packet_len(send_packet);
   uint16_t frame_len = (uint16_t)(packet_len + EB90_FRAME_HEADER_SIZE + EB90_FRAME_FOOTER_SIZE);
-  uint8_t* tx_frame = DSSC_get_tx_frame_as_non_const_pointer(p_stream_config);
+  uint8_t* tx_frame = FRMSC_get_tx_frame_as_non_const_pointer(p_stream_config);
 
-  if (frame_len > DSSC_get_tx_frame_buffer_size(p_stream_config)) return FRM_ERR_CODE_ERR;
+  if (frame_len > FRMSC_get_tx_frame_buffer_size(p_stream_config)) return FRM_ERR_CODE_ERR;
 
-  DSSC_set_tx_frame_size(p_stream_config, frame_len);
+  FRMSC_set_tx_frame_size(p_stream_config, frame_len);
 
   pos  = 0;
   size = EB90_FRAME_STX_SIZE;

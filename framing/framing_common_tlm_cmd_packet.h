@@ -46,11 +46,11 @@ FRM_ERR_CODE CCP_get_ccp_from_dssc(const FRM_StreamConfig* p_stream_config, Comm
  * @brief  C2A 間通信など， CTCP をコンポ間通信に用いるとき，FRM_init で渡す初期化関数内部用の Init Util
  *
  *         これを呼び出すと，まるっと DSSC の初期設定ができる．
- * @note   DSSC_enable は Driver 側でやること
+ * @note   FRMSC_enable は Driver 側でやること
  * @param[in]  p_stream_config: Framing 構造体の FRM_StreamConfig
  * @param[in]  tx_frame_buffer: コマンドフレーム（送信フレーム）のバッファ
  * @param[in]  tx_frame_buffer_size: バッファサイズ
- * @param[in]  data_analyzer: DSSC_set_data_analyzer で渡すための data_analyzer
+ * @param[in]  data_analyzer: FRMSC_set_data_analyzer で渡すための data_analyzer
  * @retval FRM_ERR_CODE_OK:  正常終了
  * @retval FRM_ERR_CODE_ERR: フレームバッファのサイズ不足などのエラー
  */

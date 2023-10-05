@@ -503,7 +503,7 @@ FRM_ERR_CODE FRM_receive(Framing* p_super);
 /**
  * @brief  data_analyzer_ を呼び出し，受信データを解析する．
  *
- *         FRM_receive にてデータを受信した後， DSSC_get_rec_status(p_stream_config)->status_code が FRM_STREAM_REC_STATUS_FIXED_FRAME ならば呼び出す．
+ *         FRM_receive にてデータを受信した後， FRMSC_get_rec_status(p_stream_config)->status_code が FRM_STREAM_REC_STATUS_FIXED_FRAME ならば呼び出す．
  * @param  p_super:  Framing 構造体へのポインタ
  * @param  stream:   どの stream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @param  p_driver: 継承先機器のドライバ構造体など．data_analyzer_ の第二引数．
@@ -562,78 +562,78 @@ FRM_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const Framing* p_supe
 
 
 // ###### FRM_StreamConfig Getter/Setter of Settings ######
-uint8_t DSSC_get_is_enabled(const FRM_StreamConfig* p_stream_config);
-void DSSC_enable(FRM_StreamConfig* p_stream_config);
-void DSSC_disable(FRM_StreamConfig* p_stream_config);
+uint8_t FRMSC_get_is_enabled(const FRM_StreamConfig* p_stream_config);
+void FRMSC_enable(FRM_StreamConfig* p_stream_config);
+void FRMSC_disable(FRM_StreamConfig* p_stream_config);
 
-uint8_t DSSC_get_is_strict_frame_search(const FRM_StreamConfig* p_stream_config);
-void DSSC_enable_strict_frame_search(FRM_StreamConfig* p_stream_config);
-void DSSC_disable_strict_frame_search(FRM_StreamConfig* p_stream_config);
+uint8_t FRMSC_get_is_strict_frame_search(const FRM_StreamConfig* p_stream_config);
+void FRMSC_enable_strict_frame_search(FRM_StreamConfig* p_stream_config);
+void FRMSC_disable_strict_frame_search(FRM_StreamConfig* p_stream_config);
 
-const uint8_t* DSSC_get_tx_frame(FRM_StreamConfig* p_stream_config);
-uint8_t* DSSC_get_tx_frame_as_non_const_pointer(FRM_StreamConfig* p_stream_config);
-void DSSC_set_tx_frame(FRM_StreamConfig* p_stream_config,
+const uint8_t* FRMSC_get_tx_frame(FRM_StreamConfig* p_stream_config);
+uint8_t* FRMSC_get_tx_frame_as_non_const_pointer(FRM_StreamConfig* p_stream_config);
+void FRMSC_set_tx_frame(FRM_StreamConfig* p_stream_config,
                        uint8_t* tx_frame);
-uint16_t DSSC_get_tx_frame_size(const FRM_StreamConfig* p_stream_config);
-void DSSC_set_tx_frame_size(FRM_StreamConfig* p_stream_config,
+uint16_t FRMSC_get_tx_frame_size(const FRM_StreamConfig* p_stream_config);
+void FRMSC_set_tx_frame_size(FRM_StreamConfig* p_stream_config,
                             const uint16_t tx_frame_size);
-int16_t DSSC_get_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config);
-void DSSC_set_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config,
+int16_t FRMSC_get_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config);
+void FRMSC_set_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config,
                                    const int16_t tx_frame_buffer_size);
 
-void DSSC_set_rx_buffer(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_buffer(FRM_StreamConfig* p_stream_config,
                         FRM_StreamRecBuffer* rx_buffer);
-void DSSC_set_rx_header(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_header(FRM_StreamConfig* p_stream_config,
                         const uint8_t* rx_header,
                         const uint16_t rx_header_size);
-uint16_t DSSC_get_rx_header_size(const FRM_StreamConfig* p_stream_config);
-void DSSC_set_rx_footer(FRM_StreamConfig* p_stream_config,
+uint16_t FRMSC_get_rx_header_size(const FRM_StreamConfig* p_stream_config);
+void FRMSC_set_rx_footer(FRM_StreamConfig* p_stream_config,
                         const uint8_t* rx_footer,
                         const uint16_t rx_footer_size);
-uint16_t DSSC_get_rx_footer_size(const FRM_StreamConfig* p_stream_config);
-int16_t DSSC_get_rx_frame_size(const FRM_StreamConfig* p_stream_config);
-void DSSC_set_rx_frame_size(FRM_StreamConfig* p_stream_config,
+uint16_t FRMSC_get_rx_footer_size(const FRM_StreamConfig* p_stream_config);
+int16_t FRMSC_get_rx_frame_size(const FRM_StreamConfig* p_stream_config);
+void FRMSC_set_rx_frame_size(FRM_StreamConfig* p_stream_config,
                             const int16_t rx_frame_size);
-uint16_t DSSC_get_max_rx_frame_size(const FRM_StreamConfig* p_stream_config);
-void DSSC_set_max_rx_frame_size(FRM_StreamConfig* p_stream_config,
+uint16_t FRMSC_get_max_rx_frame_size(const FRM_StreamConfig* p_stream_config);
+void FRMSC_set_max_rx_frame_size(FRM_StreamConfig* p_stream_config,
                             const uint16_t max_rx_frame_size);
 
-void DSSC_set_rx_framelength_pos(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_framelength_pos(FRM_StreamConfig* p_stream_config,
                                  const int16_t rx_framelength_pos);
-void DSSC_set_rx_framelength_type_size(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_framelength_type_size(FRM_StreamConfig* p_stream_config,
                                        const uint16_t rx_framelength_type_size);
-void DSSC_set_rx_framelength_offset(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_framelength_offset(FRM_StreamConfig* p_stream_config,
                                     const uint16_t rx_framelength_offset);
-void DSSC_set_rx_framelength_endian(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_framelength_endian(FRM_StreamConfig* p_stream_config,
                                     const ENDIAN_TYPE rx_framelength_endian);
 
-uint8_t DSSC_get_should_monitor_for_tlm_disruption(const FRM_StreamConfig* p_stream_config);
-void DSSC_enable_monitor_for_tlm_disruption(FRM_StreamConfig* p_stream_config);
-void DSSC_disable_monitor_for_tlm_disruption(FRM_StreamConfig* p_stream_config);
-uint32_t DSSC_get_time_threshold_for_tlm_disruption(const FRM_StreamConfig* p_stream_config);
-void DSSC_set_time_threshold_for_tlm_disruption(FRM_StreamConfig* p_stream_config,
+uint8_t FRMSC_get_should_monitor_for_tlm_disruption(const FRM_StreamConfig* p_stream_config);
+void FRMSC_enable_monitor_for_tlm_disruption(FRM_StreamConfig* p_stream_config);
+void FRMSC_disable_monitor_for_tlm_disruption(FRM_StreamConfig* p_stream_config);
+uint32_t FRMSC_get_time_threshold_for_tlm_disruption(const FRM_StreamConfig* p_stream_config);
+void FRMSC_set_time_threshold_for_tlm_disruption(FRM_StreamConfig* p_stream_config,
                                                 const uint32_t time_threshold_for_tlm_disruption);
 
-void DSSC_set_data_analyzer(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_data_analyzer(FRM_StreamConfig* p_stream_config,
                             FRM_ERR_CODE (*data_analyzer)(FRM_StreamConfig* p_stream_config, void* p_driver));
 
 
 // ###### FRM_StreamConfig Getter of Info ######
-const FRM_StreamSendStatus* DSSC_get_send_status(const FRM_StreamConfig* p_stream_config);
-const FRM_StreamRecStatus* DSSC_get_rec_status(const FRM_StreamConfig* p_stream_config);
+const FRM_StreamSendStatus* FRMSC_get_send_status(const FRM_StreamConfig* p_stream_config);
+const FRM_StreamRecStatus* FRMSC_get_rec_status(const FRM_StreamConfig* p_stream_config);
 
-uint32_t DSSC_get_general_cmd_tx_count(const FRM_StreamConfig* p_stream_config);
-uint32_t DSSC_get_req_tlm_cmd_tx_count(const FRM_StreamConfig* p_stream_config);
-uint32_t DSSC_get_req_tlm_cmd_tx_count_after_last_tx(const FRM_StreamConfig* p_stream_config);
-uint32_t DSSC_get_rx_frame_fix_count(const FRM_StreamConfig* p_stream_config);
+uint32_t FRMSC_get_general_cmd_tx_count(const FRM_StreamConfig* p_stream_config);
+uint32_t FRMSC_get_req_tlm_cmd_tx_count(const FRM_StreamConfig* p_stream_config);
+uint32_t FRMSC_get_req_tlm_cmd_tx_count_after_last_tx(const FRM_StreamConfig* p_stream_config);
+uint32_t FRMSC_get_rx_frame_fix_count(const FRM_StreamConfig* p_stream_config);
 
-const ObcTime* DSSC_get_general_cmd_tx_time(const FRM_StreamConfig* p_stream_config);
-const ObcTime* DSSC_get_req_tlm_cmd_tx_time(const FRM_StreamConfig* p_stream_config);
-const ObcTime* DSSC_get_rx_frame_fix_time(const FRM_StreamConfig* p_stream_config);
+const ObcTime* FRMSC_get_general_cmd_tx_time(const FRM_StreamConfig* p_stream_config);
+const ObcTime* FRMSC_get_req_tlm_cmd_tx_time(const FRM_StreamConfig* p_stream_config);
+const ObcTime* FRMSC_get_rx_frame_fix_time(const FRM_StreamConfig* p_stream_config);
 
-FRM_STREAM_TLM_DISRUPTION_STATUS_CODE DSSC_get_tlm_disruption_status(const FRM_StreamConfig* p_stream_config);
+FRM_STREAM_TLM_DISRUPTION_STATUS_CODE FRMSC_get_tlm_disruption_status(const FRM_StreamConfig* p_stream_config);
 
-FRM_ERR_CODE DSSC_get_ret_from_data_analyzer(const FRM_StreamConfig* p_stream_config);
+FRM_ERR_CODE FRMSC_get_ret_from_data_analyzer(const FRM_StreamConfig* p_stream_config);
 
 
 // ###### Driver 汎用 Util 関数 ######
@@ -685,13 +685,13 @@ CCP_CmdRet FRM_conv_cmd_err_to_ccp_cmd_ret(FRM_CMD_ERR_CODE code);
  * @param  p_stream_config[in]: Framing 構造体の FRM_StreamConfig
  * @retval フレーム確定時:   受信フレーム先頭ポインタ
  * @retval フレーム未確定時: rx_buffer_.pos_of_frame_head_candidate
- * @note   フレームサイズは DSSC_get_fixed_rx_frame_size で取得可能
+ * @note   フレームサイズは FRMSC_get_fixed_rx_frame_size で取得可能
  * @note   rx_buffer_ (FRM_StreamRecBuffer) には，前回確定したフレームが入っているが，次回の FRM_receive 呼び出しで失われる．
  *         したがって，次回の FRM_receive 呼び出し時までに内容を吸い出しておくこと
  * @note   基本的には， rx_buffer_.pos_of_frame_head_candidate は rx_buffer_.buffer 先頭に頭出しされているはず．
  *         したがって，ここで取得したポインタを rx_buffer_.capacity 以上読み込まない場合は，問題ない．
  */
-const uint8_t* DSSC_get_rx_frame(const FRM_StreamConfig* p_stream_config);
+const uint8_t* FRMSC_get_rx_frame(const FRM_StreamConfig* p_stream_config);
 
 /**
  * @brief  確定したフレームのサイズを取得
@@ -699,6 +699,6 @@ const uint8_t* DSSC_get_rx_frame(const FRM_StreamConfig* p_stream_config);
  * @retval フレーム確定時:   確定したフレームサイズ
  * @retval フレーム未確定時: 0
  */
-uint16_t DSSC_get_fixed_rx_frame_size(const FRM_StreamConfig* p_stream_config);
+uint16_t FRMSC_get_fixed_rx_frame_size(const FRM_StreamConfig* p_stream_config);
 
 #endif

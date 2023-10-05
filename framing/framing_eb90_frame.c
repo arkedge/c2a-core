@@ -14,14 +14,14 @@ const uint8_t EB90_FRAME_kEtx[EB90_FRAME_ETX_SIZE] = {EB90_FRAME_ETX_1ST_BYTE, E
 uint16_t EB90_FRAME_get_packet_length_from_dssc(const FRM_StreamConfig* p_stream_config)
 {
   uint16_t length;
-  ENDIAN_memcpy(&length, &(DSSC_get_rx_frame(p_stream_config)[2]), EB90_FRAME_LEN_SIZE);
+  ENDIAN_memcpy(&length, &(FRMSC_get_rx_frame(p_stream_config)[2]), EB90_FRAME_LEN_SIZE);
   return length;
 }
 
 
 const uint8_t* EB90_FRAME_get_packet_head_from_dssc(const FRM_StreamConfig* p_stream_config)
 {
-  return &(DSSC_get_rx_frame(p_stream_config)[EB90_FRAME_HEADER_SIZE]);
+  return &(FRMSC_get_rx_frame(p_stream_config)[EB90_FRAME_HEADER_SIZE]);
 }
 
 
@@ -29,7 +29,7 @@ uint16_t EB90_FRAME_get_crc_from_dssc(const FRM_StreamConfig* p_stream_config)
 {
   uint16_t crc;
   uint16_t offset = EB90_FRAME_HEADER_SIZE + EB90_FRAME_get_packet_length_from_dssc(p_stream_config);
-  ENDIAN_memcpy(&crc, &(DSSC_get_rx_frame(p_stream_config)[offset]), EB90_FRAME_CRC_SIZE);
+  ENDIAN_memcpy(&crc, &(FRMSC_get_rx_frame(p_stream_config)[offset]), EB90_FRAME_CRC_SIZE);
   return crc;
 }
 

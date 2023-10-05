@@ -267,7 +267,7 @@ FRM_ERR_CODE FRM_init_streams(Framing* p_super,
   {
     if (rx_buffers[stream] != NULL)
     {
-      DSSC_set_rx_buffer(&(p_super->stream_config[stream]), rx_buffers[stream]);
+      FRMSC_set_rx_buffer(&(p_super->stream_config[stream]), rx_buffers[stream]);
     }
   }
 
@@ -647,7 +647,7 @@ static void FRM_analyze_rx_buffer_prepare_buffer_(FRM_StreamConfig* p_stream_con
                                                  uint16_t rec_data_len)
 {
   // rx_buffer_ には，前回確定したフレームも残っているので，それは除く
-  // したがって， DS の DSSC_get_rx_frame した frame へのポインタは，次回受信時までしか有効ではない
+  // したがって， DS の FRMSC_get_rx_frame した frame へのポインタは，次回受信時までしか有効ではない
   FRM_StreamRecBuffer* buffer = p_stream_config->settings.rx_buffer_;
   FRM_ERR_CODE ret;
 
@@ -1385,88 +1385,88 @@ FRM_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const Framing* p_supe
 
 // ###### FRM_StreamConfig Getter/Setter of Settings ######
 // FIXME: HEW で Warning が出てしまう（gcc ではでない）ので，キャストしている関数がいくつかある
-uint8_t DSSC_get_is_enabled(const FRM_StreamConfig* p_stream_config)
+uint8_t FRMSC_get_is_enabled(const FRM_StreamConfig* p_stream_config)
 {
   return (uint8_t)p_stream_config->settings.is_enabled_;
 }
 
-void DSSC_enable(FRM_StreamConfig* p_stream_config)
+void FRMSC_enable(FRM_StreamConfig* p_stream_config)
 {
   p_stream_config->settings.is_enabled_ = 1;
   p_stream_config->internal.is_validation_needed_for_send_ = 1;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-void DSSC_disable(FRM_StreamConfig* p_stream_config)
+void FRMSC_disable(FRM_StreamConfig* p_stream_config)
 {
   p_stream_config->settings.is_enabled_ = 0;
 }
 
-uint8_t DSSC_get_is_strict_frame_search(const FRM_StreamConfig* p_stream_config)
+uint8_t FRMSC_get_is_strict_frame_search(const FRM_StreamConfig* p_stream_config)
 {
   return (uint8_t)p_stream_config->settings.is_strict_frame_search_;
 }
 
-void DSSC_enable_strict_frame_search(FRM_StreamConfig* p_stream_config)
+void FRMSC_enable_strict_frame_search(FRM_StreamConfig* p_stream_config)
 {
   p_stream_config->settings.is_strict_frame_search_ = 1;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-void DSSC_disable_strict_frame_search(FRM_StreamConfig* p_stream_config)
+void FRMSC_disable_strict_frame_search(FRM_StreamConfig* p_stream_config)
 {
   p_stream_config->settings.is_strict_frame_search_ = 0;
 }
 
-const uint8_t* DSSC_get_tx_frame(FRM_StreamConfig* p_stream_config)
+const uint8_t* FRMSC_get_tx_frame(FRM_StreamConfig* p_stream_config)
 {
   return p_stream_config->settings.tx_frame_;
 }
 
-uint8_t* DSSC_get_tx_frame_as_non_const_pointer(FRM_StreamConfig* p_stream_config)
+uint8_t* FRMSC_get_tx_frame_as_non_const_pointer(FRM_StreamConfig* p_stream_config)
 {
   return p_stream_config->settings.tx_frame_;
 }
 
-void DSSC_set_tx_frame(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_tx_frame(FRM_StreamConfig* p_stream_config,
                        uint8_t* tx_frame)
 {
   p_stream_config->settings.tx_frame_ = tx_frame;
   p_stream_config->internal.is_validation_needed_for_send_ = 1;
 }
 
-uint16_t DSSC_get_tx_frame_size(const FRM_StreamConfig* p_stream_config)
+uint16_t FRMSC_get_tx_frame_size(const FRM_StreamConfig* p_stream_config)
 {
   return (uint16_t)p_stream_config->settings.tx_frame_size_;
 }
 
-void DSSC_set_tx_frame_size(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_tx_frame_size(FRM_StreamConfig* p_stream_config,
                             const uint16_t tx_frame_size)
 {
   p_stream_config->settings.tx_frame_size_ = tx_frame_size;
   p_stream_config->internal.is_validation_needed_for_send_ = 1;
 }
 
-int16_t DSSC_get_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config)
+int16_t FRMSC_get_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config)
 {
   return (int16_t)p_stream_config->settings.tx_frame_buffer_size_;
 }
 
-void DSSC_set_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config,
                                    const int16_t tx_frame_buffer_size)
 {
   p_stream_config->settings.tx_frame_buffer_size_ = tx_frame_buffer_size;
   p_stream_config->internal.is_validation_needed_for_send_ = 1;
 }
 
-void DSSC_set_rx_buffer(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_buffer(FRM_StreamConfig* p_stream_config,
                         FRM_StreamRecBuffer* rx_buffer)
 {
   p_stream_config->settings.rx_buffer_ = rx_buffer;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-void DSSC_set_rx_header(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_header(FRM_StreamConfig* p_stream_config,
                         const uint8_t* rx_header,
                         const uint16_t rx_header_size)
 {
@@ -1475,12 +1475,12 @@ void DSSC_set_rx_header(FRM_StreamConfig* p_stream_config,
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-uint16_t DSSC_get_rx_header_size(const FRM_StreamConfig* p_stream_config)
+uint16_t FRMSC_get_rx_header_size(const FRM_StreamConfig* p_stream_config)
 {
   return (uint16_t)p_stream_config->settings.rx_header_size_;
 }
 
-void DSSC_set_rx_footer(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_footer(FRM_StreamConfig* p_stream_config,
                         const uint8_t* rx_footer,
                         const uint16_t rx_footer_size)
 {
@@ -1489,93 +1489,93 @@ void DSSC_set_rx_footer(FRM_StreamConfig* p_stream_config,
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-uint16_t DSSC_get_rx_footer_size(const FRM_StreamConfig* p_stream_config)
+uint16_t FRMSC_get_rx_footer_size(const FRM_StreamConfig* p_stream_config)
 {
   return (uint16_t)p_stream_config->settings.rx_footer_size_;
 }
 
-int16_t DSSC_get_rx_frame_size(const FRM_StreamConfig* p_stream_config)
+int16_t FRMSC_get_rx_frame_size(const FRM_StreamConfig* p_stream_config)
 {
   return (int16_t)p_stream_config->settings.rx_frame_size_;
 }
 
-void DSSC_set_rx_frame_size(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_frame_size(FRM_StreamConfig* p_stream_config,
                             const int16_t rx_frame_size)
 {
   p_stream_config->settings.rx_frame_size_ = rx_frame_size;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-uint16_t DSSC_get_max_rx_frame_size(const FRM_StreamConfig* p_stream_config)
+uint16_t FRMSC_get_max_rx_frame_size(const FRM_StreamConfig* p_stream_config)
 {
   return (uint16_t)p_stream_config->settings.max_rx_frame_size_;
 }
 
-void DSSC_set_max_rx_frame_size(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_max_rx_frame_size(FRM_StreamConfig* p_stream_config,
                             const uint16_t max_rx_frame_size)
 {
   p_stream_config->settings.max_rx_frame_size_ = max_rx_frame_size;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-void DSSC_set_rx_framelength_pos(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_framelength_pos(FRM_StreamConfig* p_stream_config,
                                  const int16_t rx_framelength_pos)
 {
   p_stream_config->settings.rx_framelength_pos_ = rx_framelength_pos;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-void DSSC_set_rx_framelength_type_size(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_framelength_type_size(FRM_StreamConfig* p_stream_config,
                                        const uint16_t rx_framelength_type_size)
 {
   p_stream_config->settings.rx_framelength_type_size_ = rx_framelength_type_size;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-void DSSC_set_rx_framelength_offset(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_framelength_offset(FRM_StreamConfig* p_stream_config,
                                     const uint16_t rx_framelength_offset)
 {
   p_stream_config->settings.rx_framelength_offset_ = rx_framelength_offset;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-void DSSC_set_rx_framelength_endian(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_rx_framelength_endian(FRM_StreamConfig* p_stream_config,
                                     const ENDIAN_TYPE rx_framelength_endian)
 {
   p_stream_config->settings.rx_framelength_endian_ = rx_framelength_endian;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-uint8_t DSSC_get_should_monitor_for_tlm_disruption(const FRM_StreamConfig* p_stream_config)
+uint8_t FRMSC_get_should_monitor_for_tlm_disruption(const FRM_StreamConfig* p_stream_config)
 {
   return (uint8_t)p_stream_config->settings.should_monitor_for_tlm_disruption_;
 }
 
-void DSSC_enable_monitor_for_tlm_disruption(FRM_StreamConfig* p_stream_config)
+void FRMSC_enable_monitor_for_tlm_disruption(FRM_StreamConfig* p_stream_config)
 {
   p_stream_config->settings.should_monitor_for_tlm_disruption_ = 1;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-void DSSC_disable_monitor_for_tlm_disruption(FRM_StreamConfig* p_stream_config)
+void FRMSC_disable_monitor_for_tlm_disruption(FRM_StreamConfig* p_stream_config)
 {
   p_stream_config->settings.should_monitor_for_tlm_disruption_ = 0;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-uint32_t DSSC_get_time_threshold_for_tlm_disruption(const FRM_StreamConfig* p_stream_config)
+uint32_t FRMSC_get_time_threshold_for_tlm_disruption(const FRM_StreamConfig* p_stream_config)
 {
   return (uint32_t)p_stream_config->settings.time_threshold_for_tlm_disruption_;
 }
 
-void DSSC_set_time_threshold_for_tlm_disruption(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_time_threshold_for_tlm_disruption(FRM_StreamConfig* p_stream_config,
                                                 const uint32_t time_threshold_for_tlm_disruption)
 {
   p_stream_config->settings.time_threshold_for_tlm_disruption_ = time_threshold_for_tlm_disruption;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
-void DSSC_set_data_analyzer(FRM_StreamConfig* p_stream_config,
+void FRMSC_set_data_analyzer(FRM_StreamConfig* p_stream_config,
                             FRM_ERR_CODE (*data_analyzer)(FRM_StreamConfig* p_stream_config, void* p_driver))
 {
   p_stream_config->settings.data_analyzer_ = data_analyzer;
@@ -1584,57 +1584,57 @@ void DSSC_set_data_analyzer(FRM_StreamConfig* p_stream_config,
 
 
 // ###### FRM_StreamConfig Getter/Setter of Info ######
-const FRM_StreamSendStatus* DSSC_get_send_status(const FRM_StreamConfig* p_stream_config)
+const FRM_StreamSendStatus* FRMSC_get_send_status(const FRM_StreamConfig* p_stream_config)
 {
   return &p_stream_config->info.send_status_;
 }
 
-const FRM_StreamRecStatus* DSSC_get_rec_status(const FRM_StreamConfig* p_stream_config)
+const FRM_StreamRecStatus* FRMSC_get_rec_status(const FRM_StreamConfig* p_stream_config)
 {
   return &p_stream_config->info.rec_status_;
 }
 
-uint32_t DSSC_get_general_cmd_tx_count(const FRM_StreamConfig* p_stream_config)
+uint32_t FRMSC_get_general_cmd_tx_count(const FRM_StreamConfig* p_stream_config)
 {
   return (uint32_t)p_stream_config->info.general_cmd_tx_count_;
 }
 
-uint32_t DSSC_get_req_tlm_cmd_tx_count(const FRM_StreamConfig* p_stream_config)
+uint32_t FRMSC_get_req_tlm_cmd_tx_count(const FRM_StreamConfig* p_stream_config)
 {
   return (uint32_t)p_stream_config->info.req_tlm_cmd_tx_count_;
 }
 
-uint32_t DSSC_get_req_tlm_cmd_tx_count_after_last_tx(const FRM_StreamConfig* p_stream_config)
+uint32_t FRMSC_get_req_tlm_cmd_tx_count_after_last_tx(const FRM_StreamConfig* p_stream_config)
 {
   return (uint32_t)p_stream_config->info.req_tlm_cmd_tx_count_after_last_tx_;
 }
 
-uint32_t DSSC_get_rx_frame_fix_count(const FRM_StreamConfig* p_stream_config)
+uint32_t FRMSC_get_rx_frame_fix_count(const FRM_StreamConfig* p_stream_config)
 {
   return (uint32_t)p_stream_config->info.rx_frame_fix_count_;
 }
 
-const ObcTime* DSSC_get_general_cmd_tx_time(const FRM_StreamConfig* p_stream_config)
+const ObcTime* FRMSC_get_general_cmd_tx_time(const FRM_StreamConfig* p_stream_config)
 {
   return &p_stream_config->info.general_cmd_tx_time_;
 }
 
-const ObcTime* DSSC_get_req_tlm_cmd_tx_time(const FRM_StreamConfig* p_stream_config)
+const ObcTime* FRMSC_get_req_tlm_cmd_tx_time(const FRM_StreamConfig* p_stream_config)
 {
   return &p_stream_config->info.req_tlm_cmd_tx_time_;
 }
 
-const ObcTime* DSSC_get_rx_frame_fix_time(const FRM_StreamConfig* p_stream_config)
+const ObcTime* FRMSC_get_rx_frame_fix_time(const FRM_StreamConfig* p_stream_config)
 {
   return &p_stream_config->info.rx_frame_fix_time_;
 }
 
-FRM_STREAM_TLM_DISRUPTION_STATUS_CODE DSSC_get_tlm_disruption_status(const FRM_StreamConfig* p_stream_config)
+FRM_STREAM_TLM_DISRUPTION_STATUS_CODE FRMSC_get_tlm_disruption_status(const FRM_StreamConfig* p_stream_config)
 {
   return (FRM_STREAM_TLM_DISRUPTION_STATUS_CODE)p_stream_config->info.rec_status_.tlm_disruption_status;
 }
 
-FRM_ERR_CODE DSSC_get_ret_from_data_analyzer(const FRM_StreamConfig* p_stream_config)
+FRM_ERR_CODE FRMSC_get_ret_from_data_analyzer(const FRM_StreamConfig* p_stream_config)
 {
   return (FRM_ERR_CODE)p_stream_config->info.ret_from_data_analyzer_;
 }
@@ -1709,14 +1709,14 @@ CCP_CmdRet FRM_conv_cmd_err_to_ccp_cmd_ret(FRM_CMD_ERR_CODE code)
 }
 
 
-const uint8_t* DSSC_get_rx_frame(const FRM_StreamConfig* p_stream_config)
+const uint8_t* FRMSC_get_rx_frame(const FRM_StreamConfig* p_stream_config)
 {
   FRM_StreamRecBuffer* buffer = p_stream_config->settings.rx_buffer_;
   return &(buffer->buffer[buffer->pos_of_frame_head_candidate]);
 }
 
 
-uint16_t DSSC_get_fixed_rx_frame_size(const FRM_StreamConfig* p_stream_config)
+uint16_t FRMSC_get_fixed_rx_frame_size(const FRM_StreamConfig* p_stream_config)
 {
   FRM_StreamRecBuffer* buffer = p_stream_config->settings.rx_buffer_;
   if (buffer->is_frame_fixed)
