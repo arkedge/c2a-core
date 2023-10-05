@@ -52,3 +52,6 @@ done
 
 ## type
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i 's/DriverSuper/Framing/g'
+
+## variable
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i 's/p_super/p_framing/g'
