@@ -31,11 +31,11 @@
  *          Packet Field の CRC
  *          Header は含めない
  */
-#ifndef EB90_FRAME_FOR_DRIVER_SUPER_H_
-#define EB90_FRAME_FOR_DRIVER_SUPER_H_
+#ifndef FRAMING_EB90_FRAME_H_
+#define FRAMING_EB90_FRAME_H_
 
 #include <stdint.h>
-#include "../Super/driver_super.h"
+#include "framing.h"
 
 #define EB90_FRAME_STX_SIZE     (2)           //!< EB90 Frame の STX のサイズ
 #define EB90_FRAME_ETX_SIZE     (2)           //!< EB90 Frame の ETX のサイズ

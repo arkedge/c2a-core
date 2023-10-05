@@ -20,8 +20,8 @@
  *           - rx_buffer_size_in_if_rx_ のサイズは，実際の OBC のハードウェアバッファサイズと等しくすると最も効率が良い
  *           - DS_IF_RX_BUFFER_SIZE はすべてのドライバの rx_buffer_size_in_if_rx_ 以上の値にする（最大値にすると良い）
  */
-#ifndef DRIVER_SUPER_H_
-#define DRIVER_SUPER_H_
+#ifndef FRAMING_H_
+#define FRAMING_H_
 
 #include <src_user/hal/if_list.h>
 #include <stdint.h>

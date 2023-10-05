@@ -6,8 +6,8 @@
  * @note  Tlm か Cmd かはコンテキストで読み替える
  * @note  データリンク層は DS_StreamConfig.data_link_layer_ で規定する
  */
-#include "eb90_packet_for_driver_super.h"
-#include "eb90_frame_for_driver_super.h"
+#include "framing_eb90_packet.h"
+#include "framing_eb90_frame.h"
 #include "../../library/endian.h"
 
 // FIXME: DS_StreamConfig.data_link_layer_ をちゃんと見る！

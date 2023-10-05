@@ -9,7 +9,7 @@
  *         個々の機器のインターフェースドライバに継承させて使用します．
  */
 
-#include "driver_super.h"
+#include "framing.h"
 #include "../../library/print.h"
 #include <string.h>     // for memset などの mem 系
 #include <stddef.h>     // for NULL

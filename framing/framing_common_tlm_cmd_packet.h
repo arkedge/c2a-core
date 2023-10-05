@@ -5,11 +5,11 @@
  * @note  データリンク層は DS_StreamConfig.data_link_layer_ で規定する
  * @note  packet 構造 などは tlm_cmd/common_tlm_cmd_packet.h を参照のこと
  */
-#ifndef COMMON_TLM_CMD_PACKET_FOR_DRIVER_SUPER_H_
-#define COMMON_TLM_CMD_PACKET_FOR_DRIVER_SUPER_H_
+#ifndef FRAMING_COMMON_TLM_CMD_PACKET_H_
+#define FRAMING_COMMON_TLM_CMD_PACKET_H_
 
 #include <stdint.h>
-#include "../Super/driver_super.h"
+#include "framing.h"
 #include "../../tlm_cmd/common_tlm_cmd_packet.h"
 
 /**

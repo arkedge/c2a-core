@@ -23,11 +23,11 @@
  *        |       * |     0 |     * | ...              |
  *        |---------+-------+-------+------------------|
  */
-#ifndef EB90_PACKET_FOR_DRIVER_SUPER_H_
-#define EB90_PACKET_FOR_DRIVER_SUPER_H_
+#ifndef FRAMING_EB90_PACKET_H_
+#define FRAMING_EB90_PACKET_H_
 
 #include <stdint.h>
-#include "../Super/driver_super.h"
+#include "framing.h"
 
 #define EB90_PACKET_HEADER_SIZE  (4)  //!< EB90 Packet のヘッダサイズ
 
