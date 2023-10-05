@@ -44,8 +44,8 @@ for ((i=0;i<${#settings_org[@]};++i)); do
   find src/src_user/Settings -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#${settings_org[$i]}#${settings_new[$i]}#g"
 
   # include guard
-  settings_org_gurad=$(echo ${settings_org[$i]} | tr '[:lower:]' '[:upper:]')
-  settings_new_gurad=$(echo ${settings_new[$i]} | tr '[:lower:]' '[:upper:]')
+  settings_org_gurad=$(echo ${settings_org[$i]} | tr '[:lower:]' '[:upper:]' | sed 's/\./_/g')
+  settings_new_gurad=$(echo ${settings_new[$i]} | tr '[:lower:]' '[:upper:]' | sed 's/\./_/g')
 
   sed -i "s/${settings_org_gurad}/${settings_new_gurad}/g" src/src_user/Settings/framing/${settings_new[$i]}
 done
