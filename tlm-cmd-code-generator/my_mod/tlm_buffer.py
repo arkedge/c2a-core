@@ -368,7 +368,7 @@ def OutputTlmBufferC_(file_path, name, body, settings):
  * @brief  テレメトリバッファー（テレメ中継）
  * @note   このコードは自動生成されています！
  */
-#include <src_core/Drivers/Protocol/common_tlm_cmd_packet_for_driver_super.h>
+#include <src_core/framing/framing_common_tlm_cmd_packet.h>
 #include "./{_obc_name_lower}_telemetry_definitions.h"
 #include "./{_obc_name_lower}_telemetry_buffer.h"
 #include "./{_obc_name_lower}.h"
@@ -410,7 +410,7 @@ def OutputTlmBufferH_(file_path, name, body, settings):
 #define {_obc_name_upper}_TELEMETRY_BUFFER_H_
 
 #include "./{_obc_name_lower}_telemetry_definitions.h"
-#include <src_core/Drivers/Super/driver_super.h>
+#include <src_core/framing/framing.h>
 #include <src_core/tlm_cmd/common_tlm_packet.h>
 #include <src_core/tlm_cmd/telemetry_frame.h>
 
