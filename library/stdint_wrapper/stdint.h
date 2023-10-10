@@ -7,7 +7,7 @@
 #define STDINT_H_
 
 // C99 stdint.h ないしはそれと同等のヘッダへのラッパー用ヘッダ
-// 実機向けのコンパイラが C89 であるときのみ使用すること（CMake では C2A_USE_C99_STDINT=OFF すること）
+// 実機向けのコンパイラが C89 であるときのみ使用すること（CMake では C2A_USE_STDINT_WRAPPER=ON すること）
 
 #ifdef SILS_FW
 #include <stdint.h> // このヘッダを使う OBC であっても，SILS 環境下では C99 stdint.h が存在することが期待できる

@@ -2,19 +2,25 @@ cmake_minimum_required(VERSION 3.13)
 
 project(C2A_CORE)
 
-# user config
-option(USE_ALL_C2A_CORE_APPS        "use C2A-core all Applications" ON)
-option(USE_ALL_C2A_CORE_TEST_APPS   "use C2A-core all Test Applications" ON)
-option(USE_ALL_C2A_CORE_LIB         "use C2A-core all library" ON)
-option(USE_32BIT_COMPILER           "use 32bit compiler" OFF)
+# Build option
+## C2A compile config
+option(C2A_BUILD_AS_UTF8            "Build C2A as UTF-8" ON)
+option(C2A_BUILD_AS_C99             "Build C2A as C99" OFF)
+option(C2A_BUILD_AS_CXX             "Build C2A as C++" OFF)
 
-option(C2A_USE_SIMPLE_LIBC          "use C2A-core hosted simple libc implementation" OFF)
-option(C2A_USE_C99_STDINT           "use C99 standard stdint.h" ON)
+option(C2A_BUILD_FOR_32BIT          "Build C2A for 32bit target(this will add -m32 option)" ON)
 
-option(BUILD_C2A_AS_SILS_FW         "build C2A as SILS firmware" ON)
-option(BUILD_C2A_AS_C99             "build C2A as C99" OFF)
-option(BUILD_C2A_AS_CXX             "build C2A as C++" OFF)
-option(BUILD_C2A_AS_UTF8            "build C2A as UTF-8" ON)
+## C2A
+option(C2A_USE_STDINT_WRAPPER       "Use stdint.h wrapper for C89" OFF)
+
+option(C2A_BUILD_FOR_SILS           "Build C2A for SILS target" ON)
+
+## C2A core library select
+option(C2A_USE_ALL_CORE_APPS        "Use C2A-core all Applications" ON)
+option(C2A_USE_ALL_CORE_TEST_APPS   "Use C2A-core all Test Applications" ON)
+option(C2A_USE_ALL_CORE_LIB         "Use C2A-core all library" ON)
+
+option(C2A_USE_SIMPLE_LIBC          "Use C2A-core hosted simple libc (c2a-core/library/libc) implementation" OFF)
 
 set(C2A_CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -52,8 +58,8 @@ set(C2A_SRCS
   tlm_cmd/ccsds/tlm_space_packet.c
 )
 
-if(NOT C2A_USE_C99_STDINT)
-  message("Use stdint.h wrapper")
+if(C2A_USE_STDINT_WRAPPER)
+  message("Use stdint.h wrapper for C89")
   include_directories(library/stdint_wrapper)
 endif()
 
@@ -72,23 +78,23 @@ execute_process(
 add_definitions("-DGIT_REVISION_C2A_CORE=\"${GIT_REVISION_C2A_CORE}\"")
 add_definitions("-DGIT_REVISION_C2A_CORE_SHORT=0x${GIT_REVISION_C2A_CORE_SHORT}")
 
-if(BUILD_C2A_AS_CXX)
+if(C2A_BUILD_AS_CXX)
   set_source_files_properties(${C2A_SRCS} PROPERTIES LANGUAGE CXX)  # C++
 endif()
 
 add_library(${PROJECT_NAME} OBJECT ${C2A_SRCS})
 
-if(USE_ALL_C2A_CORE_APPS)
+if(C2A_USE_ALL_CORE_APPS)
   add_subdirectory(applications)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_APPS>)
 endif()
 
-if(USE_ALL_C2A_CORE_TEST_APPS)
+if(C2A_USE_ALL_CORE_TEST_APPS)
   add_subdirectory(applications/test_app)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_TEST_APPS>)
 endif()
 
-if(USE_ALL_C2A_CORE_LIB)
+if(C2A_USE_ALL_CORE_LIB)
   add_subdirectory(library)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_LIB>)
 endif()
