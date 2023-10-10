@@ -36,6 +36,7 @@ jobs:
         with:
           path: s2e-user
           repository: ut-issl/s2e-user-for-c2a-core
+          ref: ae-v3.0.0  # TODO: import s2e-user-for-c2a-core to c2a-core
           fetch-depth: 1
 
       - name: checkout C2A user
