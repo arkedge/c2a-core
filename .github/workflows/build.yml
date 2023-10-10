@@ -10,7 +10,7 @@ on:
 jobs:
   mobc:
     name: mobc
-    uses: arkedge/workflows-c2a/.github/workflows/build.yml@v4.3.0
+    uses: arkedge/workflows-c2a/.github/workflows/build.yml@v4.4.0
     with:
       c2a_dir: examples/mobc
       c2a_custom_setup: |
@@ -25,7 +25,7 @@ jobs:
 
   subobc:
     name: subobc
-    uses: arkedge/workflows-c2a/.github/workflows/build.yml@v4.3.0
+    uses: arkedge/workflows-c2a/.github/workflows/build.yml@v4.4.0
     with:
       c2a_dir: examples/subobc
       c2a_custom_setup: |
