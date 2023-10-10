@@ -58,7 +58,7 @@ static int FRM_rx_(Framing* p_framing);
  * @return void 詳細は FRM_StreamRecStatus
  */
 static void FRM_analyze_rx_buffer_(FRM_StreamConfig* p_stream_config,
-                                  uint16_t rec_data_len);
+                                   uint16_t rec_data_len);
 
 /**
  * @brief  解析用受信バッファの準備
@@ -70,7 +70,7 @@ static void FRM_analyze_rx_buffer_(FRM_StreamConfig* p_stream_config,
  * @note   厳格なフレーム探索が有効かどうかで処理が変わることに注意
  */
 static void FRM_analyze_rx_buffer_prepare_buffer_(FRM_StreamConfig* p_stream_config,
-                                                 uint16_t rec_data_len);
+                                                  uint16_t rec_data_len);
 
 /**
  * @brief  フレーム解析関数
@@ -144,7 +144,7 @@ static void FRM_analyze_rx_buffer_receiving_header_(FRM_StreamConfig* p_stream_c
  * @return void その他の詳細は FRM_StreamRecStatus
  */
 static void FRM_analyze_rx_buffer_receiving_footer_(FRM_StreamConfig* p_stream_config,
-                                                   uint16_t rx_frame_size);
+                                                    uint16_t rx_frame_size);
 
 /**
  * @brief  フレーム解析中に受信したフレームからフレーム長を取得する関数
@@ -193,7 +193,7 @@ void FRM_clear_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer);
  * @return void
  */
 void FRM_drop_from_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
-                                     uint16_t size);
+                                      uint16_t size);
 
 /**
  * @brief FRM_StreamRecBuffer の追記（後ろへの）
@@ -205,8 +205,8 @@ void FRM_drop_from_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
  * @retval FRM_ERR_CODE_ERR: サイズ不足でコピーできず
  */
 FRM_ERR_CODE FRM_push_to_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
-                                          const uint8_t* buffer,
-                                          uint16_t size);
+                                            const uint8_t* buffer,
+                                            uint16_t size);
 
 /**
  * @brief FRM_StreamRecBuffer の未処理バッファサイズの取得
@@ -224,7 +224,7 @@ uint16_t FRM_get_unprocessed_size_from_stream_rec_buffer_(FRM_StreamRecBuffer* s
  * @return void
  */
 void FRM_confirm_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
-                                   uint16_t size);
+                                    uint16_t size);
 
 /**
  * @brief FRM_StreamRecBuffer で指定サイズだけフレーム開始点を前進させる
@@ -234,15 +234,15 @@ void FRM_confirm_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
  * @return void
  */
 void FRM_move_forward_frame_head_candidate_of_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
-                                                                uint16_t size);
+                                                                 uint16_t size);
 
 
 // ###### Framing基本関数 ######
 
 FRM_ERR_CODE FRM_init(Framing* p_framing,
-                    void* if_config,
-                    FRM_StreamRecBuffer* rx_buffer,
-                    FRM_ERR_CODE (*load_init_setting)(Framing* p_framing))
+                      void* if_config,
+                      FRM_StreamRecBuffer* rx_buffer,
+                      FRM_ERR_CODE (*load_init_setting)(Framing* p_framing))
 {
   FRM_StreamRecBuffer* rx_buffers[FRM_STREAM_MAX];
   FRM_nullify_stream_rec_buffers(rx_buffers);
@@ -252,9 +252,9 @@ FRM_ERR_CODE FRM_init(Framing* p_framing,
 
 
 FRM_ERR_CODE FRM_init_streams(Framing* p_framing,
-                            void* if_config,
-                            FRM_StreamRecBuffer* rx_buffers[FRM_STREAM_MAX],
-                            FRM_ERR_CODE (*load_init_setting)(Framing* p_framing))
+                              void* if_config,
+                              FRM_StreamRecBuffer* rx_buffers[FRM_STREAM_MAX],
+                              FRM_ERR_CODE (*load_init_setting)(Framing* p_framing))
 {
   uint8_t stream;
 
@@ -578,8 +578,8 @@ static int FRM_tx_(Framing* p_framing, uint8_t stream)
 #endif
 
   ret = (*IF_TX[p_framing->interface])(p_framing->if_config,
-                                     p_stream_config->settings.tx_frame_,
-                                     (int)p_stream_config->settings.tx_frame_size_);
+                                       p_stream_config->settings.tx_frame_,
+                                       (int)p_stream_config->settings.tx_frame_size_);
 
   if (ret != 0) return ret;
   return FRM_ERR_CODE_OK;
@@ -608,8 +608,8 @@ static int FRM_rx_(Framing* p_framing)
   if (flag == 0) return 0;
 
   rec_data_len = (*IF_RX[p_framing->interface])(p_framing->if_config,
-                                              FRM_if_rx_buffer_,
-                                              p_framing->config.settings.rx_buffer_size_in_if_rx_);
+                                                FRM_if_rx_buffer_,
+                                                p_framing->config.settings.rx_buffer_size_in_if_rx_);
 
 #ifdef FRM_DEBUG
   Printf("DS: rx_\n");
@@ -632,7 +632,7 @@ static int FRM_rx_(Framing* p_framing)
 
 
 static void FRM_analyze_rx_buffer_(FRM_StreamConfig* p_stream_config,
-                                  uint16_t rec_data_len)
+                                   uint16_t rec_data_len)
 {
   FRM_analyze_rx_buffer_prepare_buffer_(p_stream_config, rec_data_len);
 
@@ -644,7 +644,7 @@ static void FRM_analyze_rx_buffer_(FRM_StreamConfig* p_stream_config,
 
 
 static void FRM_analyze_rx_buffer_prepare_buffer_(FRM_StreamConfig* p_stream_config,
-                                                 uint16_t rec_data_len)
+                                                  uint16_t rec_data_len)
 {
   // rx_buffer_ には，前回確定したフレームも残っているので，それは除く
   // したがって， DS の FRMSC_get_rx_frame した frame へのポインタは，次回受信時までしか有効ではない
@@ -807,7 +807,7 @@ static void FRM_analyze_rx_buffer_fixed_pickup_(FRM_StreamConfig* p_stream_confi
   {
     // フッタ受信中 or フッタなしの場合はフレーム確定
     FRM_analyze_rx_buffer_receiving_footer_(p_stream_config,
-                                           (uint16_t)(p->settings.rx_frame_size_));
+                                            (uint16_t)(p->settings.rx_frame_size_));
     return;
   }
 }
@@ -906,7 +906,7 @@ static void FRM_analyze_rx_buffer_variable_pickup_with_rx_frame_size_(FRM_Stream
   {
     // フッタ受信中 or フッタなしの場合はフレーム確定
     FRM_analyze_rx_buffer_receiving_footer_(p_stream_config,
-                                           (uint16_t)rx_frame_size);
+                                            (uint16_t)rx_frame_size);
     return;
   }
 }
@@ -1081,7 +1081,7 @@ static void FRM_analyze_rx_buffer_receiving_header_(FRM_StreamConfig* p_stream_c
 
 
 static void FRM_analyze_rx_buffer_receiving_footer_(FRM_StreamConfig* p_stream_config,
-                                                   uint16_t rx_frame_size)
+                                                    uint16_t rx_frame_size)
 {
   FRM_StreamConfig* p = p_stream_config;  // ちょっと変数名が長すぎて配列 index などがみずらいので...
   FRM_StreamRecBuffer* buffer = p->settings.rx_buffer_;
@@ -1321,7 +1321,7 @@ uint16_t DSC_get_rx_buffer_size_in_if_rx(const Framing* p_framing)
 }
 
 FRM_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(Framing* p_framing,
-                                            const uint16_t rx_buffer_size_in_if_rx)
+                                             const uint16_t rx_buffer_size_in_if_rx)
 {
   if (rx_buffer_size_in_if_rx > FRM_IF_RX_BUFFER_SIZE) return FRM_ERR_CODE_ERR;
   p_framing->config.settings.rx_buffer_size_in_if_rx_ = rx_buffer_size_in_if_rx;
@@ -1429,7 +1429,7 @@ uint8_t* FRMSC_get_tx_frame_as_non_const_pointer(FRM_StreamConfig* p_stream_conf
 }
 
 void FRMSC_set_tx_frame(FRM_StreamConfig* p_stream_config,
-                       uint8_t* tx_frame)
+                        uint8_t* tx_frame)
 {
   p_stream_config->settings.tx_frame_ = tx_frame;
   p_stream_config->internal.is_validation_needed_for_send_ = 1;
@@ -1441,7 +1441,7 @@ uint16_t FRMSC_get_tx_frame_size(const FRM_StreamConfig* p_stream_config)
 }
 
 void FRMSC_set_tx_frame_size(FRM_StreamConfig* p_stream_config,
-                            const uint16_t tx_frame_size)
+                             const uint16_t tx_frame_size)
 {
   p_stream_config->settings.tx_frame_size_ = tx_frame_size;
   p_stream_config->internal.is_validation_needed_for_send_ = 1;
@@ -1453,22 +1453,22 @@ int16_t FRMSC_get_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config)
 }
 
 void FRMSC_set_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config,
-                                   const int16_t tx_frame_buffer_size)
+                                    const int16_t tx_frame_buffer_size)
 {
   p_stream_config->settings.tx_frame_buffer_size_ = tx_frame_buffer_size;
   p_stream_config->internal.is_validation_needed_for_send_ = 1;
 }
 
 void FRMSC_set_rx_buffer(FRM_StreamConfig* p_stream_config,
-                        FRM_StreamRecBuffer* rx_buffer)
+                         FRM_StreamRecBuffer* rx_buffer)
 {
   p_stream_config->settings.rx_buffer_ = rx_buffer;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void FRMSC_set_rx_header(FRM_StreamConfig* p_stream_config,
-                        const uint8_t* rx_header,
-                        const uint16_t rx_header_size)
+                         const uint8_t* rx_header,
+                         const uint16_t rx_header_size)
 {
   p_stream_config->settings.rx_header_ = rx_header;
   p_stream_config->settings.rx_header_size_ = rx_header_size;
@@ -1481,8 +1481,8 @@ uint16_t FRMSC_get_rx_header_size(const FRM_StreamConfig* p_stream_config)
 }
 
 void FRMSC_set_rx_footer(FRM_StreamConfig* p_stream_config,
-                        const uint8_t* rx_footer,
-                        const uint16_t rx_footer_size)
+                         const uint8_t* rx_footer,
+                         const uint16_t rx_footer_size)
 {
   p_stream_config->settings.rx_footer_ = rx_footer;
   p_stream_config->settings.rx_footer_size_ = rx_footer_size;
@@ -1500,7 +1500,7 @@ int16_t FRMSC_get_rx_frame_size(const FRM_StreamConfig* p_stream_config)
 }
 
 void FRMSC_set_rx_frame_size(FRM_StreamConfig* p_stream_config,
-                            const int16_t rx_frame_size)
+                             const int16_t rx_frame_size)
 {
   p_stream_config->settings.rx_frame_size_ = rx_frame_size;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
@@ -1512,35 +1512,35 @@ uint16_t FRMSC_get_max_rx_frame_size(const FRM_StreamConfig* p_stream_config)
 }
 
 void FRMSC_set_max_rx_frame_size(FRM_StreamConfig* p_stream_config,
-                            const uint16_t max_rx_frame_size)
+                                 const uint16_t max_rx_frame_size)
 {
   p_stream_config->settings.max_rx_frame_size_ = max_rx_frame_size;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void FRMSC_set_rx_framelength_pos(FRM_StreamConfig* p_stream_config,
-                                 const int16_t rx_framelength_pos)
+                                  const int16_t rx_framelength_pos)
 {
   p_stream_config->settings.rx_framelength_pos_ = rx_framelength_pos;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void FRMSC_set_rx_framelength_type_size(FRM_StreamConfig* p_stream_config,
-                                       const uint16_t rx_framelength_type_size)
+                                        const uint16_t rx_framelength_type_size)
 {
   p_stream_config->settings.rx_framelength_type_size_ = rx_framelength_type_size;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void FRMSC_set_rx_framelength_offset(FRM_StreamConfig* p_stream_config,
-                                    const uint16_t rx_framelength_offset)
+                                     const uint16_t rx_framelength_offset)
 {
   p_stream_config->settings.rx_framelength_offset_ = rx_framelength_offset;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void FRMSC_set_rx_framelength_endian(FRM_StreamConfig* p_stream_config,
-                                    const ENDIAN_TYPE rx_framelength_endian)
+                                     const ENDIAN_TYPE rx_framelength_endian)
 {
   p_stream_config->settings.rx_framelength_endian_ = rx_framelength_endian;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
@@ -1569,14 +1569,14 @@ uint32_t FRMSC_get_time_threshold_for_tlm_disruption(const FRM_StreamConfig* p_s
 }
 
 void FRMSC_set_time_threshold_for_tlm_disruption(FRM_StreamConfig* p_stream_config,
-                                                const uint32_t time_threshold_for_tlm_disruption)
+                                                 const uint32_t time_threshold_for_tlm_disruption)
 {
   p_stream_config->settings.time_threshold_for_tlm_disruption_ = time_threshold_for_tlm_disruption;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void FRMSC_set_data_analyzer(FRM_StreamConfig* p_stream_config,
-                            FRM_ERR_CODE (*data_analyzer)(FRM_StreamConfig* p_stream_config, void* p_driver))
+                             FRM_ERR_CODE (*data_analyzer)(FRM_StreamConfig* p_stream_config, void* p_driver))
 {
   p_stream_config->settings.data_analyzer_ = data_analyzer;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
@@ -1643,8 +1643,8 @@ FRM_ERR_CODE FRMSC_get_ret_from_data_analyzer(const FRM_StreamConfig* p_stream_c
 // ###### Driver 汎用 Util 関数 ######
 
 FRM_ERR_CODE FRM_init_stream_rec_buffer(FRM_StreamRecBuffer* stream_rec_buffer,
-                                      uint8_t* buffer,
-                                      const uint16_t buffer_capacity)
+                                        uint8_t* buffer,
+                                        const uint16_t buffer_capacity)
 {
   if (stream_rec_buffer == NULL) return FRM_ERR_CODE_ERR;
   if (buffer == NULL) return FRM_ERR_CODE_ERR;
@@ -1746,7 +1746,7 @@ void FRM_clear_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer)
 
 
 void FRM_drop_from_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
-                                     uint16_t size)
+                                      uint16_t size)
 {
   int32_t move_size = stream_rec_buffer->size - size;
 
@@ -1796,8 +1796,8 @@ void FRM_drop_from_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
 
 
 FRM_ERR_CODE FRM_push_to_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
-                                          const uint8_t* buffer,
-                                          uint16_t size)
+                                            const uint8_t* buffer,
+                                            uint16_t size)
 {
   uint16_t rest_size = stream_rec_buffer->capacity - stream_rec_buffer->size;
   if (rest_size < size) return FRM_ERR_CODE_ERR;
@@ -1820,7 +1820,7 @@ uint16_t FRM_get_unprocessed_size_from_stream_rec_buffer_(FRM_StreamRecBuffer* s
 
 
 void FRM_confirm_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
-                                   uint16_t size)
+                                    uint16_t size)
 {
   stream_rec_buffer->confirmed_frame_len += size;
   if (stream_rec_buffer->confirmed_frame_len > stream_rec_buffer->size)
@@ -1831,7 +1831,7 @@ void FRM_confirm_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
 
 
 void FRM_move_forward_frame_head_candidate_of_stream_rec_buffer_(FRM_StreamRecBuffer* stream_rec_buffer,
-                                                                uint16_t size)
+                                                                 uint16_t size)
 {
   stream_rec_buffer->pos_of_frame_head_candidate += size;
   if (stream_rec_buffer->pos_of_frame_head_candidate > stream_rec_buffer->size)

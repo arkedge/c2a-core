@@ -28,9 +28,9 @@
 #include "../library/endian.h"        // パスが不定な自動生成コード類で使えるように
 #include "../system/time_manager/time_manager.h"
 
-#define FRM_STREAM_MAX                 (3)         /*!< FRM_StreamConfig の最大数
+#define FRM_STREAM_MAX                (3)         /*!< FRM_StreamConfig の最大数
                                                        uint8_t を想定          */
-#define FRM_IF_RX_BUFFER_SIZE          (1024)      /*!< IF_RX で受信するときの一次バッファ
+#define FRM_IF_RX_BUFFER_SIZE         (1024)      /*!< IF_RX で受信するときの一次バッファ
                                                        IF_RX から受信できる最大数を規定する
                                                        OBC の物理的な信号ラインのバッファサイズ以上とするともっともパフォーマンスが出る */
 
@@ -255,7 +255,7 @@ typedef struct
 
   struct
   {
-    FRM_RecStatus rec_status_;                                 //!< IF受信状況
+    FRM_RecStatus rec_status_;                                //!< IF受信状況
 
     uint32_t rx_count_;                                       //!< なにかしらのデータの受信回数
     uint32_t rx_call_count_;                                  //!< FRM_receive 呼び出し回数
@@ -265,7 +265,7 @@ typedef struct
 
   struct
   {
-    FRM_ERR_CODE (*load_init_setting)(Framing* p_framing);   /*!< FRM_init でロードする，ドライバの初期設定の設定関数
+    FRM_ERR_CODE (*load_init_setting)(Framing* p_framing);    /*!< FRM_init でロードする，ドライバの初期設定の設定関数
                                                                    FRM_reset_config での設定をオーバーロードする
                                                                    返り値は FRM_ERR_CODE */
   } internal;       //!< 内部処理用
@@ -309,7 +309,7 @@ struct FRM_StreamConfig
                                                                    未指定の場合は負数とする
                                                                    初期値: -1 */
 
-    FRM_StreamRecBuffer* rx_buffer_;                           /*!< 受信バッファ
+    FRM_StreamRecBuffer* rx_buffer_;                          /*!< 受信バッファ
                                                                    stream 初期化時に user がメモリを割り当て，設定する
                                                                    初期値: NULL */
     const uint8_t* rx_header_;                                /*!< 受信データのヘッダ
@@ -374,8 +374,8 @@ struct FRM_StreamConfig
 
   struct
   {
-    FRM_StreamSendStatus send_status_;                         //!< フレーム送信状況
-    FRM_StreamRecStatus  rec_status_;                          //!< フレーム受信状況
+    FRM_StreamSendStatus send_status_;                        //!< フレーム送信状況
+    FRM_StreamRecStatus  rec_status_;                         //!< フレーム受信状況
 
     uint32_t general_cmd_tx_count_;                           //!< 通常コマンド送信回数
     uint32_t req_tlm_cmd_tx_count_;                           //!< テレメ要求コマンド送信回数
@@ -387,7 +387,7 @@ struct FRM_StreamConfig
     ObcTime  req_tlm_cmd_tx_time_;                            //!< テレメ要求コマンド最終送信時刻
     ObcTime  rx_frame_fix_time_;                              //!< フレーム確定時刻
 
-    FRM_ERR_CODE ret_from_data_analyzer_;                      //!< data_analyzer_ の返り値
+    FRM_ERR_CODE ret_from_data_analyzer_;                     //!< data_analyzer_ の返り値
   } info;           //!< 取得値（メトリクス）
 
   struct
@@ -406,16 +406,16 @@ struct FRM_StreamConfig
 struct Framing
 {
   // 【継承先まで公開】
-  IF_LIST_ENUM       interface;                              //!< 継承先の機器の使用 IF
-  void*              if_config;                              //!< IF 設定
+  IF_LIST_ENUM       interface;                               //!< 継承先の機器の使用 IF
+  void*              if_config;                               //!< IF 設定
 
-  FRM_Config         config;                                 //!< Framing の設定
+  FRM_Config         config;                                  //!< Framing の設定
 
-  FRM_StreamConfig   stream_config[FRM_STREAM_MAX];          /*!< Framing Stream
-                                                                 index が低いものほど優先（に今後するかも．実行速度次第）．
-                                                                 使い方例：[0] のみをつかって，テレメ内に仕込んだ TLM ID などで data_analyzer_ 内で処理を分岐
-                                                                 使い方例：[0] を定期テレメと一般コマンドで使い，[1] 以降を非定期や特殊コマンド・テレメトリで使う
-                                                                 が，まあ自由に使ってもらえたら */
+  FRM_StreamConfig   stream_config[FRM_STREAM_MAX];           /*!< Framing Stream
+                                                                   index が低いものほど優先（に今後するかも．実行速度次第）．
+                                                                   使い方例：[0] のみをつかって，テレメ内に仕込んだ TLM ID などで data_analyzer_ 内で処理を分岐
+                                                                   使い方例：[0] を定期テレメと一般コマンドで使い，[1] 以降を非定期や特殊コマンド・テレメトリで使う
+                                                                   が，まあ自由に使ってもらえたら */
 };
 
 
@@ -428,16 +428,16 @@ struct Framing
  *         そして，構造体内の初期化が必要な変数を初期化する．
  *         デフォルト値の上書きは load_init_setting で行う
  * @note   Framing を使用する時は起動時に必ず実施すること
- * @param  p_framing:           初期化する Framing 構造体へのポインタ
+ * @param  p_framing:         初期化する Framing 構造体へのポインタ
  * @param  if_config:         初期化する Driverで用いられている IF の config 構造体
  * @param  rx_buffer:         初期化する Framing の stream 0 で用いられるフレーム受信バッファ
  * @param  load_init_setting: Framing の初期設定ロード関数ポインタ
  * @return FRM_ERR_CODE
  */
 FRM_ERR_CODE FRM_init(Framing* p_framing,
-                    void* if_config,
-                    FRM_StreamRecBuffer* rx_buffer,
-                    FRM_ERR_CODE (*load_init_setting)(Framing* p_framing));
+                      void* if_config,
+                      FRM_StreamRecBuffer* rx_buffer,
+                      FRM_ERR_CODE (*load_init_setting)(Framing* p_framing));
 
 /**
  * @brief  継承先の機器より Framing を初期化する（複数の stream を使用する場合）
@@ -446,16 +446,16 @@ FRM_ERR_CODE FRM_init(Framing* p_framing,
  *         そして，構造体内の初期化が必要な変数を初期化する．
  *         デフォルト値の上書きは load_init_setting で行う
  * @note   Framing を使用する時は起動時に必ず実施すること
- * @param  p_framing:           初期化する Framing 構造体へのポインタ
+ * @param  p_framing:         初期化する Framing 構造体へのポインタ
  * @param  if_config:         初期化する Driverで用いられている IF の config 構造体
  * @param  rx_buffers:        初期化する Framing で用いられるフレーム受信バッファ．使用しない stream は NULL を設定しておく
  * @param  load_init_setting: Framing の初期設定ロード関数ポインタ
  * @return FRM_ERR_CODE
  */
 FRM_ERR_CODE FRM_init_streams(Framing* p_framing,
-                            void* if_config,
-                            FRM_StreamRecBuffer* rx_buffers[FRM_STREAM_MAX],
-                            FRM_ERR_CODE (*load_init_setting)(Framing* p_framing));
+                              void* if_config,
+                              FRM_StreamRecBuffer* rx_buffers[FRM_STREAM_MAX],
+                              FRM_ERR_CODE (*load_init_setting)(Framing* p_framing));
 
 /**
  * @brief  Framing のリセット
@@ -504,9 +504,9 @@ FRM_ERR_CODE FRM_receive(Framing* p_framing);
  * @brief  data_analyzer_ を呼び出し，受信データを解析する．
  *
  *         FRM_receive にてデータを受信した後， FRMSC_get_rec_status(p_stream_config)->status_code が FRM_STREAM_REC_STATUS_FIXED_FRAME ならば呼び出す．
- * @param  p_framing:  Framing 構造体へのポインタ
- * @param  stream:   どの stream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
- * @param  p_driver: 継承先機器のドライバ構造体など．data_analyzer_ の第二引数．
+ * @param  p_framing: Framing 構造体へのポインタ
+ * @param  stream:    どの stream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
+ * @param  p_driver:  継承先機器のドライバ構造体など．data_analyzer_ の第二引数．
  * @return FRM_ERR_CODE: data_analyzer_ の返り値をそのまま返す
  * @note   data_analyzer_ の返り値は， ret_from_data_analyzer_ にも保存される．
  */
@@ -519,7 +519,7 @@ FRM_ERR_CODE FRM_analyze_rec_data(Framing* p_framing, uint8_t stream, void* p_dr
  * @note   この関数の実行前に，tx_frame, tx_frame_size の設定が必要である
  * @note   これは基底クラスなため，アノマリ発行は行わない．継承先で返り値を見て適切にアノマリ発行すること
  * @param  p_framing: Framing 構造体へのポインタ
- * @param  stream:  どのstream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
+ * @param  stream:    どのstream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval FRM_ERR_CODE_OK:  正常終了
  * @retval FRM_ERR_CODE_ERR: IF_TX でのエラーあり
  * @note   受信状況やエラー情報は send_status_ に格納されている
@@ -532,7 +532,7 @@ FRM_ERR_CODE FRM_send_general_cmd(Framing* p_framing, uint8_t stream);
  *         テレメについては FRM_receive で受け取る．
  * @note   この関数の実行前に，tx_frame, tx_frame_sizeの設定が必要である
  * @param  p_framing: Framing 構造体へのポインタ
- * @param  stream:  どのstream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
+ * @param  stream:    どのstream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval FRM_ERR_CODE_OK:  正常終了
  * @retval FRM_ERR_CODE_ERR: IF_TX でのエラーあり
  * @note   受信状況やエラー情報は send_status_ に格納されている
@@ -543,7 +543,7 @@ FRM_ERR_CODE FRM_send_req_tlm_cmd(Framing* p_framing, uint8_t stream);
 // ###### FRM_Config Getter/Setter of Settings ######
 uint16_t DSC_get_rx_buffer_size_in_if_rx(const Framing* p_framing);
 FRM_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(Framing* p_framing,
-                                            const uint16_t rx_buffer_size_in_if_rx);
+                                             const uint16_t rx_buffer_size_in_if_rx);
 uint8_t DSC_get_should_monitor_for_rx_disruption(const Framing* p_framing);
 void DSC_enable_monitor_for_rx_disruption(Framing* p_framing);
 void DSC_disable_monitor_for_rx_disruption(Framing* p_framing);
@@ -573,49 +573,49 @@ void FRMSC_disable_strict_frame_search(FRM_StreamConfig* p_stream_config);
 const uint8_t* FRMSC_get_tx_frame(FRM_StreamConfig* p_stream_config);
 uint8_t* FRMSC_get_tx_frame_as_non_const_pointer(FRM_StreamConfig* p_stream_config);
 void FRMSC_set_tx_frame(FRM_StreamConfig* p_stream_config,
-                       uint8_t* tx_frame);
+                        uint8_t* tx_frame);
 uint16_t FRMSC_get_tx_frame_size(const FRM_StreamConfig* p_stream_config);
 void FRMSC_set_tx_frame_size(FRM_StreamConfig* p_stream_config,
-                            const uint16_t tx_frame_size);
+                             const uint16_t tx_frame_size);
 int16_t FRMSC_get_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config);
 void FRMSC_set_tx_frame_buffer_size(FRM_StreamConfig* p_stream_config,
-                                   const int16_t tx_frame_buffer_size);
+                                    const int16_t tx_frame_buffer_size);
 
 void FRMSC_set_rx_buffer(FRM_StreamConfig* p_stream_config,
-                        FRM_StreamRecBuffer* rx_buffer);
+                         FRM_StreamRecBuffer* rx_buffer);
 void FRMSC_set_rx_header(FRM_StreamConfig* p_stream_config,
-                        const uint8_t* rx_header,
-                        const uint16_t rx_header_size);
+                         const uint8_t* rx_header,
+                         const uint16_t rx_header_size);
 uint16_t FRMSC_get_rx_header_size(const FRM_StreamConfig* p_stream_config);
 void FRMSC_set_rx_footer(FRM_StreamConfig* p_stream_config,
-                        const uint8_t* rx_footer,
-                        const uint16_t rx_footer_size);
+                         const uint8_t* rx_footer,
+                         const uint16_t rx_footer_size);
 uint16_t FRMSC_get_rx_footer_size(const FRM_StreamConfig* p_stream_config);
 int16_t FRMSC_get_rx_frame_size(const FRM_StreamConfig* p_stream_config);
 void FRMSC_set_rx_frame_size(FRM_StreamConfig* p_stream_config,
-                            const int16_t rx_frame_size);
+                             const int16_t rx_frame_size);
 uint16_t FRMSC_get_max_rx_frame_size(const FRM_StreamConfig* p_stream_config);
 void FRMSC_set_max_rx_frame_size(FRM_StreamConfig* p_stream_config,
-                            const uint16_t max_rx_frame_size);
+                                 const uint16_t max_rx_frame_size);
 
 void FRMSC_set_rx_framelength_pos(FRM_StreamConfig* p_stream_config,
-                                 const int16_t rx_framelength_pos);
+                                  const int16_t rx_framelength_pos);
 void FRMSC_set_rx_framelength_type_size(FRM_StreamConfig* p_stream_config,
-                                       const uint16_t rx_framelength_type_size);
+                                        const uint16_t rx_framelength_type_size);
 void FRMSC_set_rx_framelength_offset(FRM_StreamConfig* p_stream_config,
-                                    const uint16_t rx_framelength_offset);
+                                     const uint16_t rx_framelength_offset);
 void FRMSC_set_rx_framelength_endian(FRM_StreamConfig* p_stream_config,
-                                    const ENDIAN_TYPE rx_framelength_endian);
+                                     const ENDIAN_TYPE rx_framelength_endian);
 
 uint8_t FRMSC_get_should_monitor_for_tlm_disruption(const FRM_StreamConfig* p_stream_config);
 void FRMSC_enable_monitor_for_tlm_disruption(FRM_StreamConfig* p_stream_config);
 void FRMSC_disable_monitor_for_tlm_disruption(FRM_StreamConfig* p_stream_config);
 uint32_t FRMSC_get_time_threshold_for_tlm_disruption(const FRM_StreamConfig* p_stream_config);
 void FRMSC_set_time_threshold_for_tlm_disruption(FRM_StreamConfig* p_stream_config,
-                                                const uint32_t time_threshold_for_tlm_disruption);
+                                                 const uint32_t time_threshold_for_tlm_disruption);
 
 void FRMSC_set_data_analyzer(FRM_StreamConfig* p_stream_config,
-                            FRM_ERR_CODE (*data_analyzer)(FRM_StreamConfig* p_stream_config, void* p_driver));
+                             FRM_ERR_CODE (*data_analyzer)(FRM_StreamConfig* p_stream_config, void* p_driver));
 
 
 // ###### FRM_StreamConfig Getter of Info ######
@@ -646,8 +646,8 @@ FRM_ERR_CODE FRMSC_get_ret_from_data_analyzer(const FRM_StreamConfig* p_stream_c
  * @return FRM_ERR_CODE
  */
 FRM_ERR_CODE FRM_init_stream_rec_buffer(FRM_StreamRecBuffer* stream_rec_buffer,
-                                      uint8_t* buffer,
-                                      const uint16_t buffer_capacity);
+                                        uint8_t* buffer,
+                                        const uint16_t buffer_capacity);
 
 /**
  * @brief FRM_StreamRecBuffer の要素数 FRM_STREAM_MAX の配列を NULL で初期化する
