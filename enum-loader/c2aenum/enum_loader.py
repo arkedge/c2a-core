@@ -12,7 +12,7 @@ class C2aEnum:
         self.search_dirs = [
             "/src_user/",
             "/src_core/applications/",
-            "/src_core/Drivers/",
+            "/src_core/drivers/",
             "/src_core/hal/",
             "/src_core/library/",
             "/src_core/system/",

@@ -138,7 +138,7 @@ def GenerateOtherObcTlmDef(settings, other_obc_dbs):
             )
         output_file_path = (
             settings["path_to_src"]
-            + r"src_user/Drivers/"
+            + r"src_user/drivers/"
             + settings["other_obc_data"][i]["driver_path"]
             + obc_name.lower()
             + "_telemetry_definitions.h"
