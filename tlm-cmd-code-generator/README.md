@@ -86,14 +86,6 @@ $ python GenerateC2ACode.py
 }
 ```
 
-## 開発方針
-- `main`: リリース版
-- `feature/*` : 開発ブランチ
-
-というブランチを用いる．
-
-[C2A Core](https://github.com/ut-issl/c2a-core) との互換性などは，[Releases](https://github.com/ut-issl/c2a-tlm-cmd-code-generator/releases) を参照すること（[詳細](https://github.com/ut-issl/c2a-core/tree/develop/Docs/．General/release.md)）
-
 ## 要求
 - python 3.7 以上
 - 必要ライブラリは `./requirements.txt` に記載．
