@@ -27,6 +27,7 @@ find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#f
 
 ## prefix
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i '/CCSDS_/!s/DS_/FRM_/g'
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i 's/DSC_/FRMC_/g'
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i 's/DSSC_/FRMSC_/g'
 
 # Settings
