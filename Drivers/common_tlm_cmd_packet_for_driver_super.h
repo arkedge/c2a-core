@@ -9,8 +9,8 @@
 #define COMMON_TLM_CMD_PACKET_FOR_DRIVER_SUPER_H_
 
 #include <stdint.h>
-#include "../Super/driver_super.h"
-#include "../../tlm_cmd/common_tlm_cmd_packet.h"
+#include "driver_super.h"
+#include "../tlm_cmd/common_tlm_cmd_packet.h"
 
 /**
  * @brief  CommonTlmCmdPacket を受信データからコピーして取得する

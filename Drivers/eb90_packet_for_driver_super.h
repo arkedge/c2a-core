@@ -27,7 +27,7 @@
 #define EB90_PACKET_FOR_DRIVER_SUPER_H_
 
 #include <stdint.h>
-#include "../Super/driver_super.h"
+#include "driver_super.h"
 
 #define EB90_PACKET_HEADER_SIZE  (4)  //!< EB90 Packet のヘッダサイズ
 

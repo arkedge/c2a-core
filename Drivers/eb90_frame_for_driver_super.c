@@ -4,8 +4,8 @@
  * @brief コンポ間通信などで標準的に使う データリンク層 の EB90 Frame
  */
 #include "eb90_frame_for_driver_super.h"
-#include "../../library/endian.h"
-#include "../../library/crc.h"
+#include "../library/endian.h"
+#include "../library/crc.h"
 
 const uint8_t EB90_FRAME_kStx[EB90_FRAME_STX_SIZE] = {EB90_FRAME_STX_1ST_BYTE, EB90_FRAME_STX_2ND_BYTE};
 const uint8_t EB90_FRAME_kEtx[EB90_FRAME_ETX_SIZE] = {EB90_FRAME_ETX_1ST_BYTE, EB90_FRAME_ETX_2ND_BYTE};
