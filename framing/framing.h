@@ -541,24 +541,24 @@ FRM_ERR_CODE FRM_send_req_tlm_cmd(Framing* p_framing, uint8_t stream);
 
 
 // ###### FRM_Config Getter/Setter of Settings ######
-uint16_t DSC_get_rx_buffer_size_in_if_rx(const Framing* p_framing);
-FRM_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(Framing* p_framing,
+uint16_t FRMC_get_rx_buffer_size_in_if_rx(const Framing* p_framing);
+FRM_ERR_CODE FRMC_set_rx_buffer_size_in_if_rx(Framing* p_framing,
                                              const uint16_t rx_buffer_size_in_if_rx);
-uint8_t DSC_get_should_monitor_for_rx_disruption(const Framing* p_framing);
-void DSC_enable_monitor_for_rx_disruption(Framing* p_framing);
-void DSC_disable_monitor_for_rx_disruption(Framing* p_framing);
-uint32_t DSC_get_time_threshold_for_rx_disruption(const Framing* p_framing);
-void DSC_set_time_threshold_for_rx_disruption(Framing* p_framing,
+uint8_t FRMC_get_should_monitor_for_rx_disruption(const Framing* p_framing);
+void FRMC_enable_monitor_for_rx_disruption(Framing* p_framing);
+void FRMC_disable_monitor_for_rx_disruption(Framing* p_framing);
+uint32_t FRMC_get_time_threshold_for_rx_disruption(const Framing* p_framing);
+void FRMC_set_time_threshold_for_rx_disruption(Framing* p_framing,
                                               const uint32_t time_threshold_for_rx_disruption);
 
 
 // ###### FRM_Config Getter of Info ######
-const FRM_RecStatus* DSC_get_rec_status(const Framing* p_framing);
-uint32_t DSC_get_rx_count(const Framing* p_framing);
-uint32_t DSC_get_rx_call_count(const Framing* p_framing);
-const ObcTime* DSC_get_rx_time(const Framing* p_framing);
+const FRM_RecStatus* FRMC_get_rec_status(const Framing* p_framing);
+uint32_t FRMC_get_rx_count(const Framing* p_framing);
+uint32_t FRMC_get_rx_call_count(const Framing* p_framing);
+const ObcTime* FRMC_get_rx_time(const Framing* p_framing);
 
-FRM_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const Framing* p_framing);
+FRM_RX_DISRUPTION_STATUS_CODE FRMC_get_rx_disruption_status(const Framing* p_framing);
 
 
 // ###### FRM_StreamConfig Getter/Setter of Settings ######

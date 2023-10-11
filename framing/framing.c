@@ -1315,12 +1315,12 @@ static FRM_ERR_CODE FRM_data_analyzer_dummy_(FRM_StreamConfig* p_stream_config, 
 
 
 // ###### FRM_Config Getter/Setter of Settings ######
-uint16_t DSC_get_rx_buffer_size_in_if_rx(const Framing* p_framing)
+uint16_t FRMC_get_rx_buffer_size_in_if_rx(const Framing* p_framing)
 {
   return (uint16_t)p_framing->config.settings.rx_buffer_size_in_if_rx_;
 }
 
-FRM_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(Framing* p_framing,
+FRM_ERR_CODE FRMC_set_rx_buffer_size_in_if_rx(Framing* p_framing,
                                              const uint16_t rx_buffer_size_in_if_rx)
 {
   if (rx_buffer_size_in_if_rx > FRM_IF_RX_BUFFER_SIZE) return FRM_ERR_CODE_ERR;
@@ -1328,27 +1328,27 @@ FRM_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(Framing* p_framing,
   return FRM_ERR_CODE_OK;
 }
 
-uint8_t DSC_get_should_monitor_for_rx_disruption(const Framing* p_framing)
+uint8_t FRMC_get_should_monitor_for_rx_disruption(const Framing* p_framing)
 {
   return (uint8_t)p_framing->config.settings.should_monitor_for_rx_disruption_;
 }
 
-void DSC_enable_monitor_for_rx_disruption(Framing* p_framing)
+void FRMC_enable_monitor_for_rx_disruption(Framing* p_framing)
 {
   p_framing->config.settings.should_monitor_for_rx_disruption_ = 1;
 }
 
-void DSC_disable_monitor_for_rx_disruption(Framing* p_framing)
+void FRMC_disable_monitor_for_rx_disruption(Framing* p_framing)
 {
   p_framing->config.settings.should_monitor_for_rx_disruption_ = 0;
 }
 
-uint32_t DSC_get_time_threshold_for_rx_disruption(const Framing* p_framing)
+uint32_t FRMC_get_time_threshold_for_rx_disruption(const Framing* p_framing)
 {
   return (uint32_t)p_framing->config.settings.time_threshold_for_rx_disruption_;
 }
 
-void DSC_set_time_threshold_for_rx_disruption(Framing* p_framing,
+void FRMC_set_time_threshold_for_rx_disruption(Framing* p_framing,
                                               const uint32_t time_threshold_for_rx_disruption)
 {
   p_framing->config.settings.time_threshold_for_rx_disruption_ = time_threshold_for_rx_disruption;
@@ -1357,27 +1357,27 @@ void DSC_set_time_threshold_for_rx_disruption(Framing* p_framing,
 
 // ###### FRM_Config Getter/Setter of Info ######
 // FIXME: HEW で Warning が出てしまう（gcc ではでない）ので，キャストしている関数がいくつかある
-const FRM_RecStatus* DSC_get_rec_status(const Framing* p_framing)
+const FRM_RecStatus* FRMC_get_rec_status(const Framing* p_framing)
 {
   return &p_framing->config.info.rec_status_;
 }
 
-uint32_t DSC_get_rx_count(const Framing* p_framing)
+uint32_t FRMC_get_rx_count(const Framing* p_framing)
 {
   return (uint32_t)p_framing->config.info.rx_count_;
 }
 
-uint32_t DSC_get_rx_call_count(const Framing* p_framing)
+uint32_t FRMC_get_rx_call_count(const Framing* p_framing)
 {
   return (uint32_t)p_framing->config.info.rx_call_count_;
 }
 
-const ObcTime* DSC_get_rx_time(const Framing* p_framing)
+const ObcTime* FRMC_get_rx_time(const Framing* p_framing)
 {
   return &p_framing->config.info.rx_time_;
 }
 
-FRM_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const Framing* p_framing)
+FRM_RX_DISRUPTION_STATUS_CODE FRMC_get_rx_disruption_status(const Framing* p_framing)
 {
   return (FRM_RX_DISRUPTION_STATUS_CODE)p_framing->config.info.rec_status_.rx_disruption_status;
 }
