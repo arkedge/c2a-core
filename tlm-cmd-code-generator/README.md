@@ -14,7 +14,7 @@ $ python GenerateC2ACode.py
 ```
 
 ## 設定
-`settings.json` にて記述する．
+実行時のパスと同じディレクトリに `settings.json` を置いて設定する．
 
 `is_main_obc` は，MOBC（地上局と通信するOBC．2nd OBCのtlm/cmdを取りまとめる）かそれ以外のOBC（2nd OBC．MOBCと通信するOBC）かを制御する．  
 `1` とした場合，MOBCを意図したコードが生成され，加えて以下が生成される．
@@ -24,6 +24,7 @@ $ python GenerateC2ACode.py
 - 2nd_obc_telemetry_buffer.h
 - 2nd_obc_telemetry_data_definitions.h
 
+設定の記述例（JSON としては invalid だがコメント付き）
 ```
 {
   # `src_core`, `src_user` のあるディレクトリへのパス
@@ -103,4 +104,5 @@ $ pip install -r requirements.txt
 ```
 
 ## その他
+- [settings_mobc.json](./settings_mobc.json), [settings_subobc.json](./settings_subobc.json) は c2a-core example user での設定
 - MOBCと2nd OBCのC2A間通信の例は （TBA）．
