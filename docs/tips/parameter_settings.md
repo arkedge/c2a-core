@@ -243,7 +243,7 @@ Event Logger 全体のメモリ使用量は以下Byte.
 
 #### 定義
 - core: [`/src_core/system/event_manager/event_logger.h`](https://github.com/arkedge/c2a-core/blob/develop/system/event_manager/event_logger.h)
-- user: `/src_user/Settings/System/event_handler_params.h`
+- user: `/src_user/Settings/system/event_handler_params.h`
 
 #### 詳細説明
 [`/src_core/system/event_manager/event_logger.h`](https://github.com/arkedge/c2a-core/blob/develop/system/event_manager/event_logger.h) を参照．
@@ -270,7 +270,7 @@ NOTE: この値が関わる部分を抽出しているため，AppManagerの他�
 
 #### 定義
 - core: [`/src_core/system/application_manager/AppManager.h`](https://github.com/arkedge/c2a-core/blob/develop/system/application_manager/AppManager.h)
-- user: `/src_user/Settings/System/app_manager_params.h`
+- user: `/src_user/Settings/system/app_manager_params.h`
 
 #### 詳細説明
 [`/src_core/system/application_manager/AppManager.h`](https://github.com/arkedge/c2a-core/blob/develop/system/application_manager/AppManager.h) を参照．
@@ -285,7 +285,7 @@ NOTE: メモリ使用量にほぼ関係なし
 
 #### 定義
 - core: [`/src_core/system/time_manager/obc_time.h`](https://github.com/arkedge/c2a-core/blob/develop/system/time_manager/obc_time.h)
-- user: `/src_user/Settings/System/obc_time_params.h`
+- user: `/src_user/Settings/system/obc_time_params.h`
 
 #### 詳細説明
 [`/src_core/system/time_manager/obc_time.h`](https://github.com/arkedge/c2a-core/blob/develop/system/time_manager/obc_time.h) を参照．
