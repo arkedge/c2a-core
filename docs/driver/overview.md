@@ -3,17 +3,17 @@
 ## Driver
 ### 概要
 Driver とは，各コンポーネントとの通信において， HW 依存部分を吸収するためのレイヤーである．  
-[DriverSuper](https://github.com/arkedge/c2a-core/blob/develop/Drivers/Super/) と呼ばれる共通の IF を各ドライバが継承することで，統一的で安全な実装が可能になる．
+[DriverSuper](https://github.com/arkedge/c2a-core/blob/develop/driver/driver_super.h) と呼ばれる共通の IF を各ドライバが継承することで，統一的で安全な実装が可能になる．
 
 また，これを Application へと抽象化したものが， Application Layer にある DI (Driver Instance) である．
 
-実装方法は，基本的には [driver_super.h](https://github.com/arkedge/c2a-core/blob/develop/Drivers/Super/driver_super.h) をみればわかるようにしてあるが，現時点で
+実装方法は，基本的には [driver_super.h](https://github.com/arkedge/c2a-core/blob/develop/driver/driver_super.h) をみればわかるようにしてあるが，現時点で
 
-- UART test: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/Drivers/Etc/uart_test.c
-- GS: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/Drivers/Com/gs.c
+- UART test: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/driver/etc/uart_test.c
+- GS: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/driver/com/gs.c
 - C2A 間通信:
-    - https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/Drivers/Aocs/aobc.c
-    - https://github.com/arkedge/c2a-core/blob/develop/examples/subobc/src/src_user/Drivers/Etc/mobc.c
+    - https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/driver/aocs/aobc.c
+    - https://github.com/arkedge/c2a-core/blob/develop/examples/subobc/src/src_user/driver/etc/mobc.c
 
 が実装されているので，それを参考のこと．  
 `load_init_setting` については下を参照．
@@ -43,7 +43,7 @@ typedef struct
 
 ## DriverSuper
 ### テレメとしておろしてもいいのではないかなと思う DriverSuper のメンバ
-[driver_super.h](https://github.com/arkedge/c2a-core/blob/develop/Drivers/Super/driver_super.h) のメンバから抜粋する．
+[driver_super.h](https://github.com/arkedge/c2a-core/blob/develop/driver/driver_super.h) のメンバから抜粋する．
 
 `DriverSuper` の最上位には特に重要な情報はないので， `DriverSuper` の使っているstreamの `stream_config` のメンバを下ろす．  
 具体的には以下．（ FIXME: 2021/12/04 現在，だいぶ情報が古い）

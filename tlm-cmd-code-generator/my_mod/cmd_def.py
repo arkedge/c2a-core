@@ -165,7 +165,7 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
         # print(body_h)
         output_file_path = (
             settings["path_to_src"]
-            + r"src_user/Drivers/"
+            + r"src_user/driver/"
             + settings["other_obc_data"][i]["driver_path"]
             + name_lower
             + "_command_definitions.h"
