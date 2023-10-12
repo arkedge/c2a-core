@@ -17,8 +17,8 @@
 #include <src_core/tlm_cmd/command_dispatcher_manager.h>
 #include <src_core/tlm_cmd/block_command_executor.h>
 #include "../applications/app_headers.h"
-#include "../Drivers/Aocs/aobc_telemetry_buffer.h"
-#include "../Drivers/Com/gs_validate.h"
+#include "../driver/aocs/aobc_telemetry_buffer.h"
+#include "../driver/com/gs_validate.h"
 #include "../Settings/build_settings.h"
 
 #endif

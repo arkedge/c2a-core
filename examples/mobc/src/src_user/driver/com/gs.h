@@ -6,7 +6,7 @@
 #define GS_H_
 
 #include <src_core/tlm_cmd/packet_handler.h>
-#include <src_core/Drivers/Super/driver_super.h>
+#include <src_core/driver/driver_super.h>
 #include <src_core/hal/uart.h>
 #include <src_core/hal/ccsds.h>
 #include "../../hal/ccsds_user.h"

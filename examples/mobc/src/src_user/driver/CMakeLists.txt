@@ -3,11 +3,11 @@ cmake_minimum_required(VERSION 3.13)
 project(C2A_USER_DRIVERS)
 
 set(C2A_SRCS
-  Aocs/aobc_telemetry_buffer.c
-  Aocs/aobc.c
-  Com/gs.c
-  Com/gs_validate.c
-  Etc/uart_test.c
+  aocs/aobc_telemetry_buffer.c
+  aocs/aobc.c
+  com/gs.c
+  com/gs_validate.c
+  etc/uart_test.c
 )
 
 if(C2A_BUILD_AS_CXX)

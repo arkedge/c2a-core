@@ -9,8 +9,8 @@
 #include "./aobc_telemetry_buffer.h"
 #include <src_core/tlm_cmd/common_tlm_cmd_packet.h>
 #include <src_core/tlm_cmd/common_cmd_packet.h>
-#include <src_core/Drivers/Protocol/eb90_frame_for_driver_super.h>
-#include <src_core/Drivers/Protocol/common_tlm_cmd_packet_for_driver_super.h>
+#include <src_core/driver/eb90_frame_for_driver_super.h>
+#include <src_core/driver/common_tlm_cmd_packet_for_driver_super.h>
 #include <string.h>
 
 #define AOBC_STREAM_TLM_CMD   (0)   //!< テレコマで使うストリーム

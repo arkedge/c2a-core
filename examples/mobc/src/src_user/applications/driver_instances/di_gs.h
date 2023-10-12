@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 
-#include "../../Drivers/Com/gs.h"
+#include "../../driver/com/gs.h"
 #include "../../tlm_cmd/ccsds/tcp_to_m_pdu.h"
 #include "../../tlm_cmd/ccsds/vcdu.h"
 #include <src_core/system/application_manager/app_info.h>

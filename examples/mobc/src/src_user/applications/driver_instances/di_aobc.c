@@ -6,7 +6,7 @@
  */
 
 #include "di_aobc.h"
-#include "../../Drivers/Aocs/aobc.h"
+#include "../../driver/aocs/aobc.h"
 #include "../../tlm_cmd/user_packet_handler.h"
 #include <src_core/library/print.h>
 #include <src_core/tlm_cmd/common_cmd_packet_util.h>

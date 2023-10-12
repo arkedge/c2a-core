@@ -6,9 +6,9 @@
 #ifndef DI_AOBC_H_
 #define DI_AOBC_H_
 
-#include "../../Drivers/Aocs/aobc.h"
-#include "../../Drivers/Aocs/aobc_command_definitions.h"
-#include "../../Drivers/Aocs/aobc_telemetry_definitions.h"
+#include "../../driver/aocs/aobc.h"
+#include "../../driver/aocs/aobc_command_definitions.h"
+#include "../../driver/aocs/aobc_telemetry_definitions.h"
 #include <src_core/system/application_manager/app_info.h>
 #include <src_core/tlm_cmd/command_dispatcher.h>
 #include <src_core/tlm_cmd/common_cmd_packet.h>
