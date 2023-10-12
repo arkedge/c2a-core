@@ -34,9 +34,8 @@ set(C2A_USER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/src_user)
 include_directories(src)
 
 # Output debug print to SILS console window
-option(SHOW_DEBUG_PRINT_ON_SILS "Show debug print")
-set(SHOW_DEBUG_PRINT_ON_SILS ON)
-if(SHOW_DEBUG_PRINT_ON_SILS)
+option(C2A_SHOW_DEBUG_PRINT_ON_SILS "Show debug print" ON)
+if(C2A_SHOW_DEBUG_PRINT_ON_SILS)
   add_definitions(-DSHOW_DEBUG_PRINT_ON_SILS)
   message("Show debug print")
 endif()
