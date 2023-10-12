@@ -7,9 +7,6 @@ pub mod i2c {
 pub mod spi {
     include!(concat!(env!("OUT_DIR"), "/spi.rs"));
 }
-pub mod spwire {
-    include!(concat!(env!("OUT_DIR"), "/spwire.rs"));
-}
 pub mod uart {
     include!(concat!(env!("OUT_DIR"), "/uart.rs"));
 }
