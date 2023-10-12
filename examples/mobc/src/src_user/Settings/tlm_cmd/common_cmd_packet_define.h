@@ -20,7 +20,7 @@ typedef CmdSpacePacket CommonCmdPacket;
 /**
  * @enum   CCP_DEST_TYPE
  * @brief  コマンドの解釈の宛先を規定
- * @note   詳細は https://github.com/arkedge/c2a-core/blob/develop/docs/core/communication.md を参照
+ * @note   詳細は https://github.com/arkedge/c2a-core/blob/develop/doc/core/communication.md を参照
  * @note   4bit を想定
  */
 typedef enum

@@ -6,7 +6,7 @@
   ],
   "ignore_dirs" : [
     "src/src_core/examples",
-    "src/src_core/docs",
+    "src/src_core/doc",
     "src/src_core/script"
   ],
   "ignore_files" : [
