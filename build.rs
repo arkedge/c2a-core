@@ -26,7 +26,6 @@ fn main() {
     bind("hal".into(), "ccsds.h");
     bind("hal".into(), "i2c.h");
     bind("hal".into(), "spi.h");
-    bind("hal".into(), "spwire.h");
     bind("hal".into(), "uart.h");
     bind("hal".into(), "wdt.h");
 }
