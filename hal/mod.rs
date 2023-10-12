@@ -1,6 +1,3 @@
-pub mod aa {
-    include!(concat!(env!("OUT_DIR"), "/aa.rs"));
-}
 pub mod ccsds {
     include!(concat!(env!("OUT_DIR"), "/ccsds.rs"));
 }

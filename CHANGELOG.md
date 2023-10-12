@@ -18,7 +18,7 @@
   - 歪なディレクトリ構造の修正: [#28](https://github.com/arkedge/c2a-core/issues/28)
   - 移行には [scripts/migration/](./scripts/migration/) 以下の `v4-rename-*.sh` の migration script を使用可能
     - example user についてはこの migration script のみで移行しているが，あらゆる C2A user の状況について考慮できているわけではないため，適宜対応が必要
-- `hal`（旧 `IfWrapper`）のうち，古すぎるインターフェースを排除: [#23](https://github.com/arkedge/c2a-core/issues/23), [#25](https://github.com/arkedge/c2a-core/pull/25)
+- `hal`（旧 `IfWrapper`）のうち，古すぎるインターフェースを排除: [#23](https://github.com/arkedge/c2a-core/issues/23), [#25](https://github.com/arkedge/c2a-core/pull/25), [#129](https://github.com/arkedge/c2a-core/pull/129)
   - 既に使われてしまっているものについては，各 C2A user で一旦雑に古いヘッダファイルを各々で持って対応可能（今後再設計する予定）
 - `check_coding_rule.py` の設定ファイルである `check_coding_rule.json` の場所を C2A user のトップディレクトリに変更: [#97](https://github.com/arkedge/c2a-core/pull/97)
   - 対応方法

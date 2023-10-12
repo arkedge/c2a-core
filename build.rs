@@ -23,7 +23,6 @@ fn main() {
     //bind("system/time_manager".into(), "time_manager.h");
     //bind("system/watchdog_timer".into(), "watchdog_timer.h");
 
-    bind("hal".into(), "aa.h");
     bind("hal".into(), "ccsds.h");
     bind("hal".into(), "i2c.h");
     bind("hal".into(), "pa.h");
