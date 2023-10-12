@@ -17,7 +17,7 @@
       "input_file_encoding" : "utf-8",
       "path_to_db" : "../examples/subobc/src/src_user/Settings/tlm_cmd/data_base/",
       "max_tlm_num" : 256,
-      "driver_path" : "Aocs/",
+      "driver_path" : "aocs/",
       "driver_type" : "AOBC_Driver",
       "driver_name" : "aobc_driver",
       "code_when_tlm_not_found" : "aobc_driver->info.comm.rx_err_code = AOBC_RX_ERR_CODE_TLM_NOT_FOUND;"
