@@ -10,7 +10,7 @@ project(C2A)
 # そちらのバッファが詰まってSILSの動作が止まることがあるので注意すること！
 option(USE_SCI_COM_WINGS "Use SCI_COM_WINGS" ON)
 
-option(USE_SILS_MOCKUP "Use SILS mockup for build C2A with minimal user in C89 only" OFF)
+option(C2A_BUILD_WITH_SILS_MOCKUP "Build C2A with SILS mockup for check undefined symbols by build minimal C2A user executable(C89 only)" OFF)
 
 option(C2A_BUILD_FOR_SILS "Build C2A for SILS target" ON)
 
@@ -18,7 +18,7 @@ option(C2A_BUILD_FOR_SILS "Build C2A for SILS target" ON)
 set(C2A_USE_ALL_CORE_APPS OFF)
 set(C2A_USE_ALL_CORE_TEST_APPS OFF)
 
-if(USE_SILS_MOCKUP)
+if(C2A_BUILD_WITH_SILS_MOCKUP)
   set(C2A_BUILD_AS_CXX OFF)
 endif()
 
@@ -72,7 +72,7 @@ if(C2A_BUILD_AS_CXX)
   set_source_files_properties(${C2A_SRCS} PROPERTIES LANGUAGE CXX)  # C++
 endif()
 
-if(USE_SILS_MOCKUP)
+if(C2A_BUILD_WITH_SILS_MOCKUP)
   add_definitions(-DDEFINE_MAIN_ON_SILS)
   add_executable(${PROJECT_NAME} ${C2A_SRCS})
 else()

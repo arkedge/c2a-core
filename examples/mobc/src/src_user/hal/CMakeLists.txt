@@ -7,7 +7,7 @@ set(C2A_COMMON_SRCS
 )
 
 # 通常，S2EではC++ビルドされるが，C2A core開発のため，C2A単体をC89でライブラリビルドする場合は，mockupをビルド対象にする
-if(USE_SILS_MOCKUP)
+if(C2A_BUILD_WITH_SILS_MOCKUP)
   message("USE SILS_MOCKUP")
 
   #target_sources(${PROJECT_NAME} PRIVATE
