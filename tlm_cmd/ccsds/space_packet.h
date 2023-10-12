@@ -8,7 +8,7 @@
  *          CommonCmdPacket    -> CmdSpacePacket
  *        つまり， C2A Core 実装においては， Space Packet に依存したコードを書いてはならない！（これを include してはならない）  FIXME: 完全にできてないので直す
  * @note  Packet Secondary Header は C2A 独自定義． いくつかのバージョンを用意している
- * @note  /docs/core/communication.md などを参照
+ * @note  /doc/core/communication.md などを参照
  * @note  packet 構造
  *        |---------+-------+-------+------------------|
  *        | Pos     | Pos   | size  | name             |

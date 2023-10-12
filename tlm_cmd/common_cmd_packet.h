@@ -12,7 +12,7 @@
 // ここで CCP_DEST_TYPE を定義する
 // 詳細は
 // - /examples/mobc/src/src_user/Settings/tlm_cmd/common_cmd_packet_define.h
-// - https://github.com/arkedge/c2a-core/blob/develop/docs/core/communication.md
+// - https://github.com/arkedge/c2a-core/blob/develop/doc/core/communication.md
 // を参照
 /* 例
 typedef enum
