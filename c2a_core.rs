@@ -3,6 +3,8 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 #![allow(dead_code)]
+#![allow(rustdoc::bare_urls)]
+#![doc = include_str!("README.md")]
 
 use core::*;
 include!(concat!(env!("OUT_DIR"), "/c2a_core_main.rs"));
