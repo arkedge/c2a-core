@@ -81,7 +81,7 @@ jobs:
     - uses: sksat/setup-rye@v0.9.1
 
     - name: install pytest deps
-      working-directory: examples/${{ matrix.c2a_user }}/src/src_user/Test
+      working-directory: examples/${{ matrix.c2a_user }}/src/src_user/test
       run: |
         rye sync
 
@@ -115,6 +115,6 @@ jobs:
         sleep 3
 
     - name: run pytest
-      working-directory: ./examples/${{ matrix.c2a_user }}/src/src_user/Test
+      working-directory: ./examples/${{ matrix.c2a_user }}/src/src_user/test
       run: |
         rye run pytest -m sils -v ./test/${{ matrix.test_dir }}

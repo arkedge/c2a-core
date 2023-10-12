@@ -1,7 +1,7 @@
 # C2A PYTEST
 - CI などで自動でテストできるようにした pytest．
 - C2A は現状関数レベルのテストはなく，コマンド送信とテレメ結果で判断する，結合テストのみしかない．
-- なお， C2A 間通信のテストについては， [examples/subobc/src/src_user/Test](../../../../subobc/src/src_user/Test) を参照すること．
+- なお， C2A 間通信のテストについては， [examples/subobc/src/src_user/test](../../../../subobc/src/src_user/test) を参照すること．
 
 ## 環境
 - python3 系列と以下のライブラリ
