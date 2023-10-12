@@ -145,11 +145,11 @@ DriverSuperを継承したDriver数:           4
 ```
 
 #### 定義
-- core: [`/src_core/Drivers/Super/DriverSuper.h`](https://github.com/arkedge/c2a-core/blob/develop/Drivers/Super/DriverSuper.h)
+- core: [`/src_core/driver/driver_super.h`](https://github.com/arkedge/c2a-core/blob/develop/driver/driver_super.h)
 - user: `/src_user/Settings/DriverSuper/driver_super_params.h`
 
 #### 詳細説明
-[`/src_core/Drivers/Super/DriverSuper.h`](https://github.com/arkedge/c2a-core/blob/develop/Drivers/Super/DriverSuper.h) を参照．
+[`/src_core/driver/Super/DriverSuper.h`](https://github.com/arkedge/c2a-core/blob/develop/driver/driver_super.h) を参照．
 
 
 ## メモリ使用量にあまり影響しない設定
