@@ -4,9 +4,6 @@ pub mod ccsds {
 pub mod i2c {
     include!(concat!(env!("OUT_DIR"), "/i2c.rs"));
 }
-pub mod pa {
-    include!(concat!(env!("OUT_DIR"), "/pa.rs"));
-}
 pub mod spi {
     include!(concat!(env!("OUT_DIR"), "/spi.rs"));
 }
