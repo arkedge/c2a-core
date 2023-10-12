@@ -59,7 +59,7 @@ $ python GenerateC2ACode.py
       "path_to_db" : "../../c2a_sample_aobc/database/",
       # MOBC で保持するテレメの TLM ID の最大値（＝テレメ種類数）
       "max_tlm_num" : 256,
-      "driver_path" : "Aocs/",
+      "driver_path" : "aocs/",
       "driver_type" : "AOBC_Driver",
       "driver_name" : "aobc",
       "code_when_tlm_not_found" : "aobc_driver->info.comm.rx_err_code = AOBC_RX_ERR_CODE_TLM_NOT_FOUND;"
@@ -77,7 +77,7 @@ $ python GenerateC2ACode.py
       "path_to_db" : ""../../c2a_sample_tobc/database/",
       # MOBC で保持するテレメの TLM ID の最大値（＝テレメ種類数）
       "max_tlm_num" : 256,
-      "driver_path" : "Thermal/",
+      "driver_path" : "thermal/",
       "driver_type" : "TOBC_Driver",
       "driver_name" : "tobc",
       "code_when_tlm_not_found" : "tobc_driver->info.comm.rx_err_code = TOBC_RX_ERR_CODE_TLM_NOT_FOUND;"
