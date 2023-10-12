@@ -6,7 +6,7 @@ fn main() {
         .define("C2A_BUILD_FOR_32BIT", "OFF")
         .define("C2A_BUILD_AS_C99", "ON")
         .define("C2A_BUILD_FOR_SILS", "ON")
-        .define("USE_SCI_COM_WINGS", "OFF")
+        .define("C2A_USE_SCI_COM_WINGS", "OFF")
         .build_target("C2A");
 
     println!("cargo:rerun-if-changed=./src/src_core");

@@ -7,7 +7,7 @@ set(C2A_COMMON_SRCS
 )
 
 # 通常，S2EではC++ビルドされるが，C2A core開発のため，C2A単体をC89でライブラリビルドする場合は，mockupをビルド対象にする
-if(USE_SILS_MOCKUP)
+if(C2A_BUILD_WITH_SILS_MOCKUP)
   message("USE SILS_MOCKUP")
 
   #target_sources(${PROJECT_NAME} PRIVATE
@@ -26,7 +26,7 @@ else()
     sils/wdt_sils.cpp
   )
 
-  if(USE_SCI_COM_WINGS)
+  if(C2A_USE_SCI_COM_WINGS)
     add_definitions(-DUSE_SCI_COM_WINGS)
     #target_sources(${PROJECT_NAME} PUBLIC
     set(C2A_HAL_COM_WINGS_SRCS
@@ -35,7 +35,7 @@ else()
     message("USE SCI_COM_WINGS")
   endif()
 
-  if(USE_SCI_COM_UART)
+  if(C2A_USE_SCI_COM_UART)
     add_definitions(-DUSE_SCI_COM_UART)
     #target_sources(${PROJECT_NAME} PUBLIC
     set(C2A_HAL_COM_UART_SRCS

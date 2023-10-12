@@ -7,7 +7,7 @@ set(C2A_COMMON_SRCS
 )
 
 # 通常，S2EではC++ビルドされるが，C2A core開発のため，C2A単体をC89でライブラリビルドする場合は，mockupをビルド対象にする
-if(USE_SILS_MOCKUP)
+if(C2A_BUILD_WITH_SILS_MOCKUP)
   message("USE SILS_MOCKUP")
 
   #target_sources(${PROJECT_NAME} PRIVATE
@@ -24,7 +24,7 @@ else()
     sils/wdt_sils.cpp
   )
 
-  if(USE_SCI_COM_WINGS) # TODO: これ USE_SCI_COM_UART では？
+  if(C2A_USE_SCI_COM_WINGS) # option 名が confusing だが，subobc の upstream（単体試験では WINGS と疎通するポート）は UART
     add_definitions(-DUSE_SCI_COM_WINGS)
     #target_sources(${PROJECT_NAME} PUBLIC
     set(C2A_HAL_COM_UART_SRCS
