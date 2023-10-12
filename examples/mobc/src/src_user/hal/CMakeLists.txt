@@ -26,7 +26,7 @@ else()
     sils/wdt_sils.cpp
   )
 
-  if(USE_SCI_COM_WINGS)
+  if(C2A_USE_SCI_COM_WINGS)
     add_definitions(-DUSE_SCI_COM_WINGS)
     #target_sources(${PROJECT_NAME} PUBLIC
     set(C2A_HAL_COM_WINGS_SRCS
@@ -35,7 +35,7 @@ else()
     message("USE SCI_COM_WINGS")
   endif()
 
-  if(USE_SCI_COM_UART)
+  if(C2A_USE_SCI_COM_UART)
     add_definitions(-DUSE_SCI_COM_UART)
     #target_sources(${PROJECT_NAME} PUBLIC
     set(C2A_HAL_COM_UART_SRCS

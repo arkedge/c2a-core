@@ -8,13 +8,13 @@ project(C2A)
 # ！！！注意！！！
 # これをONにした状態で，SCIの受け口がない場合（TMTC IFが動いてない状態）
 # そちらのバッファが詰まってSILSの動作が止まることがあるので注意すること！
-option(USE_SCI_COM_WINGS "Use SCI_COM_WINGS" ON)
+option(C2A_USE_SCI_COM_WINGS "Use SCI_COM_WINGS" ON)
 
 # SCI COM for connection to PC UART
 # ！！！注意！！！
 # これをONにした状態で，SCIの受け口がない場合（受けてのTeratermが起動していない状態）
 # そちらのバッファが詰まってSILSの動作が止まることがあるので注意すること！
-option(USE_SCI_COM_UART "Use SCI_COM_UART" OFF)
+option(C2A_USE_SCI_COM_UART "Use SCI_COM_UART" OFF)
 
 option(C2A_BUILD_WITH_SILS_MOCKUP "Build C2A with SILS mockup for check undefined symbols by build minimal C2A user executable(C89 only)" OFF)
 
