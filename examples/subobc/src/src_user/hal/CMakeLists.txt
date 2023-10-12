@@ -24,7 +24,7 @@ else()
     sils/wdt_sils.cpp
   )
 
-  if(C2A_USE_SCI_COM_WINGS) # TODO: これ USE_SCI_COM_UART では？
+  if(C2A_USE_SCI_COM_WINGS) # option 名が confusing だが，subobc の upstream（単体試験では WINGS と疎通するポート）は UART
     add_definitions(-DUSE_SCI_COM_WINGS)
     #target_sources(${PROJECT_NAME} PUBLIC
     set(C2A_HAL_COM_UART_SRCS
