@@ -32,6 +32,5 @@ jobs:
           git add .
           if ! git diff --exit-code --cached; then
             echo "threre are some diff after code generation"
-            git diff HEAD
             exit 1
           fi
