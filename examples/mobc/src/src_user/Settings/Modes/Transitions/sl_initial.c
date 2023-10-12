@@ -4,7 +4,7 @@
 #include "../../../tlm_cmd/block_command_definitions.h"
 #include "../../../tlm_cmd/command_definitions.h"
 
-#include "../../../Drivers/Com/gs.h"
+#include "../../../driver/com/gs.h"
 
 #include <src_core/applications/timeline_command_dispatcher_id_define.h>
 #include <src_core/tlm_cmd/block_command_loader.h>

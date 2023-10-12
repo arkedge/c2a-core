@@ -7,7 +7,7 @@
 #define AOBC_TELEMETRY_BUFFER_H_
 
 #include "./aobc_telemetry_definitions.h"
-#include <src_core/Drivers/Super/driver_super.h>
+#include <src_core/driver/driver_super.h>
 #include <src_core/tlm_cmd/common_tlm_packet.h>
 #include <src_core/tlm_cmd/telemetry_frame.h>
 

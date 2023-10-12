@@ -11,7 +11,7 @@
 
 #include "../../hal/ccsds_user.h"
 #include "../../tlm_cmd/ccsds/tc_transfer_frame.h"
-#include <src_core/Drivers/Super/driver_super.h>
+#include <src_core/driver/driver_super.h>
 #include <src_core/tlm_cmd/packet_handler.h>
 #include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>
 

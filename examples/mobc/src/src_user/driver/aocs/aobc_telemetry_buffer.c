@@ -4,7 +4,7 @@
  * @brief  テレメトリバッファー（テレメ中継）
  * @note   このコードは自動生成されています！
  */
-#include <src_core/Drivers/Protocol/common_tlm_cmd_packet_for_driver_super.h>
+#include <src_core/driver/common_tlm_cmd_packet_for_driver_super.h>
 #include "./aobc_telemetry_definitions.h"
 #include "./aobc_telemetry_buffer.h"
 #include "./aobc.h"

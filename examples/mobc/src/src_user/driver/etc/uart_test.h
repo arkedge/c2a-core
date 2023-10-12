@@ -6,7 +6,7 @@
 #define UART_TEST_H_
 
 #include <src_core/hal/uart.h>
-#include <src_core/Drivers/Super/driver_super.h>
+#include <src_core/driver/driver_super.h>
 
 /**
  * @struct UART_TEST_Info

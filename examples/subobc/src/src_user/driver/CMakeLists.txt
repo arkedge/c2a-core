@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 project(C2A_USER_DRIVERS)
 
 set(C2A_SRCS
-  Etc/mobc.c
+  etc/mobc.c
 )
 
 if(C2A_BUILD_AS_CXX)
