@@ -88,4 +88,4 @@
 - [v3.6.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.6.0)
 - [v3.5.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.5.0)
 - [v3.4.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.4.0)
-- [v3.1.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.3.1)
+- [v3.3.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.3.1)
