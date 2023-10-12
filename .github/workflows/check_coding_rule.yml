@@ -15,7 +15,7 @@ jobs:
         user:
           - mobc
           - subobc
-    uses: arkedge/workflows-c2a/.github/workflows/check-coding-rule-v4.yml@v4.5.1
+    uses: arkedge/workflows-c2a/.github/workflows/check-coding-rule-v4.yml@v4.5.2
     with:
       c2a_dir: examples/${{ matrix.user }}
       c2a_custom_setup: |
