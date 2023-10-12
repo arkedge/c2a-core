@@ -259,23 +259,23 @@ int Cmd_APP_DR_SET_PARAMS(const CommonCmdPacket* packet);
 ```
 
 
-### applications/driver_instances
-- ファイル名は `di_${IFやデバイス名}`
+### applications/component_service
+- ファイル名は `csrv_${IFやデバイス名}`
 - Driver 構造体名とそのインスタンス名を一致させる（スタイルを除く）
     - 特定のドライバ構造体のインスタンスが複数ある場合は，配列にまとめる．
     - 単一の場合は，スカラ形式を推奨するが，要素1の配列にしても良い．
         - その場合，その C2A 内ではすべてのドライバ構造体のインスタンスは配列にすること．
-- 接頭辞は `DI_${IFやデバイス名}`
+- 接頭辞は `CSRV_${IFやデバイス名}`
 
 例：
 ```cpp
 ファイル名
-di_pcdu.c/h
-di_xtx.c/h
+csrv_pcdu.c/h
+csrv_xtx.c/h
 
 接頭辞
-DI_PCDU_
-DI_XTX_
+CSRV_PCDU_
+CSRV_XTX_
 
 インスタンス名
 static PCDU_Driver pcdu_driver_;
@@ -284,15 +284,15 @@ static XTX_Driver xtx_driver_;
 const XTX_Driver* const xtx_driver = &xtx_driver_;
 ```
 
-複数インスタンス例：
+複数 Component Service 例：
 ```cpp
 typedef enum
 {
-  DI_RM3100_IDX_ON_AOBC = 0,
-  DI_RM3100_IDX_ON_HOGE,
-  DI_RM3100_IDX_ON_FUGA,
-  DI_RM3100_IDX_MAX,
-} DI_RM3100_IDX;
+  CSRV_RM3100_IDX_ON_AOBC = 0,
+  CSRV_RM3100_IDX_ON_HOGE,
+  CSRV_RM3100_IDX_ON_FUGA,
+  CSRV_RM3100_IDX_MAX,
+} CSRV_RM3100_IDX;
 
 RM3100_Driver rm3100_driver[RM3100_IDX_MAX];
 ```
@@ -322,14 +322,14 @@ const MwFlash* const mw_flash = &mw_flash_;
 `AR_APP_ID` enumの接頭辞は，
 - `AR_NOP`: NOP
 - `AR_APP_HOGE`: UserDefined
-- `AR_DI_HOGE`: DI
+- `AR_CSRV_HOGE`: Component Service
 - `AR_WM_HOGE`: MW
 
 とし，基本的には `HOGE` は ファイル名にする．
 
 つまり， 
 - applications/user_defined/data_recorder.h → `AR_APP_DATA_RECORDER`
-- applications/driver_instances/di_pcdu.h → `AR_DI_PCDU`
+- applications/component_service/csrv_pcdu.h → `AR_CSRV_PCDU`
 
 となる．
 
