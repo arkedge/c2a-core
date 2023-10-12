@@ -35,7 +35,7 @@
     "driver/",
     "hal/",
     "library/",
-    "System/",
+    "system/",
     "tlm_cmd/",
     "examples/mobc/src/src_user/",
     "examples/subobc/src/src_user/"

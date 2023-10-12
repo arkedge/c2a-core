@@ -11,7 +11,7 @@ int UTIL_COUNTER_dummy(void)
 #if 0
 
 #include "../tlm_cmd/packet_handler.h"
-#include "../System/AnomalyLogger/anomaly_logger.h"
+#include "../system/AnomalyLogger/anomaly_logger.h"
 #include <string.h>   // for memcpy
 #include "../tlm_cmd/common_cmd_packet_util.h"
 #include "../library/result.h"

@@ -20,7 +20,7 @@ sub GetSetting {
 		'driver',
 		'hal',
 		'library',
-		'System',
+		'system',
 		'tlm_cmd'
 	];
 
