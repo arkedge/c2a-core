@@ -58,7 +58,7 @@ static int CDS_rx_(ComponentDriverSuper* p_super);
  * @return void 詳細は CDS_StreamRecStatus
  */
 static void CDS_analyze_rx_buffer_(CDS_StreamConfig* p_stream_config,
-                                  uint16_t rec_data_len);
+                                   uint16_t rec_data_len);
 
 /**
  * @brief  解析用受信バッファの準備
@@ -70,7 +70,7 @@ static void CDS_analyze_rx_buffer_(CDS_StreamConfig* p_stream_config,
  * @note   厳格なフレーム探索が有効かどうかで処理が変わることに注意
  */
 static void CDS_analyze_rx_buffer_prepare_buffer_(CDS_StreamConfig* p_stream_config,
-                                                 uint16_t rec_data_len);
+                                                  uint16_t rec_data_len);
 
 /**
  * @brief  フレーム解析関数
@@ -144,7 +144,7 @@ static void CDS_analyze_rx_buffer_receiving_header_(CDS_StreamConfig* p_stream_c
  * @return void その他の詳細は CDS_StreamRecStatus
  */
 static void CDS_analyze_rx_buffer_receiving_footer_(CDS_StreamConfig* p_stream_config,
-                                                   uint16_t rx_frame_size);
+                                                    uint16_t rx_frame_size);
 
 /**
  * @brief  フレーム解析中に受信したフレームからフレーム長を取得する関数
@@ -193,7 +193,7 @@ void CDS_clear_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer);
  * @return void
  */
 void CDS_drop_from_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
-                                     uint16_t size);
+                                      uint16_t size);
 
 /**
  * @brief CDS_StreamRecBuffer の追記（後ろへの）
@@ -205,8 +205,8 @@ void CDS_drop_from_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
  * @retval CDS_ERR_CODE_ERR: サイズ不足でコピーできず
  */
 CDS_ERR_CODE CDS_push_to_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
-                                          const uint8_t* buffer,
-                                          uint16_t size);
+                                            const uint8_t* buffer,
+                                            uint16_t size);
 
 /**
  * @brief CDS_StreamRecBuffer の未処理バッファサイズの取得
@@ -224,7 +224,7 @@ uint16_t CDS_get_unprocessed_size_from_stream_rec_buffer_(CDS_StreamRecBuffer* s
  * @return void
  */
 void CDS_confirm_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
-                                   uint16_t size);
+                                    uint16_t size);
 
 /**
  * @brief CDS_StreamRecBuffer で指定サイズだけフレーム開始点を前進させる
@@ -234,15 +234,15 @@ void CDS_confirm_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
  * @return void
  */
 void CDS_move_forward_frame_head_candidate_of_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
-                                                                uint16_t size);
+                                                                 uint16_t size);
 
 
 // ###### ComponentDriverSuper基本関数 ######
 
 CDS_ERR_CODE CDS_init(ComponentDriverSuper* p_super,
-                    void* if_config,
-                    CDS_StreamRecBuffer* rx_buffer,
-                    CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super))
+                      void* if_config,
+                      CDS_StreamRecBuffer* rx_buffer,
+                      CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super))
 {
   CDS_StreamRecBuffer* rx_buffers[CDS_STREAM_MAX];
   CDS_nullify_stream_rec_buffers(rx_buffers);
@@ -252,9 +252,9 @@ CDS_ERR_CODE CDS_init(ComponentDriverSuper* p_super,
 
 
 CDS_ERR_CODE CDS_init_streams(ComponentDriverSuper* p_super,
-                            void* if_config,
-                            CDS_StreamRecBuffer* rx_buffers[CDS_STREAM_MAX],
-                            CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super))
+                              void* if_config,
+                              CDS_StreamRecBuffer* rx_buffers[CDS_STREAM_MAX],
+                              CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super))
 {
   uint8_t stream;
 
@@ -632,7 +632,7 @@ static int CDS_rx_(ComponentDriverSuper* p_super)
 
 
 static void CDS_analyze_rx_buffer_(CDS_StreamConfig* p_stream_config,
-                                  uint16_t rec_data_len)
+                                   uint16_t rec_data_len)
 {
   CDS_analyze_rx_buffer_prepare_buffer_(p_stream_config, rec_data_len);
 
@@ -644,7 +644,7 @@ static void CDS_analyze_rx_buffer_(CDS_StreamConfig* p_stream_config,
 
 
 static void CDS_analyze_rx_buffer_prepare_buffer_(CDS_StreamConfig* p_stream_config,
-                                                 uint16_t rec_data_len)
+                                                  uint16_t rec_data_len)
 {
   // rx_buffer_ には，前回確定したフレームも残っているので，それは除く
   // したがって， DS の CDSSC_get_rx_frame した frame へのポインタは，次回受信時までしか有効ではない
@@ -807,7 +807,7 @@ static void CDS_analyze_rx_buffer_fixed_pickup_(CDS_StreamConfig* p_stream_confi
   {
     // フッタ受信中 or フッタなしの場合はフレーム確定
     CDS_analyze_rx_buffer_receiving_footer_(p_stream_config,
-                                           (uint16_t)(p->settings.rx_frame_size_));
+                                            (uint16_t)(p->settings.rx_frame_size_));
     return;
   }
 }
@@ -906,7 +906,7 @@ static void CDS_analyze_rx_buffer_variable_pickup_with_rx_frame_size_(CDS_Stream
   {
     // フッタ受信中 or フッタなしの場合はフレーム確定
     CDS_analyze_rx_buffer_receiving_footer_(p_stream_config,
-                                           (uint16_t)rx_frame_size);
+                                            (uint16_t)rx_frame_size);
     return;
   }
 }
@@ -1081,7 +1081,7 @@ static void CDS_analyze_rx_buffer_receiving_header_(CDS_StreamConfig* p_stream_c
 
 
 static void CDS_analyze_rx_buffer_receiving_footer_(CDS_StreamConfig* p_stream_config,
-                                                   uint16_t rx_frame_size)
+                                                    uint16_t rx_frame_size)
 {
   CDS_StreamConfig* p = p_stream_config;  // ちょっと変数名が長すぎて配列 index などがみずらいので...
   CDS_StreamRecBuffer* buffer = p->settings.rx_buffer_;
@@ -1321,7 +1321,7 @@ uint16_t CDSC_get_rx_buffer_size_in_if_rx(const ComponentDriverSuper* p_super)
 }
 
 CDS_ERR_CODE CDSC_set_rx_buffer_size_in_if_rx(ComponentDriverSuper* p_super,
-                                            const uint16_t rx_buffer_size_in_if_rx)
+                                              const uint16_t rx_buffer_size_in_if_rx)
 {
   if (rx_buffer_size_in_if_rx > CDS_IF_RX_BUFFER_SIZE) return CDS_ERR_CODE_ERR;
   p_super->config.settings.rx_buffer_size_in_if_rx_ = rx_buffer_size_in_if_rx;
@@ -1349,7 +1349,7 @@ uint32_t CDSC_get_time_threshold_for_rx_disruption(const ComponentDriverSuper* p
 }
 
 void CDSC_set_time_threshold_for_rx_disruption(ComponentDriverSuper* p_super,
-                                              const uint32_t time_threshold_for_rx_disruption)
+                                               const uint32_t time_threshold_for_rx_disruption)
 {
   p_super->config.settings.time_threshold_for_rx_disruption_ = time_threshold_for_rx_disruption;
 }
@@ -1429,7 +1429,7 @@ uint8_t* CDSSC_get_tx_frame_as_non_const_pointer(CDS_StreamConfig* p_stream_conf
 }
 
 void CDSSC_set_tx_frame(CDS_StreamConfig* p_stream_config,
-                       uint8_t* tx_frame)
+                        uint8_t* tx_frame)
 {
   p_stream_config->settings.tx_frame_ = tx_frame;
   p_stream_config->internal.is_validation_needed_for_send_ = 1;
@@ -1441,7 +1441,7 @@ uint16_t CDSSC_get_tx_frame_size(const CDS_StreamConfig* p_stream_config)
 }
 
 void CDSSC_set_tx_frame_size(CDS_StreamConfig* p_stream_config,
-                            const uint16_t tx_frame_size)
+                             const uint16_t tx_frame_size)
 {
   p_stream_config->settings.tx_frame_size_ = tx_frame_size;
   p_stream_config->internal.is_validation_needed_for_send_ = 1;
@@ -1453,22 +1453,22 @@ int16_t CDSSC_get_tx_frame_buffer_size(CDS_StreamConfig* p_stream_config)
 }
 
 void CDSSC_set_tx_frame_buffer_size(CDS_StreamConfig* p_stream_config,
-                                   const int16_t tx_frame_buffer_size)
+                                    const int16_t tx_frame_buffer_size)
 {
   p_stream_config->settings.tx_frame_buffer_size_ = tx_frame_buffer_size;
   p_stream_config->internal.is_validation_needed_for_send_ = 1;
 }
 
 void CDSSC_set_rx_buffer(CDS_StreamConfig* p_stream_config,
-                        CDS_StreamRecBuffer* rx_buffer)
+                         CDS_StreamRecBuffer* rx_buffer)
 {
   p_stream_config->settings.rx_buffer_ = rx_buffer;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void CDSSC_set_rx_header(CDS_StreamConfig* p_stream_config,
-                        const uint8_t* rx_header,
-                        const uint16_t rx_header_size)
+                         const uint8_t* rx_header,
+                         const uint16_t rx_header_size)
 {
   p_stream_config->settings.rx_header_ = rx_header;
   p_stream_config->settings.rx_header_size_ = rx_header_size;
@@ -1481,8 +1481,8 @@ uint16_t CDSSC_get_rx_header_size(const CDS_StreamConfig* p_stream_config)
 }
 
 void CDSSC_set_rx_footer(CDS_StreamConfig* p_stream_config,
-                        const uint8_t* rx_footer,
-                        const uint16_t rx_footer_size)
+                         const uint8_t* rx_footer,
+                         const uint16_t rx_footer_size)
 {
   p_stream_config->settings.rx_footer_ = rx_footer;
   p_stream_config->settings.rx_footer_size_ = rx_footer_size;
@@ -1500,7 +1500,7 @@ int16_t CDSSC_get_rx_frame_size(const CDS_StreamConfig* p_stream_config)
 }
 
 void CDSSC_set_rx_frame_size(CDS_StreamConfig* p_stream_config,
-                            const int16_t rx_frame_size)
+                             const int16_t rx_frame_size)
 {
   p_stream_config->settings.rx_frame_size_ = rx_frame_size;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
@@ -1512,35 +1512,35 @@ uint16_t CDSSC_get_max_rx_frame_size(const CDS_StreamConfig* p_stream_config)
 }
 
 void CDSSC_set_max_rx_frame_size(CDS_StreamConfig* p_stream_config,
-                            const uint16_t max_rx_frame_size)
+                                 const uint16_t max_rx_frame_size)
 {
   p_stream_config->settings.max_rx_frame_size_ = max_rx_frame_size;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void CDSSC_set_rx_framelength_pos(CDS_StreamConfig* p_stream_config,
-                                 const int16_t rx_framelength_pos)
+                                  const int16_t rx_framelength_pos)
 {
   p_stream_config->settings.rx_framelength_pos_ = rx_framelength_pos;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void CDSSC_set_rx_framelength_type_size(CDS_StreamConfig* p_stream_config,
-                                       const uint16_t rx_framelength_type_size)
+                                        const uint16_t rx_framelength_type_size)
 {
   p_stream_config->settings.rx_framelength_type_size_ = rx_framelength_type_size;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void CDSSC_set_rx_framelength_offset(CDS_StreamConfig* p_stream_config,
-                                    const uint16_t rx_framelength_offset)
+                                     const uint16_t rx_framelength_offset)
 {
   p_stream_config->settings.rx_framelength_offset_ = rx_framelength_offset;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void CDSSC_set_rx_framelength_endian(CDS_StreamConfig* p_stream_config,
-                                    const ENDIAN_TYPE rx_framelength_endian)
+                                     const ENDIAN_TYPE rx_framelength_endian)
 {
   p_stream_config->settings.rx_framelength_endian_ = rx_framelength_endian;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
@@ -1569,14 +1569,14 @@ uint32_t CDSSC_get_time_threshold_for_tlm_disruption(const CDS_StreamConfig* p_s
 }
 
 void CDSSC_set_time_threshold_for_tlm_disruption(CDS_StreamConfig* p_stream_config,
-                                                const uint32_t time_threshold_for_tlm_disruption)
+                                                 const uint32_t time_threshold_for_tlm_disruption)
 {
   p_stream_config->settings.time_threshold_for_tlm_disruption_ = time_threshold_for_tlm_disruption;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
 }
 
 void CDSSC_set_data_analyzer(CDS_StreamConfig* p_stream_config,
-                            CDS_ERR_CODE (*data_analyzer)(CDS_StreamConfig* p_stream_config, void* p_driver))
+                             CDS_ERR_CODE (*data_analyzer)(CDS_StreamConfig* p_stream_config, void* p_driver))
 {
   p_stream_config->settings.data_analyzer_ = data_analyzer;
   p_stream_config->internal.is_validation_needed_for_rec_ = 1;
@@ -1643,8 +1643,8 @@ CDS_ERR_CODE CDSSC_get_ret_from_data_analyzer(const CDS_StreamConfig* p_stream_c
 // ###### ComponentDriver 汎用 Util 関数 ######
 
 CDS_ERR_CODE CDS_init_stream_rec_buffer(CDS_StreamRecBuffer* stream_rec_buffer,
-                                      uint8_t* buffer,
-                                      const uint16_t buffer_capacity)
+                                        uint8_t* buffer,
+                                        const uint16_t buffer_capacity)
 {
   if (stream_rec_buffer == NULL) return CDS_ERR_CODE_ERR;
   if (buffer == NULL) return CDS_ERR_CODE_ERR;
@@ -1746,7 +1746,7 @@ void CDS_clear_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer)
 
 
 void CDS_drop_from_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
-                                     uint16_t size)
+                                      uint16_t size)
 {
   int32_t move_size = stream_rec_buffer->size - size;
 
@@ -1796,8 +1796,8 @@ void CDS_drop_from_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
 
 
 CDS_ERR_CODE CDS_push_to_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
-                                          const uint8_t* buffer,
-                                          uint16_t size)
+                                            const uint8_t* buffer,
+                                            uint16_t size)
 {
   uint16_t rest_size = stream_rec_buffer->capacity - stream_rec_buffer->size;
   if (rest_size < size) return CDS_ERR_CODE_ERR;
@@ -1820,7 +1820,7 @@ uint16_t CDS_get_unprocessed_size_from_stream_rec_buffer_(CDS_StreamRecBuffer* s
 
 
 void CDS_confirm_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
-                                   uint16_t size)
+                                    uint16_t size)
 {
   stream_rec_buffer->confirmed_frame_len += size;
   if (stream_rec_buffer->confirmed_frame_len > stream_rec_buffer->size)
@@ -1831,7 +1831,7 @@ void CDS_confirm_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
 
 
 void CDS_move_forward_frame_head_candidate_of_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
-                                                                uint16_t size)
+                                                                 uint16_t size)
 {
   stream_rec_buffer->pos_of_frame_head_candidate += size;
   if (stream_rec_buffer->pos_of_frame_head_candidate > stream_rec_buffer->size)

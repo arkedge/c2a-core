@@ -255,7 +255,7 @@ typedef struct
 
   struct
   {
-    CDS_RecStatus rec_status_;                                 //!< IF受信状況
+    CDS_RecStatus rec_status_;                                //!< IF受信状況
 
     uint32_t rx_count_;                                       //!< なにかしらのデータの受信回数
     uint32_t rx_call_count_;                                  //!< CDS_receive 呼び出し回数
@@ -265,7 +265,8 @@ typedef struct
 
   struct
   {
-    CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super);   /*!< CDS_init でロードする，ドライバの初期設定の設定関数
+    CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super);
+                                                              /*!< CDS_init でロードする，ドライバの初期設定の設定関数
                                                                    CDS_reset_config での設定をオーバーロードする
                                                                    返り値は CDS_ERR_CODE */
   } internal;       //!< 内部処理用
@@ -309,7 +310,7 @@ struct CDS_StreamConfig
                                                                    未指定の場合は負数とする
                                                                    初期値: -1 */
 
-    CDS_StreamRecBuffer* rx_buffer_;                           /*!< 受信バッファ
+    CDS_StreamRecBuffer* rx_buffer_;                          /*!< 受信バッファ
                                                                    stream 初期化時に user がメモリを割り当て，設定する
                                                                    初期値: NULL */
     const uint8_t* rx_header_;                                /*!< 受信データのヘッダ
@@ -374,8 +375,8 @@ struct CDS_StreamConfig
 
   struct
   {
-    CDS_StreamSendStatus send_status_;                         //!< フレーム送信状況
-    CDS_StreamRecStatus  rec_status_;                          //!< フレーム受信状況
+    CDS_StreamSendStatus send_status_;                        //!< フレーム送信状況
+    CDS_StreamRecStatus  rec_status_;                         //!< フレーム受信状況
 
     uint32_t general_cmd_tx_count_;                           //!< 通常コマンド送信回数
     uint32_t req_tlm_cmd_tx_count_;                           //!< テレメ要求コマンド送信回数
@@ -387,7 +388,7 @@ struct CDS_StreamConfig
     ObcTime  req_tlm_cmd_tx_time_;                            //!< テレメ要求コマンド最終送信時刻
     ObcTime  rx_frame_fix_time_;                              //!< フレーム確定時刻
 
-    CDS_ERR_CODE ret_from_data_analyzer_;                      //!< data_analyzer_ の返り値
+    CDS_ERR_CODE ret_from_data_analyzer_;                     //!< data_analyzer_ の返り値
   } info;           //!< 取得値（メトリクス）
 
   struct
@@ -406,16 +407,16 @@ struct CDS_StreamConfig
 struct ComponentDriverSuper
 {
   // 【継承先まで公開】
-  IF_LIST_ENUM      interface;                              //!< 継承先の機器の使用 IF
-  void*             if_config;                              //!< IF 設定
+  IF_LIST_ENUM     interface;                                 //!< 継承先の機器の使用 IF
+  void*            if_config;                                 //!< IF 設定
 
-  CDS_Config         config;                                 //!< ComponentDriverSuper の設定
+  CDS_Config       config;                                    //!< ComponentDriverSuper の設定
 
-  CDS_StreamConfig   stream_config[CDS_STREAM_MAX];           /*!< ComponentDriverSuperStream
-                                                                 index が低いものほど優先（に今後するかも．実行速度次第）．
-                                                                 使い方例：[0] のみをつかって，テレメ内に仕込んだ TLM ID などで data_analyzer_ 内で処理を分岐
-                                                                 使い方例：[0] を定期テレメと一般コマンドで使い，[1] 以降を非定期や特殊コマンド・テレメトリで使う
-                                                                 が，まあ自由に使ってもらえたら */
+  CDS_StreamConfig stream_config[CDS_STREAM_MAX];             /*!< ComponentDriverSuperStream
+                                                                   index が低いものほど優先（に今後するかも．実行速度次第）．
+                                                                   使い方例：[0] のみをつかって，テレメ内に仕込んだ TLM ID などで data_analyzer_ 内で処理を分岐
+                                                                   使い方例：[0] を定期テレメと一般コマンドで使い，[1] 以降を非定期や特殊コマンド・テレメトリで使う
+                                                                   が，まあ自由に使ってもらえたら */
 };
 
 
@@ -435,9 +436,9 @@ struct ComponentDriverSuper
  * @return CDS_ERR_CODE
  */
 CDS_ERR_CODE CDS_init(ComponentDriverSuper* p_super,
-                    void* if_config,
-                    CDS_StreamRecBuffer* rx_buffer,
-                    CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super));
+                      void* if_config,
+                      CDS_StreamRecBuffer* rx_buffer,
+                      CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super));
 
 /**
  * @brief  継承先の機器より ComponentDriverSuper を初期化する（複数の stream を使用する場合）
@@ -453,9 +454,9 @@ CDS_ERR_CODE CDS_init(ComponentDriverSuper* p_super,
  * @return CDS_ERR_CODE
  */
 CDS_ERR_CODE CDS_init_streams(ComponentDriverSuper* p_super,
-                            void* if_config,
-                            CDS_StreamRecBuffer* rx_buffers[CDS_STREAM_MAX],
-                            CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super));
+                              void* if_config,
+                              CDS_StreamRecBuffer* rx_buffers[CDS_STREAM_MAX],
+                              CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super));
 
 /**
  * @brief  ComponentDriverSuper のリセット
@@ -543,13 +544,13 @@ CDS_ERR_CODE CDS_send_req_tlm_cmd(ComponentDriverSuper* p_super, uint8_t stream)
 // ###### CDS_Config Getter/Setter of Settings ######
 uint16_t CDSC_get_rx_buffer_size_in_if_rx(const ComponentDriverSuper* p_super);
 CDS_ERR_CODE CDSC_set_rx_buffer_size_in_if_rx(ComponentDriverSuper* p_super,
-                                            const uint16_t rx_buffer_size_in_if_rx);
+                                              const uint16_t rx_buffer_size_in_if_rx);
 uint8_t CDSC_get_should_monitor_for_rx_disruption(const ComponentDriverSuper* p_super);
 void CDSC_enable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);
 void CDSC_disable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);
 uint32_t CDSC_get_time_threshold_for_rx_disruption(const ComponentDriverSuper* p_super);
 void CDSC_set_time_threshold_for_rx_disruption(ComponentDriverSuper* p_super,
-                                              const uint32_t time_threshold_for_rx_disruption);
+                                               const uint32_t time_threshold_for_rx_disruption);
 
 
 // ###### CDS_Config Getter of Info ######
@@ -573,49 +574,49 @@ void CDSSC_disable_strict_frame_search(CDS_StreamConfig* p_stream_config);
 const uint8_t* CDSSC_get_tx_frame(CDS_StreamConfig* p_stream_config);
 uint8_t* CDSSC_get_tx_frame_as_non_const_pointer(CDS_StreamConfig* p_stream_config);
 void CDSSC_set_tx_frame(CDS_StreamConfig* p_stream_config,
-                       uint8_t* tx_frame);
+                        uint8_t* tx_frame);
 uint16_t CDSSC_get_tx_frame_size(const CDS_StreamConfig* p_stream_config);
 void CDSSC_set_tx_frame_size(CDS_StreamConfig* p_stream_config,
-                            const uint16_t tx_frame_size);
+                             const uint16_t tx_frame_size);
 int16_t CDSSC_get_tx_frame_buffer_size(CDS_StreamConfig* p_stream_config);
 void CDSSC_set_tx_frame_buffer_size(CDS_StreamConfig* p_stream_config,
-                                   const int16_t tx_frame_buffer_size);
+                                    const int16_t tx_frame_buffer_size);
 
 void CDSSC_set_rx_buffer(CDS_StreamConfig* p_stream_config,
-                        CDS_StreamRecBuffer* rx_buffer);
+                         CDS_StreamRecBuffer* rx_buffer);
 void CDSSC_set_rx_header(CDS_StreamConfig* p_stream_config,
-                        const uint8_t* rx_header,
-                        const uint16_t rx_header_size);
+                         const uint8_t* rx_header,
+                         const uint16_t rx_header_size);
 uint16_t CDSSC_get_rx_header_size(const CDS_StreamConfig* p_stream_config);
 void CDSSC_set_rx_footer(CDS_StreamConfig* p_stream_config,
-                        const uint8_t* rx_footer,
-                        const uint16_t rx_footer_size);
+                         const uint8_t* rx_footer,
+                         const uint16_t rx_footer_size);
 uint16_t CDSSC_get_rx_footer_size(const CDS_StreamConfig* p_stream_config);
 int16_t CDSSC_get_rx_frame_size(const CDS_StreamConfig* p_stream_config);
 void CDSSC_set_rx_frame_size(CDS_StreamConfig* p_stream_config,
-                            const int16_t rx_frame_size);
+                             const int16_t rx_frame_size);
 uint16_t CDSSC_get_max_rx_frame_size(const CDS_StreamConfig* p_stream_config);
 void CDSSC_set_max_rx_frame_size(CDS_StreamConfig* p_stream_config,
-                            const uint16_t max_rx_frame_size);
+                                 const uint16_t max_rx_frame_size);
 
 void CDSSC_set_rx_framelength_pos(CDS_StreamConfig* p_stream_config,
-                                 const int16_t rx_framelength_pos);
+                                  const int16_t rx_framelength_pos);
 void CDSSC_set_rx_framelength_type_size(CDS_StreamConfig* p_stream_config,
-                                       const uint16_t rx_framelength_type_size);
+                                        const uint16_t rx_framelength_type_size);
 void CDSSC_set_rx_framelength_offset(CDS_StreamConfig* p_stream_config,
-                                    const uint16_t rx_framelength_offset);
+                                     const uint16_t rx_framelength_offset);
 void CDSSC_set_rx_framelength_endian(CDS_StreamConfig* p_stream_config,
-                                    const ENDIAN_TYPE rx_framelength_endian);
+                                     const ENDIAN_TYPE rx_framelength_endian);
 
 uint8_t CDSSC_get_should_monitor_for_tlm_disruption(const CDS_StreamConfig* p_stream_config);
 void CDSSC_enable_monitor_for_tlm_disruption(CDS_StreamConfig* p_stream_config);
 void CDSSC_disable_monitor_for_tlm_disruption(CDS_StreamConfig* p_stream_config);
 uint32_t CDSSC_get_time_threshold_for_tlm_disruption(const CDS_StreamConfig* p_stream_config);
 void CDSSC_set_time_threshold_for_tlm_disruption(CDS_StreamConfig* p_stream_config,
-                                                const uint32_t time_threshold_for_tlm_disruption);
+                                                 const uint32_t time_threshold_for_tlm_disruption);
 
 void CDSSC_set_data_analyzer(CDS_StreamConfig* p_stream_config,
-                            CDS_ERR_CODE (*data_analyzer)(CDS_StreamConfig* p_stream_config, void* p_driver));
+                             CDS_ERR_CODE (*data_analyzer)(CDS_StreamConfig* p_stream_config, void* p_driver));
 
 
 // ###### CDS_StreamConfig Getter of Info ######
@@ -646,8 +647,8 @@ CDS_ERR_CODE CDSSC_get_ret_from_data_analyzer(const CDS_StreamConfig* p_stream_c
  * @return CDS_ERR_CODE
  */
 CDS_ERR_CODE CDS_init_stream_rec_buffer(CDS_StreamRecBuffer* stream_rec_buffer,
-                                      uint8_t* buffer,
-                                      const uint16_t buffer_capacity);
+                                        uint8_t* buffer,
+                                        const uint16_t buffer_capacity);
 
 /**
  * @brief CDS_StreamRecBuffer の要素数 CDS_STREAM_MAX の配列を NULL で初期化する
