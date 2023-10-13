@@ -44,8 +44,8 @@ static RESULT DI_AOBC_init_(void)
   RESULT err = RESULT_OK;
 
   ret1 = CDS_init_stream_rec_buffer(&DI_AOBC_rx_buffer_,
-                                   DI_AOBC_rx_buffer_allocation_,
-                                   sizeof(DI_AOBC_rx_buffer_allocation_));
+                                    DI_AOBC_rx_buffer_allocation_,
+                                    sizeof(DI_AOBC_rx_buffer_allocation_));
   if (ret1 != CDS_ERR_CODE_OK)
   {
     Printf("AOBC buffer init Failed ! %d \n", ret1);

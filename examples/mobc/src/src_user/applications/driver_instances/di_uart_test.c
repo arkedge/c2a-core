@@ -55,15 +55,15 @@ static void UART_TEST_init_(void)
   CDS_nullify_stream_rec_buffers(rx_buffers);
 
   ret1 = CDS_init_stream_rec_buffer(&DI_UART_TEST_rx_buffer_0_,
-                                   DI_UART_TEST_rx_buffer_allocation_0_,
-                                   sizeof(DI_UART_TEST_rx_buffer_allocation_0_));
+                                    DI_UART_TEST_rx_buffer_allocation_0_,
+                                    sizeof(DI_UART_TEST_rx_buffer_allocation_0_));
   if (ret1 != CDS_ERR_CODE_OK)
   {
     Printf("UART_TEST buffer0 init Failed ! %d \n", ret1);
   }
   ret1 = CDS_init_stream_rec_buffer(&DI_UART_TEST_rx_buffer_1_,
-                                   DI_UART_TEST_rx_buffer_allocation_1_,
-                                   sizeof(DI_UART_TEST_rx_buffer_allocation_1_));
+                                    DI_UART_TEST_rx_buffer_allocation_1_,
+                                    sizeof(DI_UART_TEST_rx_buffer_allocation_1_));
   if (ret1 != CDS_ERR_CODE_OK)
   {
     Printf("UART_TEST buffer1 init Failed ! %d \n", ret1);

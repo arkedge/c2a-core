@@ -55,11 +55,11 @@ static RESULT DI_GS_init_(void)
     CDS_ERR_CODE ret1;
     CDS_ERR_CODE ret2;
     ret1 = CDS_init_stream_rec_buffer(&DI_GS_ccsds_rx_buffer_[stream],
-                                     DI_GS_ccsds_rx_buffer_allocation_[stream],
-                                     sizeof(DI_GS_ccsds_rx_buffer_allocation_[stream]));
+                                      DI_GS_ccsds_rx_buffer_allocation_[stream],
+                                      sizeof(DI_GS_ccsds_rx_buffer_allocation_[stream]));
     ret2 = CDS_init_stream_rec_buffer(&DI_GS_uart_rx_buffer_[stream],
-                                     DI_GS_uart_rx_buffer_allocation_[stream],
-                                     sizeof(DI_GS_uart_rx_buffer_allocation_[stream]));
+                                      DI_GS_uart_rx_buffer_allocation_[stream],
+                                      sizeof(DI_GS_uart_rx_buffer_allocation_[stream]));
     if (ret1 != CDS_ERR_CODE_OK || ret2 != CDS_ERR_CODE_OK)
     {
       Printf("GS buffer init Failed ! %d, %d \n", ret1, ret2);
