@@ -26,3 +26,6 @@ done
 
 echo "rename source: DI_ -> CSRV_"
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#DI_#CSRV_#g"
+
+git restore src/src_user/Settings/tlm_cmd/data_base/CMD_DB/*.xlsm
+git restore src/src_user/Settings/tlm_cmd/data_base/TLM_DB/*.xlsm
