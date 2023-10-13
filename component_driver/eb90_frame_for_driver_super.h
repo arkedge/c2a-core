@@ -58,7 +58,7 @@ extern const uint8_t EB90_FRAME_kEtx[EB90_FRAME_ETX_SIZE];
  * @param  p_stream_config: ComponentDriverSuper 構造体の CDS_StreamConfig
  * @return Packet Length
  */
-uint16_t EB90_FRAME_get_packet_length_from_dssc(const CDS_StreamConfig* p_stream_config);
+uint16_t EB90_FRAME_get_packet_length_from_cdssc(const CDS_StreamConfig* p_stream_config);
 
 /**
  * @brief  受信フレームから Packet Field の先頭ポインタを取得する
@@ -66,7 +66,7 @@ uint16_t EB90_FRAME_get_packet_length_from_dssc(const CDS_StreamConfig* p_stream
  * @param  p_stream_config: ComponentDriverSuper 構造体の CDS_StreamConfig
  * @return Packet Field の先頭ポインタ
  */
-const uint8_t* EB90_FRAME_get_packet_head_from_dssc(const CDS_StreamConfig* p_stream_config);
+const uint8_t* EB90_FRAME_get_packet_head_from_cdssc(const CDS_StreamConfig* p_stream_config);
 
 /**
  * @brief  CRC の取得
@@ -74,7 +74,7 @@ const uint8_t* EB90_FRAME_get_packet_head_from_dssc(const CDS_StreamConfig* p_st
  * @param  p_stream_config: ComponentDriverSuper 構造体の CDS_StreamConfig
  * @return CRC
  */
-uint16_t EB90_FRAME_get_crc_from_dssc(const CDS_StreamConfig* p_stream_config);
+uint16_t EB90_FRAME_get_crc_from_cdssc(const CDS_StreamConfig* p_stream_config);
 
 /**
  * @brief  EB90 Frame に付与された CRC が正しいかチェック
@@ -82,7 +82,7 @@ uint16_t EB90_FRAME_get_crc_from_dssc(const CDS_StreamConfig* p_stream_config);
  * @retval 1: 正しい
  * @retval 0: 正しくない
  */
-uint8_t EB90_FRAME_is_valid_crc_of_dssc(const CDS_StreamConfig* p_stream_config);
+uint8_t EB90_FRAME_is_valid_crc_of_cdssc(const CDS_StreamConfig* p_stream_config);
 
 /**
  * @brief  EB90 Frame の CRC の計算

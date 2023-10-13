@@ -12,28 +12,28 @@
 
 // FIXME: CDS_StreamConfig.data_link_layer_ をちゃんと見る！
 
-CDS_ERR_CODE CTCP_get_ctcp_from_dssc(const CDS_StreamConfig* p_stream_config, CommonTlmCmdPacket* received_packet)
+CDS_ERR_CODE CTCP_get_ctcp_from_cdssc(const CDS_StreamConfig* p_stream_config, CommonTlmCmdPacket* received_packet)
 {
-  const uint16_t packet_len = EB90_FRAME_get_packet_length_from_dssc(p_stream_config);
+  const uint16_t packet_len = EB90_FRAME_get_packet_length_from_cdssc(p_stream_config);
 
   if (packet_len > CTCP_MAX_LEN) return CDS_ERR_CODE_ERR;
 
   // まず， 受信データ長だけコピーしてしまってから，アサーションする（効率のため）
-  memcpy(&received_packet->packet, EB90_FRAME_get_packet_head_from_dssc(p_stream_config), (size_t)packet_len);
+  memcpy(&received_packet->packet, EB90_FRAME_get_packet_head_from_cdssc(p_stream_config), (size_t)packet_len);
   if (CTCP_get_packet_len(received_packet) != packet_len) return CDS_ERR_CODE_ERR;
   if (!CTCP_is_valid_packet(received_packet)) return CDS_ERR_CODE_ERR;
   return CDS_ERR_CODE_OK;
 }
 
 
-CDS_ERR_CODE CTP_get_ctp_from_dssc(const CDS_StreamConfig* p_stream_config, CommonTlmPacket* received_packet)
+CDS_ERR_CODE CTP_get_ctp_from_cdssc(const CDS_StreamConfig* p_stream_config, CommonTlmPacket* received_packet)
 {
-  const uint16_t packet_len = EB90_FRAME_get_packet_length_from_dssc(p_stream_config);
+  const uint16_t packet_len = EB90_FRAME_get_packet_length_from_cdssc(p_stream_config);
 
   if (packet_len > CTP_MAX_LEN) return CDS_ERR_CODE_ERR;
 
   // まず， 受信データ長だけコピーしてしまってから，アサーションする（効率のため）
-  memcpy(&received_packet->packet, EB90_FRAME_get_packet_head_from_dssc(p_stream_config), (size_t)packet_len);
+  memcpy(&received_packet->packet, EB90_FRAME_get_packet_head_from_cdssc(p_stream_config), (size_t)packet_len);
   if (CTP_get_packet_len(received_packet) != packet_len) return CDS_ERR_CODE_ERR;
   if (!CTP_is_valid_packet(received_packet)) return CDS_ERR_CODE_ERR;
 
@@ -49,21 +49,21 @@ CDS_ERR_CODE CTP_get_ctp_from_dssc(const CDS_StreamConfig* p_stream_config, Comm
 }
 
 
-CDS_ERR_CODE CCP_get_ccp_from_dssc(const CDS_StreamConfig* p_stream_config, CommonCmdPacket* received_packet)
+CDS_ERR_CODE CCP_get_ccp_from_cdssc(const CDS_StreamConfig* p_stream_config, CommonCmdPacket* received_packet)
 {
-  const uint16_t packet_len = EB90_FRAME_get_packet_length_from_dssc(p_stream_config);
+  const uint16_t packet_len = EB90_FRAME_get_packet_length_from_cdssc(p_stream_config);
 
   if (packet_len > CCP_MAX_LEN) return CDS_ERR_CODE_ERR;
 
   // まず， 受信データ長だけコピーしてしまってから，アサーションする（効率のため）
-  memcpy(&received_packet->packet, EB90_FRAME_get_packet_head_from_dssc(p_stream_config), (size_t)packet_len);
+  memcpy(&received_packet->packet, EB90_FRAME_get_packet_head_from_cdssc(p_stream_config), (size_t)packet_len);
   if (CCP_get_packet_len(received_packet) != packet_len) return CDS_ERR_CODE_ERR;
   if (!CCP_is_valid_packet(received_packet)) return CDS_ERR_CODE_ERR;
   return CDS_ERR_CODE_OK;
 }
 
 
-CDS_ERR_CODE CTCP_init_dssc(CDS_StreamConfig* p_stream_config,
+CDS_ERR_CODE CTCP_init_cdssc(CDS_StreamConfig* p_stream_config,
                            uint8_t* tx_frame_buffer,
                            int16_t tx_frame_buffer_size,
                            CDS_ERR_CODE (*data_analyzer)(CDS_StreamConfig* p_stream_config, void* p_driver))
@@ -99,7 +99,7 @@ CDS_ERR_CODE CTCP_init_dssc(CDS_StreamConfig* p_stream_config,
 }
 
 
-CDS_ERR_CODE CTCP_set_tx_frame_to_dssc(CDS_StreamConfig* p_stream_config,
+CDS_ERR_CODE CTCP_set_tx_frame_to_cdssc(CDS_StreamConfig* p_stream_config,
                                       const CommonTlmCmdPacket* send_packet)
 {
   size_t pos;
@@ -136,21 +136,21 @@ CDS_ERR_CODE CTCP_set_tx_frame_to_dssc(CDS_StreamConfig* p_stream_config,
 }
 
 
-CDS_ERR_CODE CTP_set_tx_frame_to_dssc(CDS_StreamConfig* p_stream_config,
+CDS_ERR_CODE CTP_set_tx_frame_to_cdssc(CDS_StreamConfig* p_stream_config,
                                      const CommonTlmPacket* send_packet)
 {
   const CommonTlmCmdPacket* ctcp = CTCP_convert_from_ctp(send_packet);
   if (ctcp == NULL) return CDS_ERR_CODE_ERR;
-  return CTCP_set_tx_frame_to_dssc(p_stream_config, ctcp);
+  return CTCP_set_tx_frame_to_cdssc(p_stream_config, ctcp);
 }
 
 
-CDS_ERR_CODE CCP_set_tx_frame_to_dssc(CDS_StreamConfig* p_stream_config,
+CDS_ERR_CODE CCP_set_tx_frame_to_cdssc(CDS_StreamConfig* p_stream_config,
                                      const CommonCmdPacket* send_packet)
 {
   const CommonTlmCmdPacket* ctcp = CTCP_convert_from_ccp(send_packet);
   if (ctcp == NULL) return CDS_ERR_CODE_ERR;
-  return CTCP_set_tx_frame_to_dssc(p_stream_config, ctcp);
+  return CTCP_set_tx_frame_to_cdssc(p_stream_config, ctcp);
 }
 
 #pragma section

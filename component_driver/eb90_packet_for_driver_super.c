@@ -12,20 +12,20 @@
 
 // FIXME: CDS_StreamConfig.data_link_layer_ をちゃんと見る！
 
-uint32_t EB90_PACKET_get_version_from_dssc(const CDS_StreamConfig* p_stream_config)
+uint32_t EB90_PACKET_get_version_from_cdssc(const CDS_StreamConfig* p_stream_config)
 {
   // TODO: 現状は Version 番号が 8bit のもののみしか対応していない
-  return (uint32_t)(EB90_FRAME_get_packet_head_from_dssc(p_stream_config)[0]);
+  return (uint32_t)(EB90_FRAME_get_packet_head_from_cdssc(p_stream_config)[0]);
 }
 
 
-uint32_t EB90_PACKET_get_count_from_dssc(const CDS_StreamConfig* p_stream_config)
+uint32_t EB90_PACKET_get_count_from_cdssc(const CDS_StreamConfig* p_stream_config)
 {
-  const uint32_t version = EB90_PACKET_get_version_from_dssc(p_stream_config);
+  const uint32_t version = EB90_PACKET_get_version_from_cdssc(p_stream_config);
 
   if (version == 1)
   {
-    return (uint32_t)(EB90_FRAME_get_packet_head_from_dssc(p_stream_config)[1]);
+    return (uint32_t)(EB90_FRAME_get_packet_head_from_cdssc(p_stream_config)[1]);
   }
   else
   {
@@ -34,14 +34,14 @@ uint32_t EB90_PACKET_get_count_from_dssc(const CDS_StreamConfig* p_stream_config
 }
 
 
-uint32_t EB90_PACKET_get_id_from_dssc(const CDS_StreamConfig* p_stream_config)
+uint32_t EB90_PACKET_get_id_from_cdssc(const CDS_StreamConfig* p_stream_config)
 {
-  const uint32_t version = EB90_PACKET_get_version_from_dssc(p_stream_config);
+  const uint32_t version = EB90_PACKET_get_version_from_cdssc(p_stream_config);
 
   if (version == 1)
   {
     uint16_t id;
-    ENDIAN_memcpy(&id, &(EB90_FRAME_get_packet_head_from_dssc(p_stream_config)[2]), sizeof(uint16_t));
+    ENDIAN_memcpy(&id, &(EB90_FRAME_get_packet_head_from_cdssc(p_stream_config)[2]), sizeof(uint16_t));
     return (uint32_t)id;
   }
   else
@@ -51,13 +51,13 @@ uint32_t EB90_PACKET_get_id_from_dssc(const CDS_StreamConfig* p_stream_config)
 }
 
 
-const uint8_t* EB90_PACKET_get_user_data_head_from_dssc(const CDS_StreamConfig* p_stream_config)
+const uint8_t* EB90_PACKET_get_user_data_head_from_cdssc(const CDS_StreamConfig* p_stream_config)
 {
-  const uint32_t version = EB90_PACKET_get_version_from_dssc(p_stream_config);
+  const uint32_t version = EB90_PACKET_get_version_from_cdssc(p_stream_config);
 
   if (version == 1)
   {
-    return &(EB90_FRAME_get_packet_head_from_dssc(p_stream_config)[4]);
+    return &(EB90_FRAME_get_packet_head_from_cdssc(p_stream_config)[4]);
   }
   else
   {

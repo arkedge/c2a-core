@@ -20,7 +20,7 @@
  * @retval CDS_ERR_CODE_OK:  正常終了
  * @retval CDS_ERR_CODE_ERR: パケット長が異常など，エラーでコピーできない
  */
-CDS_ERR_CODE CTCP_get_ctcp_from_dssc(const CDS_StreamConfig* p_stream_config, CommonTlmCmdPacket* received_packet);
+CDS_ERR_CODE CTCP_get_ctcp_from_cdssc(const CDS_StreamConfig* p_stream_config, CommonTlmCmdPacket* received_packet);
 
 /**
  * @brief  CommonTlmPacket を受信データからコピーして取得する
@@ -30,7 +30,7 @@ CDS_ERR_CODE CTCP_get_ctcp_from_dssc(const CDS_StreamConfig* p_stream_config, Co
  * @retval CDS_ERR_CODE_OK:  正常終了
  * @retval CDS_ERR_CODE_ERR: パケット長が異常など，エラーでコピーできない
  */
-CDS_ERR_CODE CTP_get_ctp_from_dssc(const CDS_StreamConfig* p_stream_config, CommonTlmPacket* received_packet);
+CDS_ERR_CODE CTP_get_ctp_from_cdssc(const CDS_StreamConfig* p_stream_config, CommonTlmPacket* received_packet);
 
 /**
  * @brief  CommonCmdPacket を受信データからコピーして取得する
@@ -40,7 +40,7 @@ CDS_ERR_CODE CTP_get_ctp_from_dssc(const CDS_StreamConfig* p_stream_config, Comm
  * @retval CDS_ERR_CODE_OK:  正常終了
  * @retval CDS_ERR_CODE_ERR: パケット長が異常など，エラーでコピーできない
  */
-CDS_ERR_CODE CCP_get_ccp_from_dssc(const CDS_StreamConfig* p_stream_config, CommonCmdPacket* received_packet);
+CDS_ERR_CODE CCP_get_ccp_from_cdssc(const CDS_StreamConfig* p_stream_config, CommonCmdPacket* received_packet);
 
 /**
  * @brief  C2A 間通信など， CTCP をコンポ間通信に用いるとき，CDS_init で渡す初期化関数内部用の Init Util
@@ -54,7 +54,7 @@ CDS_ERR_CODE CCP_get_ccp_from_dssc(const CDS_StreamConfig* p_stream_config, Comm
  * @retval CDS_ERR_CODE_OK:  正常終了
  * @retval CDS_ERR_CODE_ERR: フレームバッファのサイズ不足などのエラー
  */
-CDS_ERR_CODE CTCP_init_dssc(CDS_StreamConfig* p_stream_config,
+CDS_ERR_CODE CTCP_init_cdssc(CDS_StreamConfig* p_stream_config,
                            uint8_t* tx_frame_buffer,
                            int16_t tx_frame_buffer_size,
                            CDS_ERR_CODE (*data_analyzer)(CDS_StreamConfig* p_stream_config, void* p_driver));
@@ -66,7 +66,7 @@ CDS_ERR_CODE CTCP_init_dssc(CDS_StreamConfig* p_stream_config,
  * @retval CDS_ERR_CODE_OK:  正常終了
  * @retval CDS_ERR_CODE_ERR: DSSC 内部の設定不足などのエラー
  */
-CDS_ERR_CODE CTCP_set_tx_frame_to_dssc(CDS_StreamConfig* p_stream_config,
+CDS_ERR_CODE CTCP_set_tx_frame_to_cdssc(CDS_StreamConfig* p_stream_config,
                                       const CommonTlmCmdPacket* send_packet);
 
 /**
@@ -76,7 +76,7 @@ CDS_ERR_CODE CTCP_set_tx_frame_to_dssc(CDS_StreamConfig* p_stream_config,
  * @retval CDS_ERR_CODE_OK:  正常終了
  * @retval CDS_ERR_CODE_ERR: DSSC 内部の設定不足などのエラー
  */
-CDS_ERR_CODE CTP_set_tx_frame_to_dssc(CDS_StreamConfig* p_stream_config,
+CDS_ERR_CODE CTP_set_tx_frame_to_cdssc(CDS_StreamConfig* p_stream_config,
                                      const CommonTlmPacket* send_packet);
 
 /**
@@ -86,7 +86,7 @@ CDS_ERR_CODE CTP_set_tx_frame_to_dssc(CDS_StreamConfig* p_stream_config,
  * @retval CDS_ERR_CODE_OK:  正常終了
  * @retval CDS_ERR_CODE_ERR: DSSC 内部の設定不足などのエラー
  */
-CDS_ERR_CODE CCP_set_tx_frame_to_dssc(CDS_StreamConfig* p_stream_config,
+CDS_ERR_CODE CCP_set_tx_frame_to_cdssc(CDS_StreamConfig* p_stream_config,
                                      const CommonCmdPacket* send_packet);
 
 #endif
