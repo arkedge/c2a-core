@@ -64,9 +64,9 @@ CDS_ERR_CODE CCP_get_ccp_from_cdssc(const CDS_StreamConfig* p_stream_config, Com
 
 
 CDS_ERR_CODE CTCP_init_cdssc(CDS_StreamConfig* p_stream_config,
-                           uint8_t* tx_frame_buffer,
-                           int16_t tx_frame_buffer_size,
-                           CDS_ERR_CODE (*data_analyzer)(CDS_StreamConfig* p_stream_config, void* p_driver))
+                             uint8_t* tx_frame_buffer,
+                             int16_t tx_frame_buffer_size,
+                             CDS_ERR_CODE (*data_analyzer)(CDS_StreamConfig* p_stream_config, void* p_driver))
 {
   // MOBC か sub OBC かによって，送信側 (tx 側) が CTP になるか CCP になるかは不明なため，ひとまず CTCP に
   // メモリが苦しい OBC もあるので，考えてもいいかも
@@ -100,7 +100,7 @@ CDS_ERR_CODE CTCP_init_cdssc(CDS_StreamConfig* p_stream_config,
 
 
 CDS_ERR_CODE CTCP_set_tx_frame_to_cdssc(CDS_StreamConfig* p_stream_config,
-                                      const CommonTlmCmdPacket* send_packet)
+                                        const CommonTlmCmdPacket* send_packet)
 {
   size_t pos;
   size_t size;
@@ -137,7 +137,7 @@ CDS_ERR_CODE CTCP_set_tx_frame_to_cdssc(CDS_StreamConfig* p_stream_config,
 
 
 CDS_ERR_CODE CTP_set_tx_frame_to_cdssc(CDS_StreamConfig* p_stream_config,
-                                     const CommonTlmPacket* send_packet)
+                                       const CommonTlmPacket* send_packet)
 {
   const CommonTlmCmdPacket* ctcp = CTCP_convert_from_ctp(send_packet);
   if (ctcp == NULL) return CDS_ERR_CODE_ERR;
@@ -146,7 +146,7 @@ CDS_ERR_CODE CTP_set_tx_frame_to_cdssc(CDS_StreamConfig* p_stream_config,
 
 
 CDS_ERR_CODE CCP_set_tx_frame_to_cdssc(CDS_StreamConfig* p_stream_config,
-                                     const CommonCmdPacket* send_packet)
+                                       const CommonCmdPacket* send_packet)
 {
   const CommonTlmCmdPacket* ctcp = CTCP_convert_from_ccp(send_packet);
   if (ctcp == NULL) return CDS_ERR_CODE_ERR;
