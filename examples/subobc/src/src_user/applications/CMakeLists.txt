@@ -4,7 +4,7 @@ project(C2A_USER_APPS)
 
 set(C2A_SRCS
   app_registry.c
-  driver_instances/di_mobc.c
+  component_service/csrv_mobc.c
   user_defined/debug_apps.c
   ${C2A_CORE_DIR}/applications/gs_command_dispatcher.c
   ${C2A_CORE_DIR}/applications/event_utility.c

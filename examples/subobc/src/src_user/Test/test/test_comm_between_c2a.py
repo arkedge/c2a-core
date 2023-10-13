@@ -101,7 +101,7 @@ def test_c2a_comm_blc():
 @pytest.mark.real
 @pytest.mark.sils
 def test_c2a_comm_tlm_buffer():
-    send_mobc_gsc(mobc_c2a_enum.Cmd_CODE_AM_INITIALIZE_APP, (mobc_c2a_enum.AR_DI_AOBC,))
+    send_mobc_gsc(mobc_c2a_enum.Cmd_CODE_AM_INITIALIZE_APP, (mobc_c2a_enum.AR_CSRV_AOBC,))
 
     # MOBC の tlm buffer が空なのでエラー
     assert "CNT" == wings.util.send_rt_cmd_and_confirm(

@@ -4,9 +4,9 @@ project(C2A_USER_APPS)
 
 set(C2A_SRCS
   app_registry.c
-  driver_instances/di_aobc.c
-  driver_instances/di_gs.c
-  driver_instances/di_uart_test.c
+  component_service/csrv_aobc.c
+  component_service/csrv_gs.c
+  component_service/csrv_uart_test.c
   user_defined/debug_apps.c
 )
 

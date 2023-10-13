@@ -11,10 +11,10 @@ static AM_ACK add_application_(size_t id,
 void AR_load_initial_settings(void)
 {
   add_application_(AR_NOP, NOP_create_app);
-  add_application_(AR_DI_GS_CMD_PH, DI_GS_cmd_packet_handler_app);
-  add_application_(AR_DI_GS_RT_TLM_PH, DI_GS_rt_tlm_packet_handler_app);
-  add_application_(AR_DI_GS_RP_TLM_PH, DI_GS_rp_tlm_packet_handler_app);
-  add_application_(AR_DI_UART_TEST, UART_TEST_update);
+  add_application_(AR_CSRV_GS_CMD_PH, CSRV_GS_cmd_packet_handler_app);
+  add_application_(AR_CSRV_GS_RT_TLM_PH, CSRV_GS_rt_tlm_packet_handler_app);
+  add_application_(AR_CSRV_GS_RP_TLM_PH, CSRV_GS_rp_tlm_packet_handler_app);
+  add_application_(AR_CSRV_UART_TEST, UART_TEST_update);
   add_application_(AR_GSC_DISPATCHER, GSCD_create_app);
   add_application_(AR_RTC_DISPATCHER, RTCD_create_app);
   add_application_(AR_TLC_DISPATCHER_GS, TLCD_gs_create_app);
@@ -23,8 +23,8 @@ void AR_load_initial_settings(void)
 #ifdef TLCD_ENABLE_MISSION_TL
   add_application_(AR_TLC_DISPATCHER_MIS, TLCD_mis_create_app);
 #endif
-  add_application_(AR_DI_AOBC, DI_AOBC_update);
-  add_application_(AR_DI_AOBC_CDIS, DI_AOBC_cmd_dispatcher);
+  add_application_(AR_CSRV_AOBC, CSRV_AOBC_update);
+  add_application_(AR_CSRV_AOBC_CDIS, CSRV_AOBC_cmd_dispatcher);
   add_application_(AR_EVENT_UTILITY, EVENT_UTIL_create_app);
   add_application_(AR_MEM_DUMP, MEM_create_app);
   add_application_(AR_TELEMETRY_MANAGER, TLM_MGR_create_app);

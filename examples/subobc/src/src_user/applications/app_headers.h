@@ -16,7 +16,7 @@
 #include <src_core/applications/test_app/test_ccp_util.h>
 
 // DI
-#include "driver_instances/di_mobc.h"
+#include "component_service/csrv_mobc.h"
 
 // UserDefined
 #include "user_defined/debug_apps.h"
