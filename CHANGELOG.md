@@ -29,7 +29,7 @@
   - import したバージョン: [ut-issl/c2a-enum-loader ae-v2.0.0](https://github.com/ut-issl/c2a-enum-loader/releases/tag/ae-v2.0.0)
 - [ut-issl/c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) を c2a-core リポジトリで管理するように変更: [#111](https://github.com/arkedge/c2a-core/pull/111)
   - import したバージョン: [ut-issl/c2a-tlm-cmd-code-generator ae-v2.0.0](https://github.com/ut-issl/c2a-tlm-cmd-code-generator/releases/tag/ae-v2.0.0)
-- CMake option の整理: [#86](https://github.com/arkedge/c2a-core/pull/86)
+- CMake option の整理: [#83](https://github.com/arkedge/c2a-core/issues/83), [#86](https://github.com/arkedge/c2a-core/pull/86), [#132](https://github.com/arkedge/c2a-core/pull/132), [#139](https://github.com/arkedge/c2a-core/pull/139)
   - `C2A_` prefix に統一した（これはコーディング規約にも追加）
   - 意味が分かりにくい命名の変更，今後 optional としていく挙動を default OFF とした
   - `option()` の挙動はユーザ指定によってかなり変わるため，該当する変更は単なるビルドチェックなどではなくすべて grep して変更すること
@@ -42,6 +42,10 @@
   - `USE_ALL_C2A_CORE_APPS` -> `C2A_USE_ALL_CORE_APPS`
   - `USE_ALL_C2A_CORE_TEST_APPS` -> `C2A_USE_ALL_CORE_TEST_APPS`
   - `USE_ALL_C2A_CORE_LIB` -> `C2A_USE_ALL_CORE_LIB`
+  - `USE_SCI_COM_WINGS` -> `C2A_USE_SCI_COM_WINGS`: 今後 WINGS 向けビルドは optional なものとなるので，default で OFF に変更．使う場合はビルド時に指定するか，S2E user の `CMakeLists.txt` で設定すること
+  - `USE_SCI_COM_UART` -> `C2A_USE_SCI_COM_UART`
+  - `USE_SILS_MOCKUP` -> `C2A_BUILD_WITH_SILS_MOCKUP`
+  - `SHOW_DEBUG_PRINT_ON_SILS` -> `C2A_BUILD_WITH_SILS_MOCKUP`
 
 
 ### Enhancements

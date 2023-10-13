@@ -17,8 +17,11 @@ pytest は subobc 側（このディレクトリ）で実行する．
 - SILS 環境 [S2E User for C2A Core](https://github.com/ut-issl/s2e-user-for-c2a-core) を 2 セット準備し， MOBC，AOBC それぞれを立ち上げる．
     - S2E の使い方は S2E Document を参照すること．
     - この時， MOBC の CCSDS ポートは WINGS の仮想ポートに接続（ループバック）し， MOBC の UART ポートは AOBC の UART ポートに接続（ループバック）させる．
+    - MOBC / AOBC 側で WINGS への COM ポートへの出力を有効化するために，以下を ON にする．
+        - https://github.com/arkedge/c2a-core/blob/eba25277c16ed50a79610eb9a34c62317a0e0141/examples/mobc/CMakeLists.txt#L11
+        - https://github.com/arkedge/c2a-core/blob/eba25277c16ed50a79610eb9a34c62317a0e0141/examples/subobc/CMakeLists.txt#L11
     - MOBC 側で AOBC への COM ポートへの出力を有効化するために，以下を ON にする．
-        - https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Examples/mobc/CMakeLists.txt#L17
+        - https://github.com/arkedge/c2a-core/blob/eba25277c16ed50a79610eb9a34c62317a0e0141/examples/mobc/CMakeLists.txt#L17
     - デフォルトでは，以下のようになっている．
         - MOBC CCSDS: COM11
         - MOBC UART: COM13
