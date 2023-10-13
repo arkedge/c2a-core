@@ -6,12 +6,12 @@
  */
 
 #include "di_aobc.h"
-#include "../../driver/aocs/aobc.h"
+#include "../../component_driver/aocs/aobc.h"
 #include "../../tlm_cmd/user_packet_handler.h"
 #include <src_core/library/print.h>
 #include <src_core/tlm_cmd/common_cmd_packet_util.h>
 #include "../../Settings/port_config.h"
-#include "../../Settings/DriverSuper/driver_buffer_define.h"
+#include "../../Settings/component_driver_super/driver_buffer_define.h"
 #include <src_core/library/result.h>
 
 static RESULT DI_AOBC_init_(void);
@@ -27,8 +27,8 @@ static CommandDispatcher DI_AOBC_cdis_;
 const CommandDispatcher* const DI_AOBC_cdis = &DI_AOBC_cdis_;
 
 // バッファ
-static DS_StreamRecBuffer DI_AOBC_rx_buffer_;
-static uint8_t DI_AOBC_rx_buffer_allocation_[DS_STREAM_REC_BUFFER_SIZE_DEFAULT];
+static CDS_StreamRecBuffer DI_AOBC_rx_buffer_;
+static uint8_t DI_AOBC_rx_buffer_allocation_[CDS_STREAM_REC_BUFFER_SIZE_DEFAULT];
 
 
 AppInfo DI_AOBC_update(void)
@@ -39,21 +39,21 @@ AppInfo DI_AOBC_update(void)
 
 static RESULT DI_AOBC_init_(void)
 {
-  DS_ERR_CODE ret1;
-  DS_INIT_ERR_CODE ret2;
+  CDS_ERR_CODE ret1;
+  CDS_INIT_ERR_CODE ret2;
   RESULT err = RESULT_OK;
 
-  ret1 = DS_init_stream_rec_buffer(&DI_AOBC_rx_buffer_,
+  ret1 = CDS_init_stream_rec_buffer(&DI_AOBC_rx_buffer_,
                                    DI_AOBC_rx_buffer_allocation_,
                                    sizeof(DI_AOBC_rx_buffer_allocation_));
-  if (ret1 != DS_ERR_CODE_OK)
+  if (ret1 != CDS_ERR_CODE_OK)
   {
     Printf("AOBC buffer init Failed ! %d \n", ret1);
     err = RESULT_ERR;
   }
 
   ret2 = AOBC_init(&aobc_driver_, PORT_CH_RS422_AOBC, &DI_AOBC_rx_buffer_);
-  if (ret2 != DS_INIT_OK)
+  if (ret2 != CDS_INIT_OK)
   {
     Printf("AOBC init Failed ! %d \n", ret2);
     err = RESULT_ERR;
@@ -98,7 +98,7 @@ static RESULT DI_AOBC_cmd_dispatcher_(void)
 
 CCP_CmdRet DI_AOBC_dispatch_command(const CommonCmdPacket* packet)
 {
-  DS_CMD_ERR_CODE ret;
+  CDS_CMD_ERR_CODE ret;
   CommonCmdPacket* pckt = (CommonCmdPacket*)packet; // const_cast
   // ここで CCP_DEST_TYPE を宛先で受理できるように変更（なので const cast が発生している．．．）
 
@@ -121,7 +121,7 @@ CCP_CmdRet DI_AOBC_dispatch_command(const CommonCmdPacket* packet)
 
   ret = AOBC_send_cmd(&aobc_driver_, pckt);
   // FIXME: ここも一旦握りつぶす（後で直す）
-  return DS_conv_cmd_err_to_ccp_cmd_ret(ret);
+  return CDS_conv_cmd_err_to_ccp_cmd_ret(ret);
 }
 
 

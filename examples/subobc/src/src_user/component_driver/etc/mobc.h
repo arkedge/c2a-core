@@ -6,7 +6,7 @@
 #define MOBC_H_
 
 #include <src_core/hal/uart.h>
-#include <src_core/driver/driver_super.h>
+#include <src_core/component_driver/driver_super.h>
 #include <src_core/system/time_manager/obc_time.h>
 #include <src_core/tlm_cmd/common_tlm_packet.h>
 #include <src_core/tlm_cmd/packet_handler.h>
@@ -46,14 +46,14 @@ typedef struct
   // C2A 情報
   struct
   {
-    DS_CMD_ERR_CODE send_tlm_err_code;    //!< テレメトリ送信時のエラーコード
+    CDS_CMD_ERR_CODE send_tlm_err_code;    //!< テレメトリ送信時のエラーコード
     PH_ACK          ph_ack;               //!< 受信したコマンドを PH に渡したときの返り値
   } c2a;                                  //!< C2A 情報
   // 通信情報
   struct
   {
-    MOBC_TX_ERR_CODE tx_err_code;         //!< DriverSuper ではなく Driver が持つべき通信エラー情報
-    MOBC_RX_ERR_CODE rx_err_code;         //!< DriverSuper ではなく Driver が持つべき通信エラー情報
+    MOBC_TX_ERR_CODE tx_err_code;         //!< ComponentDriverSuper ではなく Driver が持つべき通信エラー情報
+    MOBC_RX_ERR_CODE rx_err_code;         //!< ComponentDriverSuper ではなく Driver が持つべき通信エラー情報
   } comm;                                 //!< 通信情報
 } MOBC_Info;
 
@@ -66,7 +66,7 @@ typedef struct
 {
   struct
   {
-    DriverSuper super;                    //!< DriverSuper class
+    ComponentDriverSuper super;                    //!< ComponentDriverSuper class
     UART_Config uart_config;              //!< UART class
   } driver;
   MOBC_Info info;
@@ -80,25 +80,25 @@ typedef struct
  * @param  mobc_driver: 初期化する MOBC_Driver 構造体へのポインタ
  * @param  ch:          MOBC が接続されている UART ポート番号
  * @param  rx_buffer:   受信バッファ
- * @return DS_INIT_ERR_CODE
+ * @return CDS_INIT_ERR_CODE
  */
-DS_INIT_ERR_CODE MOBC_init(MOBC_Driver* mobc_driver, uint8_t ch, DS_StreamRecBuffer* rx_buffer);
+CDS_INIT_ERR_CODE MOBC_init(MOBC_Driver* mobc_driver, uint8_t ch, CDS_StreamRecBuffer* rx_buffer);
 
 
 /**
  * @brief  MOBC からのデータ（ MOBC → AOBC のコマンド）受信
  * @param  mobc_driver: MOBC_Driver 構造体へのポインタ
- * @return DS_REC_ERR_CODE
+ * @return CDS_REC_ERR_CODE
  */
-DS_REC_ERR_CODE MOBC_rec(MOBC_Driver* mobc_driver);
+CDS_REC_ERR_CODE MOBC_rec(MOBC_Driver* mobc_driver);
 
 
 /**
  * @brief  MOBC へのデータ（MOBC → AOBCのテレメ）送信
  * @param  mobc_driver: MOBC_Driver 構造体へのポインタ
  * @param  packet: 送信する CTP packet
- * @return DS_CMD_ERR_CODE
+ * @return CDS_CMD_ERR_CODE
  */
-DS_CMD_ERR_CODE MOBC_send(MOBC_Driver* mobc_driver, const CommonTlmPacket* packet);
+CDS_CMD_ERR_CODE MOBC_send(MOBC_Driver* mobc_driver, const CommonTlmPacket* packet);
 
 #endif

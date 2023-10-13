@@ -5,7 +5,7 @@
 #ifndef DI_MOBC_H_
 #define DI_MOBC_H_
 
-#include "../../driver/etc/mobc.h"
+#include "../../component_driver/etc/mobc.h"
 #include <src_core/system/application_manager/app_info.h>
 #include <src_core/tlm_cmd/common_cmd_packet.h>
 

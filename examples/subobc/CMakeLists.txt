@@ -56,7 +56,7 @@ add_definitions("-DGIT_REVISION_C2A_USER_SHORT=0x${GIT_REVISION_C2A_USER_SHORT}"
 add_subdirectory(${C2A_CORE_DIR})
 
 add_subdirectory(${C2A_USER_DIR}/applications)
-add_subdirectory(${C2A_USER_DIR}/driver)
+add_subdirectory(${C2A_USER_DIR}/component_driver)
 add_subdirectory(${C2A_USER_DIR}/hal)
 add_subdirectory(${C2A_USER_DIR}/library)
 add_subdirectory(${C2A_USER_DIR}/Settings)
