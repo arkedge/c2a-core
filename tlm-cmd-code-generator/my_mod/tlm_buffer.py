@@ -146,7 +146,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "  {_obc_name_upper}_TLM_CODE tlm_id;\n"
         body_c += "  CDS_ERR_CODE ret;\n"
         body_c += "\n"
-        body_c += "  ret = CTP_get_ctp_from_dssc(p_stream_config, &{_obc_name_upper}_ctp_);\n"
+        body_c += "  ret = CTP_get_ctp_from_cdssc(p_stream_config, &{_obc_name_upper}_ctp_);\n"
         body_c += "  if (ret != CDS_ERR_CODE_OK) return ret;\n"
         body_c += "\n"
         body_c += "  tlm_id  = ({_obc_name_upper}_TLM_CODE)CTP_get_id(&{_obc_name_upper}_ctp_);\n"
