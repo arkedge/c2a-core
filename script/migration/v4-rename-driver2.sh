@@ -16,6 +16,9 @@ mv src/src_user/Settings/DriverSuper src/src_user/Settings/component_driver_supe
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#\${C2A_USER_DIR}/driver#\${C2A_USER_DIR}/component_driver#g"
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#/driver/#/component_driver/#g"
 
+## _init_dssc(), _from_dssc(), _to_dssc()
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i "s/cdssc/ccdssc/g"
+
 ## Settings
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#/DriverSuper/#/component_driver_super/#g"
 
