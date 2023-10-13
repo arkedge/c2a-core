@@ -28,9 +28,9 @@
 #include "../library/endian.h"        // パスが不定な自動生成コード類で使えるように
 #include "../system/time_manager/time_manager.h"
 
-#define CDS_STREAM_MAX                 (3)         /*!< CDS_StreamConfig の最大数
+#define CDS_STREAM_MAX                 (3)        /*!< CDS_StreamConfig の最大数
                                                        uint8_t を想定          */
-#define CDS_IF_RX_BUFFER_SIZE          (1024)      /*!< IF_RX で受信するときの一次バッファ
+#define CDS_IF_RX_BUFFER_SIZE          (1024)     /*!< IF_RX で受信するときの一次バッファ
                                                        IF_RX から受信できる最大数を規定する
                                                        OBC の物理的な信号ラインのバッファサイズ以上とするともっともパフォーマンスが出る */
 
@@ -54,11 +54,11 @@ typedef struct CDS_StreamConfig CDS_StreamConfig;
  */
 typedef enum
 {
-  CDS_DRIVER_ERR_CODE_OK = 0,                //!< OK
-  CDS_DRIVER_ERR_CODE_ILLEGAL_CONTEXT,       //!< CCP_EXEC_ILLEGAL_CONTEXT に対応
-  CDS_DRIVER_ERR_CODE_ILLEGAL_PARAMETER,     //!< CCP_EXEC_ILLEGAL_PARAMETER に対応
-  CDS_DRIVER_ERR_CODE_ILLEGAL_LENGTH,        //!< CCP_EXEC_ILLEGAL_PARAMETER に対応
-  CDS_DRIVER_ERR_CODE_UNKNOWN_ERR = 255      //!< UNKNOWN ERR
+  CDS_DRIVER_ERR_CODE_OK = 0,               //!< OK
+  CDS_DRIVER_ERR_CODE_ILLEGAL_CONTEXT,      //!< CCP_EXEC_ILLEGAL_CONTEXT に対応
+  CDS_DRIVER_ERR_CODE_ILLEGAL_PARAMETER,    //!< CCP_EXEC_ILLEGAL_PARAMETER に対応
+  CDS_DRIVER_ERR_CODE_ILLEGAL_LENGTH,       //!< CCP_EXEC_ILLEGAL_PARAMETER に対応
+  CDS_DRIVER_ERR_CODE_UNKNOWN_ERR = 255     //!< UNKNOWN ERR
 } CDS_DRIVER_ERR_CODE;
 
 /**
@@ -68,11 +68,11 @@ typedef enum
  */
 typedef enum
 {
-  CDS_INIT_OK = 0,               //!< OK
-  CDS_INIT_CDS_INIT_ERR,          //!< CDS_init でのエラー
-  CDS_INIT_PARAMETER_ERR,        //!< 初期化パラメタエラー
-  CDS_INIT_OTHER_ERR,            //!< その他のエラー
-  CDS_INIT_UNKNOWN_ERR = 255     //!< UNKNOWN ERR
+  CDS_INIT_OK = 0,              //!< OK
+  CDS_INIT_CDS_INIT_ERR,        //!< CDS_init でのエラー
+  CDS_INIT_PARAMETER_ERR,       //!< 初期化パラメタエラー
+  CDS_INIT_OTHER_ERR,           //!< その他のエラー
+  CDS_INIT_UNKNOWN_ERR = 255    //!< UNKNOWN ERR
 } CDS_INIT_ERR_CODE;
 
 /**
@@ -82,11 +82,11 @@ typedef enum
  */
 typedef enum
 {
-  CDS_REC_OK = 0,                //!< OK
-  CDS_REC_CDS_RECEIVE_ERR,        //!< CDS_receive でのエラー
-  CDS_REC_ANALYZE_ERR,           //!< CDS_analyze_rec_data でのエラー
-  CDS_REC_OTHER_ERR,             //!< その他のエラー
-  CDS_REC_UNKNOWN_ERR = 255      //!< UNKNOWN ERR
+  CDS_REC_OK = 0,               //!< OK
+  CDS_REC_CDS_RECEIVE_ERR,      //!< CDS_receive でのエラー
+  CDS_REC_ANALYZE_ERR,          //!< CDS_analyze_rec_data でのエラー
+  CDS_REC_OTHER_ERR,            //!< その他のエラー
+  CDS_REC_UNKNOWN_ERR = 255     //!< UNKNOWN ERR
 } CDS_REC_ERR_CODE;
 
 /**
@@ -114,7 +114,7 @@ typedef enum
  */
 typedef enum
 {
-  CDS_ERR_CODE_OK   = 0,     //!< 返り値は継承先や IF 先で上書きされるため，OK は 0 であることが必須
+  CDS_ERR_CODE_OK   = 0,    //!< 返り値は継承先や IF 先で上書きされるため，OK は 0 であることが必須
   CDS_ERR_CODE_ERR  = 1
 } CDS_ERR_CODE;
 
@@ -135,8 +135,8 @@ typedef enum
  */
 typedef struct
 {
-  int                          ret_from_if_rx;       //!< IF_RX の返り値
-  CDS_RX_DISRUPTION_STATUS_CODE rx_disruption_status; //!< 受信途絶判定
+  int                            ret_from_if_rx;        //!< IF_RX の返り値
+  CDS_RX_DISRUPTION_STATUS_CODE  rx_disruption_status;  //!< 受信途絶判定
 } CDS_RecStatus;
 
 /**
@@ -148,8 +148,8 @@ typedef enum
 {
   CDS_STREAM_SEND_STATUS_OK,
   CDS_STREAM_SEND_STATUS_DISABLE,
-  CDS_STREAM_SEND_STATUS_TX_ERR,                //!< IF_TX でエラー
-  CDS_STREAM_SEND_STATUS_VALIDATE_ERR,          //!< 送信前に validate_config でエラー
+  CDS_STREAM_SEND_STATUS_TX_ERR,          //!< IF_TX でエラー
+  CDS_STREAM_SEND_STATUS_VALIDATE_ERR,    //!< 送信前に validate_config でエラー
   CDS_STREAM_SEND_STATUS_OTHER_ERR
 } CDS_STREAM_SEND_STATUS_CODE;
 
@@ -159,8 +159,8 @@ typedef enum
  */
 typedef struct
 {
-  CDS_STREAM_SEND_STATUS_CODE status_code;       //!< status
-  int                        ret_from_if_tx;    //!< IF_TX の返り値
+  CDS_STREAM_SEND_STATUS_CODE status_code;      //!< status
+  int                         ret_from_if_tx;   //!< IF_TX の返り値
   // 今後詳細情報を拡張するなら，ここに入れる
 } CDS_StreamSendStatus;
 
@@ -173,7 +173,7 @@ typedef enum
 {
   CDS_STREAM_REC_STATUS_FINDING_HEADER,
   CDS_STREAM_REC_STATUS_RECEIVING_HEADER,
-  CDS_STREAM_REC_STATUS_RECEIVING_FRAMELENGTH, //!< 可変長フレームでの，フレーム長データを受信中
+  CDS_STREAM_REC_STATUS_RECEIVING_FRAMELENGTH,  //!< 可変長フレームでの，フレーム長データを受信中
   CDS_STREAM_REC_STATUS_RECEIVING_DATA,
   CDS_STREAM_REC_STATUS_RECEIVING_FOOTER,
   CDS_STREAM_REC_STATUS_FIXED_FRAME,
@@ -182,8 +182,8 @@ typedef enum
   CDS_STREAM_REC_STATUS_FOOTER_MISMATCH,
   CDS_STREAM_REC_STATUS_RX_FRAME_TOO_LONG,
   CDS_STREAM_REC_STATUS_RX_FRAME_TOO_SHORT,
-  CDS_STREAM_REC_STATUS_RX_ERR,                //!< IF_RX でエラー
-  CDS_STREAM_REC_STATUS_VALIDATE_ERR,          //!< 受信前に validate_config でエラー
+  CDS_STREAM_REC_STATUS_RX_ERR,                 //!< IF_RX でエラー
+  CDS_STREAM_REC_STATUS_VALIDATE_ERR,           //!< 受信前に validate_config でエラー
   CDS_STREAM_REC_STATUS_OTHER_ERR
 } CDS_STREAM_REC_STATUS_CODE;
 
@@ -204,10 +204,10 @@ typedef enum
  */
 typedef struct
 {
-  CDS_STREAM_REC_STATUS_CODE            status_code;                   //!< status
-  uint16_t                             fixed_frame_len;               //!< フレーム確定したときのフレーム長さ
-  CDS_STREAM_TLM_DISRUPTION_STATUS_CODE tlm_disruption_status;         //!< テレメ途絶判定
-  uint32_t                             count_of_carry_over_failures;  /*!< 受信バッファの繰越に失敗した回数
+  CDS_STREAM_REC_STATUS_CODE            status_code;                  //!< status
+  uint16_t                              fixed_frame_len;              //!< フレーム確定したときのフレーム長さ
+  CDS_STREAM_TLM_DISRUPTION_STATUS_CODE tlm_disruption_status;        //!< テレメ途絶判定
+  uint32_t                              count_of_carry_over_failures; /*!< 受信バッファの繰越に失敗した回数
                                                                            CDS_receive の呼び出し頻度がおそすぎることが原因 */
   // 今後詳細情報を拡張するなら，ここに入れる（ref. EQU Driver Super の DRIVE_Super_rec など）
 } CDS_StreamRecStatus;
