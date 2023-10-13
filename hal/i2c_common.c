@@ -54,8 +54,8 @@ static CDS_ERR_CODE I2C_write_bytes_(ComponentDriverSuper* p_super, uint8_t stre
   tx_data[0] = register_address;
   ENDIAN_memcpy(tx_data + sizeof(register_address), data_v, data_len);
   I2C_set_stop_flag(p_i2c_config, 1);
-  DSSC_set_tx_frame(stream_config, tx_data);
-  DSSC_set_tx_frame_size(stream_config, sizeof(register_address) + data_len);
+  CDSSC_set_tx_frame(stream_config, tx_data);
+  CDSSC_set_tx_frame_size(stream_config, sizeof(register_address) + data_len);
 
   return CDS_send_general_cmd(p_super, stream);
 }
@@ -80,25 +80,25 @@ static CDS_ERR_CODE I2C_read_bytes_(ComponentDriverSuper* p_super, uint8_t strea
   CDS_StreamConfig* stream_config = &(p_super->stream_config[stream]);
 
   // read setting
-  DSSC_set_rx_frame_size(stream_config, buffer_size);
+  CDSSC_set_rx_frame_size(stream_config, buffer_size);
   I2C_set_rx_length(p_i2c_config, buffer_size);
   CDS_clear_rx_buffer(p_super);
   // send
   I2C_set_stop_flag(p_i2c_config, 0);
-  DSSC_set_tx_frame(stream_config, &register_address);
-  DSSC_set_tx_frame_size(stream_config, sizeof(register_address));
+  CDSSC_set_tx_frame(stream_config, &register_address);
+  CDSSC_set_tx_frame_size(stream_config, sizeof(register_address));
   ret = CDS_send_req_tlm_cmd(p_super, stream);
   if (ret != CDS_ERR_CODE_OK) return ret;
   // read
   I2C_set_stop_flag(p_i2c_config, 1);
   ret = CDS_receive(p_super);
   if (ret != CDS_ERR_CODE_OK) return ret;
-  if (DSSC_get_rec_status(stream_config)->status_code != CDS_STREAM_REC_STATUS_FIXED_FRAME)
+  if (CDSSC_get_rec_status(stream_config)->status_code != CDS_STREAM_REC_STATUS_FIXED_FRAME)
   {
     return CDS_ERR_CODE_ERR;
   }
 
-  rx_data = DSSC_get_rx_frame(stream_config);
+  rx_data = CDSSC_get_rx_frame(stream_config);
   ENDIAN_memcpy(data_v, rx_data, buffer_size);
 
   return ret;
