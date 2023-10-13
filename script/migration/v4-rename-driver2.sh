@@ -17,7 +17,7 @@ find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#\
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#/driver/#/component_driver/#g"
 
 ## _init_dssc(), _from_dssc(), _to_dssc()
-find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i "s/cdssc/ccdssc/g"
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i "s/dssc/cdssc/g"
 
 ## Settings
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#/DriverSuper/#/component_driver_super/#g"
