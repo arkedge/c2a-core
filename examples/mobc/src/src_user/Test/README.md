@@ -57,3 +57,7 @@ or
 cd ./test/src_user/applications/user_defined/
 rye run pytest -m real -v test_tlm_mem_dump.py
 ```
+
+## WINGS を使った実行時の補足
+- デフォルトで， WIGNS へのデータ送信が無効となっているため，以下を ON にする必要がある．
+    - https://github.com/arkedge/c2a-core/blob/eba25277c16ed50a79610eb9a34c62317a0e0141/examples/mobc/CMakeLists.txt#L11
