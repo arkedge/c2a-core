@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief  AOBC の DI と AOBC の cmd dispatcher
+ * @brief  AOBC の Component Service と AOBC の cmd dispatcher
  * @note   C2A 間通信のデモ用であり， AOBC も C2A 搭載を仮定する
  */
 #ifndef CSRV_AOBC_H_

@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief MOBC の DI． MOBC における GS との DI に相当する
+ * @brief MOBC の Component Service． MOBC における GS との CSRV に相当する
  */
 #ifndef CSRV_MOBC_H_
 #define CSRV_MOBC_H_
