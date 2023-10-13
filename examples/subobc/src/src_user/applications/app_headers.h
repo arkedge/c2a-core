@@ -15,7 +15,7 @@
 // Core TestApp
 #include <src_core/applications/test_app/test_ccp_util.h>
 
-// DI
+// Component Service
 #include "component_service/csrv_mobc.h"
 
 // UserDefined

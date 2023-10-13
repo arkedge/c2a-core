@@ -20,7 +20,7 @@
 // Core TestApp
 #include <src_core/applications/test_app/test_ccp_util.h>
 
-// DI
+// Component Service
 #include "component_service/csrv_aobc.h"
 #include "component_service/csrv_uart_test.h"
 #include "component_service/csrv_gs.h"
