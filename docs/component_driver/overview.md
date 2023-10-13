@@ -6,7 +6,7 @@
 Component Driver とは，各コンポーネントとの通信において， HW 依存部分を吸収するためのレイヤーである．  
 [DriverSuper](https://github.com/arkedge/c2a-core/blob/develop/component_driver/driver_super.h) と呼ばれる共通の IF を各ドライバが継承することで，統一的で安全な実装が可能になる．
 
-また，これを Application へと抽象化したものが， Application Layer にある DI (Driver Instance) である．
+また，これを Application へと抽象化したものが， Application Layer にある CSRV (Component Service) である．
 
 実装方法は，基本的には [driver_super.h](https://github.com/arkedge/c2a-core/blob/develop/component_driver/driver_super.h) をみればわかるようにしてあるが，現時点で
 

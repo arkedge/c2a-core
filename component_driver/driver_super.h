@@ -48,7 +48,7 @@ typedef struct CDS_StreamConfig CDS_StreamConfig;
  * @note   初期化関数呼び出し時については， CDS_INIT_ERR_CODE を用いること
  * @note   受信関数呼び出し時については， CDS_REC_ERR_CODE を用いること
  * @note   接続先機器へ送るCmd呼び出し時については， CDS_CMD_ERR_CODE を用いること
- * @note   DI の Cmd の返り値である CCP_EXEC_STS との整合性を多少意識している
+ * @note   CSRV の Cmd の返り値である CCP_EXEC_STS との整合性を多少意識している
  * @note   CCP_EXEC_STS への変換は CDS_conv_driver_err_to_ccp_cmd_ret を用いる
  * @note   より詳細なエラー情報を返したい場合は， ComponentDriver ごとに独自 enum を定義して良い
  */
@@ -91,17 +91,17 @@ typedef enum
 
 /**
  * @enum   CDS_CMD_ERR_CODE
- * @brief  各DIが ComponentDriver にコマンドを送るときに，統一的に使うコード
+ * @brief  各 CSRV が ComponentDriver にコマンドを送るときに，統一的に使うコード
  * @note   uint8_t を想定
- * @note   DI の Cmd の返り値である CCP_EXEC_STS との整合性を多少意識している
+ * @note   CSRV の Cmd の返り値である CCP_EXEC_STS との整合性を多少意識している
  * @note   CCP_EXEC_STS への変換は CDS_conv_cmd_err_to_ccp_cmd_ret を用いる
  */
 typedef enum
 {
   CDS_CMD_OK                 = 0,   //!< OKは0であることを保証する
-  CDS_CMD_ILLEGAL_CONTEXT    = 1,   //!< CCP_EXEC_ILLEGAL_CONTEXT に対応．DIでみることも多いはず．HW依存部は ComponentDriver でみる
+  CDS_CMD_ILLEGAL_CONTEXT    = 1,   //!< CCP_EXEC_ILLEGAL_CONTEXT に対応．CSRV でみることも多いはず．HW依存部は ComponentDriver でみる
   CDS_CMD_ILLEGAL_PARAMETER  = 2,   //!< CCP_EXEC_ILLEGAL_PARAMETER に対応．ヒーターの個数など，HW 依存部は ComponentDriver でみる
-  CDS_CMD_ILLEGAL_LENGTH     = 3,   //!< CCP_EXEC_ILLEGAL_LENGTH に対応．これは基本的にはDIで見るはずなので，使われないことを想定
+  CDS_CMD_ILLEGAL_LENGTH     = 3,   //!< CCP_EXEC_ILLEGAL_LENGTH に対応．これは基本的には CSRV で見るはずなので，使われないことを想定
   CDS_CMD_DRIVER_SUPER_ERR   = 4,   //!< ComponentDriverSuper 側，つまり配送の低レイヤーでエラーが起きた場合
   CDS_CMD_UNKNOWN_ERR        = 255
 } CDS_CMD_ERR_CODE;
@@ -661,7 +661,7 @@ void CDS_nullify_stream_rec_buffers(CDS_StreamRecBuffer* rx_buffers[CDS_STREAM_M
 /**
  * @brief  CDS_DRIVER_ERR_CODE から CCP_CmdRet への変換関数
  *
- *         DI から ComponentDriver の関数を呼び出したときのエラーコードの変換に用いる
+ *         CSRV から ComponentDriver の関数を呼び出したときのエラーコードの変換に用いる
  * @note   汎用 Util 関数
  * @param  CDS_DRIVER_ERR_CODE
  * @return CCP_CmdRet
@@ -671,7 +671,7 @@ CCP_CmdRet CDS_conv_driver_err_to_ccp_cmd_ret(CDS_DRIVER_ERR_CODE code);
 /**
  * @brief  CDS_CMD_ERR_CODE から CCP_CmdRet への変換関数
  *
- *         DI から ComponentDriver の関数を呼び出したときのエラーコードの変換に用いる
+ *         CSRV から ComponentDriver の関数を呼び出したときのエラーコードの変換に用いる
  * @note   汎用 Util 関数
  * @param  CDS_CMD_ERR_CODE
  * @return CCP_CmdRet
