@@ -3,7 +3,7 @@
  * @file
  * @brief  各制御センサ・アクチュエータ等とのインターフェースドライバ群のスーパークラス
  *
- *         DriverSuper Class は
+ *         ComponentDriverSuper Class は
  *         各制御センサ・アクチュエータ等とのインターフェースを実現し，
  *         初期化，コマンド発行，テレメトリリクエスト，テレメトリ受信，テレメトリ解析などを行う，ドライバ群のスーパークラスです．
  *         個々の機器のインターフェースドライバに継承させて使用します．
@@ -24,36 +24,36 @@ static uint8_t DS_if_rx_buffer_[DS_IF_RX_BUFFER_SIZE];    //!< IF_RX で受信�
  * @brief  コマンド送信処理
  *
  *         DS_send_general_cmd と DS_send_req_tlm_cmdの共通部分
- * @param  p_super: DriverSuper 構造体へのポインタ
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @param  stream:  どの config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval DS_ERR_CODE_OK:  正常終了
  * @retval DS_ERR_CODE_ERR: IF_TX でのエラーあり
  * @note   受信状況やエラー情報は send_status_ に格納されている
  */
-static DS_ERR_CODE DS_send_cmd_(DriverSuper* p_super, uint8_t stream);
+static DS_ERR_CODE DS_send_cmd_(ComponentDriverSuper* p_super, uint8_t stream);
 
 /**
  * @brief  継承先の機器にコマンドを発行する
  * @note   この関数の実行前に，tx_frame_, tx_frame_size_の設定が必要である
- * @param  p_super: DriverSuper 構造体へのポインタ
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @param  stream:  どの config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval DS_ERR_CODE_OK (0): 正常終了
  * @retval 0 以外: IF_TX の戻り値
  */
-static int DS_tx_(DriverSuper* p_super, uint8_t stream);
+static int DS_tx_(ComponentDriverSuper* p_super, uint8_t stream);
 
 /**
  * @brief  継承先の機器からの受信データがあるか確認し，受信する
- * @param  p_super: DriverSuper 構造体へのポインタ
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @retval 0:    受信データなし
  * @retval 正数: 受信データ長 [Byte]
  * @retval 負数: IF_RXのエラー
  */
-static int DS_rx_(DriverSuper* p_super);
+static int DS_rx_(ComponentDriverSuper* p_super);
 
 /**
  * @brief  受信フレーム解析関数
- * @param[in]  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param[in]  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @param[in]  rec_data_len:    今回新規に受信したデータ長
  * @return void 詳細は DS_StreamRecStatus
  */
@@ -64,7 +64,7 @@ static void DS_analyze_rx_buffer_(DS_StreamConfig* p_stream_config,
  * @brief  解析用受信バッファの準備
  *
  *         繰り越されたデータと今回受信したデータの結合を行い，受信データ解析の準備をする
- * @param[in]  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param[in]  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @param[in]  rec_data_len:    今回新規に受信したデータ長
  * @return void
  * @note   厳格なフレーム探索が有効かどうかで処理が変わることに注意
@@ -76,14 +76,14 @@ static void DS_analyze_rx_buffer_prepare_buffer_(DS_StreamConfig* p_stream_confi
  * @brief  フレーム解析関数
  *
  *         受信バッファを走査し，バイト単位でフレーム内データを確認していく
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @return void その他の詳細は DS_StreamRecStatus
  */
 static void DS_analyze_rx_buffer_pickup_(DS_StreamConfig* p_stream_config);
 
 /**
  * @brief  フレーム解析関数後の繰越データの頭出し
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @return void
  */
 static void DS_analyze_rx_buffer_cueing_buffer_(DS_StreamConfig* p_stream_config);
@@ -92,7 +92,7 @@ static void DS_analyze_rx_buffer_cueing_buffer_(DS_StreamConfig* p_stream_config
  * @brief  固定長フレーム解析関数（バイト列処理）
  *
  *         受信バッファのデータを走査し，必要なデータをフレームとして pickup する
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @return void その他の詳細は DS_StreamRecStatus
  */
 static void DS_analyze_rx_buffer_fixed_pickup_(DS_StreamConfig* p_stream_config);
@@ -102,7 +102,7 @@ static void DS_analyze_rx_buffer_fixed_pickup_(DS_StreamConfig* p_stream_config)
  *
  *         受信バッファのデータを走査し，必要なデータをフレームとして pickup する
  * @note   受信フレームにフレーム長データが存在していることを前提とする
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @return void その他の詳細は DS_StreamRecStatus
  */
 static void DS_analyze_rx_buffer_variable_pickup_with_rx_frame_size_(DS_StreamConfig* p_stream_config);
@@ -114,7 +114,7 @@ static void DS_analyze_rx_buffer_variable_pickup_with_rx_frame_size_(DS_StreamCo
  * @note   DS_analyze_rx_buffer_variable_pickup_with_rx_frame_size_ との違いは，テレメ長データがフレームに含まれるか否か
  * @note   フッタが存在していることを前提とする
  * @note   ヘッダなしは認める．ただし，受信データ先頭からフレームとみなすので，ヘッダありを強く推奨する
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @return void その他の詳細は DS_StreamRecStatus
  */
 static void DS_analyze_rx_buffer_variable_pickup_with_footer_(DS_StreamConfig* p_stream_config);
@@ -122,7 +122,7 @@ static void DS_analyze_rx_buffer_variable_pickup_with_footer_(DS_StreamConfig* p
 /**
  * @brief  フレーム解析関数（ヘッダ探索）
  * @note   ヘッダが見つかった場合，最初の 1 byte のみ処理する
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @return void その他の詳細は DS_StreamRecStatus
  */
 static void DS_analyze_rx_buffer_finding_header_(DS_StreamConfig* p_stream_config);
@@ -130,7 +130,7 @@ static void DS_analyze_rx_buffer_finding_header_(DS_StreamConfig* p_stream_confi
 /**
  * @brief  フレーム解析関数（ヘッダ受信中）
  * @note   1 byte のみ処理する
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @return void その他の詳細は DS_StreamRecStatus
  */
 static void DS_analyze_rx_buffer_receiving_header_(DS_StreamConfig* p_stream_config);
@@ -139,7 +139,7 @@ static void DS_analyze_rx_buffer_receiving_header_(DS_StreamConfig* p_stream_con
  * @brief  フレーム解析関数（フッタ受信中）
  * @note   1 byte のみ処理する
  * @note   現在，フレーム長が uint16_t を超えることは想定していない！
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @param  rx_frame_size:   フレームサイズ（可変長フレームの場合もあるので，引数に取る）
  * @return void その他の詳細は DS_StreamRecStatus
  */
@@ -149,7 +149,7 @@ static void DS_analyze_rx_buffer_receiving_footer_(DS_StreamConfig* p_stream_con
 /**
  * @brief  フレーム解析中に受信したフレームからフレーム長を取得する関数
  * @note   DS_analyze_rx_buffer_variable_pickup_with_rx_frame_size_ から呼ばれることを想定
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @return フレーム長
  */
 static uint32_t DS_analyze_rx_buffer_get_framelength_(DS_StreamConfig* p_stream_config);
@@ -158,22 +158,22 @@ static uint32_t DS_analyze_rx_buffer_get_framelength_(DS_StreamConfig* p_stream_
  * @brief  DS_StreamConfig 構造体の初期化
  *
  *         DS_StreamConfig 構造体を初期化し，デフォルト値で埋める．
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @return DS_ERR_CODE
  */
 static DS_ERR_CODE DS_reset_stream_config_(DS_StreamConfig* p_stream_config);
 
 /**
  * @brief  DS_StreamConfig 構造体のバリデーション
- * @param  p_super:         DriverSuper 構造体へのポインタ
- * @param  p_stream_config: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_super:         ComponentDriverSuper 構造体へのポインタ
+ * @param  p_stream_config: ComponentDriverSuper 構造体の DS_StreamConfig
  * @return DS_ERR_CODE
  */
-static DS_ERR_CODE DS_validate_stream_config_(const DriverSuper* p_super, DS_StreamConfig* p_stream_config);
+static DS_ERR_CODE DS_validate_stream_config_(const ComponentDriverSuper* p_super, DS_StreamConfig* p_stream_config);
 
 // ダミー関数
 // EQU だと関数ポインタの初期値を NULL にしていたためにぬるぽで事故ったので
-static DS_ERR_CODE DS_load_init_setting_dummy_(DriverSuper* p_super);
+static DS_ERR_CODE DS_load_init_setting_dummy_(ComponentDriverSuper* p_super);
 static DS_ERR_CODE DS_data_analyzer_dummy_(DS_StreamConfig* p_stream_config, void* p_driver);
 
 // ###### DS_StreamRecBuffer 関連関数 ######
@@ -237,12 +237,12 @@ void DS_move_forward_frame_head_candidate_of_stream_rec_buffer_(DS_StreamRecBuff
                                                                 uint16_t size);
 
 
-// ###### DriverSuper基本関数 ######
+// ###### ComponentDriverSuper基本関数 ######
 
-DS_ERR_CODE DS_init(DriverSuper* p_super,
+DS_ERR_CODE DS_init(ComponentDriverSuper* p_super,
                     void* if_config,
                     DS_StreamRecBuffer* rx_buffer,
-                    DS_ERR_CODE (*load_init_setting)(DriverSuper* p_super))
+                    DS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super))
 {
   DS_StreamRecBuffer* rx_buffers[DS_STREAM_MAX];
   DS_nullify_stream_rec_buffers(rx_buffers);
@@ -251,10 +251,10 @@ DS_ERR_CODE DS_init(DriverSuper* p_super,
 }
 
 
-DS_ERR_CODE DS_init_streams(DriverSuper* p_super,
+DS_ERR_CODE DS_init_streams(ComponentDriverSuper* p_super,
                             void* if_config,
                             DS_StreamRecBuffer* rx_buffers[DS_STREAM_MAX],
-                            DS_ERR_CODE (*load_init_setting)(DriverSuper* p_super))
+                            DS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super))
 {
   uint8_t stream;
 
@@ -284,7 +284,7 @@ DS_ERR_CODE DS_init_streams(DriverSuper* p_super,
 }
 
 
-DS_ERR_CODE DS_reset(DriverSuper* p_super)
+DS_ERR_CODE DS_reset(ComponentDriverSuper* p_super)
 {
   uint8_t stream;
 
@@ -316,7 +316,7 @@ DS_ERR_CODE DS_reset(DriverSuper* p_super)
 }
 
 
-DS_ERR_CODE DS_validate_config(DriverSuper* p_super)
+DS_ERR_CODE DS_validate_config(ComponentDriverSuper* p_super)
 {
   uint8_t stream;
 
@@ -334,7 +334,7 @@ DS_ERR_CODE DS_validate_config(DriverSuper* p_super)
   return DS_ERR_CODE_OK;
 }
 
-DS_ERR_CODE DS_clear_rx_buffer(DriverSuper* p_super)
+DS_ERR_CODE DS_clear_rx_buffer(ComponentDriverSuper* p_super)
 {
   uint8_t stream;
 
@@ -343,7 +343,7 @@ DS_ERR_CODE DS_clear_rx_buffer(DriverSuper* p_super)
     DS_clear_stream_rec_buffer_(p_super->stream_config[stream].settings.rx_buffer_);
   }
 
-  // FIXME: すべての Driver の初期化で呼ばれ，無駄
+  // FIXME: すべての ComponentDriver の初期化で呼ばれ，無駄
   memset(DS_if_rx_buffer_,
          0x00,
          sizeof(DS_if_rx_buffer_));
@@ -352,7 +352,7 @@ DS_ERR_CODE DS_clear_rx_buffer(DriverSuper* p_super)
 }
 
 
-DS_ERR_CODE DS_receive(DriverSuper* p_super)
+DS_ERR_CODE DS_receive(ComponentDriverSuper* p_super)
 {
   uint8_t  stream;
   uint16_t rec_data_len;
@@ -360,7 +360,7 @@ DS_ERR_CODE DS_receive(DriverSuper* p_super)
 
   p_super->config.info.rx_call_count_++;
 
-  // 各 Driver で物理的に接続されている wire は１本なので，それをここで受信する．
+  // 各 ComponentDriver で物理的に接続されている wire は１本なので，それをここで受信する．
   // 後段の stream では，その受信したビット列に対して，複数のフレーム種類に対して，フレーム探索，確定処理を走らす．
   ret_rx = DS_rx_(p_super);
   p_super->config.info.rec_status_.ret_from_if_rx = ret_rx;
@@ -411,8 +411,8 @@ DS_ERR_CODE DS_receive(DriverSuper* p_super)
     {
       // RX失敗
       p_stream_config->info.rec_status_.status_code = DS_STREAM_REC_STATUS_RX_ERR;
-      // [TODO] ここに DriverSuper としての共通のアノマリ発行を入れるかは要議論
-      //        個別対応なので， Driver に実装する，ないしは， IF 側に実装するのが自然か？
+      // [TODO] ここに ComponentDriverSuper としての共通のアノマリ発行を入れるかは要議論
+      //        個別対応なので， ComponentDriver に実装する，ないしは， IF 側に実装するのが自然か？
       continue;
     }
     else if (ret_rx == 0)
@@ -483,7 +483,7 @@ DS_ERR_CODE DS_receive(DriverSuper* p_super)
 }
 
 
-DS_ERR_CODE DS_analyze_rec_data(DriverSuper* p_super, uint8_t stream, void* p_driver)
+DS_ERR_CODE DS_analyze_rec_data(ComponentDriverSuper* p_super, uint8_t stream, void* p_driver)
 {
   DS_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
 
@@ -493,7 +493,7 @@ DS_ERR_CODE DS_analyze_rec_data(DriverSuper* p_super, uint8_t stream, void* p_dr
 }
 
 
-DS_ERR_CODE DS_send_general_cmd(DriverSuper* p_super, uint8_t stream)
+DS_ERR_CODE DS_send_general_cmd(ComponentDriverSuper* p_super, uint8_t stream)
 {
   DS_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
 
@@ -514,7 +514,7 @@ DS_ERR_CODE DS_send_general_cmd(DriverSuper* p_super, uint8_t stream)
 }
 
 
-DS_ERR_CODE DS_send_req_tlm_cmd(DriverSuper* p_super, uint8_t stream)
+DS_ERR_CODE DS_send_req_tlm_cmd(ComponentDriverSuper* p_super, uint8_t stream)
 {
   DS_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
 
@@ -536,7 +536,7 @@ DS_ERR_CODE DS_send_req_tlm_cmd(DriverSuper* p_super, uint8_t stream)
 }
 
 
-static DS_ERR_CODE DS_send_cmd_(DriverSuper* p_super, uint8_t stream)
+static DS_ERR_CODE DS_send_cmd_(ComponentDriverSuper* p_super, uint8_t stream)
 {
   DS_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
 
@@ -565,7 +565,7 @@ static DS_ERR_CODE DS_send_cmd_(DriverSuper* p_super, uint8_t stream)
 }
 
 
-static int DS_tx_(DriverSuper* p_super, uint8_t stream)
+static int DS_tx_(ComponentDriverSuper* p_super, uint8_t stream)
 {
   int ret;
   DS_StreamConfig* p_stream_config = &(p_super->stream_config[stream]);
@@ -586,7 +586,7 @@ static int DS_tx_(DriverSuper* p_super, uint8_t stream)
 }
 
 
-static int DS_rx_(DriverSuper* p_super)
+static int DS_rx_(ComponentDriverSuper* p_super)
 {
   int flag;
   int rec_data_len;
@@ -1231,7 +1231,7 @@ static DS_ERR_CODE DS_reset_stream_config_(DS_StreamConfig* p_stream_config)
 }
 
 
-static DS_ERR_CODE DS_validate_stream_config_(const DriverSuper* p_super, DS_StreamConfig* p_stream_config)
+static DS_ERR_CODE DS_validate_stream_config_(const ComponentDriverSuper* p_super, DS_StreamConfig* p_stream_config)
 {
   DS_StreamConfig* p = p_stream_config;
 
@@ -1300,7 +1300,7 @@ static DS_ERR_CODE DS_validate_stream_config_(const DriverSuper* p_super, DS_Str
 }
 
 
-static DS_ERR_CODE DS_load_init_setting_dummy_(DriverSuper* p_super)
+static DS_ERR_CODE DS_load_init_setting_dummy_(ComponentDriverSuper* p_super)
 {
   (void)p_super;
   return DS_ERR_CODE_OK;
@@ -1315,12 +1315,12 @@ static DS_ERR_CODE DS_data_analyzer_dummy_(DS_StreamConfig* p_stream_config, voi
 
 
 // ###### DS_Config Getter/Setter of Settings ######
-uint16_t DSC_get_rx_buffer_size_in_if_rx(const DriverSuper* p_super)
+uint16_t DSC_get_rx_buffer_size_in_if_rx(const ComponentDriverSuper* p_super)
 {
   return (uint16_t)p_super->config.settings.rx_buffer_size_in_if_rx_;
 }
 
-DS_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(DriverSuper* p_super,
+DS_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(ComponentDriverSuper* p_super,
                                             const uint16_t rx_buffer_size_in_if_rx)
 {
   if (rx_buffer_size_in_if_rx > DS_IF_RX_BUFFER_SIZE) return DS_ERR_CODE_ERR;
@@ -1328,27 +1328,27 @@ DS_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(DriverSuper* p_super,
   return DS_ERR_CODE_OK;
 }
 
-uint8_t DSC_get_should_monitor_for_rx_disruption(const DriverSuper* p_super)
+uint8_t DSC_get_should_monitor_for_rx_disruption(const ComponentDriverSuper* p_super)
 {
   return (uint8_t)p_super->config.settings.should_monitor_for_rx_disruption_;
 }
 
-void DSC_enable_monitor_for_rx_disruption(DriverSuper* p_super)
+void DSC_enable_monitor_for_rx_disruption(ComponentDriverSuper* p_super)
 {
   p_super->config.settings.should_monitor_for_rx_disruption_ = 1;
 }
 
-void DSC_disable_monitor_for_rx_disruption(DriverSuper* p_super)
+void DSC_disable_monitor_for_rx_disruption(ComponentDriverSuper* p_super)
 {
   p_super->config.settings.should_monitor_for_rx_disruption_ = 0;
 }
 
-uint32_t DSC_get_time_threshold_for_rx_disruption(const DriverSuper* p_super)
+uint32_t DSC_get_time_threshold_for_rx_disruption(const ComponentDriverSuper* p_super)
 {
   return (uint32_t)p_super->config.settings.time_threshold_for_rx_disruption_;
 }
 
-void DSC_set_time_threshold_for_rx_disruption(DriverSuper* p_super,
+void DSC_set_time_threshold_for_rx_disruption(ComponentDriverSuper* p_super,
                                               const uint32_t time_threshold_for_rx_disruption)
 {
   p_super->config.settings.time_threshold_for_rx_disruption_ = time_threshold_for_rx_disruption;
@@ -1357,27 +1357,27 @@ void DSC_set_time_threshold_for_rx_disruption(DriverSuper* p_super,
 
 // ###### DS_Config Getter/Setter of Info ######
 // FIXME: HEW で Warning が出てしまう（gcc ではでない）ので，キャストしている関数がいくつかある
-const DS_RecStatus* DSC_get_rec_status(const DriverSuper* p_super)
+const DS_RecStatus* DSC_get_rec_status(const ComponentDriverSuper* p_super)
 {
   return &p_super->config.info.rec_status_;
 }
 
-uint32_t DSC_get_rx_count(const DriverSuper* p_super)
+uint32_t DSC_get_rx_count(const ComponentDriverSuper* p_super)
 {
   return (uint32_t)p_super->config.info.rx_count_;
 }
 
-uint32_t DSC_get_rx_call_count(const DriverSuper* p_super)
+uint32_t DSC_get_rx_call_count(const ComponentDriverSuper* p_super)
 {
   return (uint32_t)p_super->config.info.rx_call_count_;
 }
 
-const ObcTime* DSC_get_rx_time(const DriverSuper* p_super)
+const ObcTime* DSC_get_rx_time(const ComponentDriverSuper* p_super)
 {
   return &p_super->config.info.rx_time_;
 }
 
-DS_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const DriverSuper* p_super)
+DS_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const ComponentDriverSuper* p_super)
 {
   return (DS_RX_DISRUPTION_STATUS_CODE)p_super->config.info.rec_status_.rx_disruption_status;
 }
@@ -1640,7 +1640,7 @@ DS_ERR_CODE DSSC_get_ret_from_data_analyzer(const DS_StreamConfig* p_stream_conf
 }
 
 
-// ###### Driver 汎用 Util 関数 ######
+// ###### ComponentDriver 汎用 Util 関数 ######
 
 DS_ERR_CODE DS_init_stream_rec_buffer(DS_StreamRecBuffer* stream_rec_buffer,
                                       uint8_t* buffer,
@@ -1702,7 +1702,7 @@ CCP_CmdRet DS_conv_cmd_err_to_ccp_cmd_ret(DS_CMD_ERR_CODE code)
     // DS_CMD_OK
     // DS_CMD_DRIVER_SUPER_ERR
     // DS_CMD_UNKNOWN_ERR
-    // 下 2 つのエラーは Driver 側の問題で，そちらでエラー情報を持つべき
+    // 下 2 つのエラーは ComponentDriver 側の問題で，そちらでエラー情報を持つべき
     // ここでは SUCCESS を返す
     return CCP_make_cmd_ret(CCP_EXEC_SUCCESS, (uint32_t)code);
   }

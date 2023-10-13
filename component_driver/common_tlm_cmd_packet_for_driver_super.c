@@ -92,7 +92,7 @@ DS_ERR_CODE CTCP_init_dssc(DS_StreamConfig* p_stream_config,
                                  EB90_FRAME_HEADER_SIZE + EB90_FRAME_FOOTER_SIZE);
   DSSC_set_data_analyzer(p_stream_config, data_analyzer);
 
-  // 定期 TLM の監視機能の有効化はここではしないので， Driver 側でやる
+  // 定期 TLM の監視機能の有効化はここではしないので， ComponentDriver 側でやる
   // enable もここではしない
 
   return DS_ERR_CODE_OK;

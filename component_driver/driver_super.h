@@ -2,7 +2,7 @@
  * @file
  * @brief  各制御センサ・アクチュエータ等とのインターフェースドライバ群のスーパークラス
  *
- *         DriverSuper Class は
+ *         ComponentDriverSuper Class は
  *         各制御センサ・アクチュエータ等とのインターフェースを実現し，
  *         初期化，コマンド発行，テレメトリリクエスト，テレメトリ受信，テレメトリ解析などを行う，ドライバ群のスーパークラスです．
  *         個々の機器のインターフェースドライバに継承させて使用します．
@@ -34,23 +34,23 @@
                                                        IF_RX から受信できる最大数を規定する
                                                        OBC の物理的な信号ラインのバッファサイズ以上とするともっともパフォーマンスが出る */
 
-#include <src_user/Settings/DriverSuper/driver_super_params.h>
+#include <src_user/Settings/ComponentDriverSuper/driver_super_params.h>
 
-typedef struct DriverSuper DriverSuper;
+typedef struct ComponentDriverSuper ComponentDriverSuper;
 typedef struct DS_StreamConfig DS_StreamConfig;
 
 /**
  * @enum   DS_DRIVER_ERR_CODE
- * @brief  Driver の汎用エラーコード
+ * @brief  ComponentDriver の汎用エラーコード
  *
- *         Driver 内の各種 setter 等の関数返り値で使われることを想定
+ *         ComponentDriver 内の各種 setter 等の関数返り値で使われることを想定
  * @note   uint8_t を想定
  * @note   初期化関数呼び出し時については， DS_INIT_ERR_CODE を用いること
  * @note   受信関数呼び出し時については， DS_REC_ERR_CODE を用いること
  * @note   接続先機器へ送るCmd呼び出し時については， DS_CMD_ERR_CODE を用いること
  * @note   DI の Cmd の返り値である CCP_EXEC_STS との整合性を多少意識している
  * @note   CCP_EXEC_STS への変換は DS_conv_driver_err_to_ccp_cmd_ret を用いる
- * @note   より詳細なエラー情報を返したい場合は， Driver ごとに独自 enum を定義して良い
+ * @note   より詳細なエラー情報を返したい場合は， ComponentDriver ごとに独自 enum を定義して良い
  */
 typedef enum
 {
@@ -63,7 +63,7 @@ typedef enum
 
 /**
  * @enum   DS_INIT_ERR_CODE
- * @brief  Driver の初期化関数のエラーコード
+ * @brief  ComponentDriver の初期化関数のエラーコード
  * @note   uint8_t を想定
  */
 typedef enum
@@ -77,7 +77,7 @@ typedef enum
 
 /**
  * @enum   DS_REC_ERR_CODE
- * @brief  Driver の受信関数のエラーコード
+ * @brief  ComponentDriver の受信関数のエラーコード
  * @note   uint8_t を想定
  */
 typedef enum
@@ -91,7 +91,7 @@ typedef enum
 
 /**
  * @enum   DS_CMD_ERR_CODE
- * @brief  各DIが Driver にコマンドを送るときに，統一的に使うコード
+ * @brief  各DIが ComponentDriver にコマンドを送るときに，統一的に使うコード
  * @note   uint8_t を想定
  * @note   DI の Cmd の返り値である CCP_EXEC_STS との整合性を多少意識している
  * @note   CCP_EXEC_STS への変換は DS_conv_cmd_err_to_ccp_cmd_ret を用いる
@@ -99,18 +99,18 @@ typedef enum
 typedef enum
 {
   DS_CMD_OK                 = 0,   //!< OKは0であることを保証する
-  DS_CMD_ILLEGAL_CONTEXT    = 1,   //!< CCP_EXEC_ILLEGAL_CONTEXT に対応．DIでみることも多いはず．HW依存部は Driver でみる
-  DS_CMD_ILLEGAL_PARAMETER  = 2,   //!< CCP_EXEC_ILLEGAL_PARAMETER に対応．ヒーターの個数など，HW 依存部は Driver でみる
+  DS_CMD_ILLEGAL_CONTEXT    = 1,   //!< CCP_EXEC_ILLEGAL_CONTEXT に対応．DIでみることも多いはず．HW依存部は ComponentDriver でみる
+  DS_CMD_ILLEGAL_PARAMETER  = 2,   //!< CCP_EXEC_ILLEGAL_PARAMETER に対応．ヒーターの個数など，HW 依存部は ComponentDriver でみる
   DS_CMD_ILLEGAL_LENGTH     = 3,   //!< CCP_EXEC_ILLEGAL_LENGTH に対応．これは基本的にはDIで見るはずなので，使われないことを想定
-  DS_CMD_DRIVER_SUPER_ERR   = 4,   //!< DriverSuper 側，つまり配送の低レイヤーでエラーが起きた場合
+  DS_CMD_DRIVER_SUPER_ERR   = 4,   //!< ComponentDriverSuper 側，つまり配送の低レイヤーでエラーが起きた場合
   DS_CMD_UNKNOWN_ERR        = 255
 } DS_CMD_ERR_CODE;
 
 /**
  * @enum   DS_ERR_CODE
- * @brief  DriverSuper の汎用エラーコード
+ * @brief  ComponentDriverSuper の汎用エラーコード
  * @note   uint8_t を想定
- * @note   DriverSuper で用い， Drive では用いない
+ * @note   ComponentDriverSuper で用い， Drive では用いない
  */
 typedef enum
 {
@@ -231,17 +231,17 @@ typedef struct
 
 /**
  * @struct DS_Config
- * @brief  DriverSuper の設定
+ * @brief  ComponentDriverSuper の設定
  *
  *         各IFはこれを継承してつかう．
- *         DS_Config のメンバはすべての Driver から非公開とし， getter / setter でアクセスする
+ *         DS_Config のメンバはすべての ComponentDriver から非公開とし， getter / setter でアクセスする
  */
 typedef struct
 {
   struct
   {
     uint16_t rx_buffer_size_in_if_rx_;                        /*!< IF_RX で受信するときの一次バッファのサイズ
-                                                                   DS ではまず IF_RX を全 Driver 共通の一次バッファにコピーした後，
+                                                                   DS ではまず IF_RX を全 ComponentDriver 共通の一次バッファにコピーした後，
                                                                    DS_StreamRecBuffer に push して解析していく．
                                                                    IF_RX で読み込む量が多すぎると，DS_StreamRecBuffer に収まりきらないことがあるので，
                                                                    DS_StreamRecBuffer のサイズが小さい場合は，IF_RX で読み込むサイズも小さくする必要がある．
@@ -265,7 +265,7 @@ typedef struct
 
   struct
   {
-    DS_ERR_CODE (*load_init_setting)(DriverSuper* p_super);   /*!< DS_init でロードする，ドライバの初期設定の設定関数
+    DS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super);   /*!< DS_init でロードする，ドライバの初期設定の設定関数
                                                                    DS_reset_config での設定をオーバーロードする
                                                                    返り値は DS_ERR_CODE */
   } internal;       //!< 内部処理用
@@ -273,9 +273,9 @@ typedef struct
 
 /**
  * @struct DS_StreamConfig
- * @brief  DriverSuperStream の設定
+ * @brief  ComponentDriverSuperStream の設定
  *
- *         DS_StreamConfig のメンバはすべての Driver から非公開とし， getter / setter でアクセスする
+ *         DS_StreamConfig のメンバはすべての ComponentDriver から非公開とし， getter / setter でアクセスする
  */
 struct DS_StreamConfig
 {
@@ -304,7 +304,7 @@ struct DS_StreamConfig
                                                                    送信データがない場合は 0
                                                                    初期値: 0 */
     int16_t  tx_frame_buffer_size_;                           /*!< 与えた tx_frame_ の最大サイズ
-                                                                   Drivers/Protocol などで， Util が tx_frame_ を使うときに使用
+                                                                   ComponentDrivers/Protocol などで， Util が tx_frame_ を使うときに使用
                                                                    Protocol を使うときは設定しておくと良い（一部の関数は設定しないと使えない）
                                                                    未指定の場合は負数とする
                                                                    初期値: -1 */
@@ -399,19 +399,19 @@ struct DS_StreamConfig
 // TODO: Protocol 用に data_link_layer_ を追加
 
 /**
- * @struct DriverSuper
- * @brief  DriverSuper の設定
+ * @struct ComponentDriverSuper
+ * @brief  ComponentDriverSuper の設定
  *         各 IF はこれを継承してつかう．
  */
-struct DriverSuper
+struct ComponentDriverSuper
 {
   // 【継承先まで公開】
   IF_LIST_ENUM      interface;                              //!< 継承先の機器の使用 IF
   void*             if_config;                              //!< IF 設定
 
-  DS_Config         config;                                 //!< DriverSuper の設定
+  DS_Config         config;                                 //!< ComponentDriverSuper の設定
 
-  DS_StreamConfig   stream_config[DS_STREAM_MAX];           /*!< DriverSuperStream
+  DS_StreamConfig   stream_config[DS_STREAM_MAX];           /*!< ComponentDriverSuperStream
                                                                  index が低いものほど優先（に今後するかも．実行速度次第）．
                                                                  使い方例：[0] のみをつかって，テレメ内に仕込んだ TLM ID などで data_analyzer_ 内で処理を分岐
                                                                  使い方例：[0] を定期テレメと一般コマンドで使い，[1] 以降を非定期や特殊コマンド・テレメトリで使う
@@ -419,62 +419,62 @@ struct DriverSuper
 };
 
 
-// ###### DriverSuper 基本関数 ######
+// ###### ComponentDriverSuper 基本関数 ######
 
 /**
- * @brief  継承先の機器より DriverSuper を初期化する（stream 0 のみの使用の場合）
+ * @brief  継承先の機器より ComponentDriverSuper を初期化する（stream 0 のみの使用の場合）
  *
- *         DriverSuper 構造体を継承先 Driver 構造体のメンバとして定義（継承）し，ポインタを渡すことでポートを初期化する．
+ *         ComponentDriverSuper 構造体を継承先 ComponentDriver 構造体のメンバとして定義（継承）し，ポインタを渡すことでポートを初期化する．
  *         そして，構造体内の初期化が必要な変数を初期化する．
  *         デフォルト値の上書きは load_init_setting で行う
- * @note   DriverSuper を使用する時は起動時に必ず実施すること
- * @param  p_super:           初期化する DriverSuper 構造体へのポインタ
- * @param  if_config:         初期化する Driverで用いられている IF の config 構造体
- * @param  rx_buffer:         初期化する DriverSuper の stream 0 で用いられるフレーム受信バッファ
- * @param  load_init_setting: DriverSuper の初期設定ロード関数ポインタ
+ * @note   ComponentDriverSuper を使用する時は起動時に必ず実施すること
+ * @param  p_super:           初期化する ComponentDriverSuper 構造体へのポインタ
+ * @param  if_config:         初期化する ComponentDriverで用いられている IF の config 構造体
+ * @param  rx_buffer:         初期化する ComponentDriverSuper の stream 0 で用いられるフレーム受信バッファ
+ * @param  load_init_setting: ComponentDriverSuper の初期設定ロード関数ポインタ
  * @return DS_ERR_CODE
  */
-DS_ERR_CODE DS_init(DriverSuper* p_super,
+DS_ERR_CODE DS_init(ComponentDriverSuper* p_super,
                     void* if_config,
                     DS_StreamRecBuffer* rx_buffer,
-                    DS_ERR_CODE (*load_init_setting)(DriverSuper* p_super));
+                    DS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super));
 
 /**
- * @brief  継承先の機器より DriverSuper を初期化する（複数の stream を使用する場合）
+ * @brief  継承先の機器より ComponentDriverSuper を初期化する（複数の stream を使用する場合）
  *
- *         DriverSuper 構造体を継承先 Driver 構造体のメンバとして定義（継承）し，ポインタを渡すことでポートを初期化する．
+ *         ComponentDriverSuper 構造体を継承先 ComponentDriver 構造体のメンバとして定義（継承）し，ポインタを渡すことでポートを初期化する．
  *         そして，構造体内の初期化が必要な変数を初期化する．
  *         デフォルト値の上書きは load_init_setting で行う
- * @note   DriverSuper を使用する時は起動時に必ず実施すること
- * @param  p_super:           初期化する DriverSuper 構造体へのポインタ
- * @param  if_config:         初期化する Driverで用いられている IF の config 構造体
- * @param  rx_buffers:        初期化する DriverSuper で用いられるフレーム受信バッファ．使用しない stream は NULL を設定しておく
- * @param  load_init_setting: DriverSuper の初期設定ロード関数ポインタ
+ * @note   ComponentDriverSuper を使用する時は起動時に必ず実施すること
+ * @param  p_super:           初期化する ComponentDriverSuper 構造体へのポインタ
+ * @param  if_config:         初期化する ComponentDriverで用いられている IF の config 構造体
+ * @param  rx_buffers:        初期化する ComponentDriverSuper で用いられるフレーム受信バッファ．使用しない stream は NULL を設定しておく
+ * @param  load_init_setting: ComponentDriverSuper の初期設定ロード関数ポインタ
  * @return DS_ERR_CODE
  */
-DS_ERR_CODE DS_init_streams(DriverSuper* p_super,
+DS_ERR_CODE DS_init_streams(ComponentDriverSuper* p_super,
                             void* if_config,
                             DS_StreamRecBuffer* rx_buffers[DS_STREAM_MAX],
-                            DS_ERR_CODE (*load_init_setting)(DriverSuper* p_super));
+                            DS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super));
 
 /**
- * @brief  DriverSuper のリセット
+ * @brief  ComponentDriverSuper のリセット
  * @note   DS_init 内で呼ばれている．
- * @param  p_super: DriverSuper 構造体へのポインタ
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @return DS_ERR_CODE
  */
-DS_ERR_CODE DS_reset(DriverSuper* p_super);
+DS_ERR_CODE DS_reset(ComponentDriverSuper* p_super);
 
 /**
- * @brief  DriverSuper の設定に不整合が生じていないかチェックする
+ * @brief  ComponentDriverSuper の設定に不整合が生じていないかチェックする
  *
- *         Driver の設定を変えた場合は毎回呼び出すことを推奨する
+ *         ComponentDriver の設定を変えた場合は毎回呼び出すことを推奨する
  * @note   DS_init 内で呼ばれている．
  * @note   内部の管理フラグを変更しているので， p_super に厳密な const 性はない
- * @param  p_super: DriverSuper 構造体へのポインタ
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @return DS_ERR_CODE
  */
-DS_ERR_CODE DS_validate_config(DriverSuper* p_super);
+DS_ERR_CODE DS_validate_config(ComponentDriverSuper* p_super);
 
 /**
  * @brief  受信バッファをクリアする
@@ -482,10 +482,10 @@ DS_ERR_CODE DS_validate_config(DriverSuper* p_super);
  *         例えば，ヘッダなしテレメの場合，途中でゴミデータが入ると以後すべてのフレームがずれてしまう．
  *         そのようなとき（CRC エラーがでるとか，受信データが明らかにおかしい場合）に，buffer を一度クリアし，
  *         次に届くデータからフレーム解析を先頭から行うようにするために用いる．
- * @param  p_super: DriverSuper 構造体へのポインタ
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @return DS_ERR_CODE
  */
-DS_ERR_CODE DS_clear_rx_buffer(DriverSuper* p_super);
+DS_ERR_CODE DS_clear_rx_buffer(ComponentDriverSuper* p_super);
 
 /**
  * @brief  継承先の機器からテレメトリを受信する
@@ -493,24 +493,24 @@ DS_ERR_CODE DS_clear_rx_buffer(DriverSuper* p_super);
  *         フレームを確定させて，rx_frame_ にいれるまで．解析 (data_analyzer_) はしないのでドライバで DS_analyze_rec_data を呼び出すこと
  *         これは，同じ stream でもテレメ内部の ID などで解析を変えたいときなどが想定されるため
  * @note   継承先の機器のデータ出力周期より早い周期で定期的に実行すること
- * @param  p_super: DriverSuper 構造体へのポインタ
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @retval DS_ERR_CODE_OK:  IF_RX でのエラーなし
  * @retval DS_ERR_CODE_ERR: IF_RX でのエラーあり
  * @note   受信状況やエラー情報は rec_status_ に格納されている
  */
-DS_ERR_CODE DS_receive(DriverSuper* p_super);
+DS_ERR_CODE DS_receive(ComponentDriverSuper* p_super);
 
 /**
  * @brief  data_analyzer_ を呼び出し，受信データを解析する．
  *
  *         DS_receive にてデータを受信した後， DSSC_get_rec_status(p_stream_config)->status_code が DS_STREAM_REC_STATUS_FIXED_FRAME ならば呼び出す．
- * @param  p_super:  DriverSuper 構造体へのポインタ
+ * @param  p_super:  ComponentDriverSuper 構造体へのポインタ
  * @param  stream:   どの stream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @param  p_driver: 継承先機器のドライバ構造体など．data_analyzer_ の第二引数．
  * @return DS_ERR_CODE: data_analyzer_ の返り値をそのまま返す
  * @note   data_analyzer_ の返り値は， ret_from_data_analyzer_ にも保存される．
  */
-DS_ERR_CODE DS_analyze_rec_data(DriverSuper* p_super, uint8_t stream, void* p_driver);
+DS_ERR_CODE DS_analyze_rec_data(ComponentDriverSuper* p_super, uint8_t stream, void* p_driver);
 
 /**
  * @brief  継承先の機器に一般コマンドを発行する
@@ -518,47 +518,47 @@ DS_ERR_CODE DS_analyze_rec_data(DriverSuper* p_super, uint8_t stream, void* p_dr
  *         このコマンドを送ったことによってレスポンスが返ってくることを想定していない（その場合は DS_send_req_tlm_cmd を使う）
  * @note   この関数の実行前に，tx_frame, tx_frame_size の設定が必要である
  * @note   これは基底クラスなため，アノマリ発行は行わない．継承先で返り値を見て適切にアノマリ発行すること
- * @param  p_super: DriverSuper 構造体へのポインタ
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @param  stream:  どのstream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval DS_ERR_CODE_OK:  正常終了
  * @retval DS_ERR_CODE_ERR: IF_TX でのエラーあり
  * @note   受信状況やエラー情報は send_status_ に格納されている
  */
-DS_ERR_CODE DS_send_general_cmd(DriverSuper* p_super, uint8_t stream);
+DS_ERR_CODE DS_send_general_cmd(ComponentDriverSuper* p_super, uint8_t stream);
 
 /**
  * @brief  継承先の機器にテレメ要求コマンドを発行する
  *
  *         テレメについては DS_receive で受け取る．
  * @note   この関数の実行前に，tx_frame, tx_frame_sizeの設定が必要である
- * @param  p_super: DriverSuper 構造体へのポインタ
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @param  stream:  どのstream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval DS_ERR_CODE_OK:  正常終了
  * @retval DS_ERR_CODE_ERR: IF_TX でのエラーあり
  * @note   受信状況やエラー情報は send_status_ に格納されている
  */
-DS_ERR_CODE DS_send_req_tlm_cmd(DriverSuper* p_super, uint8_t stream);
+DS_ERR_CODE DS_send_req_tlm_cmd(ComponentDriverSuper* p_super, uint8_t stream);
 
 
 // ###### DS_Config Getter/Setter of Settings ######
-uint16_t DSC_get_rx_buffer_size_in_if_rx(const DriverSuper* p_super);
-DS_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(DriverSuper* p_super,
+uint16_t DSC_get_rx_buffer_size_in_if_rx(const ComponentDriverSuper* p_super);
+DS_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(ComponentDriverSuper* p_super,
                                             const uint16_t rx_buffer_size_in_if_rx);
-uint8_t DSC_get_should_monitor_for_rx_disruption(const DriverSuper* p_super);
-void DSC_enable_monitor_for_rx_disruption(DriverSuper* p_super);
-void DSC_disable_monitor_for_rx_disruption(DriverSuper* p_super);
-uint32_t DSC_get_time_threshold_for_rx_disruption(const DriverSuper* p_super);
-void DSC_set_time_threshold_for_rx_disruption(DriverSuper* p_super,
+uint8_t DSC_get_should_monitor_for_rx_disruption(const ComponentDriverSuper* p_super);
+void DSC_enable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);
+void DSC_disable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);
+uint32_t DSC_get_time_threshold_for_rx_disruption(const ComponentDriverSuper* p_super);
+void DSC_set_time_threshold_for_rx_disruption(ComponentDriverSuper* p_super,
                                               const uint32_t time_threshold_for_rx_disruption);
 
 
 // ###### DS_Config Getter of Info ######
-const DS_RecStatus* DSC_get_rec_status(const DriverSuper* p_super);
-uint32_t DSC_get_rx_count(const DriverSuper* p_super);
-uint32_t DSC_get_rx_call_count(const DriverSuper* p_super);
-const ObcTime* DSC_get_rx_time(const DriverSuper* p_super);
+const DS_RecStatus* DSC_get_rec_status(const ComponentDriverSuper* p_super);
+uint32_t DSC_get_rx_count(const ComponentDriverSuper* p_super);
+uint32_t DSC_get_rx_call_count(const ComponentDriverSuper* p_super);
+const ObcTime* DSC_get_rx_time(const ComponentDriverSuper* p_super);
 
-DS_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const DriverSuper* p_super);
+DS_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const ComponentDriverSuper* p_super);
 
 
 // ###### DS_StreamConfig Getter/Setter of Settings ######
@@ -636,7 +636,7 @@ DS_STREAM_TLM_DISRUPTION_STATUS_CODE DSSC_get_tlm_disruption_status(const DS_Str
 DS_ERR_CODE DSSC_get_ret_from_data_analyzer(const DS_StreamConfig* p_stream_config);
 
 
-// ###### Driver 汎用 Util 関数 ######
+// ###### ComponentDriver 汎用 Util 関数 ######
 
 /**
  * @brief DS_StreamRecBuffer に確保したメモリを与えて初期化する
@@ -660,7 +660,7 @@ void DS_nullify_stream_rec_buffers(DS_StreamRecBuffer* rx_buffers[DS_STREAM_MAX]
 /**
  * @brief  DS_DRIVER_ERR_CODE から CCP_CmdRet への変換関数
  *
- *         DI から Driver の関数を呼び出したときのエラーコードの変換に用いる
+ *         DI から ComponentDriver の関数を呼び出したときのエラーコードの変換に用いる
  * @note   汎用 Util 関数
  * @param  DS_DRIVER_ERR_CODE
  * @return CCP_CmdRet
@@ -670,7 +670,7 @@ CCP_CmdRet DS_conv_driver_err_to_ccp_cmd_ret(DS_DRIVER_ERR_CODE code);
 /**
  * @brief  DS_CMD_ERR_CODE から CCP_CmdRet への変換関数
  *
- *         DI から Driver の関数を呼び出したときのエラーコードの変換に用いる
+ *         DI から ComponentDriver の関数を呼び出したときのエラーコードの変換に用いる
  * @note   汎用 Util 関数
  * @param  DS_CMD_ERR_CODE
  * @return CCP_CmdRet
@@ -678,11 +678,11 @@ CCP_CmdRet DS_conv_driver_err_to_ccp_cmd_ret(DS_DRIVER_ERR_CODE code);
 CCP_CmdRet DS_conv_cmd_err_to_ccp_cmd_ret(DS_CMD_ERR_CODE code);
 
 
-// ###### Driver Stream Config 汎用 Util 関数 ######
+// ###### ComponentDriver Stream Config 汎用 Util 関数 ######
 
 /**
  * @brief  確定したフレームを取得
- * @param  p_stream_config[in]: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config[in]: ComponentDriverSuper 構造体の DS_StreamConfig
  * @retval フレーム確定時:   受信フレーム先頭ポインタ
  * @retval フレーム未確定時: rx_buffer_.pos_of_frame_head_candidate
  * @note   フレームサイズは DSSC_get_fixed_rx_frame_size で取得可能
@@ -695,7 +695,7 @@ const uint8_t* DSSC_get_rx_frame(const DS_StreamConfig* p_stream_config);
 
 /**
  * @brief  確定したフレームのサイズを取得
- * @param  p_stream_config[in]: DriverSuper 構造体の DS_StreamConfig
+ * @param  p_stream_config[in]: ComponentDriverSuper 構造体の DS_StreamConfig
  * @retval フレーム確定時:   確定したフレームサイズ
  * @retval フレーム未確定時: 0
  */
