@@ -34,7 +34,7 @@
                                                        IF_RX から受信できる最大数を規定する
                                                        OBC の物理的な信号ラインのバッファサイズ以上とするともっともパフォーマンスが出る */
 
-#include <src_user/Settings/ComponentDriverSuper/driver_super_params.h>
+#include <src_user/Settings/component_driver_super/driver_super_params.h>
 
 typedef struct ComponentDriverSuper ComponentDriverSuper;
 typedef struct CDS_StreamConfig CDS_StreamConfig;
