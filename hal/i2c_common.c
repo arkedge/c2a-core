@@ -11,7 +11,7 @@
 
 /**
  * @brief I2C_Config 構造体にて指定されたデバイスのレジスタへ書き込む
- * @param[in] p_super  : DriverSuper 構造体へのポインタ
+ * @param[in] p_super  : ComponentDriverSuper 構造体へのポインタ
  * @param[in] stream   : 使用する stream_config の番号
  * @param[in] p_i2c_config : 対象とする I2C_Config 構造体へのポインタ
  * @param[in] register_address : 書き込むレジスタのアドレス
@@ -19,12 +19,12 @@
  * @param[in] data_len : 書き込むデータの長さ．1 or 2 [byte] のみ指定可
  * @retval CDS_ERR_CODE (CDS_send_general_cmd の返り値)
  */
-static CDS_ERR_CODE I2C_write_bytes_(DriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
+static CDS_ERR_CODE I2C_write_bytes_(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
                                     uint8_t register_address, void* data_v, uint8_t data_len);
 
 /**
  * @brief I2C_Config 構造体にて指定されたデバイスのレジスタへ読み込む
- * @param[in] p_super  : DriverSuper 構造体へのポインタ
+ * @param[in] p_super  : ComponentDriverSuper 構造体へのポインタ
  * @param[in] stream   : 使用する stream_config の番号
  * @param[in] p_i2c_config : 対象とする I2C_Config 構造体へのポインタ
  * @param[in] register_address : 読み込むレジスタのアドレス
@@ -32,20 +32,20 @@ static CDS_ERR_CODE I2C_write_bytes_(DriverSuper* p_super, uint8_t stream, I2C_C
  * @param[in] buffer_size : 読み込むデータの長さ．
  * @retval CDS_ERR_CODE
  */
-static CDS_ERR_CODE I2C_read_bytes_(DriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
+static CDS_ERR_CODE I2C_read_bytes_(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
                                    uint8_t register_address, void* data_v, uint8_t buffer_size);
 
-CDS_ERR_CODE I2C_write_byte(DriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config, uint8_t register_address, uint8_t data)
+CDS_ERR_CODE I2C_write_byte(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config, uint8_t register_address, uint8_t data)
 {
   return I2C_write_bytes_(p_super, stream, p_i2c_config, register_address, &data, sizeof(data));
 }
 
-CDS_ERR_CODE I2C_write_2bytes(DriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config, uint8_t register_address, uint16_t data)
+CDS_ERR_CODE I2C_write_2bytes(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config, uint8_t register_address, uint16_t data)
 {
   return I2C_write_bytes_(p_super, stream, p_i2c_config, register_address, &data, sizeof(data));
 }
 
-static CDS_ERR_CODE I2C_write_bytes_(DriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
+static CDS_ERR_CODE I2C_write_bytes_(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
                                     uint8_t register_address, void* data_v, uint8_t data_len)
 {
   uint8_t tx_data[sizeof(register_address) + sizeof(uint16_t)];
@@ -60,19 +60,19 @@ static CDS_ERR_CODE I2C_write_bytes_(DriverSuper* p_super, uint8_t stream, I2C_C
   return CDS_send_general_cmd(p_super, stream);
 }
 
-CDS_ERR_CODE I2C_read_byte(DriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
+CDS_ERR_CODE I2C_read_byte(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
                           uint8_t register_address, uint8_t* data)
 {
   return I2C_read_bytes_(p_super, stream, p_i2c_config, register_address, data, sizeof(*data));
 }
 
-CDS_ERR_CODE I2C_read_2bytes(DriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
+CDS_ERR_CODE I2C_read_2bytes(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
                             uint8_t register_address, uint16_t* data)
 {
   return I2C_read_bytes_(p_super, stream, p_i2c_config, register_address, data, sizeof(*data));
 }
 
-static CDS_ERR_CODE I2C_read_bytes_(DriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
+static CDS_ERR_CODE I2C_read_bytes_(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
                                    uint8_t register_address, void* data_v, uint8_t buffer_size)
 {
   CDS_ERR_CODE ret = CDS_ERR_CODE_OK;
