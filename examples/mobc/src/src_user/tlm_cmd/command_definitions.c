@@ -162,7 +162,7 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
   cmd_table[Cmd_CODE_WDT_DISABLE].cmd_func = Cmd_WDT_DISABLE;
   cmd_table[Cmd_CODE_WDT_STOP_CLEAR].cmd_func = Cmd_WDT_STOP_CLEAR;
   cmd_table[Cmd_CODE_WDT_START_CLEAR].cmd_func = Cmd_WDT_START_CLEAR;
-  cmd_table[Cmd_CODE_UART_TEST_INIT_DI].cmd_func = Cmd_UART_TEST_INIT_DI;
+  cmd_table[Cmd_CODE_UART_TEST_INIT_CSRV].cmd_func = Cmd_UART_TEST_INIT_CSRV;
   cmd_table[Cmd_CODE_UART_TEST_UPDATE].cmd_func = Cmd_UART_TEST_UPDATE;
   cmd_table[Cmd_CODE_UART_TEST_SEND_TEST].cmd_func = Cmd_UART_TEST_SEND_TEST;
   cmd_table[Cmd_CODE_UTIL_CMD_ADD].cmd_func = Cmd_UTIL_CMD_ADD;

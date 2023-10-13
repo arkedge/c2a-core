@@ -102,7 +102,7 @@ static RESULT UART_TEST_update_(void)
 }
 
 
-CCP_CmdRet Cmd_UART_TEST_INIT_DI(const CommonCmdPacket* packet)
+CCP_CmdRet Cmd_UART_TEST_INIT_CSRV(const CommonCmdPacket* packet)
 {
   (void)packet;
 
