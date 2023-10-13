@@ -30,7 +30,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             tlm_name = tlm["tlm_name"]
             tlm_name_lower = tlm_name.lower()
             body_c += (
-                "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_"
+                "static CDS_ERR_CODE {_obc_name_upper}_analyze_tlm_"
                 + tlm_name_lower
                 + "_(const CommonTlmPacket* packet, {_obc_name_upper}_TLM_CODE tlm_id, "
                 + driver_type
@@ -107,7 +107,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         )
         body_h += "\n"
         body_h += (
-            "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_packet(DS_StreamConfig* p_stream_config, "
+            "CDS_ERR_CODE {_obc_name_upper}_buffer_tlm_packet(CDS_StreamConfig* p_stream_config, "
             + driver_type
             + "* "
             + driver_name
@@ -135,7 +135,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "}}\n"
         body_c += "\n"
         body_c += (
-            "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_packet(DS_StreamConfig* p_stream_config, "
+            "CDS_ERR_CODE {_obc_name_upper}_buffer_tlm_packet(CDS_StreamConfig* p_stream_config, "
             + driver_type
             + "* "
             + driver_name
@@ -144,10 +144,10 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "{{\n"
 
         body_c += "  {_obc_name_upper}_TLM_CODE tlm_id;\n"
-        body_c += "  DS_ERR_CODE ret;\n"
+        body_c += "  CDS_ERR_CODE ret;\n"
         body_c += "\n"
         body_c += "  ret = CTP_get_ctp_from_dssc(p_stream_config, &{_obc_name_upper}_ctp_);\n"
-        body_c += "  if (ret != DS_ERR_CODE_OK) return ret;\n"
+        body_c += "  if (ret != CDS_ERR_CODE_OK) return ret;\n"
         body_c += "\n"
         body_c += "  tlm_id  = ({_obc_name_upper}_TLM_CODE)CTP_get_id(&{_obc_name_upper}_ctp_);\n"
         body_c += "\n"
@@ -168,7 +168,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             )
         body_c += "  default:\n"
         body_c += "    " + settings["other_obc_data"][i]["code_when_tlm_not_found"] + "\n"
-        body_c += "    return DS_ERR_CODE_ERR;\n"
+        body_c += "    return CDS_ERR_CODE_ERR;\n"
         body_c += "  }}\n"
         body_c += "}}\n"
         body_c += "\n"
@@ -198,7 +198,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             tlm_name_lower = tlm_name.lower()
 
             body_c += (
-                "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_"
+                "static CDS_ERR_CODE {_obc_name_upper}_analyze_tlm_"
                 + tlm_name_lower
                 + "_(const CommonTlmPacket* packet, {_obc_name_upper}_TLM_CODE tlm_id, "
                 + driver_type
@@ -303,7 +303,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             for k, v in conv_tpye_to_temp.items():
                 body_c += "  (void)" + v + ";\n"
             body_c += "\n"
-            body_c += "  return DS_ERR_CODE_OK;\n"
+            body_c += "  return CDS_ERR_CODE_OK;\n"
             body_c += "}}\n"
             body_c += "\n"
 
