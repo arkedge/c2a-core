@@ -7,7 +7,7 @@
 #ifndef I2C_COMMON_H_
 #define I2C_COMMON_H_
 
-#include "../driver/driver_super.h"
+#include "../component_driver/driver_super.h"
 #include "i2c.h"
 
 /**
