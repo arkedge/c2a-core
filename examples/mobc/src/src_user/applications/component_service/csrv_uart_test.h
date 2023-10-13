@@ -14,7 +14,7 @@ extern const UART_TEST_Driver* const uart_test_driver;
 // アプリケーション
 AppInfo UART_TEST_update(void);
 
-CCP_CmdRet Cmd_UART_TEST_INIT_DI(const CommonCmdPacket* packet);
+CCP_CmdRet Cmd_UART_TEST_INIT_CSRV(const CommonCmdPacket* packet);
 
 CCP_CmdRet Cmd_UART_TEST_UPDATE(const CommonCmdPacket* packet);
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# driver instances -> component service
+# driver instances -> Component Service
 
 # C2A user code
 echo "rename C2A user code: driver_instances -> component_service"
