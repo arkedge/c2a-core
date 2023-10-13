@@ -8,7 +8,7 @@
 #include <src_core/tlm_cmd/block_command_loader.h>
 
 #include "../command_definitions.h"
-#include "../../driver/aocs/aobc_command_definitions.h"
+#include "../../component_driver/aocs/aobc_command_definitions.h"
 #include "../block_command_definitions.h"
 
 void BCL_load_test_bcl(void)

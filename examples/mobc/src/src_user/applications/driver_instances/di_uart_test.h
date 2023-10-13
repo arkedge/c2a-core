@@ -1,11 +1,11 @@
 /**
  * @file
- * @brief UART と DriverSuper テスト用
+ * @brief UART と ComponentDriverSuper テスト用
  */
 #ifndef DI_UART_TEST_H_
 #define DI_UART_TEST_H_
 
-#include "../../driver/etc/uart_test.h"
+#include "../../component_driver/etc/uart_test.h"
 #include <src_core/system/application_manager/app_info.h>
 #include <src_core/tlm_cmd/common_cmd_packet.h>
 
