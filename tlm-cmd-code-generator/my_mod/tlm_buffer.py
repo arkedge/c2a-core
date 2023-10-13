@@ -30,7 +30,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             tlm_name = tlm["tlm_name"]
             tlm_name_lower = tlm_name.lower()
             body_c += (
-                "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_"
+                "static CDS_ERR_CODE {_obc_name_upper}_analyze_tlm_"
                 + tlm_name_lower
                 + "_(const CommonTlmPacket* packet, {_obc_name_upper}_TLM_CODE tlm_id, "
                 + driver_type
@@ -107,7 +107,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         )
         body_h += "\n"
         body_h += (
-            "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_packet(DS_StreamConfig* p_stream_config, "
+            "CDS_ERR_CODE {_obc_name_upper}_buffer_tlm_packet(CDS_StreamConfig* p_stream_config, "
             + driver_type
             + "* "
             + driver_name
@@ -135,7 +135,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "}}\n"
         body_c += "\n"
         body_c += (
-            "DS_ERR_CODE {_obc_name_upper}_buffer_tlm_packet(DS_StreamConfig* p_stream_config, "
+            "CDS_ERR_CODE {_obc_name_upper}_buffer_tlm_packet(CDS_StreamConfig* p_stream_config, "
             + driver_type
             + "* "
             + driver_name
@@ -144,10 +144,10 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "{{\n"
 
         body_c += "  {_obc_name_upper}_TLM_CODE tlm_id;\n"
-        body_c += "  DS_ERR_CODE ret;\n"
+        body_c += "  CDS_ERR_CODE ret;\n"
         body_c += "\n"
-        body_c += "  ret = CTP_get_ctp_from_dssc(p_stream_config, &{_obc_name_upper}_ctp_);\n"
-        body_c += "  if (ret != DS_ERR_CODE_OK) return ret;\n"
+        body_c += "  ret = CTP_get_ctp_from_cdssc(p_stream_config, &{_obc_name_upper}_ctp_);\n"
+        body_c += "  if (ret != CDS_ERR_CODE_OK) return ret;\n"
         body_c += "\n"
         body_c += "  tlm_id  = ({_obc_name_upper}_TLM_CODE)CTP_get_id(&{_obc_name_upper}_ctp_);\n"
         body_c += "\n"
@@ -168,7 +168,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             )
         body_c += "  default:\n"
         body_c += "    " + settings["other_obc_data"][i]["code_when_tlm_not_found"] + "\n"
-        body_c += "    return DS_ERR_CODE_ERR;\n"
+        body_c += "    return CDS_ERR_CODE_ERR;\n"
         body_c += "  }}\n"
         body_c += "}}\n"
         body_c += "\n"
@@ -198,7 +198,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             tlm_name_lower = tlm_name.lower()
 
             body_c += (
-                "static DS_ERR_CODE {_obc_name_upper}_analyze_tlm_"
+                "static CDS_ERR_CODE {_obc_name_upper}_analyze_tlm_"
                 + tlm_name_lower
                 + "_(const CommonTlmPacket* packet, {_obc_name_upper}_TLM_CODE tlm_id, "
                 + driver_type
@@ -303,7 +303,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             for k, v in conv_tpye_to_temp.items():
                 body_c += "  (void)" + v + ";\n"
             body_c += "\n"
-            body_c += "  return DS_ERR_CODE_OK;\n"
+            body_c += "  return CDS_ERR_CODE_OK;\n"
             body_c += "}}\n"
             body_c += "\n"
 
@@ -338,7 +338,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
 
         output_file_path = (
             settings["path_to_src"]
-            + r"src_user/driver/"
+            + r"src_user/component_driver/"
             + settings["other_obc_data"][i]["driver_path"]
         )
         OutputTlmBufferC_(
@@ -368,7 +368,7 @@ def OutputTlmBufferC_(file_path, name, body, settings):
  * @brief  テレメトリバッファー（テレメ中継）
  * @note   このコードは自動生成されています！
  */
-#include <src_core/driver/common_tlm_cmd_packet_for_driver_super.h>
+#include <src_core/component_driver/common_tlm_cmd_packet_for_driver_super.h>
 #include "./{_obc_name_lower}_telemetry_definitions.h"
 #include "./{_obc_name_lower}_telemetry_buffer.h"
 #include "./{_obc_name_lower}.h"
@@ -410,7 +410,7 @@ def OutputTlmBufferH_(file_path, name, body, settings):
 #define {_obc_name_upper}_TELEMETRY_BUFFER_H_
 
 #include "./{_obc_name_lower}_telemetry_definitions.h"
-#include <src_core/driver/driver_super.h>
+#include <src_core/component_driver/driver_super.h>
 #include <src_core/tlm_cmd/common_tlm_packet.h>
 #include <src_core/tlm_cmd/telemetry_frame.h>
 

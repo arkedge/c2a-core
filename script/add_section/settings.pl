@@ -17,7 +17,7 @@ sub GetSetting {
 	$SETTING{'LOG_FILE'}  = './log.log';
 	$SETTING{'SEARCH_PATH'} = [
 		'applications',
-		'driver',
+		'component_driver',
 		'hal',
 		'library',
 		'system',

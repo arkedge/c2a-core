@@ -218,7 +218,7 @@ typedef enum
   EL_CORE_GROUP_CDIS_INTERNAL_ERR,
   EL_CORE_GROUP_CDIS_EXEC_ERR_STS,
   EL_CORE_GROUP_CDIS_EXEC_ERR_CODE,
-  // TODO: Driver Super
+  // TODO: ComponentDriverSuper
 #ifdef EL_IS_ENABLE_EL_ERROR_LEVEL
   EL_CORE_GROUP_EL_DROP_CLOG1,        //!< EL CLogs で古いエラーを上書きするとき (group, err_level を保存)
   EL_CORE_GROUP_EL_DROP_CLOG2,        //!< EL CLogs で古いエラーを上書きするとき (local, count を保存)

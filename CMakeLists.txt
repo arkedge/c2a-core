@@ -26,10 +26,10 @@ set(C2A_CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(C2A_SRCS
   c2a_core_main.c
-  driver/common_tlm_cmd_packet_for_driver_super.c
-  driver/eb90_frame_for_driver_super.c
-  driver/eb90_packet_for_driver_super.c
-  driver/driver_super.c
+  component_driver/common_tlm_cmd_packet_for_driver_super.c
+  component_driver/eb90_frame_for_driver_super.c
+  component_driver/eb90_packet_for_driver_super.c
+  component_driver/driver_super.c
   hal/i2c_common.c
   system/application_manager/app_info.c
   system/application_manager/app_manager.c

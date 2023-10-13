@@ -32,7 +32,7 @@
   },
   "target_dirs" : [
     "applications/",
-    "driver/",
+    "component_driver/",
     "hal/",
     "library/",
     "system/",

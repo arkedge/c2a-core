@@ -145,7 +145,7 @@ DriverSuperを継承したDriver数:           4
 ```
 
 #### 定義
-- core: [`/src_core/driver/driver_super.h`](https://github.com/arkedge/c2a-core/blob/develop/driver/driver_super.h)
+- core: [`/src_core/component_driver/driver_super.h`](https://github.com/arkedge/c2a-core/blob/develop/component_driver/driver_super.h)
 - user: `/src_user/Settings/DriverSuper/driver_super_params.h`
 
 #### 詳細説明
