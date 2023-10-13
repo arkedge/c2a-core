@@ -4,49 +4,49 @@
  * @brief MOBC の DI． MOBC における GS との DI に相当する
  */
 
-#include "di_mobc.h"
+#include "csrv_mobc.h"
 #include <src_core/tlm_cmd/packet_handler.h>
 #include <src_core/library/print.h>
 #include "../../Settings/port_config.h"
 #include "../../Settings/component_driver_super/driver_buffer_define.h"
 #include <src_core/library/result.h>
 
-static RESULT DI_MOBC_init_(void);
-static RESULT DI_MOBC_update_(void);
-static RESULT DI_MOBC_rt_tlm_packet_handler_init_(void);
-static RESULT DI_MOBC_rt_tlm_packet_handler_(void);
+static RESULT CSRV_MOBC_init_(void);
+static RESULT CSRV_MOBC_update_(void);
+static RESULT CSRV_MOBC_rt_tlm_packet_handler_init_(void);
+static RESULT CSRV_MOBC_rt_tlm_packet_handler_(void);
 
 static MOBC_Driver mobc_driver_;
 const MOBC_Driver* const mobc_driver = &mobc_driver_;
 
 // バッファ
-static CDS_StreamRecBuffer DI_MOBC_rx_buffer_;
-static uint8_t DI_MOBC_rx_buffer_allocation_[CDS_STREAM_REC_BUFFER_SIZE_DEFAULT];
+static CDS_StreamRecBuffer CSRV_MOBC_rx_buffer_;
+static uint8_t CSRV_MOBC_rx_buffer_allocation_[CDS_STREAM_REC_BUFFER_SIZE_DEFAULT];
 
-static const uint8_t DI_MOBC_kRtTlmPhMaxNumOfProc_ = 4;       //!< 一度に送出する最大テレメ数
+static const uint8_t CSRV_MOBC_kRtTlmPhMaxNumOfProc_ = 4;       //!< 一度に送出する最大テレメ数
 
 
-AppInfo DI_MOBC_update(void)
+AppInfo CSRV_MOBC_update(void)
 {
-  return AI_create_app_info("update_MOBC", DI_MOBC_init_, DI_MOBC_update_);
+  return AI_create_app_info("update_MOBC", CSRV_MOBC_init_, CSRV_MOBC_update_);
 }
 
-static RESULT DI_MOBC_init_(void)
+static RESULT CSRV_MOBC_init_(void)
 {
   CDS_ERR_CODE ret1;
   CDS_INIT_ERR_CODE ret2;
   RESULT err = RESULT_OK;
 
-  ret1 = CDS_init_stream_rec_buffer(&DI_MOBC_rx_buffer_,
-                                    DI_MOBC_rx_buffer_allocation_,
-                                    sizeof(DI_MOBC_rx_buffer_allocation_));
+  ret1 = CDS_init_stream_rec_buffer(&CSRV_MOBC_rx_buffer_,
+                                    CSRV_MOBC_rx_buffer_allocation_,
+                                    sizeof(CSRV_MOBC_rx_buffer_allocation_));
   if (ret1 != CDS_ERR_CODE_OK)
   {
     Printf("MOBC buffer init Failed ! %d \n", ret1);
     err = RESULT_ERR;
   }
 
-  ret2 = MOBC_init(&mobc_driver_, PORT_CH_UART_MOBC, &DI_MOBC_rx_buffer_);
+  ret2 = MOBC_init(&mobc_driver_, PORT_CH_UART_MOBC, &CSRV_MOBC_rx_buffer_);
   if (ret2 != CDS_INIT_OK)
   {
     Printf("MOBC init Failed ! %d \n", ret2);
@@ -56,7 +56,7 @@ static RESULT DI_MOBC_init_(void)
   return err;
 }
 
-static RESULT DI_MOBC_update_(void)
+static RESULT CSRV_MOBC_update_(void)
 {
   CDS_REC_ERR_CODE ret;
   ret = MOBC_rec(&mobc_driver_);
@@ -67,20 +67,20 @@ static RESULT DI_MOBC_update_(void)
 }
 
 
-AppInfo DI_MOBC_rt_tlm_packet_handler(void)
+AppInfo CSRV_MOBC_rt_tlm_packet_handler(void)
 {
   return AI_create_app_info("MOBC_rt_tlm_ph",
-                            DI_MOBC_rt_tlm_packet_handler_init_,
-                            DI_MOBC_rt_tlm_packet_handler_);
+                            CSRV_MOBC_rt_tlm_packet_handler_init_,
+                            CSRV_MOBC_rt_tlm_packet_handler_);
 }
 
-static RESULT DI_MOBC_rt_tlm_packet_handler_init_(void)
+static RESULT CSRV_MOBC_rt_tlm_packet_handler_init_(void)
 {
   // なにもしない
   return RESULT_OK;
 }
 
-static RESULT DI_MOBC_rt_tlm_packet_handler_(void)
+static RESULT CSRV_MOBC_rt_tlm_packet_handler_(void)
 {
   uint8_t i;
   CommonTlmPacket packet;   // FIXME: これは static にする？
@@ -88,7 +88,7 @@ static RESULT DI_MOBC_rt_tlm_packet_handler_(void)
                             //        一方でメモリ使用量は増える．
   mobc_driver_.info.c2a.send_tlm_err_code = CDS_CMD_OK;
 
-  for (i = 0; i < DI_MOBC_kRtTlmPhMaxNumOfProc_; i++)
+  for (i = 0; i < CSRV_MOBC_kRtTlmPhMaxNumOfProc_; i++)
   {
     CDS_CMD_ERR_CODE ret;
 

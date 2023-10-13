@@ -18,7 +18,7 @@
 #include <src_core/applications/gs_command_dispatcher.h>
 #include <src_core/applications/realtime_command_dispatcher.h>
 #include <src_core/applications/timeline_command_dispatcher.h>
-#include "../../applications/driver_instances/di_mobc.h"
+#include "../../applications/component_service/csrv_mobc.h"
 // #include <src_core/tlm_cmd/telemetry_generator.h>
 #include "../../library/vt100.h"
 #include <src_core/library/result.h>
