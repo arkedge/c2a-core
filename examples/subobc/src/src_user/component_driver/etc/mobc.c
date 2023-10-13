@@ -20,7 +20,7 @@ static uint8_t MOBC_tx_frame_[EB90_FRAME_HEADER_SIZE +
 
 static CDS_ERR_CODE MOBC_load_driver_super_init_settings_(ComponentDriverSuper* p_super);
 static CDS_ERR_CODE MOBC_analyze_rec_data_(CDS_StreamConfig* p_stream_config,
-                                          void* p_driver);
+                                           void* p_driver);
 
 
 CDS_INIT_ERR_CODE MOBC_init(MOBC_Driver* mobc_driver, uint8_t ch, CDS_StreamRecBuffer* rx_buffer)
@@ -36,9 +36,9 @@ CDS_INIT_ERR_CODE MOBC_init(MOBC_Driver* mobc_driver, uint8_t ch, CDS_StreamRecB
   mobc_driver->driver.uart_config.stop_bit = UART_STOP_BIT_1BIT;
 
   ret = CDS_init(&(mobc_driver->driver.super),
-                &(mobc_driver->driver.uart_config),
-                rx_buffer,
-                MOBC_load_driver_super_init_settings_);
+                 &(mobc_driver->driver.uart_config),
+                 rx_buffer,
+                 MOBC_load_driver_super_init_settings_);
   if (ret != CDS_ERR_CODE_OK) return CDS_INIT_CDS_INIT_ERR;
   return CDS_INIT_OK;
 }

@@ -57,9 +57,9 @@ static void GS_load_default_driver_super_init_settings_(ComponentDriverSuper* p_
 static CDS_ERR_CODE GS_analyze_rec_data_(CDS_StreamConfig* p_stream_config, void* p_driver);
 
 CDS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
-                         uint8_t uart_ch,
-                         CDS_StreamRecBuffer* ccsds_rx_buffers[CDS_STREAM_MAX],
-                         CDS_StreamRecBuffer* uart_rx_buffers[CDS_STREAM_MAX])
+                          uint8_t uart_ch,
+                          CDS_StreamRecBuffer* ccsds_rx_buffers[CDS_STREAM_MAX],
+                          CDS_StreamRecBuffer* uart_rx_buffers[CDS_STREAM_MAX])
 {
   CDS_ERR_CODE ret_uart, ret_ccsds;
   int i;
@@ -89,13 +89,13 @@ CDS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
   }
 
   ret_ccsds = CDS_init_streams(&gs_driver->driver_ccsds.super,
-                              &gs_driver->driver_ccsds.ccsds_config,
-                              ccsds_rx_buffers,
-                              GS_load_ccsds_driver_super_init_settings_);
+                               &gs_driver->driver_ccsds.ccsds_config,
+                               ccsds_rx_buffers,
+                               GS_load_ccsds_driver_super_init_settings_);
   ret_uart  = CDS_init_streams(&gs_driver->driver_uart.super,
-                              &gs_driver->driver_uart.uart_config,
-                              uart_rx_buffers,
-                              GS_load_uart_driver_super_init_settings_);
+                               &gs_driver->driver_uart.uart_config,
+                               uart_rx_buffers,
+                               GS_load_uart_driver_super_init_settings_);
   if (ret_ccsds != CDS_ERR_CODE_OK || ret_uart != CDS_ERR_CODE_OK) return CDS_INIT_CDS_INIT_ERR;
   gs_driver->latest_info = &gs_driver->info[GS_PORT_TYPE_CCSDS];
   gs_driver->tlm_tx_port_type = GS_PORT_TYPE_CCSDS;
@@ -169,20 +169,20 @@ CDS_REC_ERR_CODE GS_rec_tctf(GS_Driver* gs_driver)
 
   for (i = 0; i < GS_PORT_TYPE_NUM; ++i)
   {
-    ComponentDriverSuper* ds;
+    ComponentDriverSuper* cds;
 
     if (i == GS_PORT_TYPE_CCSDS)
     {
-      ds = &gs_driver->driver_ccsds.super;
+      cds = &gs_driver->driver_ccsds.super;
     }
     else
     {
-      ds = &gs_driver->driver_uart.super;
+      cds = &gs_driver->driver_uart.super;
     }
 
     // TODO: これはエラー情報をきちんと把握したいので，アノマリ発行を入れる
-    gs_driver->info[i].rx.rec_status = CDS_receive(ds);
-    gs_driver->info[i].rx.ret_from_if_rx = CDSC_get_rec_status(ds)->ret_from_if_rx;
+    gs_driver->info[i].rx.rec_status = CDS_receive(cds);
+    gs_driver->info[i].rx.ret_from_if_rx = CDSC_get_rec_status(cds)->ret_from_if_rx;
 
     if (gs_driver->info[i].rx.rec_status != CDS_ERR_CODE_OK) continue;
 
@@ -190,10 +190,10 @@ CDS_REC_ERR_CODE GS_rec_tctf(GS_Driver* gs_driver)
     {
       CDS_StreamConfig* p_stream_config;
 
-      p_stream_config = &ds->stream_config[stream];
+      p_stream_config = &cds->stream_config[stream];
       if (CDSSC_get_rec_status(p_stream_config)->status_code != CDS_STREAM_REC_STATUS_FIXED_FRAME) continue;
 
-      gs_driver->info[i].rx.rec_status = CDS_analyze_rec_data(ds, stream, gs_driver);
+      gs_driver->info[i].rx.rec_status = CDS_analyze_rec_data(cds, stream, gs_driver);
     }
   }
 

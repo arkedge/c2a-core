@@ -32,16 +32,16 @@ CDS_INIT_ERR_CODE UART_TEST_init(UART_TEST_Driver* uart_test_driver, uint8_t ch,
 {
   CDS_ERR_CODE ret;
 
-  uart_test_driver->driver.uart_config.ch         = ch;
-  uart_test_driver->driver.uart_config.baudrate   = 38400;
+  uart_test_driver->driver.uart_config.ch = ch;
+  uart_test_driver->driver.uart_config.baudrate = 38400;
   uart_test_driver->driver.uart_config.parity_settings = PARITY_SETTINGS_NONE;
   uart_test_driver->driver.uart_config.data_length = UART_DATA_LENGTH_8BIT;
   uart_test_driver->driver.uart_config.stop_bit = UART_STOP_BIT_1BIT;
 
   ret = CDS_init_streams(&(uart_test_driver->driver.super),
-                        &(uart_test_driver->driver.uart_config),
-                        rx_buffers,
-                        UART_TEST_load_driver_super_init_settings_);
+                         &(uart_test_driver->driver.uart_config),
+                         rx_buffers,
+                         UART_TEST_load_driver_super_init_settings_);
   if (ret != CDS_ERR_CODE_OK) return CDS_INIT_CDS_INIT_ERR;
   return CDS_INIT_OK;
 }

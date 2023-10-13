@@ -35,7 +35,7 @@ typedef struct
 {
   struct
   {
-    CDS_ERR_CODE rec_status;                   //!< ComponentDriverSuper からの受信結果
+    CDS_ERR_CODE rec_status;                  //!< ComponentDriverSuper からの受信結果
     int ret_from_if_rx;                       //!< UART or CCSDS からの返り値
     CCP_DEST_TYPE last_dest_type;             //!< 最後に受信したパケットの dest type
     cycle_t last_rec_time;                    //!< 最後に受信した時刻
@@ -94,9 +94,9 @@ typedef struct
  * @return CDS_INIT_ERR_CODE
  */
 CDS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
-                         uint8_t uart_ch,
-                         CDS_StreamRecBuffer* ccsds_rx_buffers[CDS_STREAM_MAX],
-                         CDS_StreamRecBuffer* uart_rx_buffers[CDS_STREAM_MAX]);
+                          uint8_t uart_ch,
+                          CDS_StreamRecBuffer* ccsds_rx_buffers[CDS_STREAM_MAX],
+                          CDS_StreamRecBuffer* uart_rx_buffers[CDS_STREAM_MAX]);
 
 /**
  * @brief 地上から CMD を受信する. 形式は TC Transer Frame
