@@ -8,7 +8,7 @@
 #include <src_core/tlm_cmd/packet_handler.h>
 #include <src_core/library/print.h>
 #include "../../Settings/port_config.h"
-#include "../../Settings/DriverSuper/driver_buffer_define.h"
+#include "../../Settings/component_driver_super/driver_buffer_define.h"
 #include <src_core/library/result.h>
 
 static RESULT DI_MOBC_init_(void);
@@ -20,8 +20,8 @@ static MOBC_Driver mobc_driver_;
 const MOBC_Driver* const mobc_driver = &mobc_driver_;
 
 // バッファ
-static DS_StreamRecBuffer DI_MOBC_rx_buffer_;
-static uint8_t DI_MOBC_rx_buffer_allocation_[DS_STREAM_REC_BUFFER_SIZE_DEFAULT];
+static CDS_StreamRecBuffer DI_MOBC_rx_buffer_;
+static uint8_t DI_MOBC_rx_buffer_allocation_[CDS_STREAM_REC_BUFFER_SIZE_DEFAULT];
 
 static const uint8_t DI_MOBC_kRtTlmPhMaxNumOfProc_ = 4;       //!< 一度に送出する最大テレメ数
 
@@ -33,21 +33,21 @@ AppInfo DI_MOBC_update(void)
 
 static RESULT DI_MOBC_init_(void)
 {
-  DS_ERR_CODE ret1;
-  DS_INIT_ERR_CODE ret2;
+  CDS_ERR_CODE ret1;
+  CDS_INIT_ERR_CODE ret2;
   RESULT err = RESULT_OK;
 
-  ret1 = DS_init_stream_rec_buffer(&DI_MOBC_rx_buffer_,
+  ret1 = CDS_init_stream_rec_buffer(&DI_MOBC_rx_buffer_,
                                    DI_MOBC_rx_buffer_allocation_,
                                    sizeof(DI_MOBC_rx_buffer_allocation_));
-  if (ret1 != DS_ERR_CODE_OK)
+  if (ret1 != CDS_ERR_CODE_OK)
   {
     Printf("MOBC buffer init Failed ! %d \n", ret1);
     err = RESULT_ERR;
   }
 
   ret2 = MOBC_init(&mobc_driver_, PORT_CH_UART_MOBC, &DI_MOBC_rx_buffer_);
-  if (ret2 != DS_INIT_OK)
+  if (ret2 != CDS_INIT_OK)
   {
     Printf("MOBC init Failed ! %d \n", ret2);
     err = RESULT_ERR;
@@ -58,7 +58,7 @@ static RESULT DI_MOBC_init_(void)
 
 static RESULT DI_MOBC_update_(void)
 {
-  DS_REC_ERR_CODE ret;
+  CDS_REC_ERR_CODE ret;
   ret = MOBC_rec(&mobc_driver_);
 
   // TODO: 必要があればここに処理を
@@ -86,11 +86,11 @@ static RESULT DI_MOBC_rt_tlm_packet_handler_(void)
   CommonTlmPacket packet;   // FIXME: これは static にする？
                             //        static のほうがコンパイル時にアドレスが確定して安全． Out of stack space を回避できる
                             //        一方でメモリ使用量は増える．
-  mobc_driver_.info.c2a.send_tlm_err_code = DS_CMD_OK;
+  mobc_driver_.info.c2a.send_tlm_err_code = CDS_CMD_OK;
 
   for (i = 0; i < DI_MOBC_kRtTlmPhMaxNumOfProc_; i++)
   {
-    DS_CMD_ERR_CODE ret;
+    CDS_CMD_ERR_CODE ret;
 
     // TODO: ここは一部 MW に入れるべきなのかなぁ．．．？
     //       最近 C2A の MW の扱いが難しい．いっそなくすか？
@@ -119,14 +119,14 @@ static RESULT DI_MOBC_rt_tlm_packet_handler_(void)
       //        AOBC のアノマリ基準は？
 
       // 最後に起きたエラーを保存する
-      mobc_driver_.info.c2a.send_tlm_err_code = DS_CMD_ILLEGAL_PARAMETER;
+      mobc_driver_.info.c2a.send_tlm_err_code = CDS_CMD_ILLEGAL_PARAMETER;
       continue;
     }
 
     // TODO: TPC のヘッダを別途設定する必要はないか，ちゃんと確認する．多分ないと思うけど
 
     ret = MOBC_send(&mobc_driver_, &packet);
-    if (ret != DS_CMD_OK)
+    if (ret != CDS_CMD_OK)
     {
       // 最後に起きたエラーを保存する
       mobc_driver_.info.c2a.send_tlm_err_code = ret;
