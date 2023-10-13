@@ -5,8 +5,8 @@
  */
 #include "user_packet_handler.h"
 #include <src_core/tlm_cmd/packet_list_util.h>
-#include "../applications/driver_instances/di_aobc.h"
-// #include "../applications/driver_instances/di_tobc.h"
+#include "../applications/component_service/csrv_aobc.h"
+// #include "../applications/component_service/di_tobc.h"
 
 #define PH_AOBC_CMD_LIST_MAX   (16)          //!< AOBC CMD QUEUEサイズ
 #define PH_TOBC_CMD_LIST_MAX   (16)          //!< TOBC CMD QUEUEサイズ
@@ -76,10 +76,10 @@ CCP_CmdRet PH_user_cmd_router(const CommonCmdPacket* packet)
   {
   case APID_AOBC_CMD:
     // AOBCに配送
-    return DI_AOBC_dispatch_command(packet);
+    return CSRV_AOBC_dispatch_command(packet);
   case APID_TOBC_CMD:
     // TOBCに配送
-    // return DI_TOBC_dispatch_command(packet);
+    // return CSRV_TOBC_dispatch_command(packet);
   default:
     // 該当する配送先が定義されていない場合
     return CCP_make_cmd_ret(CCP_EXEC_ROUTING_FAILED, apid);

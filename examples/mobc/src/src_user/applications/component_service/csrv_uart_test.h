@@ -2,8 +2,8 @@
  * @file
  * @brief UART と ComponentDriverSuper テスト用
  */
-#ifndef DI_UART_TEST_H_
-#define DI_UART_TEST_H_
+#ifndef CSRV_UART_TEST_H_
+#define CSRV_UART_TEST_H_
 
 #include "../../component_driver/etc/uart_test.h"
 #include <src_core/system/application_manager/app_info.h>

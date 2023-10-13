@@ -3,7 +3,7 @@
  * @file
  * @brief UART と ComponentDriverSuper テスト用
  */
-#include "di_uart_test.h"
+#include "csrv_uart_test.h"
 #include <stddef.h> // for NULL
 #include <src_core/library/print.h>
 #include <src_core/tlm_cmd/common_cmd_packet_util.h>
@@ -25,10 +25,10 @@ static UART_TEST_Driver uart_test_driver_;
 const UART_TEST_Driver* const uart_test_driver = &uart_test_driver_;
 
 // バッファ
-static CDS_StreamRecBuffer DI_UART_TEST_rx_buffer_0_;
-static CDS_StreamRecBuffer DI_UART_TEST_rx_buffer_1_;
-static uint8_t DI_UART_TEST_rx_buffer_allocation_0_[CDS_STREAM_REC_BUFFER_SIZE_DEFAULT];
-static uint8_t DI_UART_TEST_rx_buffer_allocation_1_[CDS_STREAM_REC_BUFFER_SIZE_DEFAULT];
+static CDS_StreamRecBuffer CSRV_UART_TEST_rx_buffer_0_;
+static CDS_StreamRecBuffer CSRV_UART_TEST_rx_buffer_1_;
+static uint8_t CSRV_UART_TEST_rx_buffer_allocation_0_[CDS_STREAM_REC_BUFFER_SIZE_DEFAULT];
+static uint8_t CSRV_UART_TEST_rx_buffer_allocation_1_[CDS_STREAM_REC_BUFFER_SIZE_DEFAULT];
 
 
 // !!!!!!!!!! 注意 !!!!!!!!!!
@@ -54,16 +54,16 @@ static void UART_TEST_init_(void)
   CDS_StreamRecBuffer* rx_buffers[CDS_STREAM_MAX];
   CDS_nullify_stream_rec_buffers(rx_buffers);
 
-  ret1 = CDS_init_stream_rec_buffer(&DI_UART_TEST_rx_buffer_0_,
-                                    DI_UART_TEST_rx_buffer_allocation_0_,
-                                    sizeof(DI_UART_TEST_rx_buffer_allocation_0_));
+  ret1 = CDS_init_stream_rec_buffer(&CSRV_UART_TEST_rx_buffer_0_,
+                                    CSRV_UART_TEST_rx_buffer_allocation_0_,
+                                    sizeof(CSRV_UART_TEST_rx_buffer_allocation_0_));
   if (ret1 != CDS_ERR_CODE_OK)
   {
     Printf("UART_TEST buffer0 init Failed ! %d \n", ret1);
   }
-  ret1 = CDS_init_stream_rec_buffer(&DI_UART_TEST_rx_buffer_1_,
-                                    DI_UART_TEST_rx_buffer_allocation_1_,
-                                    sizeof(DI_UART_TEST_rx_buffer_allocation_1_));
+  ret1 = CDS_init_stream_rec_buffer(&CSRV_UART_TEST_rx_buffer_1_,
+                                    CSRV_UART_TEST_rx_buffer_allocation_1_,
+                                    sizeof(CSRV_UART_TEST_rx_buffer_allocation_1_));
   if (ret1 != CDS_ERR_CODE_OK)
   {
     Printf("UART_TEST buffer1 init Failed ! %d \n", ret1);
@@ -75,8 +75,8 @@ static void UART_TEST_init_(void)
     return;
   }
 
-  rx_buffers[0] = &DI_UART_TEST_rx_buffer_0_;
-  rx_buffers[1] = &DI_UART_TEST_rx_buffer_1_;
+  rx_buffers[0] = &CSRV_UART_TEST_rx_buffer_0_;
+  rx_buffers[1] = &CSRV_UART_TEST_rx_buffer_1_;
 
   ret2 = UART_TEST_init(&uart_test_driver_, PORT_CH_UART_TEST, rx_buffers);
   if (ret2 != CDS_INIT_OK)
