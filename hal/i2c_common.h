@@ -20,7 +20,7 @@
  * @retval CDS_ERR_CODE (CDS_send_general_cmd の返り値)
  */
 CDS_ERR_CODE I2C_write_byte(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
-                           uint8_t register_address, uint8_t data);
+                            uint8_t register_address, uint8_t data);
 
 /**
  * @brief I2C_Config 構造体にて指定されたデバイスのレジスタへ 2 バイトデータを書き込む
@@ -32,7 +32,7 @@ CDS_ERR_CODE I2C_write_byte(ComponentDriverSuper* p_super, uint8_t stream, I2C_C
  * @retval CDS_ERR_CODE (CDS_send_general_cmd の返り値)
  */
 CDS_ERR_CODE I2C_write_2bytes(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
-                             uint8_t register_address, uint16_t data);
+                              uint8_t register_address, uint16_t data);
 
 /**
  * @brief I2C_Config 構造体にて指定されたデバイスのレジスタから 1 バイトデータを読み込む
@@ -44,7 +44,7 @@ CDS_ERR_CODE I2C_write_2bytes(ComponentDriverSuper* p_super, uint8_t stream, I2C
  * @retval CDS_ERR_CODE
  */
 CDS_ERR_CODE I2C_read_byte(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
-                          uint8_t register_address, uint8_t* data_v);
+                           uint8_t register_address, uint8_t* data_v);
 
 /**
  * @brief I2C_Config 構造体にて指定されたデバイスのレジスタから 2 バイトデータを読み込む
@@ -56,6 +56,6 @@ CDS_ERR_CODE I2C_read_byte(ComponentDriverSuper* p_super, uint8_t stream, I2C_Co
  * @retval CDS_ERR_CODE
  */
 CDS_ERR_CODE I2C_read_2bytes(ComponentDriverSuper* p_super, uint8_t stream, I2C_Config* p_i2c_config,
-                            uint8_t register_address, uint16_t* data_v);
+                             uint8_t register_address, uint16_t* data_v);
 
 #endif

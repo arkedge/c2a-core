@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief ComponentDriver Super の通信で使うプロトコルスタックのデータリンク層定義
+ * @brief ComponentDriverSuper の通信で使うプロトコルスタックのデータリンク層定義
  */
 #ifndef DATA_LINK_LAYER_DEFINITION_H_
 #define DATA_LINK_LAYER_DEFINITION_H_

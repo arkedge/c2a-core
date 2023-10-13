@@ -1,8 +1,9 @@
-# Overview of Driver
+# Overview of Component Driver
+※ v4 のメジャーアップデートに伴い，例示しているコードが古い場合がある (FIXME)．
 
-## Driver
+## Component Driver
 ### 概要
-Driver とは，各コンポーネントとの通信において， HW 依存部分を吸収するためのレイヤーである．  
+Component Driver とは，各コンポーネントとの通信において， HW 依存部分を吸収するためのレイヤーである．  
 [DriverSuper](https://github.com/arkedge/c2a-core/blob/develop/component_driver/driver_super.h) と呼ばれる共通の IF を各ドライバが継承することで，統一的で安全な実装が可能になる．
 
 また，これを Application へと抽象化したものが， Application Layer にある DI (Driver Instance) である．
@@ -18,7 +19,7 @@ Driver とは，各コンポーネントとの通信において， HW 依存部
 が実装されているので，それを参考のこと．  
 `load_init_setting` については下を参照．
 
-### 推奨する Drivre 構造体の定義
+### 推奨する Component Drivre 構造体の定義
 TOBC (TBA) を例にあげる．
 
 ```cpp
@@ -80,7 +81,7 @@ typedef struct DriverSuperStreamConfig DriverSuperStreamConfig;
 ```
 
 
-### DriverSuper と C2A 間通信
+### ComponentDriverSuper と C2A 間通信
 TBW
 
 [Driver/Communication with Components](../component_driver/communication_with_components.md) なども参照．
