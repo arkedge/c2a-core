@@ -541,24 +541,24 @@ CDS_ERR_CODE CDS_send_req_tlm_cmd(ComponentDriverSuper* p_super, uint8_t stream)
 
 
 // ###### CDS_Config Getter/Setter of Settings ######
-uint16_t DSC_get_rx_buffer_size_in_if_rx(const ComponentDriverSuper* p_super);
-CDS_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(ComponentDriverSuper* p_super,
+uint16_t CDSC_get_rx_buffer_size_in_if_rx(const ComponentDriverSuper* p_super);
+CDS_ERR_CODE CDSC_set_rx_buffer_size_in_if_rx(ComponentDriverSuper* p_super,
                                             const uint16_t rx_buffer_size_in_if_rx);
-uint8_t DSC_get_should_monitor_for_rx_disruption(const ComponentDriverSuper* p_super);
-void DSC_enable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);
-void DSC_disable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);
-uint32_t DSC_get_time_threshold_for_rx_disruption(const ComponentDriverSuper* p_super);
-void DSC_set_time_threshold_for_rx_disruption(ComponentDriverSuper* p_super,
+uint8_t CDSC_get_should_monitor_for_rx_disruption(const ComponentDriverSuper* p_super);
+void CDSC_enable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);
+void CDSC_disable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);
+uint32_t CDSC_get_time_threshold_for_rx_disruption(const ComponentDriverSuper* p_super);
+void CDSC_set_time_threshold_for_rx_disruption(ComponentDriverSuper* p_super,
                                               const uint32_t time_threshold_for_rx_disruption);
 
 
 // ###### CDS_Config Getter of Info ######
-const CDS_RecStatus* DSC_get_rec_status(const ComponentDriverSuper* p_super);
-uint32_t DSC_get_rx_count(const ComponentDriverSuper* p_super);
-uint32_t DSC_get_rx_call_count(const ComponentDriverSuper* p_super);
-const ObcTime* DSC_get_rx_time(const ComponentDriverSuper* p_super);
+const CDS_RecStatus* CDSC_get_rec_status(const ComponentDriverSuper* p_super);
+uint32_t CDSC_get_rx_count(const ComponentDriverSuper* p_super);
+uint32_t CDSC_get_rx_call_count(const ComponentDriverSuper* p_super);
+const ObcTime* CDSC_get_rx_time(const ComponentDriverSuper* p_super);
 
-CDS_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const ComponentDriverSuper* p_super);
+CDS_RX_DISRUPTION_STATUS_CODE CDSC_get_rx_disruption_status(const ComponentDriverSuper* p_super);
 
 
 // ###### CDS_StreamConfig Getter/Setter of Settings ######

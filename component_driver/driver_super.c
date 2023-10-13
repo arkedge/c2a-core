@@ -1315,12 +1315,12 @@ static CDS_ERR_CODE CDS_data_analyzer_dummy_(CDS_StreamConfig* p_stream_config, 
 
 
 // ###### CDS_Config Getter/Setter of Settings ######
-uint16_t DSC_get_rx_buffer_size_in_if_rx(const ComponentDriverSuper* p_super)
+uint16_t CDSC_get_rx_buffer_size_in_if_rx(const ComponentDriverSuper* p_super)
 {
   return (uint16_t)p_super->config.settings.rx_buffer_size_in_if_rx_;
 }
 
-CDS_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(ComponentDriverSuper* p_super,
+CDS_ERR_CODE CDSC_set_rx_buffer_size_in_if_rx(ComponentDriverSuper* p_super,
                                             const uint16_t rx_buffer_size_in_if_rx)
 {
   if (rx_buffer_size_in_if_rx > CDS_IF_RX_BUFFER_SIZE) return CDS_ERR_CODE_ERR;
@@ -1328,27 +1328,27 @@ CDS_ERR_CODE DSC_set_rx_buffer_size_in_if_rx(ComponentDriverSuper* p_super,
   return CDS_ERR_CODE_OK;
 }
 
-uint8_t DSC_get_should_monitor_for_rx_disruption(const ComponentDriverSuper* p_super)
+uint8_t CDSC_get_should_monitor_for_rx_disruption(const ComponentDriverSuper* p_super)
 {
   return (uint8_t)p_super->config.settings.should_monitor_for_rx_disruption_;
 }
 
-void DSC_enable_monitor_for_rx_disruption(ComponentDriverSuper* p_super)
+void CDSC_enable_monitor_for_rx_disruption(ComponentDriverSuper* p_super)
 {
   p_super->config.settings.should_monitor_for_rx_disruption_ = 1;
 }
 
-void DSC_disable_monitor_for_rx_disruption(ComponentDriverSuper* p_super)
+void CDSC_disable_monitor_for_rx_disruption(ComponentDriverSuper* p_super)
 {
   p_super->config.settings.should_monitor_for_rx_disruption_ = 0;
 }
 
-uint32_t DSC_get_time_threshold_for_rx_disruption(const ComponentDriverSuper* p_super)
+uint32_t CDSC_get_time_threshold_for_rx_disruption(const ComponentDriverSuper* p_super)
 {
   return (uint32_t)p_super->config.settings.time_threshold_for_rx_disruption_;
 }
 
-void DSC_set_time_threshold_for_rx_disruption(ComponentDriverSuper* p_super,
+void CDSC_set_time_threshold_for_rx_disruption(ComponentDriverSuper* p_super,
                                               const uint32_t time_threshold_for_rx_disruption)
 {
   p_super->config.settings.time_threshold_for_rx_disruption_ = time_threshold_for_rx_disruption;
@@ -1357,27 +1357,27 @@ void DSC_set_time_threshold_for_rx_disruption(ComponentDriverSuper* p_super,
 
 // ###### CDS_Config Getter/Setter of Info ######
 // FIXME: HEW で Warning が出てしまう（gcc ではでない）ので，キャストしている関数がいくつかある
-const CDS_RecStatus* DSC_get_rec_status(const ComponentDriverSuper* p_super)
+const CDS_RecStatus* CDSC_get_rec_status(const ComponentDriverSuper* p_super)
 {
   return &p_super->config.info.rec_status_;
 }
 
-uint32_t DSC_get_rx_count(const ComponentDriverSuper* p_super)
+uint32_t CDSC_get_rx_count(const ComponentDriverSuper* p_super)
 {
   return (uint32_t)p_super->config.info.rx_count_;
 }
 
-uint32_t DSC_get_rx_call_count(const ComponentDriverSuper* p_super)
+uint32_t CDSC_get_rx_call_count(const ComponentDriverSuper* p_super)
 {
   return (uint32_t)p_super->config.info.rx_call_count_;
 }
 
-const ObcTime* DSC_get_rx_time(const ComponentDriverSuper* p_super)
+const ObcTime* CDSC_get_rx_time(const ComponentDriverSuper* p_super)
 {
   return &p_super->config.info.rx_time_;
 }
 
-CDS_RX_DISRUPTION_STATUS_CODE DSC_get_rx_disruption_status(const ComponentDriverSuper* p_super)
+CDS_RX_DISRUPTION_STATUS_CODE CDSC_get_rx_disruption_status(const ComponentDriverSuper* p_super)
 {
   return (CDS_RX_DISRUPTION_STATUS_CODE)p_super->config.info.rec_status_.rx_disruption_status;
 }
