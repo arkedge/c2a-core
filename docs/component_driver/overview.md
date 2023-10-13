@@ -3,17 +3,17 @@
 ## Driver
 ### 概要
 Driver とは，各コンポーネントとの通信において， HW 依存部分を吸収するためのレイヤーである．  
-[DriverSuper](https://github.com/arkedge/c2a-core/blob/develop/driver/driver_super.h) と呼ばれる共通の IF を各ドライバが継承することで，統一的で安全な実装が可能になる．
+[DriverSuper](https://github.com/arkedge/c2a-core/blob/develop/component_driver/driver_super.h) と呼ばれる共通の IF を各ドライバが継承することで，統一的で安全な実装が可能になる．
 
 また，これを Application へと抽象化したものが， Application Layer にある DI (Driver Instance) である．
 
-実装方法は，基本的には [driver_super.h](https://github.com/arkedge/c2a-core/blob/develop/driver/driver_super.h) をみればわかるようにしてあるが，現時点で
+実装方法は，基本的には [driver_super.h](https://github.com/arkedge/c2a-core/blob/develop/component_driver/driver_super.h) をみればわかるようにしてあるが，現時点で
 
-- UART test: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/driver/etc/uart_test.c
-- GS: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/driver/com/gs.c
+- UART test: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/component_driver/etc/uart_test.c
+- GS: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/component_driver/com/gs.c
 - C2A 間通信:
-    - https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/driver/aocs/aobc.c
-    - https://github.com/arkedge/c2a-core/blob/develop/examples/subobc/src/src_user/driver/etc/mobc.c
+    - https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/component_driver/aocs/aobc.c
+    - https://github.com/arkedge/c2a-core/blob/develop/examples/subobc/src/src_user/component_driver/etc/mobc.c
 
 が実装されているので，それを参考のこと．  
 `load_init_setting` については下を参照．
@@ -43,7 +43,7 @@ typedef struct
 
 ## DriverSuper
 ### テレメとしておろしてもいいのではないかなと思う DriverSuper のメンバ
-[driver_super.h](https://github.com/arkedge/c2a-core/blob/develop/driver/driver_super.h) のメンバから抜粋する．
+[driver_super.h](https://github.com/arkedge/c2a-core/blob/develop/component_driver/driver_super.h) のメンバから抜粋する．
 
 `DriverSuper` の最上位には特に重要な情報はないので， `DriverSuper` の使っているstreamの `stream_config` のメンバを下ろす．  
 具体的には以下．（ FIXME: 2021/12/04 現在，だいぶ情報が古い）
@@ -83,7 +83,7 @@ typedef struct DriverSuperStreamConfig DriverSuperStreamConfig;
 ### DriverSuper と C2A 間通信
 TBW
 
-[Driver/Communication with Components](../driver/communication_with_components.md) なども参照．
+[Driver/Communication with Components](../component_driver/communication_with_components.md) なども参照．
 
 ### その他
 2021年の改良としては，大きく以下がある．

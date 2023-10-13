@@ -2,7 +2,7 @@
 
 ## 概要
 通信関連，ネットワーク関連などをまとめる．  
-コンポーネント間通信については [Driver/Communication with Components](../driver/communication_with_components.md) などを参照のこと．
+コンポーネント間通信については [Driver/Communication with Components](../component_driver/communication_with_components.md) などを参照のこと．
 
 
 ## C2A 内部を流れるパケットについて (Common Packet)
@@ -185,7 +185,7 @@ https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e
 
 
 ## C2A 間通信について
-上記 [#コマンド配送におけるルーティングについて](#コマンド配送におけるルーティングについて) や [Driver/Communication with Components#c2a-間通信](../driver/communication_with_components.md#c2a-間通信) などを参照すること．
+上記 [#コマンド配送におけるルーティングについて](#コマンド配送におけるルーティングについて) や [Driver/Communication with Components#c2a-間通信](../component_driver/communication_with_components.md#c2a-間通信) などを参照すること．
 
 
 ## CCSDS 準拠状況
