@@ -21,8 +21,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: run tlm-cmd-code-generator
-        working-directory: ./tlm-cmd-code-generator
+      - name: run code-generator
+        working-directory: ./code-generator
         run: |
           cp "./settings_${{ matrix.user }}.json" ./settings.json
           python GenerateC2ACode.py
