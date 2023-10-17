@@ -51,11 +51,6 @@ rye run pytest -m sils -v   # SILSの場合
 個別ファイルをテストしたい場合は，以下などでOK．
 ```
 rye run pytest -m real -v ./src_user/applications/user_defined/test_tlm_mem_dump.py
-
-or
-
-cd ./src_user/applications/user_defined/
-rye run pytest -m real -v test_tlm_mem_dump.py
 ```
 
 ## WINGS を使った実行時の補足
