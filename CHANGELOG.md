@@ -8,6 +8,8 @@
 
 - [ut-issl/c2a-core](https://github.com/ut-issl/c2a-core) [v3.10.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.0) から ArkEdge Space Inc. による先行開発のために fork し，リポジトリを [arkedge/c2a-core](https://github.com/arkedge/c2a-core) に移行
   - ライセンス情報の更新: [#1](https://github.com/arkedge/c2a-core/pull/1)
+- CommandDispatcher の統一的なテレメの提供: [#18](https://github.com/arkedge/c2a-core/pull/18)
+-  App の initializer, entry_point の返り値を void から RESULT にする: [#19](https://github.com/arkedge/c2a-core/pull/19)
 - 各ディレクトリ名・構造の変更
   - example user を `minimum_user` -> `mobc`, `2nd_obc_user` -> `subobc` に変更: [#15](https://github.com/arkedge/c2a-core/pull/15)
   - ディレクトリ名のコーディング規約を `CamelCase` から `snake_case` に変更: [#20](https://github.com/arkedge/c2a-core/pull/20)
