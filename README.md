@@ -29,7 +29,7 @@
 - C2A は，フライトソフトウェアがそのまま実行できる SILS 環境を構築できる．
 - つまり，ターゲットの OBC 上で動くソフトウェアが， PC などの上で，そのままエミュレートできる．
 - C2A の SILS runtime として，以下のような実装が存在する．
-  - [c2a-sils-runtime](./docs/sils/c2a_sils_runtime.md)
+  - [c2a-sils-runtime](./sils-runtime)
     - 今後の標準的な C2A の SILS runtime．これが導入済みの C2A user は基本的に `cargo run` すれば動作する．
   - [S2E](https://github.com/ut-issl/s2e-core)
     - 宇宙環境シミュレータ．元々の SILS runtime 実装であり，姿勢制御モジュールなど，宇宙環境模擬が必要な C2A user についてはこちらを用いて検証を行う．
