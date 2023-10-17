@@ -1,4 +1,4 @@
-# c2a-tlm-cmd-code-generator
+# c2a-code-generator
 [TlmCmd DB](https://github.com/ut-issl/tlm-cmd-db)からC2Aのコードを生成するためのスクリプト
 
 以下が自動生成される．
