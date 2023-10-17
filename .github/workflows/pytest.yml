@@ -117,4 +117,4 @@ jobs:
     - name: run pytest
       working-directory: ./examples/${{ matrix.c2a_user }}/src/src_user/test
       run: |
-        rye run pytest -m sils -v ./test/${{ matrix.test_dir }}
+        rye run pytest -m sils -v ./${{ matrix.test_dir }}
