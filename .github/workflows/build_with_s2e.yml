@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: checkout S2E core
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
         with:
           path: s2e-core
           repository: ut-issl/s2e-core
@@ -32,7 +32,7 @@ jobs:
           fetch-depth: 1
 
       - name: checkout S2E user
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
         with:
           path: s2e-user
           repository: ut-issl/s2e-user-for-c2a-core
@@ -40,7 +40,7 @@ jobs:
           fetch-depth: 1
 
       - name: checkout C2A user
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
         with:
           path: c2a-core
 
