@@ -40,7 +40,7 @@
 ### テスト
 - 特定の user を仮定しないと，各種パラメタが確定しないため， [`examples/mobc`](./examples/mobc) でテストする．
 - C2A 間通信に関連する部分のテストのみは [`examples/subobc`](./examples/subobc) を用いる．
-- 詳細は [Test](./examples/mobc/src/src_user/Test) 参照．
+- 詳細は [test](./examples/mobc/src/src_user/test) 参照．
 
 ### ブランチ
 - `main`: リリース版（[詳細](./docs/general/release.md)）
