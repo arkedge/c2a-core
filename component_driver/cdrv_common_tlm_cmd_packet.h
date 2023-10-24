@@ -55,9 +55,9 @@ CDS_ERR_CODE CDRV_CCP_get_ccp(const CDS_StreamConfig* p_stream_config, CommonCmd
  * @retval CDS_ERR_CODE_ERR: フレームバッファのサイズ不足などのエラー
  */
 CDS_ERR_CODE CDRV_CTCP_init_stream_config(CDS_StreamConfig* p_stream_config,
-                             uint8_t* tx_frame_buffer,
-                             int16_t tx_frame_buffer_size,
-                             CDS_ERR_CODE (*data_analyzer)(CDS_StreamConfig* p_stream_config, void* p_driver));
+                                          uint8_t* tx_frame_buffer,
+                                          int16_t tx_frame_buffer_size,
+                                          CDS_ERR_CODE (*data_analyzer)(CDS_StreamConfig* p_stream_config, void* p_driver));
 
 /**
  * @brief  C2A 間通信など， CTCP をコンポ間通信に用いるときの tx_frame のセット
@@ -67,7 +67,7 @@ CDS_ERR_CODE CDRV_CTCP_init_stream_config(CDS_StreamConfig* p_stream_config,
  * @retval CDS_ERR_CODE_ERR: DSSC 内部の設定不足などのエラー
  */
 CDS_ERR_CODE CDRV_CTCP_set_tx_frame(CDS_StreamConfig* p_stream_config,
-                                        const CommonTlmCmdPacket* send_packet);
+                                    const CommonTlmCmdPacket* send_packet);
 
 /**
  * @brief  C2A 間通信など， CTP をコンポ間通信に用いるときの tx_frame のセット
@@ -77,7 +77,7 @@ CDS_ERR_CODE CDRV_CTCP_set_tx_frame(CDS_StreamConfig* p_stream_config,
  * @retval CDS_ERR_CODE_ERR: DSSC 内部の設定不足などのエラー
  */
 CDS_ERR_CODE CDRV_CTP_set_tx_frame(CDS_StreamConfig* p_stream_config,
-                                       const CommonTlmPacket* send_packet);
+                                    const CommonTlmPacket* send_packet);
 
 /**
  * @brief  C2A 間通信など， CCP をコンポ間通信に用いるときの tx_frame のセット
@@ -87,6 +87,6 @@ CDS_ERR_CODE CDRV_CTP_set_tx_frame(CDS_StreamConfig* p_stream_config,
  * @retval CDS_ERR_CODE_ERR: DSSC 内部の設定不足などのエラー
  */
 CDS_ERR_CODE CDRV_CCP_set_tx_frame(CDS_StreamConfig* p_stream_config,
-                                       const CommonCmdPacket* send_packet);
+                                    const CommonCmdPacket* send_packet);
 
 #endif
