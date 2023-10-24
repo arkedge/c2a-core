@@ -23,13 +23,13 @@
  *        |       * |     0 |     * | ...              |
  *        |---------+-------+-------+------------------|
  */
-#ifndef EB90_PACKET_FOR_DRIVER_SUPER_H_
-#define EB90_PACKET_FOR_DRIVER_SUPER_H_
+#ifndef CDRV_EB90_PACKET_H_
+#define CDRV_EB90_PACKET_H_
 
 #include <stdint.h>
 #include "driver_super.h"
 
-#define EB90_PACKET_HEADER_SIZE  (4)  //!< EB90 Packet のヘッダサイズ
+#define CDRV_EB90_PACKET_HEADER_SIZE  (4)  //!< EB90 Packet のヘッダサイズ
 
 /**
  * @brief  Version ID の取得
@@ -37,7 +37,7 @@
  * @param  p_stream_config: ComponentDriverSuper 構造体の CDS_StreamConfig
  * @return Version ID （バージョン 0x01 では uint8_t だが将来性のために uint32_t で返す）
  */
-uint32_t EB90_PACKET_get_version_from_cdssc(const CDS_StreamConfig* p_stream_config);
+uint32_t CDRV_EB90_PACKET_get_version(const CDS_StreamConfig* p_stream_config);
 
 /**
  * @brief  Tlm / Cmd Count の取得
@@ -46,7 +46,7 @@ uint32_t EB90_PACKET_get_version_from_cdssc(const CDS_StreamConfig* p_stream_con
  * @retval Tlm / Cmd Count （バージョン 0x01 では uint8_t だが将来性のために uint32_t で返す）
  * @retval 0 (入力が不正な場合)
  */
-uint32_t EB90_PACKET_get_count_from_cdssc(const CDS_StreamConfig* p_stream_config);
+uint32_t CDRV_EB90_PACKET_get_count(const CDS_StreamConfig* p_stream_config);
 
 /**
  * @brief  Tlm / Cmd ID の取得
@@ -56,7 +56,7 @@ uint32_t EB90_PACKET_get_count_from_cdssc(const CDS_StreamConfig* p_stream_confi
  * @retval Tlm / Cmd ID （バージョン 0x01 では uint16_t だが将来性のために uint32_t で返す）
  * @retval 0 (入力が不正な場合)
  */
-uint32_t EB90_PACKET_get_id_from_cdssc(const CDS_StreamConfig* p_stream_config);
+uint32_t CDRV_EB90_PACKET_get_id(const CDS_StreamConfig* p_stream_config);
 
 /**
  * @brief  受信フレームからPacket Field の先頭ポインタを取得する
@@ -65,7 +65,7 @@ uint32_t EB90_PACKET_get_id_from_cdssc(const CDS_StreamConfig* p_stream_config);
  * @retval Packet Field の先頭ポインタ
  * @retval NULL (入力が不正な場合)
  */
-const uint8_t* EB90_PACKET_get_user_data_head_from_cdssc(const CDS_StreamConfig* p_stream_config);
+const uint8_t* CDRV_EB90_PACKET_get_user_data_head(const CDS_StreamConfig* p_stream_config);
 
 // TODO: cdssc の tx_frame に packet を EB90 frame につめてから挿入する関数を作る
 //       CTCP_set_tx_frame_to_cdssc の EB90 packet 用
