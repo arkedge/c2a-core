@@ -9,15 +9,15 @@
 #include "./aobc_telemetry_buffer.h"
 #include <src_core/tlm_cmd/common_tlm_cmd_packet.h>
 #include <src_core/tlm_cmd/common_cmd_packet.h>
-#include <src_core/component_driver/eb90_frame_for_driver_super.h>
-#include <src_core/component_driver/common_tlm_cmd_packet_for_driver_super.h>
+#include <src_core/component_driver/cdrv_eb90_frame.h>
+#include <src_core/component_driver/cdrv_common_tlm_cmd_packet.h>
 #include <string.h>
 
 #define AOBC_STREAM_TLM_CMD   (0)   //!< テレコマで使うストリーム
 
-static uint8_t AOBC_tx_frame_[EB90_FRAME_HEADER_SIZE +
+static uint8_t AOBC_tx_frame_[CDRV_EB90_FRAME_HEADER_SIZE +
                               CTCP_MAX_LEN +
-                              EB90_FRAME_FOOTER_SIZE];
+                              CDRV_EB90_FRAME_FOOTER_SIZE];
 
 static CDS_ERR_CODE AOBC_load_driver_super_init_settings_(ComponentDriverSuper* p_super);
 static CDS_ERR_CODE AOBC_analyze_rec_data_(CDS_StreamConfig* p_stream_config,
@@ -54,7 +54,7 @@ static CDS_ERR_CODE AOBC_load_driver_super_init_settings_(ComponentDriverSuper* 
   // stream は 0 のみ
   p_stream_config = &(p_super->stream_config[AOBC_STREAM_TLM_CMD]);
 
-  CTCP_init_cdssc(p_stream_config, AOBC_tx_frame_, sizeof(AOBC_tx_frame_), AOBC_analyze_rec_data_);
+  CDRV_CTCP_init_stream_config(p_stream_config, AOBC_tx_frame_, sizeof(AOBC_tx_frame_), AOBC_analyze_rec_data_);
 
   // 定期 TLM の監視機能の有効化しない → ので設定上書きなし
 
@@ -91,7 +91,7 @@ static CDS_ERR_CODE AOBC_analyze_rec_data_(CDS_StreamConfig* p_stream_config,
 
   aobc_driver->info.comm.rx_err_code = AOBC_RX_ERR_CODE_OK;
 
-  if (!EB90_FRAME_is_valid_crc_of_cdssc(p_stream_config))
+  if (!CDRV_EB90_FRAME_is_valid_crc(p_stream_config))
   {
     aobc_driver->info.comm.rx_err_code = AOBC_RX_ERR_CODE_CRC_ERR;
     return CDS_ERR_CODE_ERR;
@@ -134,7 +134,7 @@ CDS_CMD_ERR_CODE AOBC_send_cmd(AOBC_Driver* aobc_driver, const CommonCmdPacket* 
   p_stream_config = &(aobc_driver->driver.super.stream_config[AOBC_STREAM_TLM_CMD]);
 
   // tx_frameの設定
-  CCP_set_tx_frame_to_cdssc(p_stream_config, packet);
+  CDRV_CCP_set_tx_frame(p_stream_config, packet);
 
   cmd_code = (AOBC_CMD_CODE)CCP_get_id(packet);
 

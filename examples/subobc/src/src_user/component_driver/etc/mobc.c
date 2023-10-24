@@ -8,15 +8,15 @@
 
 #include "./mobc.h"
 #include <src_core/tlm_cmd/common_tlm_cmd_packet.h>
-#include <src_core/component_driver/eb90_frame_for_driver_super.h>
-#include <src_core/component_driver/common_tlm_cmd_packet_for_driver_super.h>
+#include <src_core/component_driver/cdrv_eb90_frame.h>
+#include <src_core/component_driver/cdrv_common_tlm_cmd_packet.h>
 #include <string.h>
 
 #define MOBC_STREAM_TLM_CMD   (0)   //!< テレコマで使うストリーム
 
-static uint8_t MOBC_tx_frame_[EB90_FRAME_HEADER_SIZE +
+static uint8_t MOBC_tx_frame_[CDRV_EB90_FRAME_HEADER_SIZE +
                               CTCP_MAX_LEN +
-                              EB90_FRAME_FOOTER_SIZE];
+                              CDRV_EB90_FRAME_FOOTER_SIZE];
 
 static CDS_ERR_CODE MOBC_load_driver_super_init_settings_(ComponentDriverSuper* p_super);
 static CDS_ERR_CODE MOBC_analyze_rec_data_(CDS_StreamConfig* p_stream_config,
@@ -53,7 +53,7 @@ static CDS_ERR_CODE MOBC_load_driver_super_init_settings_(ComponentDriverSuper* 
   // stream は 0 のみ
   p_stream_config = &(p_super->stream_config[MOBC_STREAM_TLM_CMD]);
 
-  CTCP_init_cdssc(p_stream_config, MOBC_tx_frame_, sizeof(MOBC_tx_frame_), MOBC_analyze_rec_data_);
+  CDRV_CTCP_init_stream_config(p_stream_config, MOBC_tx_frame_, sizeof(MOBC_tx_frame_), MOBC_analyze_rec_data_);
 
   // 定期 TLM の監視機能の有効化しない → ので設定上書きなし
 
@@ -89,7 +89,7 @@ static CDS_ERR_CODE MOBC_analyze_rec_data_(CDS_StreamConfig* p_stream_config, vo
   CommonCmdPacket packet;   // FIXME: これは static にする？
                             //        static のほうがコンパイル時にアドレスが確定して安全． Out of stack space を回避できる
                             //        一方でメモリ使用量は増える．
-  CDS_ERR_CODE ret =  CCP_get_ccp_from_cdssc(p_stream_config, &packet);
+  CDS_ERR_CODE ret =  CDRV_CCP_get_ccp(p_stream_config, &packet);
   if (ret != CDS_ERR_CODE_OK)
   {
     mobc_driver->info.comm.rx_err_code = MOBC_RX_ERR_CODE_INVALID_PACKET;
@@ -98,7 +98,7 @@ static CDS_ERR_CODE MOBC_analyze_rec_data_(CDS_StreamConfig* p_stream_config, vo
 
   mobc_driver->info.comm.rx_err_code = MOBC_RX_ERR_CODE_OK;
 
-  if (!EB90_FRAME_is_valid_crc_of_cdssc(p_stream_config))
+  if (!CDRV_EB90_FRAME_is_valid_crc(p_stream_config))
   {
     mobc_driver->info.comm.rx_err_code = MOBC_RX_ERR_CODE_CRC_ERR;
     return CDS_ERR_CODE_ERR;
@@ -132,7 +132,7 @@ CDS_CMD_ERR_CODE MOBC_send(MOBC_Driver* mobc_driver, const CommonTlmPacket* pack
   p_stream_config = &(mobc_driver->driver.super.stream_config[MOBC_STREAM_TLM_CMD]);
 
   // tx_frameの設定
-  CTP_set_tx_frame_to_cdssc(p_stream_config, packet);
+  CDRV_CTP_set_tx_frame(p_stream_config, packet);
 
   ret = CDS_send_general_cmd(&(mobc_driver->driver.super), MOBC_STREAM_TLM_CMD);
 

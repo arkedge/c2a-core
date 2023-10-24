@@ -4,7 +4,7 @@
  * @brief  テレメトリバッファー（テレメ中継）
  * @note   このコードは自動生成されています！
  */
-#include <src_core/component_driver/common_tlm_cmd_packet_for_driver_super.h>
+#include <src_core/component_driver/cdrv_common_tlm_cmd_packet.h>
 #include "./aobc_telemetry_definitions.h"
 #include "./aobc_telemetry_buffer.h"
 #include "./aobc.h"
@@ -30,7 +30,7 @@ CDS_ERR_CODE AOBC_buffer_tlm_packet(CDS_StreamConfig* p_stream_config, AOBC_Driv
   AOBC_TLM_CODE tlm_id;
   CDS_ERR_CODE ret;
 
-  ret = CTP_get_ctp_from_cdssc(p_stream_config, &AOBC_ctp_);
+  ret = CDRV_CTP_get_ctp(p_stream_config, &AOBC_ctp_);
   if (ret != CDS_ERR_CODE_OK) return ret;
 
   tlm_id  = (AOBC_TLM_CODE)CTP_get_id(&AOBC_ctp_);
