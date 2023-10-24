@@ -31,8 +31,8 @@
  *          Packet Field の CRC
  *          Header は含めない
  */
-#ifndef EB90_FRAME_FOR_DRIVER_SUPER_H_
-#define EB90_FRAME_FOR_DRIVER_SUPER_H_
+#ifndef CDRV_EB90_FRAME_H_
+#define CDRV_EB90_FRAME_H_
 
 #include <stdint.h>
 #include "driver_super.h"

@@ -23,8 +23,8 @@
  *        |       * |     0 |     * | ...              |
  *        |---------+-------+-------+------------------|
  */
-#ifndef EB90_PACKET_FOR_DRIVER_SUPER_H_
-#define EB90_PACKET_FOR_DRIVER_SUPER_H_
+#ifndef CDRV_EB90_PACKET_H_
+#define CDRV_EB90_PACKET_H_
 
 #include <stdint.h>
 #include "driver_super.h"

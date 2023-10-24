@@ -5,8 +5,8 @@
  * @note  データリンク層は CDS_StreamConfig.data_link_layer_ で規定する
  * @note  packet 構造 などは tlm_cmd/common_tlm_cmd_packet.h を参照のこと
  */
-#ifndef COMMON_TLM_CMD_PACKET_FOR_DRIVER_SUPER_H_
-#define COMMON_TLM_CMD_PACKET_FOR_DRIVER_SUPER_H_
+#ifndef CDRV_COMMON_TLM_CMD_PACKET_H_
+#define CDRV_COMMON_TLM_CMD_PACKET_H_
 
 #include <stdint.h>
 #include "driver_super.h"
