@@ -6,26 +6,26 @@
  * @note  Tlm か Cmd かはコンテキストで読み替える
  * @note  データリンク層は CDS_StreamConfig.data_link_layer_ で規定する
  */
-#include "eb90_packet_for_driver_super.h"
-#include "eb90_frame_for_driver_super.h"
+#include "cdrv_eb90_packet.h"
+#include "cdrv_eb90_frame.h"
 #include "../library/endian.h"
 
 // FIXME: CDS_StreamConfig.data_link_layer_ をちゃんと見る！
 
-uint32_t EB90_PACKET_get_version_from_cdssc(const CDS_StreamConfig* p_stream_config)
+uint32_t CDRV_EB90_PACKET_get_version(const CDS_StreamConfig* p_stream_config)
 {
   // TODO: 現状は Version 番号が 8bit のもののみしか対応していない
-  return (uint32_t)(EB90_FRAME_get_packet_head_from_cdssc(p_stream_config)[0]);
+  return (uint32_t)(CDRV_EB90_FRAME_get_packet_head(p_stream_config)[0]);
 }
 
 
-uint32_t EB90_PACKET_get_count_from_cdssc(const CDS_StreamConfig* p_stream_config)
+uint32_t CDRV_EB90_PACKET_get_count(const CDS_StreamConfig* p_stream_config)
 {
-  const uint32_t version = EB90_PACKET_get_version_from_cdssc(p_stream_config);
+  const uint32_t version = CDRV_EB90_PACKET_get_version(p_stream_config);
 
   if (version == 1)
   {
-    return (uint32_t)(EB90_FRAME_get_packet_head_from_cdssc(p_stream_config)[1]);
+    return (uint32_t)(CDRV_EB90_FRAME_get_packet_head(p_stream_config)[1]);
   }
   else
   {
@@ -34,14 +34,14 @@ uint32_t EB90_PACKET_get_count_from_cdssc(const CDS_StreamConfig* p_stream_confi
 }
 
 
-uint32_t EB90_PACKET_get_id_from_cdssc(const CDS_StreamConfig* p_stream_config)
+uint32_t CDRV_EB90_PACKET_get_id(const CDS_StreamConfig* p_stream_config)
 {
-  const uint32_t version = EB90_PACKET_get_version_from_cdssc(p_stream_config);
+  const uint32_t version = CDRV_EB90_PACKET_get_version(p_stream_config);
 
   if (version == 1)
   {
     uint16_t id;
-    ENDIAN_memcpy(&id, &(EB90_FRAME_get_packet_head_from_cdssc(p_stream_config)[2]), sizeof(uint16_t));
+    ENDIAN_memcpy(&id, &(CDRV_EB90_FRAME_get_packet_head(p_stream_config)[2]), sizeof(uint16_t));
     return (uint32_t)id;
   }
   else
@@ -51,13 +51,13 @@ uint32_t EB90_PACKET_get_id_from_cdssc(const CDS_StreamConfig* p_stream_config)
 }
 
 
-const uint8_t* EB90_PACKET_get_user_data_head_from_cdssc(const CDS_StreamConfig* p_stream_config)
+const uint8_t* CDRV_EB90_PACKET_get_user_data_head(const CDS_StreamConfig* p_stream_config)
 {
-  const uint32_t version = EB90_PACKET_get_version_from_cdssc(p_stream_config);
+  const uint32_t version = CDRV_EB90_PACKET_get_version(p_stream_config);
 
   if (version == 1)
   {
-    return &(EB90_FRAME_get_packet_head_from_cdssc(p_stream_config)[4]);
+    return &(CDRV_EB90_FRAME_get_packet_head(p_stream_config)[4]);
   }
   else
   {
