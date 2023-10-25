@@ -40,7 +40,7 @@ done
 
 ## hal handler config
 echo "p_super->interface -> p_super->hal_handler_id"
-find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#IF_LIST_ENUM(\s)interface;#IF_LIST_ENUM\\\1hal_handler_id;#g"
+#find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#IF_LIST_ENUM(\s)interface;#IF_LIST_ENUM\\\1hal_handler_id;#g"
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#p_super->interface#p_super->hal_handler_id#g"
 
 echo "p_super->if_config -> p_super->hal_config"
@@ -55,8 +55,8 @@ find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#r
 
 
 ## enum
-enum_org=("IF_LIST_MAX" "IF_LIST_ENUM" "IF_REOPEN_REASON")
-enum_new=("HAL_HANDLER_MAX" "HAL_HANDLER_ID" "HAL_HANDLER_REOPEN_REASON")
+enum_org=("IF_LIST_ENUM" "IF_LIST_MAX" "IF_REOPEN_REASON")
+enum_new=("HAL_HANDLER_ID" "HAL_HANDLER_ID_MAX" "HAL_HANDLER_REOPEN_REASON")
 
 echo "rename enum"
 for i in ${!enum_org[@]}; do
