@@ -5,7 +5,22 @@ echo "move if_list source files to src/src_user/Settings/component_driver_super"
 mv src/src_user/hal/if_list.h src/src_user/Settings/component_driver_super/hal_handler_registry.h
 mv src/src_user/hal/if_list.c src/src_user/Settings/component_driver_super/hal_handler_registry.c
 
-find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#IF_LIST_H_#HAL_HANDLER_REGISTRY_H_#g"
+## include
+### guard
+sed -i -e "s#IF_LIST_H_#HAL_HANDLER_REGISTRY_H_#g" src/src_user/Settings/component_driver_super/hal_handler_registry.h
+
+### ref
+sed -i -e "s#\"if_list\.h\"#\"hal_handler_registry\.h\"#g" src/src_user/Settings/component_driver_super/hal_handler_registry.c
+
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#src_user/hal/if_list\.h#src_user/Settings/component_driver_super/hal_handler_registry\.h#g"
+
+## CMake
+echo "remove src/src_user/hal/if_list.c from CMakeLists.txt"
+sed -i -e "s#if_list\.c##g" src/src_user/hal/CMakeLists.txt
+sed -i -e "s#src/src_user/hal/if_list\.c##g" CMakeLists.txt
+
+echo "add src/src_user/Settings/component_driver_super/hal_handler_registry.c to CMakeLists.txt"
+sed -i -z -e "s#set(C2A_SRCS\n#set(C2A_SRCS\n  component_driver_super/hal_handler_registry\.c\n#g" src/src_user/Settings/CMakeLists.txt
 
 ## hal handler list
 echo "rename handler list"
