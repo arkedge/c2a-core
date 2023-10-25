@@ -407,7 +407,7 @@ struct CDS_StreamConfig
 struct ComponentDriverSuper
 {
   // 【継承先まで公開】
-  IF_LIST_ENUM     interface;                                 //!< 継承先の機器の使用 IF
+  IF_LIST_ENUM     hal_handler_id;                            //!< 継承先の機器の使用 IF
   void*            if_config;                                 //!< IF 設定
 
   CDS_Config       config;                                    //!< ComponentDriverSuper の設定
