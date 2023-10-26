@@ -7,8 +7,8 @@
 #include "csrv_mobc.h"
 #include <src_core/tlm_cmd/packet_handler.h>
 #include <src_core/library/print.h>
-#include "../../Settings/port_config.h"
-#include "../../Settings/component_driver_super/driver_buffer_define.h"
+#include "../../settings/port_config.h"
+#include "../../settings/component_driver_super/driver_buffer_define.h"
 #include <src_core/library/result.h>
 
 static RESULT CSRV_MOBC_init_(void);

@@ -10,7 +10,7 @@ git_revs_core=$(../src_core/script/git/revision.sh)
 git_rev_user=$(git log --pretty=format:%H -1)
 git_rev_user_short=$(git log --pretty=format:%h -1)
 
-tee Settings/git_revision_config.h << EOS
+tee settings/git_revision_config.h << EOS
 #ifndef GIT_REVISION_CONFIG_H_
 #define GIT_REVISION_CONFIG_H_
 

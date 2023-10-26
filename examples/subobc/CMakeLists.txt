@@ -59,7 +59,7 @@ add_subdirectory(${C2A_USER_DIR}/applications)
 add_subdirectory(${C2A_USER_DIR}/component_driver)
 add_subdirectory(${C2A_USER_DIR}/hal)
 add_subdirectory(${C2A_USER_DIR}/library)
-add_subdirectory(${C2A_USER_DIR}/Settings)
+add_subdirectory(${C2A_USER_DIR}/settings)
 add_subdirectory(${C2A_USER_DIR}/tlm_cmd)
 
 set(C2A_SRCS

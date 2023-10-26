@@ -11,17 +11,17 @@ typedef enum
 {
 
   // Block Cmds for Mode Transition (シーケンスリスト)
-  // ./src_user/Settings/Modes/Transitions/ で定義
+  // ./src_user/settings/modes/transitions/ で定義
   BC_SL_START_UP_TO_INITIAL = 0,
   BC_SL_NOP  = 17,
 
   // Block Cmds for TaskList (タスクリスト) : 286-300
-  // ./src_user/Settings/Modes/TaskLists/ で定義
+  // ./src_user/settings/modes/task_lists/ で定義
   BC_TL_START_UP = 20,
   BC_TL_INITIAL = 21,
 
   // Block Cmds for Elements (App Rotator, Combinar)
-  // ./src_user/Settings/Modes/TaskLists/Elements/ で定義
+  // ./src_user/settings/modes/task_lists/elements/ で定義
   BC_AR_DEBUG_DISPLAY_INI = 40,
   BC_AR_GS_RELATED_PROCESS = 44,
   BC_AC_TLM_CMD_HIRATE = 50,
