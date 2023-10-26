@@ -5,7 +5,7 @@
 
 #if 0
 // FIXME: 現在 AL に依存してしまっている
-#include <src_user/Settings/system/anomaly_logger_define.h>
+#include <src_user/settings/system/anomaly_logger_define.h>
 #ifdef AL_ENABLE
 
 #include "../system/application_manager/app_info.h"

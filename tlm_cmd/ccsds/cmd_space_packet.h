@@ -56,7 +56,7 @@ typedef enum
 #define CSP_2ND_HDR_VER_TO_USE  (CSP_2ND_HDR_VER_1)   //!< 使う Sec. HDR Ver
 
 // CSP_MAX_LEN, CSP_2ND_HDR_VER_TO_USE を再定義
-#include <src_user/Settings/tlm_cmd/ccsds/cmd_space_packet_params.h>
+#include <src_user/settings/tlm_cmd/ccsds/cmd_space_packet_params.h>
 
 // 相互参照問題があるので，この順番で include
 #include <stdint.h>

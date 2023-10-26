@@ -10,11 +10,11 @@
 #include <src_user/tlm_cmd/telemetry_definitions.h>
 
 // ここで， CTP_APID_FROM_ME, CTP_MAX_LEN, CommonTlmPacket として使うパケット型を指定する
-#include <src_user/Settings/tlm_cmd/common_tlm_packet_define.h>
+#include <src_user/settings/tlm_cmd/common_tlm_packet_define.h>
 
 // ここで APID を定義する
 // 詳細は common_tlm_cmd_packet.h を参照
-#include <src_user/Settings/tlm_cmd/ccsds/apid_define.h>
+#include <src_user/settings/tlm_cmd/ccsds/apid_define.h>
 
 typedef uint8_t ctp_dest_flags_t;     //!< CTP_DEST_FLAG の & をとったフラグのための型
 

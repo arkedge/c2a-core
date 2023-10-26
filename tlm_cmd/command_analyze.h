@@ -14,7 +14,7 @@
 #define CA_MAX_CMDS           (CA_TLM_PAGE_SIZE * CA_TLM_PAGE_MAX)  //!< コマンドテーブルサイズ．すなわち登録できる最大コマンド数
 #define CA_MAX_CMD_PARAM_NUM  (6)                                   //!< コマンドパラメタ（引数）の最大数．現時点ではユーザー側で可変にすることを想定してはない
 
-#include <src_user/Settings/tlm_cmd/command_analyze_params.h>
+#include <src_user/settings/tlm_cmd/command_analyze_params.h>
 
 
 /**

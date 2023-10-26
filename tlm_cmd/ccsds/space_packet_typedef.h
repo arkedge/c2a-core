@@ -12,7 +12,7 @@
 #define CSP_MAX_LEN   (128)   //!< CmdSpacePacket の最大パケット長．値は適当においている
 
 // TSP_MAX_LEN, CSP_MAX_LEN を再定義
-#include <src_user/Settings/tlm_cmd/ccsds/space_packet_typedef_params.h>
+#include <src_user/settings/tlm_cmd/ccsds/space_packet_typedef_params.h>
 
 #if TSP_MAX_LEN > CSP_MAX_LEN
 #define SP_MAX_LEN    TSP_MAX_LEN

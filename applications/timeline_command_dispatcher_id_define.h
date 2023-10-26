@@ -6,7 +6,7 @@
 #ifndef TIMELINE_COMMAND_DISPATCHER_ID_DEFINE_H_
 #define TIMELINE_COMMAND_DISPATCHER_ID_DEFINE_H_
 
-#include <src_user/Settings/applications/timeline_command_dispatcher_define.h>
+#include <src_user/settings/applications/timeline_command_dispatcher_define.h>
 
 /**
  * @enum   TLCD_ID

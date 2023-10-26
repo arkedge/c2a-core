@@ -399,20 +399,20 @@ C言語におけるファイル名のユニーク性を担保するために，�
 名前空間を切るために用いる接頭辞（変数名・関数名につけるもの）とは異なることに注意すること．
 
 ```
-Settings/Modes/TaskLists
+settings/modes/task_lists
 -> tl_
 
-Settings/Modes/TaskLists/Elements
+settings/modes/task_lists/elements
 -> tl_elem_
-旧 Settings/Modes/TaskLists/Composition
+旧 settings/modes/task_lists/composition
 
-Settings/Modes/Transitions
+settings/modes/transitions
 -> sl_
 
-Settings/AnomalyHandlerRules
+settings/anomaly_handler_rules
 -> ahr_
 
-Settings/AnomalyLogger
+settings/anomaly_logger
 -> al_
 
 TlmCmd/NormalBlockCommandDefinition
@@ -427,13 +427,13 @@ TlmCmd/NormalBlockCommandDefinition
 Block Command は各所で定義されるため， TL, SL に関しては以下のようにする．
 
 ```
-Settings/Modes/TaskLists
+settings/modes/task_lists
 -> void BCL_load_tl_hoge(void);
 
-Settings/Modes/TaskLists/Elements
+settings/modes/task_lists/elements
 -> void BCL_load_tl_elem_hoge(void);
 
-Settings/Modes/Transitions
+settings/modes/transitions
 -> void BCL_load_sl_hoge(void);
 ```
 

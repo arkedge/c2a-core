@@ -4,7 +4,7 @@
  */
 #pragma section REPRO
 #include "endian.h"
-#include <src_user/Settings/build_settings.h>
+#include <src_user/settings/build_settings.h>
 #include <stdint.h>
 #include <string.h>
 

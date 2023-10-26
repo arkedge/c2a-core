@@ -9,6 +9,6 @@
 #define OBCT_MAX_CYCLE (0xfffffff0u)                                             //!< 最大 cycle 数．つまり TI がいくつでオーバーフローするか
 
 // user 設定
-#include <src_user/Settings/system/obc_time_params.h>
+#include <src_user/settings/system/obc_time_params.h>
 
 #endif // OBC_TIME_CONFIG_H_

@@ -5,7 +5,7 @@
  * @note  C2A の App を管理する
  */
 #include "app_manager.h"
-#include <src_user/Settings/sils_define.h>
+#include <src_user/settings/sils_define.h>
 
 #include <string.h>
 #include "../../applications/nop.h"
