@@ -1,6 +1,6 @@
 {
   "path_to_src" : "../examples/mobc/src/",
-  "path_to_db" : "../examples/mobc/src/src_user/settings/tlm_cmd/data_base/",
+  "path_to_db" : "../examples/mobc/tlm-cmd-db/",
   "db_prefix" : "SAMPLE_MOBC",
   "tlm_id_range" : ["0x00", "0x100"],
   "is_cmd_prefixed_in_db" : 0,
@@ -15,7 +15,7 @@
       "tlm_id_range" : ["0x90", "0xc0"],
       "is_cmd_prefixed_in_db" : 0,
       "input_file_encoding" : "utf-8",
-      "path_to_db" : "../examples/subobc/src/src_user/settings/tlm_cmd/data_base/",
+      "path_to_db" : "../examples/subobc/tlm-cmd-db/",
       "max_tlm_num" : 256,
       "driver_path" : "aocs/",
       "driver_type" : "AOBC_Driver",
