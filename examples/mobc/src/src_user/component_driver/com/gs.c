@@ -134,7 +134,7 @@ static CDS_ERR_CODE GS_load_ccsds_driver_super_init_settings_(ComponentDriverSup
 
 static CDS_ERR_CODE GS_load_uart_driver_super_init_settings_(ComponentDriverSuper* p_super)
 {
-  p_super->hal_handler_id = UART;
+  p_super->hal_handler_id = HAL_HANDLER_ID_UART;
   GS_load_default_driver_super_init_settings_(p_super);
 
   return CDS_ERR_CODE_OK;
