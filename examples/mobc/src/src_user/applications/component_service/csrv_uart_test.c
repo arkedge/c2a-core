@@ -7,8 +7,8 @@
 #include <stddef.h> // for NULL
 #include <src_core/library/print.h>
 #include <src_core/tlm_cmd/common_cmd_packet_util.h>
-#include "../../Settings/port_config.h"
-#include "../../Settings/component_driver_super/driver_buffer_define.h"
+#include "../../settings/port_config.h"
+#include "../../settings/component_driver_super/driver_buffer_define.h"
 #include <src_core/library/result.h>
 
 static RESULT UART_TEST_init_by_AM_(void);

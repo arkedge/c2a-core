@@ -5,7 +5,7 @@ use utf8;
 # package sub;
 
 sub GetSetting {
-	print "Laod Settings...\n";
+	print "Laod settings...\n";
 
 	my %SETTING;
 
@@ -20,7 +20,7 @@ sub GetSetting {
 		'driver',
 		'hal',
 		'library',
-		'Settings',
+		'settings',
 		'tlm_cmd'
 	];
 

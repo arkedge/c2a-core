@@ -11,7 +11,7 @@
 #include <src_core/tlm_cmd/packet_handler.h>
 #include <src_core/tlm_cmd/telemetry_frame.h>
 #include "telemetry_definitions.h"
-#include "../Settings/tlm_cmd/ccsds/apid_define.h"
+#include "../settings/tlm_cmd/ccsds/apid_define.h"
 
 /**
  * @brief  PH のユーザー固有部初期化処理

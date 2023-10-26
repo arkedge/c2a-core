@@ -1,7 +1,7 @@
 {
   "name": "c2a-example-subobc",
   "scripts": {
-    "build:tlmcmddb": "tlmcmddb-cli bundle --pretty src/src_user/Settings/tlm_cmd/data_base/TLM_DB/calced_data src/src_user/Settings/tlm_cmd/data_base/CMD_DB tlmcmddb.json",
+    "build:tlmcmddb": "tlmcmddb-cli bundle --pretty src/src_user/settings/tlm_cmd/data_base/TLM_DB/calced_data src/src_user/settings/tlm_cmd/data_base/CMD_DB tlmcmddb.json",
     "run:c2a": "cargo run",
     "run:gaia": "tmtc-c2a --satconfig satconfig.json --tlmcmddb tlmcmddb.json",
     "run:kble": "bash -c 'while :; do kble -s <(jrsonnet spaghetti.jsonnet); sleep 1; done'",

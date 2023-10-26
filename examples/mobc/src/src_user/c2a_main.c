@@ -3,7 +3,7 @@
 #include <src_core/c2a_core_main.h>
 #include <src_core/system/time_manager/time_manager.h>
 #include <src_core/system/watchdog_timer/watchdog_timer.h>
-#include "./Settings/sils_define.h"
+#include "./settings/sils_define.h"
 
 // SILSの時，通常main関数はC2A外にある
 #ifdef DEFINE_MAIN_ON_SILS
