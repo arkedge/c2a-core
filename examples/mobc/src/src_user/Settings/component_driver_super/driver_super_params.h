@@ -9,6 +9,6 @@
 #undef CDS_HAL_RX_BUFFER_SIZE
 
 #define CDS_STREAM_MAX           (3)
-#define CDS_HAL_RX_BUFFER_SIZE    (1024)
+#define CDS_HAL_RX_BUFFER_SIZE   (1024)
 
 #endif

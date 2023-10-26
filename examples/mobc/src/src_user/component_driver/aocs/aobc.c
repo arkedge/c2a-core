@@ -49,7 +49,7 @@ static CDS_ERR_CODE AOBC_load_driver_super_init_settings_(ComponentDriverSuper* 
 {
   CDS_StreamConfig* p_stream_config;
 
-  p_super->hal_handler_id = UART;
+  p_super->hal_handler_id = HAL_HANDLER_ID_UART;
 
   // stream は 0 のみ
   p_stream_config = &(p_super->stream_config[AOBC_STREAM_TLM_CMD]);
