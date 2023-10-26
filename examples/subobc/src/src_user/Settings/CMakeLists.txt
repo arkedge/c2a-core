@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 project(C2A_USER_SETTINGS)
 
 set(C2A_SRCS
+  component_driver_super/hal_handler_registry.c
   Modes/mode_definitions.c
   Modes/TaskLists/tl_initial.c
   Modes/TaskLists/Elements/tl_elem_debug_display.c
