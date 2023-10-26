@@ -543,7 +543,7 @@ CDS_ERR_CODE CDS_send_req_tlm_cmd(ComponentDriverSuper* p_super, uint8_t stream)
 // ###### CDS_Config Getter/Setter of Settings ######
 uint16_t CDSC_get_hal_rx_buffer_size(const ComponentDriverSuper* p_super);
 CDS_ERR_CODE CDSC_set_hal_rx_buffer_size(ComponentDriverSuper* p_super,
-                                              const uint16_t hal_rx_buffer_size);
+                                         const uint16_t hal_rx_buffer_size);
 uint8_t CDSC_get_should_monitor_for_rx_disruption(const ComponentDriverSuper* p_super);
 void CDSC_enable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);
 void CDSC_disable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);

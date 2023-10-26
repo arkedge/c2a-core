@@ -1321,7 +1321,7 @@ uint16_t CDSC_get_hal_rx_buffer_size(const ComponentDriverSuper* p_super)
 }
 
 CDS_ERR_CODE CDSC_set_hal_rx_buffer_size(ComponentDriverSuper* p_super,
-                                              const uint16_t hal_rx_buffer_size)
+                                         const uint16_t hal_rx_buffer_size)
 {
   if (hal_rx_buffer_size > CDS_HAL_RX_BUFFER_SIZE) return CDS_ERR_CODE_ERR;
   p_super->config.settings.hal_rx_buffer_size_ = hal_rx_buffer_size;
