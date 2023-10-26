@@ -13,25 +13,25 @@
  *           - 同期通信の場合:   受信フレーム最大長 以上
  *         が望ましい．
  *         メモリに余力がある場合，さらに
- *           - rx_buffer_size_in_if_rx_ (or CDS_IF_RX_BUFFER_SIZE) x 2 以上
+ *           - hal_rx_buffer_size_ (or CDS_HAL_RX_BUFFER_SIZE) x 2 以上
  *         があると，さらに受信漏れを防ぐことができる．
  * @note   バッファのサイズ設定について
- *           - CDS_StreamRecBuffer のサイズは rx_buffer_size_in_if_rx_ よりも大きい必要がある
- *           - rx_buffer_size_in_if_rx_ のサイズは，実際の OBC のハードウェアバッファサイズと等しくすると最も効率が良い
- *           - CDS_IF_RX_BUFFER_SIZE はすべてのドライバの rx_buffer_size_in_if_rx_ 以上の値にする（最大値にすると良い）
+ *           - CDS_StreamRecBuffer のサイズは hal_rx_buffer_size_ よりも大きい必要がある
+ *           - hal_rx_buffer_size_ のサイズは，実際の OBC のハードウェアバッファサイズと等しくすると最も効率が良い
+ *           - CDS_HAL_RX_BUFFER_SIZE はすべてのドライバの hal_rx_buffer_size_ 以上の値にする（最大値にすると良い）
  */
 #ifndef DRIVER_SUPER_H_
 #define DRIVER_SUPER_H_
 
-#include <src_user/hal/if_list.h>
+#include <src_user/Settings/component_driver_super/hal_handler_registry.h>
 #include <stdint.h>
 #include "../library/endian.h"        // パスが不定な自動生成コード類で使えるように
 #include "../system/time_manager/time_manager.h"
 
 #define CDS_STREAM_MAX                 (3)        /*!< CDS_StreamConfig の最大数
                                                        uint8_t を想定          */
-#define CDS_IF_RX_BUFFER_SIZE          (1024)     /*!< IF_RX で受信するときの一次バッファ
-                                                       IF_RX から受信できる最大数を規定する
+#define CDS_HAL_RX_BUFFER_SIZE          (1024)     /*!< HAL_rx_handlers で受信するときの一次バッファ
+                                                       HAL_rx_handlers から受信できる最大数を規定する
                                                        OBC の物理的な信号ラインのバッファサイズ以上とするともっともパフォーマンスが出る */
 
 #include <src_user/Settings/component_driver_super/driver_super_params.h>
@@ -135,7 +135,7 @@ typedef enum
  */
 typedef struct
 {
-  int                            ret_from_if_rx;        //!< IF_RX の返り値
+  int                            ret_from_hal_rx;        //!< HAL_rx_handlers の返り値
   CDS_RX_DISRUPTION_STATUS_CODE  rx_disruption_status;  //!< 受信途絶判定
 } CDS_RecStatus;
 
@@ -148,7 +148,7 @@ typedef enum
 {
   CDS_STREAM_SEND_STATUS_OK,
   CDS_STREAM_SEND_STATUS_DISABLE,
-  CDS_STREAM_SEND_STATUS_TX_ERR,          //!< IF_TX でエラー
+  CDS_STREAM_SEND_STATUS_TX_ERR,          //!< HAL_tx_handlers でエラー
   CDS_STREAM_SEND_STATUS_VALIDATE_ERR,    //!< 送信前に validate_config でエラー
   CDS_STREAM_SEND_STATUS_OTHER_ERR
 } CDS_STREAM_SEND_STATUS_CODE;
@@ -160,7 +160,7 @@ typedef enum
 typedef struct
 {
   CDS_STREAM_SEND_STATUS_CODE status_code;      //!< status
-  int                         ret_from_if_tx;   //!< IF_TX の返り値
+  int                         ret_from_hal_tx;   //!< HAL_tx_handlers の返り値
   // 今後詳細情報を拡張するなら，ここに入れる
 } CDS_StreamSendStatus;
 
@@ -182,7 +182,7 @@ typedef enum
   CDS_STREAM_REC_STATUS_FOOTER_MISMATCH,
   CDS_STREAM_REC_STATUS_RX_FRAME_TOO_LONG,
   CDS_STREAM_REC_STATUS_RX_FRAME_TOO_SHORT,
-  CDS_STREAM_REC_STATUS_RX_ERR,                 //!< IF_RX でエラー
+  CDS_STREAM_REC_STATUS_RX_ERR,                 //!< HAL_rx_handlers でエラー
   CDS_STREAM_REC_STATUS_VALIDATE_ERR,           //!< 受信前に validate_config でエラー
   CDS_STREAM_REC_STATUS_OTHER_ERR
 } CDS_STREAM_REC_STATUS_CODE;
@@ -240,13 +240,13 @@ typedef struct
 {
   struct
   {
-    uint16_t rx_buffer_size_in_if_rx_;                        /*!< IF_RX で受信するときの一次バッファのサイズ
-                                                                   DS ではまず IF_RX を全 ComponentDriver 共通の一次バッファにコピーした後，
+    uint16_t hal_rx_buffer_size_;                        /*!< HAL_rx_handlers で受信するときの一次バッファのサイズ
+                                                                   DS ではまず HAL_rx_handlers を全 ComponentDriver 共通の一次バッファにコピーした後，
                                                                    CDS_StreamRecBuffer に push して解析していく．
-                                                                   IF_RX で読み込む量が多すぎると，CDS_StreamRecBuffer に収まりきらないことがあるので，
-                                                                   CDS_StreamRecBuffer のサイズが小さい場合は，IF_RX で読み込むサイズも小さくする必要がある．
-                                                                   最大値: CDS_IF_RX_BUFFER_SIZE
-                                                                   初期値: CDS_IF_RX_BUFFER_SIZE */
+                                                                   HAL_rx_handlers で読み込む量が多すぎると，CDS_StreamRecBuffer に収まりきらないことがあるので，
+                                                                   CDS_StreamRecBuffer のサイズが小さい場合は，HAL_rx_handlers で読み込むサイズも小さくする必要がある．
+                                                                   最大値: CDS_HAL_RX_BUFFER_SIZE
+                                                                   初期値: CDS_HAL_RX_BUFFER_SIZE */
     uint8_t  should_monitor_for_rx_disruption_;               /*!< 受信途絶判定をするか？
                                                                    初期値: 0 */
     uint32_t time_threshold_for_rx_disruption_;               /*!< 受信途絶判定の閾値 [ms]
@@ -407,8 +407,8 @@ struct CDS_StreamConfig
 struct ComponentDriverSuper
 {
   // 【継承先まで公開】
-  IF_LIST_ENUM     interface;                                 //!< 継承先の機器の使用 IF
-  void*            if_config;                                 //!< IF 設定
+  HAL_HANDLER_ID     hal_handler_id;                            //!< 継承先の機器の使用 IF
+  void*            hal_config;                                 //!< IF 設定
 
   CDS_Config       config;                                    //!< ComponentDriverSuper の設定
 
@@ -430,13 +430,13 @@ struct ComponentDriverSuper
  *         デフォルト値の上書きは load_init_setting で行う
  * @note   ComponentDriverSuper を使用する時は起動時に必ず実施すること
  * @param  p_super:           初期化する ComponentDriverSuper 構造体へのポインタ
- * @param  if_config:         初期化する ComponentDriverで用いられている IF の config 構造体
+ * @param  hal_config:         初期化する ComponentDriverで用いられている IF の config 構造体
  * @param  rx_buffer:         初期化する ComponentDriverSuper の stream 0 で用いられるフレーム受信バッファ
  * @param  load_init_setting: ComponentDriverSuper の初期設定ロード関数ポインタ
  * @return CDS_ERR_CODE
  */
 CDS_ERR_CODE CDS_init(ComponentDriverSuper* p_super,
-                      void* if_config,
+                      void* hal_config,
                       CDS_StreamRecBuffer* rx_buffer,
                       CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super));
 
@@ -448,13 +448,13 @@ CDS_ERR_CODE CDS_init(ComponentDriverSuper* p_super,
  *         デフォルト値の上書きは load_init_setting で行う
  * @note   ComponentDriverSuper を使用する時は起動時に必ず実施すること
  * @param  p_super:           初期化する ComponentDriverSuper 構造体へのポインタ
- * @param  if_config:         初期化する ComponentDriverで用いられている IF の config 構造体
+ * @param  hal_config:         初期化する ComponentDriverで用いられている IF の config 構造体
  * @param  rx_buffers:        初期化する ComponentDriverSuper で用いられるフレーム受信バッファ．使用しない stream は NULL を設定しておく
  * @param  load_init_setting: ComponentDriverSuper の初期設定ロード関数ポインタ
  * @return CDS_ERR_CODE
  */
 CDS_ERR_CODE CDS_init_streams(ComponentDriverSuper* p_super,
-                              void* if_config,
+                              void* hal_config,
                               CDS_StreamRecBuffer* rx_buffers[CDS_STREAM_MAX],
                               CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super));
 
@@ -495,8 +495,8 @@ CDS_ERR_CODE CDS_clear_rx_buffer(ComponentDriverSuper* p_super);
  *         これは，同じ stream でもテレメ内部の ID などで解析を変えたいときなどが想定されるため
  * @note   継承先の機器のデータ出力周期より早い周期で定期的に実行すること
  * @param  p_super: ComponentDriverSuper 構造体へのポインタ
- * @retval CDS_ERR_CODE_OK:  IF_RX でのエラーなし
- * @retval CDS_ERR_CODE_ERR: IF_RX でのエラーあり
+ * @retval CDS_ERR_CODE_OK:  HAL_rx_handlers でのエラーなし
+ * @retval CDS_ERR_CODE_ERR: HAL_rx_handlers でのエラーあり
  * @note   受信状況やエラー情報は rec_status_ に格納されている
  */
 CDS_ERR_CODE CDS_receive(ComponentDriverSuper* p_super);
@@ -522,7 +522,7 @@ CDS_ERR_CODE CDS_analyze_rec_data(ComponentDriverSuper* p_super, uint8_t stream,
  * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @param  stream:  どのstream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval CDS_ERR_CODE_OK:  正常終了
- * @retval CDS_ERR_CODE_ERR: IF_TX でのエラーあり
+ * @retval CDS_ERR_CODE_ERR: HAL_tx_handlers でのエラーあり
  * @note   受信状況やエラー情報は send_status_ に格納されている
  */
 CDS_ERR_CODE CDS_send_general_cmd(ComponentDriverSuper* p_super, uint8_t stream);
@@ -535,16 +535,16 @@ CDS_ERR_CODE CDS_send_general_cmd(ComponentDriverSuper* p_super, uint8_t stream)
  * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @param  stream:  どのstream_config を使用するか．stream は 0-MAX なので，継承先で ENUM など宣言して使いやすくすればいいと思う．
  * @retval CDS_ERR_CODE_OK:  正常終了
- * @retval CDS_ERR_CODE_ERR: IF_TX でのエラーあり
+ * @retval CDS_ERR_CODE_ERR: HAL_tx_handlers でのエラーあり
  * @note   受信状況やエラー情報は send_status_ に格納されている
  */
 CDS_ERR_CODE CDS_send_req_tlm_cmd(ComponentDriverSuper* p_super, uint8_t stream);
 
 
 // ###### CDS_Config Getter/Setter of Settings ######
-uint16_t CDSC_get_rx_buffer_size_in_if_rx(const ComponentDriverSuper* p_super);
-CDS_ERR_CODE CDSC_set_rx_buffer_size_in_if_rx(ComponentDriverSuper* p_super,
-                                              const uint16_t rx_buffer_size_in_if_rx);
+uint16_t CDSC_get_hal_rx_buffer_size(const ComponentDriverSuper* p_super);
+CDS_ERR_CODE CDSC_set_hal_rx_buffer_size(ComponentDriverSuper* p_super,
+                                              const uint16_t hal_rx_buffer_size);
 uint8_t CDSC_get_should_monitor_for_rx_disruption(const ComponentDriverSuper* p_super);
 void CDSC_enable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);
 void CDSC_disable_monitor_for_rx_disruption(ComponentDriverSuper* p_super);
