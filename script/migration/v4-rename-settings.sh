@@ -54,5 +54,11 @@ find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#S
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#Settings/AnomalyHandlerRules#settings/anomaly_handler_rules#g"
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#Settings/AnomalyLogger#settings/anomaly_logger#g"
 
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#Settings/ComponentDriverSuper#settings/component_driver_super#g"
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#Settings\\\ComponentDriverSuper#settings\\\component_driver_super#g"
+
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#src_user/Settings/#src_user/settings/#g"
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#src_user\\\Settings/#src_user\\\settings/#g"
+
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#Settings/#settings/#g"
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#settings\\\#settings\\\#g"
