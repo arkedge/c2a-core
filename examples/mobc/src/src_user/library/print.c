@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#include "../Settings/sils_define.h"
+#include "../settings/sils_define.h"
 
 // バッファサイズよりでかい文字列が来ると死ぬ
 static char PRINT_buffer_[512];

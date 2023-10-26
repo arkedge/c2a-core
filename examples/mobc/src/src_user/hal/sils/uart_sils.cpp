@@ -1,6 +1,6 @@
 #pragma section REPRO
 #include <src_core/hal/uart.h>
-#include "../../Settings/port_config.h"
+#include "../../settings/port_config.h"
 
 #ifdef USE_SCI_COM_UART
 #include "uart_sils_sci_if.hpp"

@@ -5,13 +5,13 @@
 #include <string.h> // for memcpy
 #include "command_definitions.h"
 
-#include "../Settings/Modes/Transitions/sl_initial.h"
-#include "../Settings/Modes/Transitions/sl_nop.h"
-#include "../Settings/Modes/TaskLists/tl_initial.h"
-#include "../Settings/Modes/TaskLists/Elements/tl_elem_tlm_cmd_hirate.h"
-#include "../Settings/Modes/TaskLists/Elements/tl_elem_debug_display.h"
-#include "../Settings/Modes/TaskLists/Elements/tl_elem_drivers_update.h"
-#include "../Settings/Modes/TaskLists/Elements/tl_elem_gs_related_process.h"
+#include "../settings/modes/transitions/sl_initial.h"
+#include "../settings/modes/transitions/sl_nop.h"
+#include "../settings/modes/task_lists/tl_initial.h"
+#include "../settings/modes/task_lists/elements/tl_elem_tlm_cmd_hirate.h"
+#include "../settings/modes/task_lists/elements/tl_elem_debug_display.h"
+#include "../settings/modes/task_lists/elements/tl_elem_drivers_update.h"
+#include "../settings/modes/task_lists/elements/tl_elem_gs_related_process.h"
 #include "./normal_block_command_definition/nbc_header.h"
 
 /**

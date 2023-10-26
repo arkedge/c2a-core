@@ -2,7 +2,7 @@
 #define GIT_REVISION_CONFIG_H_
 
 /**
- * src/src_user/Settings/git_revision_config.hは自動生成される場合と設定だけを書く場合があります．
+ * src/src_user/settings/git_revision_config.hは自動生成される場合と設定だけを書く場合があります．
  * C2A core/userのcommit hashはコマンドラインオプションないしこのファイルでdefineされ，
  * 実際の埋め込みについてはsrc_core/Librari/git_revision.hとsrc_core/c2a_core_main.cが制御します．
  * このexample userのファイルは例・ドキュメントなので，実際の内容は各C2A userで判断してください(そのままコピペしないでください)．
@@ -23,8 +23,8 @@
 
 #if 0
 /*!< @brief このファイルを自動生成する場合
- * src_user/script/git/revision.sh/batが以下のような内容でsrc/src_user/Settings/git_revision_config.hを生成します
- * 注意!!!: この場合はsrc/src_user/Settings/git_revision_config.hは自分で記述しないでください
+ * src_user/script/git/revision.sh/batが以下のような内容でsrc/src_user/settings/git_revision_config.hを生成します
+ * 注意!!!: この場合はsrc/src_user/settings/git_revision_config.hは自分で記述しないでください
  *          また，基本的にGitで管理する必要がないです(gitignoreしてください)．
  */
 

@@ -4,15 +4,15 @@ project(C2A_USER_SETTINGS)
 
 set(C2A_SRCS
   component_driver_super/hal_handler_registry.c
-  Modes/mode_definitions.c
-  Modes/TaskLists/tl_initial.c
-  Modes/TaskLists/Elements/tl_elem_debug_display.c
-  Modes/TaskLists/Elements/tl_elem_drivers_update.c
-  Modes/TaskLists/Elements/tl_elem_gs_related_process.c
-  Modes/TaskLists/Elements/tl_elem_tlm_cmd_hirate.c
-  Modes/Transitions/sl_initial.c
-  Modes/Transitions/sl_nop.c
-  Modes/Transitions/sequence_items.c
+  modes/mode_definitions.c
+  modes/task_lists/tl_initial.c
+  modes/task_lists/elements/tl_elem_debug_display.c
+  modes/task_lists/elements/tl_elem_drivers_update.c
+  modes/task_lists/elements/tl_elem_gs_related_process.c
+  modes/task_lists/elements/tl_elem_tlm_cmd_hirate.c
+  modes/transitions/sl_initial.c
+  modes/transitions/sl_nop.c
+  modes/transitions/sequence_items.c
   system/event_logger_settings.c
   system/event_handler_rules/event_handler_rules.c
   system/event_handler_rules/event_handler_rule_test.c

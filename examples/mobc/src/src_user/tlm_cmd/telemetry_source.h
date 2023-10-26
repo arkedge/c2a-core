@@ -19,6 +19,6 @@
 #include "../applications/app_headers.h"
 #include "../component_driver/aocs/aobc_telemetry_buffer.h"
 #include "../component_driver/com/gs_validate.h"
-#include "../Settings/build_settings.h"
+#include "../settings/build_settings.h"
 
 #endif
