@@ -126,7 +126,7 @@ CDS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
 
 static CDS_ERR_CODE GS_load_ccsds_driver_super_init_settings_(ComponentDriverSuper* p_super)
 {
-  p_super->hal_handler_id = CCSDS;
+  p_super->hal_handler_id = HAL_HANDLER_ID_CCSDS;
   GS_load_default_driver_super_init_settings_(p_super);
 
   return CDS_ERR_CODE_OK;
