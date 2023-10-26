@@ -36,7 +36,7 @@ typedef struct
   struct
   {
     CDS_ERR_CODE rec_status;                  //!< ComponentDriverSuper からの受信結果
-    int ret_from_if_rx;                       //!< UART or CCSDS からの返り値
+    int ret_from_hal_rx;                       //!< UART or CCSDS からの返り値
     CCP_DEST_TYPE last_dest_type;             //!< 最後に受信したパケットの dest type
     cycle_t last_rec_time;                    //!< 最後に受信した時刻
     PH_ACK cmd_ack;                           //!< 受信した CMD の実行結果
