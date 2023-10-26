@@ -49,9 +49,11 @@ find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#i
 ## other members
 echo "ret_from_if_rx -> ret_from_hal_rx"
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#ret_from_if_rx#ret_from_hal_rx#g"
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#RET_FROM_IF_RX#RET_FROM_HAL_RX#g"
 
 echo "ret_from_if_tx -> ret_from_hal_tx"
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#ret_from_if_tx#ret_from_hal_tx#g"
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#RET_FROM_IF_TX#RET_FROM_HAL_TX#g"
 
 
 ## enum
