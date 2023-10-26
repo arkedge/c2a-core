@@ -51,7 +51,7 @@ static CDS_ERR_CODE UART_TEST_load_driver_super_init_settings_(ComponentDriverSu
 {
   CDS_StreamConfig* p_stream_config;
 
-  p_super->interface = UART;
+  p_super->hal_handler_id = UART;
 
   // stream0の設定
   p_stream_config = &(p_super->stream_config[UART_TEST_STREAM_FIX]);

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 project(C2A_USER_HAL)
 
 set(C2A_COMMON_SRCS
-  if_list.c
+  
 )
 
 # 通常，S2EではC++ビルドされるが，C2A core開発のため，C2A単体をC89でライブラリビルドする場合は，mockupをビルド対象にする

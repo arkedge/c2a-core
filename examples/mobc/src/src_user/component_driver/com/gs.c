@@ -103,7 +103,7 @@ CDS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
   for (i = 0; i < GS_PORT_TYPE_NUM; ++i)
   {
     gs_driver->info[i].rx.rec_status = CDS_ERR_CODE_OK;
-    gs_driver->info[i].rx.ret_from_if_rx = 0;
+    gs_driver->info[i].rx.ret_from_hal_rx = 0;
     gs_driver->info[i].rx.last_dest_type = CCP_DEST_TYPE_TO_UNKOWN;
     gs_driver->info[i].rx.last_rec_time = 0;
     gs_driver->info[i].rx.cmd_ack = PH_ACK_SUCCESS;
@@ -126,7 +126,7 @@ CDS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
 
 static CDS_ERR_CODE GS_load_ccsds_driver_super_init_settings_(ComponentDriverSuper* p_super)
 {
-  p_super->interface = CCSDS;
+  p_super->hal_handler_id = CCSDS;
   GS_load_default_driver_super_init_settings_(p_super);
 
   return CDS_ERR_CODE_OK;
@@ -134,7 +134,7 @@ static CDS_ERR_CODE GS_load_ccsds_driver_super_init_settings_(ComponentDriverSup
 
 static CDS_ERR_CODE GS_load_uart_driver_super_init_settings_(ComponentDriverSuper* p_super)
 {
-  p_super->interface = UART;
+  p_super->hal_handler_id = UART;
   GS_load_default_driver_super_init_settings_(p_super);
 
   return CDS_ERR_CODE_OK;
@@ -182,7 +182,7 @@ CDS_REC_ERR_CODE GS_rec_tctf(GS_Driver* gs_driver)
 
     // TODO: これはエラー情報をきちんと把握したいので，アノマリ発行を入れる
     gs_driver->info[i].rx.rec_status = CDS_receive(cds);
-    gs_driver->info[i].rx.ret_from_if_rx = CDSC_get_rec_status(cds)->ret_from_if_rx;
+    gs_driver->info[i].rx.ret_from_hal_rx = CDSC_get_rec_status(cds)->ret_from_hal_rx;
 
     if (gs_driver->info[i].rx.rec_status != CDS_ERR_CODE_OK) continue;
 

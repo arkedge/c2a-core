@@ -78,7 +78,7 @@ static TF_TLM_FUNC_ACK Tlm_MOBC_(uint8_t* packet, uint16_t* len, uint16_t max_le
   TF_copy_u16(&packet[55], (uint16_t)(task_dispatcher->tskd.prev_err.code));
   TF_copy_u8(&packet[57], (uint8_t)(task_dispatcher->tskd.prev_err.cmd_ret.exec_sts));
   TF_copy_u32(&packet[58], task_dispatcher->tskd.prev_err.cmd_ret.err_code);
-  TF_copy_i32(&packet[62], (int32_t)gs_driver->latest_info->rx.ret_from_if_rx);
+  TF_copy_i32(&packet[62], (int32_t)gs_driver->latest_info->rx.ret_from_hal_rx);
   TF_copy_u8(&packet[66], (uint8_t)gs_driver->latest_info->rx.rec_status);
   TF_copy_u32(&packet[67], (uint32_t)gs_driver->latest_info->rx.last_rec_time);
   TF_copy_u8(&packet[71], (uint8_t)gs_validate_info->positive_window_width);
@@ -3554,7 +3554,7 @@ static TF_TLM_FUNC_ACK Tlm_GS_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 
 #ifndef BUILD_SETTINGS_FAST_BUILD
   TF_copy_u8(&packet[26], (uint8_t)gs_driver->info[0].rx.rec_status);
-  TF_copy_i32(&packet[27], (int32_t)gs_driver->info[0].rx.ret_from_if_rx);
+  TF_copy_i32(&packet[27], (int32_t)gs_driver->info[0].rx.ret_from_hal_rx);
   TF_copy_u8(&packet[31], (uint8_t)gs_driver->info[0].rx.last_dest_type);
   TF_copy_u32(&packet[32], (uint32_t)gs_driver->info[0].rx.last_rec_time);
   TF_copy_u8(&packet[36], (uint8_t)gs_driver->info[0].rx.cmd_ack);
@@ -3572,7 +3572,7 @@ static TF_TLM_FUNC_ACK Tlm_GS_(uint8_t* packet, uint16_t* len, uint16_t max_len)
   TF_copy_u8(&packet[57], (uint8_t)gs_driver->driver_uart.uart_config.data_length);
   TF_copy_u8(&packet[58], (uint8_t)gs_driver->driver_uart.uart_config.stop_bit);
   TF_copy_u8(&packet[59], (uint8_t)gs_driver->info[1].rx.rec_status);
-  TF_copy_i32(&packet[60], (int32_t)gs_driver->info[1].rx.ret_from_if_rx);
+  TF_copy_i32(&packet[60], (int32_t)gs_driver->info[1].rx.ret_from_hal_rx);
   TF_copy_u8(&packet[64], (uint8_t)gs_driver->info[1].rx.last_dest_type);
   TF_copy_u32(&packet[65], (uint32_t)gs_driver->info[1].rx.last_rec_time);
   TF_copy_u8(&packet[69], (uint8_t)gs_driver->info[1].rx.cmd_ack);
@@ -3841,7 +3841,7 @@ static TF_TLM_FUNC_ACK Tlm_UART_TEST_(uint8_t* packet, uint16_t* len, uint16_t m
   if (55 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
 
 #ifndef BUILD_SETTINGS_FAST_BUILD
-  TF_copy_u8(&packet[26], (uint8_t)(uart_test_driver->driver.super.config.info.rec_status_.ret_from_if_rx));
+  TF_copy_u8(&packet[26], (uint8_t)(uart_test_driver->driver.super.config.info.rec_status_.ret_from_hal_rx));
   TF_copy_u32(&packet[27], uart_test_driver->driver.super.config.info.rx_count_);
   TF_copy_u8(&packet[31], (uint8_t)(uart_test_driver->driver.super.stream_config[0].info.rec_status_.status_code));
   TF_copy_u16(&packet[32], uart_test_driver->driver.super.stream_config[0].info.rec_status_.fixed_frame_len);
