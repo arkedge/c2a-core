@@ -291,7 +291,7 @@ CDS_ERR_CODE CDS_reset(ComponentDriverSuper* p_super)
   p_super->hal_handler_id = HAL_HANDLER_ID_MAX; // FIXME: (*HAL_init_handlers[p_super->hal_handler_id])(p_super->hal_config) の様な使い方をするのでセグフォが起こる可能性があり
   p_super->hal_config = NULL;        // FIXME: NULL ポインタはこの関数が Reset 単体で使われるとマズい
 
-  p_super->config.settings.hal_rx_buffer_size_          = CDS_HAL_RX_BUFFER_SIZE;
+  p_super->config.settings.hal_rx_buffer_size_               = CDS_HAL_RX_BUFFER_SIZE;
   p_super->config.settings.should_monitor_for_rx_disruption_ = 0;
   p_super->config.settings.time_threshold_for_rx_disruption_ = 60 * 1000;      // この値はよく考えること
 
@@ -578,8 +578,8 @@ static int CDS_tx_(ComponentDriverSuper* p_super, uint8_t stream)
 #endif
 
   ret = (*HAL_tx_handlers[p_super->hal_handler_id])(p_super->hal_config,
-                                     p_stream_config->settings.tx_frame_,
-                                     (int)p_stream_config->settings.tx_frame_size_);
+                                                    p_stream_config->settings.tx_frame_,
+                                                    (int)p_stream_config->settings.tx_frame_size_);
 
   if (ret != 0) return ret;
   return CDS_ERR_CODE_OK;
@@ -608,8 +608,8 @@ static int CDS_rx_(ComponentDriverSuper* p_super)
   if (flag == 0) return 0;
 
   rec_data_len = (*HAL_rx_handlers[p_super->hal_handler_id])(p_super->hal_config,
-                                              CDS_hal_rx_buffer_,
-                                              p_super->config.settings.hal_rx_buffer_size_);
+                                                             CDS_hal_rx_buffer_,
+                                                             p_super->config.settings.hal_rx_buffer_size_);
 
 #ifdef CDS_DEBUG
   Printf("DS: rx_\n");
@@ -1204,7 +1204,7 @@ static CDS_ERR_CODE CDS_reset_stream_config_(CDS_StreamConfig* p_stream_config)
   p->settings.data_analyzer_ = CDS_data_analyzer_dummy_;
 
   // CDS_StreamSendStatus の初期化
-  p->info.send_status_.status_code    = CDS_STREAM_SEND_STATUS_DISABLE;
+  p->info.send_status_.status_code     = CDS_STREAM_SEND_STATUS_DISABLE;
   p->info.send_status_.ret_from_hal_tx = 0;
 
   // CDS_StreamRecStatus の初期化
