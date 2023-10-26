@@ -23,7 +23,7 @@
 #ifndef DRIVER_SUPER_H_
 #define DRIVER_SUPER_H_
 
-#include <src_user/Settings/component_driver_super/hal_handler_registry.h>
+#include <src_user/settings/component_driver_super/hal_handler_registry.h>
 #include <stdint.h>
 #include "../library/endian.h"        // パスが不定な自動生成コード類で使えるように
 #include "../system/time_manager/time_manager.h"
