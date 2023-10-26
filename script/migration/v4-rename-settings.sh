@@ -61,4 +61,4 @@ find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#s
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#src_user\\\Settings/#src_user\\\settings/#g"
 
 find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#Settings/#settings/#g"
-find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#settings\\\#settings\\\#g"
+find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#Settings\\\#settings\\\#g"
