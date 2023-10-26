@@ -34,8 +34,8 @@
 #define TLM_MGR_BC_ROLE_AT_BC_9   (TLM_MGR_BC_ROLE_LOW_FREQ_TLM)    // TLM_MGR_BC_ROLE_HIGH_FREQ_TLM が固まらないようにここに入れている
 
 // user 設定
-#include <src_user/Settings/applications/telemetry_manager_define.h>
-#include <src_user/Settings/applications/telemetry_manager_params.h>
+#include <src_user/settings/applications/telemetry_manager_define.h>
+#include <src_user/settings/applications/telemetry_manager_params.h>
 
 // 現状， BC#9 は low ではないとだめ (deploy と combine するため)
 #if !(TLM_MGR_BC_ROLE_AT_BC_9 == TLM_MGR_BC_ROLE_LOW_FREQ_TLM)

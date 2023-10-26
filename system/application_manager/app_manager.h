@@ -14,7 +14,7 @@
 #define AM_TLM_PAGE_MAX (4)                                 //!< AMのAppInfoテーブルのページ数（ページネーション用）
 #define AM_MAX_APPS (AM_TLM_PAGE_SIZE * AM_TLM_PAGE_MAX)    //!< 登録できる最大AppInfo数，これは登録できる最大アプリ数と等しい
 
-#include <src_user/Settings/system/app_manager_params.h>
+#include <src_user/settings/system/app_manager_params.h>
 
 /**
  * @struct AppManager

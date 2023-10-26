@@ -5,7 +5,7 @@
  * @brief  HW 依存 Print, つまり ログ情報のフォーマット出力（デバッグ出力）
  */
 
-// #include "../Settings/sils_define.h" //ここでincludeしておくと，Printf系のものは全てOKになる
+// #include "../settings/sils_define.h" //ここでincludeしておくと，Printf系のものは全てOKになる
 
 // かなり危険な定義なので，一旦コメントアウト 2020/08/22
 // typedef unsigned  char  u_char;
