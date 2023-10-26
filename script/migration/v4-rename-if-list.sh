@@ -66,8 +66,8 @@ done
 
 ## buffer
 echo "rename buffers"
-buf_org=("CDS_if_rx_buffer_" "CDS_IF_RX_BUFFER_SIZE" "rx_buffer_size_in_if_rx_")
-buf_new=("CDS_hal_rx_buffer_" "CDS_HAL_RX_BUFFER_SIZE" "hal_rx_buffer_size_")
+buf_org=("CDS_if_rx_buffer_" "CDS_IF_RX_BUFFER_SIZE" "rx_buffer_size_in_if_rx")
+buf_new=("CDS_hal_rx_buffer_" "CDS_HAL_RX_BUFFER_SIZE" "hal_rx_buffer_size")
 
 for i in ${!buf_org[@]}; do
   echo "  ${buf_org[$i]} -> ${buf_new[$i]}"
