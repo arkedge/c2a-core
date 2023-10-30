@@ -194,6 +194,8 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 
 ### Migration Guide
 
+注意: migration 方法やスクリプトの修正などもありえるため，本 Migration Guide 及び Migration Script は c2a-core v4 系のその時点での最新版を参照すること
+
 - v4.0.0-alpha.0
   - [#19](https://github.com/arkedge/c2a-core/pull/18) の変更を取り込む
 - v4.0.0-alpha.1
