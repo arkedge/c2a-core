@@ -7,9 +7,7 @@ echo sync with mobc sample...
 echo.
 
 call :sync_dir ".\src\s2e_mockup\" "..\mobc\src\s2e_mockup\"
-call :sync_dir ".\src\src_user\BootLoader\" "..\mobc\src\src_user\BootLoader\"
 call :sync_dir ".\src\src_user\library\" "..\mobc\src\src_user\library\"
-call :sync_dir ".\src\src_user\ReProgramming\" "..\mobc\src\src_user\ReProgramming\"
 call :sync_dir ".\src\src_user\script\" "..\mobc\src\src_user\script\"
 call :sync_dir ".\src\src_user\settings\tlm_cmd\ccsds\" "..\mobc\src\src_user\settings\tlm_cmd\ccsds\"
 
