@@ -4,6 +4,27 @@
 
 ## v4.0.0 (Unreleased)
 
+c2a-core v4.0.0 は ArkEdge Space Inc. による C2A の先行開発のための c2a-core の fork 後最初のリリースとなる．
+v4.0.0 では，fork に伴う開発体制の変更に加え，以下の大きなセマンティクス的な変更を行ったため，major update とした．
+
+- 大規模な rename
+- 各ツールの c2a-core リポジトリへの吸収合併
+- [Rust](https://www.rust-lang.org/) のエコシステム / C2A 標準開発環境 C2A Boom の導入
+
+大規模な rename はあくまで現在の設計・コードの責務をできるだけ明らかにし，（特に C2A の開発経験の無い一般的なソフトウェアエンジニアを中心とした）開発者のディスコミュニケーションを低減する目的で実施した．
+また，ディレクトリ名に大文字・小文字があったりなかったりする，不必要に階層構造が深いといった歪なディレクトリ構造の修正も行った．
+
+ex: `IfWrapper` -> `HAL`, `Driver` -> `Component Driver`, `src/src_user/Settings/TlmCmd/data_base` -> `tlm-cmd-db`
+
+これらの rename は大規模ではあるものの，C2A としてのロジックの変更やリファクタリングはほぼ行っていない．
+この移行については migration script を用意している（Migration Guide 参照）．
+
+各ツールの c2a-core リポジトリへの吸収合併については，enum-loader や tlm-cmd-code-generator などの c2a-core のコード構成に依存したツールのリリース単位は c2a-core と同一であると判断し実施した．
+これらのツールについては，今後は各 C2A user で使用している c2a-core と同じバージョンのものを使用してもらうことになる（実務上は `src/src_core` から使うことになる）．
+
+Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc. 内での開発成果を OSS 化しつつ実施した．
+これらについては c2a-core v3 系に対しても互換性があり導入可能だが，新機能の開発や積極的なサポートは c2a-core v4 系以降を前提として行われる可能性がある．
+
 ### Breaking Changes
 
 - [ut-issl/c2a-core](https://github.com/ut-issl/c2a-core) [v3.10.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.0) から ArkEdge Space Inc. による先行開発のために fork し，リポジトリを [arkedge/c2a-core](https://github.com/arkedge/c2a-core) に移行
