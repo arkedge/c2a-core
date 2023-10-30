@@ -28,31 +28,51 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 ### Breaking Changes
 
 - [ut-issl/c2a-core](https://github.com/ut-issl/c2a-core) [v3.10.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.0) から ArkEdge Space Inc. による先行開発のために fork し，リポジトリを [arkedge/c2a-core](https://github.com/arkedge/c2a-core) に移行
-  - ライセンス情報の更新: [#1](https://github.com/arkedge/c2a-core/pull/1)
-- CommandDispatcher の統一的なテレメの提供: [#18](https://github.com/arkedge/c2a-core/pull/18)
--  App の initializer, entry_point の返り値を void から RESULT にする: [#19](https://github.com/arkedge/c2a-core/pull/19)
+  - [#1](https://github.com/arkedge/c2a-core/pull/1): ライセンス情報の更新
+- [#18](https://github.com/arkedge/c2a-core/pull/18): CommandDispatcher の統一的なテレメの提供
+-  [#19](https://github.com/arkedge/c2a-core/pull/19): App の initializer, entry_point の返り値を void から RESULT にする
 - 各ディレクトリ名・構造の変更
-  - example user を `minimum_user` -> `mobc`, `2nd_obc_user` -> `subobc` に変更: [#15](https://github.com/arkedge/c2a-core/pull/15)
-  - ディレクトリ名のコーディング規約を `CamelCase` から `snake_case` に変更: [#20](https://github.com/arkedge/c2a-core/pull/20)
+  - [#15](https://github.com/arkedge/c2a-core/pull/15): example user を `minimum_user` -> `mobc`, `2nd_obc_user` -> `subobc` に変更
+  - [#20](https://github.com/arkedge/c2a-core/pull/20): ディレクトリ名のコーディング規約を `CamelCase` から `snake_case` に変更
     - v4 系統ではこの変更は移行期間とし，あらゆるディレクトリ名を一気に変更する必要はないものとしている
-    - Rust の crate のためのディレクトリは小文字の `-` 区切りとする: [#42](https://github.com/arkedge/c2a-core/pull/42)
-  - C2A 用語の rename: [#8](https://github.com/arkedge/c2a-core/issues/8)
-    - `IfWrapper` -> `HAL` (Hardware Abstraction Layer): [#21](https://github.com/arkedge/c2a-core/pull/21), [#24](https://github.com/arkedge/c2a-core/pull/24)
-  - 歪なディレクトリ構造の修正: [#28](https://github.com/arkedge/c2a-core/issues/28)
+    - [#42](https://github.com/arkedge/c2a-core/pull/42): Rust の crate のためのディレクトリは小文字の `-` 区切りとする
+  - [#8](https://github.com/arkedge/c2a-core/issues/8): C2A 用語の rename
+    - [#21](https://github.com/arkedge/c2a-core/pull/21), [#24](https://github.com/arkedge/c2a-core/pull/24): `IfWrapper` -> `HAL` (Hardware Abstraction Layer)
+    - [#146](https://github.com/arkedge/c2a-core/pull/146), [#147](https://github.com/arkedge/c2a-core/pull/147) `Driver` -> `Component Driver`
+    - [#143](https://github.com/arkedge/c2a-core/pull/143), [#144](https://github.com/arkedge/c2a-core/pull/144) `Driver instances` -> `Component Service`
+    - [#153](https://github.com/arkedge/c2a-core/pull/153): `c2a-tlm-cmd-code-generator` -> `c2a-code-generator`
+    - [#165](https://github.com/arkedge/c2a-core/pull/165), [#166](https://github.com/arkedge/c2a-core/pull/166): `IF list` -> `CDS HAL handler registry`
+    - [#151](https://github.com/arkedge/c2a-core/issues/151): これは v4.0.0 以降も継続的に実施していく
+  - [#28](https://github.com/arkedge/c2a-core/issues/28): 歪なディレクトリ構造の修正
+    - [#122](https://github.com/arkedge/c2a-core/pull/122), [#124](https://github.com/arkedge/c2a-core/pull/124): `src/src_core/Drivers/Super` -> `src/src_core/driver`, `src/src_core/Drivers/Protocol` -> `src/src_core/driver`
+    - [#138](https://github.com/arkedge/c2a-core/pull/138): `src/src_user/Test` -> `src/src_user/test`, `src/src_user/Test/test` -> `src/src_user/test`
+    - [#10](https://github.com/arkedge/c2a-core/issues/10): ディレクトリ名の CamelCase をやめて snake_case にする
+      - [#20](https://github.com/arkedge/c2a-core/pull/20): コーディング規約の変更
+      - [#21](https://github.com/arkedge/c2a-core/pull/21), [#24](https://github.com/arkedge/c2a-core/pull/24): `IfWrapper` -> `hal`
+      - [#26](https://github.com/arkedge/c2a-core/pull/26): `c2a-core/Examples` -> `c2a-core/examples`
+      - [#31](https://github.com/arkedge/c2a-core/pull/31): `Docs` -> `docs`
+      - [#33](https://github.com/arkedge/c2a-core/pull/33), [#39](https://github.com/arkedge/c2a-core/pull/39): `Script` -> `script`
+      - [#46](https://github.com/arkedge/c2a-core/pull/46), [#48](https://github.com/arkedge/c2a-core/pull/48), [#140](https://github.com/arkedge/c2a-core/pull/140): `Applications` -> `applications`
+      - [#50](https://github.com/arkedge/c2a-core/pull/50), [#51](https://github.com/arkedge/c2a-core/pull/51), [#53](https://github.com/arkedge/c2a-core/pull/53): `Library` -> `library`
+      - [#54](https://github.com/arkedge/c2a-core/pull/54), [#55](https://github.com/arkedge/c2a-core/pull/55), [#125](https://github.com/arkedge/c2a-core/pull/125): `System` -> `system`
+      - [#79](https://github.com/arkedge/c2a-core/pull/79), [#80](https://github.com/arkedge/c2a-core/pull/80): `TlmCmd` -> `tlm_cmd`
+      - [#122](https://github.com/arkedge/c2a-core/pull/122), [#124](https://github.com/arkedge/c2a-core/pull/124): `Drivers` -> `driver`
+      - [#138](https://github.com/arkedge/c2a-core/pull/138): `src/src_user/Test` -> `src/src_user/test`
+      - [#167](https://github.com/arkedge/c2a-core/pull/167), [#168](https://github.com/arkedge/c2a-core/pull/168): `src/src_user/Settings` -> `src/src_user/settings`
   - 移行には [scripts/migration/](./scripts/migration/) 以下の `v4-rename-*.sh` の migration script を使用可能
     - example user についてはこの migration script のみで移行しているが，あらゆる C2A user の状況について考慮できているわけではないため，適宜対応が必要
-- `hal`（旧 `IfWrapper`）のうち，古すぎるインターフェースを排除: [#23](https://github.com/arkedge/c2a-core/issues/23), [#25](https://github.com/arkedge/c2a-core/pull/25), [#129](https://github.com/arkedge/c2a-core/pull/129), [#130](https://github.com/arkedge/c2a-core/pull/130), [#131](https://github.com/arkedge/c2a-core/pull/131)
+- [#23](https://github.com/arkedge/c2a-core/issues/23), [#25](https://github.com/arkedge/c2a-core/pull/25), [#129](https://github.com/arkedge/c2a-core/pull/129), [#130](https://github.com/arkedge/c2a-core/pull/130), [#131](https://github.com/arkedge/c2a-core/pull/131): `hal`（旧 `IfWrapper`）のうち，古すぎるインターフェースを排除
   - 既に使われてしまっているものについては，各 C2A user で一旦雑に古いヘッダファイルを各々で持って対応可能（今後再設計する予定）
-- `check_coding_rule.py` の設定ファイルである `check_coding_rule.json` の場所を C2A user のトップディレクトリに変更: [#97](https://github.com/arkedge/c2a-core/pull/97)
+- [#97](https://github.com/arkedge/c2a-core/pull/97): `check_coding_rule.py` の設定ファイルである `check_coding_rule.json` の場所を C2A user のトップディレクトリに変更
   - 対応方法
     - `Script/CI/check_coding_rule.json` ないし `script/ci/check_coding_rule.json` を C2A user のトップディレクトリに移動
     - 設定ファイルから `c2a_root_dir` を削除
     - 設定ファイル中のディレクトリの設定を C2A user のトップディレクトリからの相対パスに変更
-- [ut-issl/c2a-enum-loader](https://github.com/ut-issl/c2a-enum-loader) を c2a-core リポジトリで管理するように変更: [#99](https://github.com/arkedge/c2a-core/pull/99)
+- [#99](https://github.com/arkedge/c2a-core/pull/99): [ut-issl/c2a-enum-loader](https://github.com/ut-issl/c2a-enum-loader) を c2a-core リポジトリで管理するように変更
   - import したバージョン: [ut-issl/c2a-enum-loader ae-v2.0.0](https://github.com/ut-issl/c2a-enum-loader/releases/tag/ae-v2.0.0)
-- [ut-issl/c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) を c2a-core リポジトリで管理するように変更: [#111](https://github.com/arkedge/c2a-core/pull/111)
+- [#111](https://github.com/arkedge/c2a-core/pull/111): [ut-issl/c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) を c2a-core リポジトリで管理するように変更
   - import したバージョン: [ut-issl/c2a-tlm-cmd-code-generator ae-v2.0.0](https://github.com/ut-issl/c2a-tlm-cmd-code-generator/releases/tag/ae-v2.0.0)
-- CMake option の整理: [#83](https://github.com/arkedge/c2a-core/issues/83), [#86](https://github.com/arkedge/c2a-core/pull/86), [#132](https://github.com/arkedge/c2a-core/pull/132), [#139](https://github.com/arkedge/c2a-core/pull/139)
+- [#83](https://github.com/arkedge/c2a-core/issues/83), [#86](https://github.com/arkedge/c2a-core/pull/86), [#132](https://github.com/arkedge/c2a-core/pull/132), [#139](https://github.com/arkedge/c2a-core/pull/139): CMake option の整理
   - `C2A_` prefix に統一した（これはコーディング規約にも追加）
   - 意味が分かりにくい命名の変更，今後 optional としていく挙動を default OFF とした
   - `option()` の挙動はユーザ指定によってかなり変わるため，該当する変更は単なるビルドチェックなどではなくすべて grep して変更すること
@@ -73,26 +93,26 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 
 ### Enhancements
 
-- `c2a-core` crate で Rust 向けの binding を提供する :[#35](https://github.com/arkedge/c2a-core/pull/35), [#37](https://github.com/arkedge/c2a-core/pull/37)
+- [#35](https://github.com/arkedge/c2a-core/pull/35), [#37](https://github.com/arkedge/c2a-core/pull/37): `c2a-core` crate で Rust 向けの binding を提供する
   - C2A 内で共通の [bindgen](https://github.com/rust-lang/rust-bindgen) の設定を使用可能にするため，[c2a-bind-utils](https://crates.io/crates/c2a-bind-utils) crate を追加
 - C2A 単体での SILS のための C2A のランタイム実装である `c2a-sils-runtime` crate を追加
 - 共通して使用可能な C2A HAL（旧 `IfWrapper`）実装群を追加
-  - C2A HAL 実装のテンプレートや，モックとして使用可能な noop 実装を追加: [#40](https://github.com/arkedge/c2a-core/pull/40)
-  - [kble](https://github.com/arkedge/kble) を使った SILS 向け UART 実装を追加: [#41](https://github.com/arkedge/c2a-core/pull/41)
-- `c2a-sils-runtime` と Rust 製の C2A HAL 実装を使って，example user の C2A 単体での SILS（S2E なし）を実装: [#44](https://github.com/arkedge/c2a-core/pull/44), [#45](https://github.com/arkedge/c2a-core/pull/45)
-- 新たな C2A 標準環境である `C2A Boom` を example user に導入: [#56](https://github.com/arkedge/c2a-core/pull/56)
+  - [#40](https://github.com/arkedge/c2a-core/pull/40): C2A HAL 実装のテンプレートや，モックとして使用可能な noop 実装を追加
+  - [#41](https://github.com/arkedge/c2a-core/pull/41): [kble](https://github.com/arkedge/kble) を使った SILS 向け UART 実装を追加
+- [#44](https://github.com/arkedge/c2a-core/pull/44), [#45](https://github.com/arkedge/c2a-core/pull/45): `c2a-sils-runtime` と Rust 製の C2A HAL 実装を使って，example user の C2A 単体での SILS（S2E なし）を実装
+- [#56](https://github.com/arkedge/c2a-core/pull/56): 新たな C2A 標準環境である `C2A Boom` を example user に導入
   - これに伴い，各種 ArkEdge 独自のライブラリ・ツール群が 導入・OSS 化された
   - [Gaia](https://github.com/arkedge/gaia)
   - [tlmcmddb-cli](https://github.com/arkedge/c2a-tlmcmddb)
   - [kble](https://github.com/arkedge/kble)
   - [C2A DevTools](https://github.com/arkedge/c2a-devtools)
-- example user に対して，Gaia を用いた pytest を導入: [#59](https://github.com/arkedge/c2a-core/pull/59)
+- [#59](https://github.com/arkedge/c2a-core/pull/59): example user に対して，Gaia を用いた pytest を導入
   - [python-wings-interface](https://github.com/ut-issl/python-wings-interface) 互換の Gaia（`tmtc-c2a`）向けインターフェースとして [c2a-pytest-gaia](https://github.com/arkedge/c2a-pytest-gaia) を導入
   - これに伴い，Python の仮想環境・ツールチェーン管理に [rye](https://rye-up.com/)
 
 ### Fixed
 
-- `c2a-core` crate のためのソースファイルを `src/lib.rs` から `c2a_core.rs` に移動し，紛らわしい `src` ディレクトリを削除: [#30](https://github.com/arkedge/c2a-core/pull/30)
+- [#30](https://github.com/arkedge/c2a-core/pull/30): `c2a-core` crate のためのソースファイルを `src/lib.rs` から `c2a_core.rs` に移動し，紛らわしい `src` ディレクトリを削除
 
 ### Compatible C2A Tools
 
