@@ -134,6 +134,7 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 - [#93](https://github.com/arkedge/c2a-core/pull/93): リリースルールの明瞭化
 - [#123](https://github.com/arkedge/c2a-core/pull/123): c2a-sils-runtime や C2A DevTools での開発のためのドキュメントを追加
 - [#135](https://github.com/arkedge/c2a-core/pull/135): Fix CHANGELOG.md
+- [#157](https://github.com/arkedge/c2a-core/pull/157): Update v4 changelog
 
 ### Internal
 
