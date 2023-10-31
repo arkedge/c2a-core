@@ -4,7 +4,7 @@
 
 ## v4.0.0 (Unreleased)
 
-c2a-core v4.0.0 は ArkEdge Space Inc. による C2A の先行開発のための c2a-core の fork 後最初のリリースとなる．
+[arkedge/c2a-core](https://github.com/arkedge/c2a-core) v4.0.0 は ArkEdge Space Inc. による C2A の先行開発のための [ut-issl/c2a-core](https://github.com/ut-issl/c2a-core) の fork 後最初のリリースとなる．
 v4.0.0 では，fork に伴う開発体制の変更に加え，以下の大きなセマンティクス的な変更を行ったため，major update とした．
 
 - 大規模な rename
@@ -12,14 +12,17 @@ v4.0.0 では，fork に伴う開発体制の変更に加え，以下の大き�
 - [Rust](https://www.rust-lang.org/) のエコシステム / C2A 標準開発環境 C2A Boom の導入
 
 大規模な rename はあくまで現在の設計・コードの責務をできるだけ明らかにし，（特に C2A の開発経験の無い一般的なソフトウェアエンジニアを中心とした）開発者のディスコミュニケーションを低減する目的で実施した．
+
+ex: `IfWrapper` -> `HAL`, `Driver` -> `Component Driver`
+
 また，ディレクトリ名に大文字・小文字があったりなかったりする，不必要に階層構造が深いといった歪なディレクトリ構造の修正も行った．
 
-ex: `IfWrapper` -> `HAL`, `Driver` -> `Component Driver`, `src/src_user/Settings/TlmCmd/data_base` -> `tlm-cmd-db`
+ex: `src/src_core/System` -> `src/src_core/system`, `src/src_user/Settings/TlmCmd/data_base` -> `tlm-cmd-db`
 
 これらの rename は大規模ではあるものの，C2A としてのロジックの変更やリファクタリングはほぼ行っていない．
 この移行については migration script を用意している（Migration Guide 参照）．
 
-各ツールの c2a-core リポジトリへの吸収合併については，enum-loader や tlm-cmd-code-generator などの c2a-core のコード構成に依存したツールのリリース単位は c2a-core と同一であると判断し実施した．
+各ツールの c2a-core リポジトリへの吸収合併については，[ut-issl/c2a-enum-loader](https://github.com/ut-issl/c2a-enum-loader) や [ut-issl/c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) などの c2a-core のコード構成に依存したツールのリリース単位は c2a-core と同一であると判断し実施した．
 これらのツールについては，今後は各 C2A user で使用している c2a-core と同じバージョンのものを使用してもらうことになる（実務上は `src/src_core` から使うことになる）．
 
 Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc. 内での開発成果を OSS 化しつつ実施した．
@@ -184,7 +187,6 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 
 - [c2a-code-generator](./code-generator): [ut-issl/c2a-tlm-cmd-code-generator ae-v2.0.0](https://github.com/ut-issl/c2a-tlm-cmd-code-generator/releases/tag/ae-v2.0.0) を c2a-core リポジトリに吸収し，rename した
 - [c2a-enum-loader](./enum-loader): [ut-issl/c2a-enum-loader ae-v2.0.0](https://github.com/ut-issl/c2a-enum-loader/releases/tag/ae-v2.0.0) を c2a-core リポジトリに吸収した
-
 - [ut-issl/tlm-cmd-db v2.4.0](https://github.com/ut-issl/tlm-cmd-db/releases/tag/v2.4.0)
 - [ut-issl/python-wings-interface v1.5.1](https://github.com/ut-issl/python-wings-interface/releases/tag/v1.5.1)
 - [arkedge/gaia v0.5.0](https://github.com/arkedge/gaia/releases/tag/v0.5.0)
