@@ -13,8 +13,8 @@ Component Driver とは，各コンポーネントとの通信において， HW
 - UART test: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/component_driver/etc/uart_test.c
 - GS: https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/component_driver/com/gs.c
 - C2A 間通信:
-    - https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/component_driver/aocs/aobc.c
-    - https://github.com/arkedge/c2a-core/blob/develop/examples/subobc/src/src_user/component_driver/etc/mobc.c
+  - https://github.com/arkedge/c2a-core/blob/develop/examples/mobc/src/src_user/component_driver/aocs/aobc.c
+  - https://github.com/arkedge/c2a-core/blob/develop/examples/subobc/src/src_user/component_driver/etc/mobc.c
 
 が実装されているので，それを参考のこと．  
 `load_init_setting` については下を参照．
@@ -91,7 +91,7 @@ TBW
 - コードの見通しの良さの大幅改良
 - 高速化
 - 複数のフレーム定義（＝ヘッダフッタやフレーム長）に対応するためのStreamの新設
-    - これまでは定期・非定期で２つあったが，これがコードの見通しの良さとバグの温床になっていた
+  - これまでは定期・非定期で２つあったが，これがコードの見通しの良さとバグの温床になっていた
 - varidationの強化
 
 各ドライバの実装方法は，上で述べたように既存コードを参照してほしいが，初期化時にユーザー設定をデフォルト設定で上書きするための `load_init_setting` 関数ポインタを渡す必要がある．  
