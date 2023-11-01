@@ -51,14 +51,14 @@ https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e
 
 #### 各フィールドの説明
 - Version ID
-    - `0x00`: バージョン不定
-    - `0x01`: Version 1
+  - `0x00`: バージョン不定
+  - `0x01`: Version 1
 - Tlm / Cmd Count
-    - 送信 Packet 毎にインクリメントされていくカウンタ
+  - 送信 Packet 毎にインクリメントされていくカウンタ
 - Tlm / Cmd ID
-    - Packet 種別を表す ID
+  - Packet 種別を表す ID
 - User Data Field
-    - バイト単位で格納されたユーザーデータ
+  - バイト単位で格納されたユーザーデータ
 
 なお，すべてのフィールドのバイトオーダはビッグエンディアンとする．
 
@@ -72,20 +72,20 @@ https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e
 
 #### 各フィールドの説明
 - STX
-    - Frame 先頭識別子
-    - `0xEB 0x90` 固定
+  - Frame 先頭識別子
+  - `0xEB 0x90` 固定
 - Packet Length
-    - Packet Field の長さ
+  - Packet Field の長さ
 - CRC
-    - Packet Field 部分の CRC (Header は含めない)
-    - 使用する CRC の種類は CRC-16/CCITT-FALSE (CRC-16/AUTOSAR, CRC-16/IBM-3740 とも)
-    - `width=16, poly=0x1021, init=0xffff, refin=false, refout=false, xorout=0x0000, check=0x29b1, residue=0x0000`
+  - Packet Field 部分の CRC (Header は含めない)
+  - 使用する CRC の種類は CRC-16/CCITT-FALSE (CRC-16/AUTOSAR, CRC-16/IBM-3740 とも)
+  - `width=16, poly=0x1021, init=0xffff, refin=false, refout=false, xorout=0x0000, check=0x29b1, residue=0x0000`
 - ETX
-    - Frame 終端識別子
-    - `0xC5 0x79` 固定
+  - Frame 終端識別子
+  - `0xC5 0x79` 固定
 - Packet Field
-    - バイト単位で格納された送信 Packet
-    - EB90 Packet や Common Packet などが格納される
+  - バイト単位で格納された送信 Packet
+  - EB90 Packet や Common Packet などが格納される
 
 なお，すべてのフィールドのバイトオーダはビッグエンディアンとする．
 
@@ -95,13 +95,13 @@ https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e
 C2A 間通信によって，以下のような機能が提供される．
 
 - OBC 間の簡易な Driver 実装と自動コード生成
-    - [c2a-code-generator](../../code-generator/) 参照．
-    - [`examples/mobc/src/src_user/Drivers/Aocs`](/examples/mobc/src/src_user/Drivers/Aocs/) などの多くのコードが自動生成される．
+  - [c2a-code-generator](../../code-generator/) 参照．
+  - [`examples/mobc/src/src_user/Drivers/Aocs`](/examples/mobc/src/src_user/Drivers/Aocs/) などの多くのコードが自動生成される．
 - OBC と地上局でネットワークを形成．
-    - 地上局から MOBC をルーターとして， sub OBC へコマンド配送．
-    - sub OBC のテレメトリを MOBC を経由して地上局まで配送．
-    - OBC A から OBC B に対してコマンド発行 / テレメ送信．
-    - 他
+  - 地上局から MOBC をルーターとして， sub OBC へコマンド配送．
+  - sub OBC のテレメトリを MOBC を経由して地上局まで配送．
+  - OBC A から OBC B に対してコマンド発行 / テレメ送信．
+  - 他
 
 C2A 間通信の具体的な実装については，本リポジトリに同封されている User Sample である [`examples/mobc`](/examples/mobc) と [`examples/subobc`](/examples/subobc) での通信（前者が MOBC，後者が AOBC を想定）を参考にされたい．
 具体的なドライバのコードは以下となる．
