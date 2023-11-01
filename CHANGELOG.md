@@ -138,6 +138,7 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 - [#123](https://github.com/arkedge/c2a-core/pull/123): c2a-sils-runtime や C2A DevTools での開発のためのドキュメントを追加
 - [#135](https://github.com/arkedge/c2a-core/pull/135): Fix CHANGELOG.md
 - [#157](https://github.com/arkedge/c2a-core/pull/157): Update v4 changelog
+- [#177](https://github.com/arkedge/c2a-core/pull/177): インデントのスペースを GFM に準拠する
 
 ### Internal
 
