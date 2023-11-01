@@ -110,9 +110,9 @@ git blame を使うことで，該当ファイルの各行がいつ変更され�
 
 ### ディレクトリ名・ファイル名
 - [Rust の crate](https://doc.rust-lang.org/book/ch07-01-packages-and-crates.html) のディレクトリは小文字の `-` 区切り．
-  - `c2a-core` crate のように，crate 名は小文字の `-` 区切りに寄せる．
-  - 実際の crate 名とディレクトリ名を合わせるため．
-    - ディレクトリ名を必ず crate 名と合わせないといけないわけではない．例えば，ディレクトリ名では `c2a-` prefix を削る，といったことはある．
+    - `c2a-core` crate のように，crate 名は小文字の `-` 区切りに寄せる．
+    - 実際の crate 名とディレクトリ名を合わせるため．
+        - ディレクトリ名を必ず crate 名と合わせないといけないわけではない．例えば，ディレクトリ名では `c2a-` prefix を削る，といったことはある．
 - それ以外のディレクトリ名は基本的に小文字の `snake_case` ．
     - ただし，外部ライブラリについてはこの限りではない．
         - 例えば，`hoge-lib` のようなリポジトリ名のライブラリを Git submodule などで配置するときは，元の名前をのままにすることが望ましい．
@@ -216,7 +216,7 @@ typedef uint32_t flash_block_t;
 ### CMake option
 - 大文字の snake case
 - 接頭辞は `C2A_` で統一する
-  - 特定の C2A user 固有のものや，C2A 以外の文脈が含まれる場合は必須ではない
+    - 特定の C2A user 固有のものや，C2A 以外の文脈が含まれる場合は必須ではない
 
 
 ### applications/user_defined
