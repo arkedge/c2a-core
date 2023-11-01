@@ -246,8 +246,6 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 - v4.0.0
   - [#167](https://github.com/arkedge/c2a-core/pull/167), [#168](https://github.com/arkedge/c2a-core/pull/168): `src/src_user/Settings` -> `src/src_user/settings`
   - [#172](https://github.com/arkedge/c2a-core/pull/172): `src/src_user/settings/tlm_cmd/data_base` -> `tlm-cmd-db` の rename を実行（[v4-move-db-dir.sh](script/migration/v4-move-db-dir.sh)）
-
-
 - pytest への rye の導入
   - [#100](https://github.com/arkedge/c2a-core/pull/100): `build-backend` に pdm を指定する
 
