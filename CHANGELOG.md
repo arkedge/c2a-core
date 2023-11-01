@@ -2,7 +2,7 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
-## v4.0.0 (Unreleased)
+## v4.0.0 (2023-11-01)
 
 [arkedge/c2a-core](https://github.com/arkedge/c2a-core) v4.0.0 は ArkEdge Space Inc. による C2A の先行開発のための [ut-issl/c2a-core](https://github.com/ut-issl/c2a-core) の fork 後最初のリリースとなる．
 v4.0.0 では，fork に伴う開発体制の変更に加え，以下の大きなセマンティクス的な変更を行ったため，major update とした．
