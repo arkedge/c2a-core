@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::env;
+use std::path::PathBuf;
 
 use semver::Version;
 
@@ -16,6 +17,27 @@ fn main() {
     dbg!(&header_ver);
 
     assert_eq!(ver, header_ver);
+
+    bind(".".into(), "c2a_core_main.h");
+
+    //bind("system/time_manager".into(), "time_manager.h");
+    //bind("system/watchdog_timer".into(), "watchdog_timer.h");
+
+    bind("hal".into(), "ccsds.h");
+    bind("hal".into(), "i2c.h");
+    bind("hal".into(), "spi.h");
+    bind("hal".into(), "uart.h");
+    bind("hal".into(), "wdt.h");
+}
+
+fn bind(module: PathBuf, header: &str) {
+    let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
+    let gen_rs = header.replace(".h", ".rs");
+    let gen_rs = out_dir.join(gen_rs);
+
+    let header_path = module.join(header);
+
+    c2a_bind_utils::bind_c2a(header_path, gen_rs)
 }
 
 fn get_core_version_from_header() -> Version {
@@ -94,7 +116,11 @@ fn get_definitions(src_file: &str) -> HashMap<String, Option<String>> {
 
                 let first = token.first().unwrap();
                 let last = token.last().unwrap();
-                if first.get_kind() == Punctuation && last.get_kind() == Punctuation && first.get_spelling() == "(" && last.get_spelling() == ")" {
+                if first.get_kind() == Punctuation
+                    && last.get_kind() == Punctuation
+                    && first.get_spelling() == "("
+                    && last.get_spelling() == ")"
+                {
                     token.remove(0);
                     token.remove(token.len() - 1);
                 }

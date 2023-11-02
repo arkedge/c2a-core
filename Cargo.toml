@@ -1,6 +1,35 @@
+[workspace.package]
+version = "4.0.0"
+
+[workspace]
+resolver = "2"
+
+members = [
+  "./sils-runtime",
+  "./library/bind-utils",
+
+  "./hal/i2c-noop",
+  "./hal/spi-noop",
+  "./hal/uart-noop",
+  "./hal/wdt-noop",
+
+  "./hal/uart-kble",
+
+  "./examples/mobc",
+  "./examples/subobc",
+]
+
+[workspace.dependencies]
+c2a-core = { path = "." }
+c2a-bind-utils = { path = "./library/bind-utils" }
+
+c2a-sils-runtime = { path = "./sils-runtime" }
+c2a-wdt-noop = { path = "./hal/wdt-noop" }
+c2a-uart-kble = { path = "./hal/uart-kble" }
+
 [package]
 name = "c2a-core"
-version = "3.10.0"
+version.workspace = true
 edition = "2021"
 
 links = "c2a-core"
@@ -9,15 +38,24 @@ description = "Core of Command Centric Architecture"
 readme = "README.md"
 license = "MIT"
 
-repository = "https://github.com/ut-issl/c2a-core"
+repository = "https://github.com/arkedge/c2a-core"
 documentation = "https://ut-issl.github.io/c2a-reference/c2a-core"
+
+[lib]
+path = "c2a_core.rs"
 
 [features]
 default = ["clang-runtime"]
 std = []
 export-src = ["std"]
 clang-runtime = ["clang/runtime"]
+no-c2a-link = []
 
 [build-dependencies]
-semver = "1.0.17"
+semver = "1.0.20"
 clang = "2.0.0"
+c2a-bind-utils = "4.0.0-beta.0"
+
+[dev-dependencies]
+# unit test 時に libC2A.a を要求しないようにする
+c2a-core = { path = ".", features = ["no-c2a-link"] }

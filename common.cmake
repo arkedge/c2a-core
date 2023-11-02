@@ -1,8 +1,8 @@
-if(BUILD_C2A_AS_CXX)
+if(C2A_BUILD_AS_CXX)
   # memo: set_source_files_properties() must be set before add_library/add_executable on Visual Studio CMake
   set_source_files_properties(${C2A_SRCS} PROPERTIES LANGUAGE CXX)  # C++
 else()
-  if(BUILD_C2A_AS_C99)
+  if(C2A_BUILD_AS_C99)
     set_target_properties(${PROJECT_NAME} PROPERTIES C_STANDARD 99) # C99
   else()
     if (CMAKE_C_COMPILER_ID STREQUAL "Clang")
@@ -20,7 +20,7 @@ else()
   endif()
 endif()
 
-if(BUILD_C2A_AS_SILS_FW)
+if(C2A_BUILD_FOR_SILS )
   target_compile_definitions(${PROJECT_NAME} PUBLIC SILS_FW)
 endif()
 
@@ -28,10 +28,10 @@ endif()
 if(MSVC)
   target_compile_options(${PROJECT_NAME} PUBLIC "/W4")
   target_compile_options(${PROJECT_NAME} PUBLIC "/MT")
-  if(BUILD_C2A_AS_CXX)
+  if(C2A_BUILD_AS_CXX)
     target_compile_options(${PROJECT_NAME} PUBLIC "/TP") # Compile C codes as C++
   endif()
-  if(BUILD_C2A_AS_UTF8)
+  if(C2A_BUILD_AS_UTF8)
     target_compile_options(${PROJECT_NAME} PUBLIC "/source-charset:utf-8")
   endif()
 
@@ -45,7 +45,7 @@ else()
   # endif()
 
   # 32bit
-  if(NOT USE_32BIT_COMPILER)
+  if(C2A_BUILD_FOR_32BIT)
     target_compile_options(${PROJECT_NAME} PUBLIC "-m32")
     target_link_options(${PROJECT_NAME} PRIVATE "-m32")
   endif()

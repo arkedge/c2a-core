@@ -1,0 +1,36 @@
+name: check tlm_cmd code generation
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  check_code_generate:
+    strategy:
+      fail-fast: false
+      matrix:
+        user:
+          - mobc
+          - subobc
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4.1.1
+
+      - name: run code-generator
+        working-directory: ./code-generator
+        run: |
+          cp "./settings_${{ matrix.user }}.json" ./settings.json
+          python GenerateC2ACode.py
+
+      - name: check diff
+        run: |
+          git add .
+          if ! git diff --exit-code --cached; then
+            echo "threre are some diff after code generation"
+            exit 1
+          fi

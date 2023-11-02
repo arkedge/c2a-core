@@ -3,17 +3,19 @@
 ## C2A
 - Command Centric Architecture
 - OBC 搭載フライトソフトウェアフレームワーク
-- v4 系以降の先行開発は https://github.com/arkedge/c2a-core で行われる
+- 本リポジトリは， ArkEdge Space Inc. による C2A の先行開発のため，[ut-issl/c2a-core v3.10.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.0) から fork したもの
+- v3 系列の開発は [ut-issl/c2a-core](https://github.com/ut-issl/c2a-core) で引き続き行われる
 
 ### C2A core
 - 各 C2A で共通利用される C2A の中核部のコード
 - 基本的には，各々の C2A user repository （サンプル： TBW） にて， git submodule で参照される．
-- core 開発のための最小限の user 部は [`Examples`](./Examples) にあり，これを用いてビルドし，検証する．
+- core 開発のための最小限の user 部は [`examples`](./examples) にあり，これを用いてビルドし，検証する．
 
 
 ## ドキュメント
-- ドキュメント:  https://github.com/ut-issl/c2a-core/tree/develop/Docs
-- リファレンス:  https://github.com/ut-issl/c2a-reference
+- ドキュメント:  https://github.com/arkedge/c2a-core/tree/develop/docs
+- リファレンス (TBD):  https://github.com/ut-issl/c2a-reference
+- [CHANGELOG](./CHANGELOG.md)
 
 
 ## 開発
@@ -21,21 +23,27 @@
 1. clone 後， [`setup.bat`](./setup.bat) or [`setup.sh`](./setup.sh) を実行
 
 ### Kanban (開発マイルストーンなど)
-- https://github.com/orgs/ut-issl/projects/1
+- https://github.com/orgs/arkedge/projects/43/views/1
 
 ### SILS (Software-In-the-Loop-Simulation) 環境
-- C2A は， [S2E](https://github.com/ut-issl/s2e-core) などの SILS を用いて，フライトソフトウェアがそのまま実行される SILS を構築できる．
+- C2A は，フライトソフトウェアがそのまま実行できる SILS 環境を構築できる．
 - つまり，ターゲットの OBC 上で動くソフトウェアが， PC などの上で，そのままエミュレートできる．
-- [`Examples/minimum_user`](./Examples/minimum_user) にある， 最小限の C2A 実行サンプルは， [S2E User for C2A Core](https://github.com/ut-issl/s2e-user-for-c2a-core) によってエミュレーション可能である．
-    - また， [`Examples/2nd_obc_user`](./Examples/2nd_obc_user) にある 2nd OBC (非 MOBC) の user 部を使うことで， C2A 間通信も模擬できる．
+- C2A の SILS runtime として，以下のような実装が存在する．
+  - [c2a-sils-runtime](./sils-runtime)
+    - 今後の標準的な C2A の SILS runtime．これが導入済みの C2A user は基本的に `cargo run` すれば動作する．
+  - [S2E](https://github.com/ut-issl/s2e-core)
+    - 宇宙環境シミュレータ．元々の SILS runtime 実装であり，姿勢制御モジュールなど，宇宙環境模擬が必要な C2A user についてはこちらを用いて検証を行う．
+    - 最小限の SILS-S2E は [S2E User for C2A Core](https://github.com/ut-issl/s2e-user-for-c2a-core) で実行可能．
+- [`examples`](./examples) の C2A user は [c2a-sils-runtime](./sils-runtime) と [S2E User for C2A Core](https://github.com/ut-issl/s2e-user-for-c2a-core) での模擬に対応．
+- [`examples/mobc`](./examples/mobc)（MOBC: Main OBC） と [`examples/subobc`](./examples/subobc)（非 MOBC）を SILS 環境で動作させて接続させることで，C2A 間通信の模擬・検証も行うことができる．
 
 ### テスト
-- 特定の user を仮定しないと，各種パラメタが確定しないため， [`Examples/minimum_user`](./Examples/minimum_user) でテストする．
-- C2A 間通信に関連する部分のテストのみは [`Examples/2nd_obc_user`](./Examples/2nd_obc_user) を用いる．
-- 詳細は [Test](./Examples/minimum_user/src/src_user/Test) 参照．
+- 特定の user を仮定しないと，各種パラメタが確定しないため， [`examples/mobc`](./examples/mobc) でテストする．
+- C2A 間通信に関連する部分のテストのみは [`examples/subobc`](./examples/subobc) を用いる．
+- 詳細は [test](./examples/mobc/src/src_user/test) 参照．
 
 ### ブランチ
-- `main`: リリース版（[詳細](./Docs/General/release.md)）
+- `main`: リリース版（[詳細](./docs/general/release.md)）
 - `develop`: 概ね検証された最新版（beta 機能含む）
 - `feature/*` : 開発ブランチ
 - `hotfix/*` : 重大バグ修正用ブランチ
@@ -63,12 +71,14 @@ C2A Core の採用実績のある衛星 OBC や動作実績のあるボードの
 ## 関連リンク
 ### C2A 関連ツール
 - https://github.com/ut-issl/tlm-cmd-db
-- https://github.com/ut-issl/c2a-tlm-cmd-code-generator
 - https://github.com/ut-issl/python-wings-interface
-- https://github.com/ut-issl/c2a-enum-loader
 - https://github.com/ut-issl/s2e-user-for-c2a-core
 - https://github.com/arkedge/c2a-tlmcmddb
+- https://github.com/arkedge/c2a-devtools
 - https://github.com/arkedge/workflows-c2a
+- https://github.com/arkedge/gaia
+- https://github.com/arkedge/c2a-pytest-gaia
+- https://github.com/arkedge/kble
 
 
 ### User 実装例
@@ -80,11 +90,3 @@ C2A Core の採用実績のある衛星 OBC や動作実績のあるボードの
 - https://crates.io/crates/tlmcmddb
 - https://crates.io/crates/tlmcmddb-cli
 - https://crates.io/crates/tlmcmddb-csv
-
-
-## 協力
-[<img src="./Docs/Img/arkedgespace_logo.png" width="25%" alt="ArkEdge Space Inc.">](https://arkedgespace.com/)
-
-
-## 質問，問い合わせ，その他なんでも
-お気軽に [Discussions](https://github.com/ut-issl/c2a-core/discussions) に投稿してください．

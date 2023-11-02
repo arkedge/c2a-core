@@ -1,0 +1,17 @@
+[package]
+name = "c2a-example-mobc-ccsds-kble"
+description = "kble-based CCSDS emulation for examples/mobc"
+version.workspace = true
+edition = "2021"
+
+[dependencies]
+c2a-core.workspace = true
+anyhow = "1"
+futures = "0.3"
+kble-socket = { version = "0.2.0", features = ["tungstenite"] }
+tokio-tungstenite = "0.18"
+tokio = { version = "1", features = ["sync", "rt"] }
+once_cell = "1"
+
+[build-dependencies]
+c2a-bind-utils.workspace = true

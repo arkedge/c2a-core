@@ -1,0 +1,19 @@
+#ifndef SEQUENCE_ITEMS_H_
+#define SEQUENCE_ITEMS_H_
+
+#include <src_core/tlm_cmd/block_command_table.h>
+#include <src_core/applications/timeline_command_dispatcher_id_define.h>
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// SIを使うことはもう非推奨！！！
+// 普通のBCを使うこと！！！！
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+void SI_finish_transition(CommonCmdPacket* packet);
+
+void SI_start_hk_tlm(CommonCmdPacket* packet);
+
+// BC展開
+void SI_deploy_block(CommonCmdPacket* packet, TLCD_ID line_no, bct_id_t block_no);
+
+#endif

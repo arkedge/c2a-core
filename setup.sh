@@ -13,17 +13,17 @@ echo setting for local environment...
 echo
 
 echo [SET USER HOOKS]
-git config --local core.hooksPath Script/GitHooks
+git config --local core.hooksPath script/git_hooks
 echo done.
 echo
 
-echo [SET UP DEVELOP ENVIRONMENT FOR C2A MINIMUM USER SAMPLE]
-make_link './Examples/minimum_user/src/src_core' '../../../'
+echo [SET UP DEVELOP ENVIRONMENT FOR C2A MOBC USER SAMPLE]
+make_link './examples/mobc/src/src_core' '../../../'
 echo done.
 echo
 
-echo [SET UP DEVELOP ENVIRONMENT FOR 2ND OBC USER SAMPLE]
-make_link './Examples/2nd_obc_user/src/src_core' '../../../'
+echo [SET UP DEVELOP ENVIRONMENT FOR SUBOBC USER SAMPLE]
+make_link './examples/subobc/src/src_core' '../../../'
 echo done.
 echo
 

@@ -1,0 +1,12 @@
+{
+  "path_to_src" : "../examples/subobc/src/",
+  "path_to_db" : "../examples/subobc/tlm-cmd-db/",
+  "db_prefix" : "SAMPLE_AOBC",
+  "tlm_id_range" : ["0x00", "0x100"],
+  "is_cmd_prefixed_in_db" : 0,
+  "input_file_encoding" : "utf-8",
+  "output_file_encoding" : "utf-8",
+  "is_main_obc" : 0,
+  "other_obc_data" : [
+  ]
+}

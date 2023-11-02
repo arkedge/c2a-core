@@ -58,11 +58,12 @@ dkms.conf
 ._*
 
 # for c2a user sample
-Examples/minimum_user/src/src_core
-Examples/minimum_user/build
-Examples/2nd_obc_user/src/src_core
-Examples/2nd_obc_user/build
+examples/mobc/src/src_core
+examples/mobc/build
+examples/subobc/src/src_core
+examples/subobc/build
 *.pyc
+tlmcmddb*.json
 
 # Added by cargo
 /target

@@ -1,20 +1,20 @@
 #pragma section REPRO
 #include "c2a_core_main.h"
 
-#include "./Library/git_revision.h"
-#include "./Library/print.h"
-#include "./System/TaskManager/task_dispatcher.h"
-#include "./System/ApplicationManager/app_manager.h"
-#include "./System/EventManager/event_manager.h"
-#include "./System/TimeManager/time_manager.h"
-#include "./System/ModeManager/mode_manager.h"
-#include "./System/WatchdogTimer/watchdog_timer.h"
-#include "./TlmCmd/packet_handler.h"
-#include "./TlmCmd/block_command_table.h"
-#include "./TlmCmd/command_analyze.h"
-#include "./TlmCmd/telemetry_frame.h"
+#include "./library/git_revision.h"
+#include "./library/print.h"
+#include "./system/task_manager/task_dispatcher.h"
+#include "./system/application_manager/app_manager.h"
+#include "./system/event_manager/event_manager.h"
+#include "./system/time_manager/time_manager.h"
+#include "./system/mode_manager/mode_manager.h"
+#include "./system/watchdog_timer/watchdog_timer.h"
+#include "./tlm_cmd/packet_handler.h"
+#include "./tlm_cmd/block_command_table.h"
+#include "./tlm_cmd/command_analyze.h"
+#include "./tlm_cmd/telemetry_frame.h"
 
-#include <src_user/Applications/app_registry.h>
+#include <src_user/applications/app_registry.h>
 
 // git revisionをコードに埋め込む
 const char GIT_REV_CORE[41]         = GIT_REVISION_C2A_CORE;

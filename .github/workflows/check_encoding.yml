@@ -11,7 +11,7 @@ jobs:
   check_encoding:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.1.1
       - uses: actions/setup-python@v4
         with:
           python-version-file: .github/workflows/.python-version
@@ -19,4 +19,4 @@ jobs:
       - run: pip install chardet
       - name: check_encoding
         run: python ./check_encoding.py ./check_encoding.json
-        working-directory: ./Script/CI
+        working-directory: ./script/ci

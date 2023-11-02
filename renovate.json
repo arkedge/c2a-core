@@ -4,5 +4,14 @@
   ],
   "labels": ["priority::medium", "tools"],
   "additionalReviewers": ["meltingrabbit", "sksat"],
-  "assignees": ["meltingrabbit", "sksat"]
+  "assignees": ["meltingrabbit", "sksat"],
+  "regexManagers": [
+    {
+      "fileMatch": [".github/workflows/*"],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?_VERSION:\\s(?<currentValue>.*)\\s",
+      ],
+      "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
+    }
+  ]
 }

@@ -8,7 +8,8 @@ on:
   pull_request:
 
 env:
-  S2E_CORE_VERSION: v6.0.0
+  # renovate: datasource=github-releases depName=ut-issl/s2e-core
+  S2E_CORE_VERSION: v7.0.1
 
 jobs:
   build_s2e_win:
@@ -18,12 +19,12 @@ jobs:
       fail-fast: false
       matrix:
         example:
-          - minimum_user
-          - 2nd_obc_user
+          - mobc
+          - subobc
 
     steps:
       - name: checkout S2E core
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
         with:
           path: s2e-core
           repository: ut-issl/s2e-core
@@ -31,14 +32,15 @@ jobs:
           fetch-depth: 1
 
       - name: checkout S2E user
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
         with:
           path: s2e-user
           repository: ut-issl/s2e-user-for-c2a-core
+          ref: ae-v3.0.0  # TODO: import s2e-user-for-c2a-core to c2a-core
           fetch-depth: 1
 
       - name: checkout C2A user
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
         with:
           path: c2a-core
 
@@ -95,5 +97,5 @@ jobs:
         run: |
           cl.exe
           cmake --version
-          cmake -G "Visual Studio 17 2022" -A Win32 -DCMAKE_CONFIGURATION_TYPES:STRING="Debug" -DEXT_LIB_DIR=../s2e-core/ExtLibraries -DFLIGHT_SW_DIR=../c2a-core -DC2A_NAME=Examples/${{ matrix.example }} -DUSE_C2A=ON
+          cmake -G "Visual Studio 17 2022" -A Win32 -DCMAKE_CONFIGURATION_TYPES:STRING="Debug" -DEXT_LIB_DIR=../s2e-core/ExtLibraries -DFLIGHT_SW_DIR=../c2a-core -DC2A_NAME=examples/${{ matrix.example }} -DUSE_C2A=ON
           cmake --build . --clean-first

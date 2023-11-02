@@ -1,0 +1,8 @@
+[package]
+name = "c2a-uart-noop"
+description = "No-op c2a-hal UART implementation for mock"
+version.workspace = true
+edition = "2021"
+
+[dependencies]
+c2a-core.workspace = true
