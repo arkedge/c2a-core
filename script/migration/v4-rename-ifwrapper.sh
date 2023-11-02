@@ -29,6 +29,7 @@ find_all | xargs -0 sed -i -e "s#SilsMockup#sils_mockup#g"
 #### IfWrapper internal ref
 echo "rename src_user ref in src/src_user/hal: IfWrapper/*"
 find src/src_user/hal -name "*" -type f -print0 | xargs -0 sed -i -e "s#Common#common#g"
+find src/src_user/hal -name "*" -type f -print0 | xargs -0 sed -i -e "s#Sils#sils#g"
 
 #### main ref
 echo "rename IfWrapper -> hal"
