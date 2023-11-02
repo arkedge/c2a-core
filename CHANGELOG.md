@@ -2,7 +2,7 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
-## v4.0.0 (Unreleased)
+## v4.0.0 (2023-11-02)
 
 [arkedge/c2a-core](https://github.com/arkedge/c2a-core) v4.0.0 は ArkEdge Space Inc. による C2A の先行開発のための [ut-issl/c2a-core](https://github.com/ut-issl/c2a-core) の fork 後最初のリリースとなる．
 v4.0.0 では，fork に伴う開発体制の変更に加え，以下の大きなセマンティクス的な変更を行ったため，major update とした．
@@ -138,6 +138,7 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 - [#123](https://github.com/arkedge/c2a-core/pull/123): c2a-sils-runtime や C2A DevTools での開発のためのドキュメントを追加
 - [#135](https://github.com/arkedge/c2a-core/pull/135): Fix CHANGELOG.md
 - [#157](https://github.com/arkedge/c2a-core/pull/157): Update v4 changelog
+- [#177](https://github.com/arkedge/c2a-core/pull/177): インデントのスペースを GFM に準拠する
 
 ### Internal
 
@@ -197,7 +198,7 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 
 ### Migration Guide
 
-注意: migration 方法やスクリプトの修正などもありえるため，本 Migration Guide 及び Migration Script は c2a-core v4 系のその時点での最新版を参照すること
+注意: migration 方法やスクリプトの修正などもありえるため，本 Migration Guide 及び Migration Script は c2a-core v4 系のその時点での最新版を参照すること．例えば，使う c2a-core version が v4.0.0 であっても，v4.1.0 や v4.2.0 がリリースされていれば，その時点のものを参照すること．
 
 - v4.0.0-alpha.0
   - [#19](https://github.com/arkedge/c2a-core/pull/18) の変更を取り込む
@@ -245,8 +246,6 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 - v4.0.0
   - [#167](https://github.com/arkedge/c2a-core/pull/167), [#168](https://github.com/arkedge/c2a-core/pull/168): `src/src_user/Settings` -> `src/src_user/settings`
   - [#172](https://github.com/arkedge/c2a-core/pull/172): `src/src_user/settings/tlm_cmd/data_base` -> `tlm-cmd-db` の rename を実行（[v4-move-db-dir.sh](script/migration/v4-move-db-dir.sh)）
-
-
 - pytest への rye の導入
   - [#100](https://github.com/arkedge/c2a-core/pull/100): `build-backend` に pdm を指定する
 
