@@ -1,5 +1,9 @@
 #!/bin/bash
-# driver instances -> Component Service
+echo "driver instances -> Component Service migration"
+
+function find_all() {
+  find . -name "*" -not \( -path "*/.git/*" -o -path "*/src_core/*" -o -path "*.xlsm" \) -type f -print0
+}
 
 # C2A user code
 echo "rename C2A user code: driver_instances -> component_service"
@@ -16,16 +20,13 @@ for di_src in $di_srcs; do
 done
 
 echo "rename path: driver_instances -> component_service"
-find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#driver_instances#component_service#g"
+find_all | xargs -0 sed -i -e "s#driver_instances#component_service#g"
 
 echo "rename file path: di_* -> csrv_*"
 for di_src in $di_srcs; do
   echo "  $di_src -> csrv_${di_src#di_}"
-  find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#$di_src#csrv_${di_src#di_}#g"
+  find_all | xargs -0 sed -i -e "s#$di_src#csrv_${di_src#di_}#g"
 done
 
 echo "rename source: DI_ -> CSRV_"
-find . -name "*" -not -path "*/.git/*" -type f -print0 | xargs -0 sed -i -e "s#DI_#CSRV_#g"
-
-git restore src/src_user/Settings/tlm_cmd/data_base/CMD_DB/*.xlsm
-git restore src/src_user/Settings/tlm_cmd/data_base/TLM_DB/*.xlsm
+find_all | xargs -0 sed -i -e "s#DI_#CSRV_#g"
