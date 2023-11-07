@@ -2,6 +2,17 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
+## v4.0.1 (Unreleased)
+
+### Fixed
+
+- [#180](https://github.com/arkedge/c2a-core/pull/180): Refactor v4 IfWrapper migration script
+- [#182](https://github.com/arkedge/c2a-core/pull/182): Refactor v4 migration script
+
+### Internal
+
+- [#185](https://github.com/arkedge/c2a-core/pull/185): Add Gaia label
+
 ## v4.0.0 (2023-11-02)
 
 [arkedge/c2a-core](https://github.com/arkedge/c2a-core) v4.0.0 は ArkEdge Space Inc. による C2A の先行開発のための [ut-issl/c2a-core](https://github.com/ut-issl/c2a-core) の fork 後最初のリリースとなる．
