@@ -15,7 +15,7 @@ void T2M_initialize(TcpToMPdu* tcp_to_m_pdu)
   tcp_to_m_pdu->m_pdu_wp = 0;
   tcp_to_m_pdu->fhp_valid = 0;
   // 強制送出待ち時間の初期値は10秒
-  // 32kbpsなら8VCDU/secの送信能力
+  // 32kbpsなら8AOSTF/secの送信能力
   tcp_to_m_pdu->flush_interval = OBCT_sec2cycle(10);
   // 最終更新時刻は現在時刻に設定
   tcp_to_m_pdu->last_updated = TMGR_get_master_total_cycle();

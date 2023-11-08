@@ -19,8 +19,8 @@
 typedef struct
 {
   TcpToMPdu tc_packet_to_m_pdu; //!< PL から取り出した tc_packet を M_PDU に変換する
-  VCDU vcdu;              //!< 送信するVCDU
-  uint32_t vcdu_counter;  //!< VCDU counter
+  AOSTF vcdu;              //!< 送信するAOSTF
+  uint32_t vcdu_counter;  //!< AOSTF counter
 } CSRV_GS_TlmPacketHandler;
 
 extern const GS_Driver* const gs_driver;

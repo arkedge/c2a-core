@@ -53,8 +53,8 @@ typedef struct
   struct
   {
     cycle_t send_cycle;                       //!< 最後に送信したときの時刻
-    VCDU_VCID vcid;                           //!< 送信した TLM のタイプ
-    uint32_t vcdu_counter;                    //!< VCDU counter
+    AOSTF_VCID vcid;                           //!< 送信した TLM のタイプ
+    uint32_t vcdu_counter;                    //!< AOSTF counter
   } tx;
 } GS_Info;
 
@@ -106,13 +106,13 @@ CDS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
 CDS_REC_ERR_CODE GS_rec_tctf(GS_Driver* gs_driver);
 
 /**
- * @brief 地上に向けて TLM を送信. 形式は VCDU
+ * @brief 地上に向けて TLM を送信. 形式は AOSTF
  * @note  CDS_send_general_cmd が使われているが, これは DS は MOBC コンポ間を想定しているため, MOBC から見るとコンポに cmd を送信している様に見える, が 今回は MOBC から地上に TLM を送信している
- * @note TLM 送信, 形式は VCDU
+ * @note TLM 送信, 形式は AOSTF
  * @param[in] gs_driver: ドライバー
- * @param[in] vcdu:      送信する VCDU. 場合によってはそのまま DS に渡すので， local変数ではなくstaticな変数を渡すこと
+ * @param[in] vcdu:      送信する AOSTF. 場合によってはそのまま DS に渡すので， local変数ではなくstaticな変数を渡すこと
  * @return CDS_CMD_ERR_CODE: 送信結果
  */
-CDS_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const VCDU* vcdu);
+CDS_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const AOSTF* vcdu);
 
 #endif

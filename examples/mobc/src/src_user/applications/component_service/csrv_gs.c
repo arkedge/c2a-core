@@ -126,17 +126,17 @@ static RESULT CSRV_GS_rt_tlm_packet_handler_app_(void)
                                  &CSRV_GS_rt_tlm_packet_handler_.vcdu.m_pdu);
     if (ack != T2M_SUCCESS) return RESULT_OK;
 
-    // Realtime VCDU カウンタの設定
-    VCDU_setup_realtime_vcdu_hdr(&CSRV_GS_rt_tlm_packet_handler_.vcdu, CSRV_GS_rt_tlm_packet_handler_.vcdu_counter);
-    CSRV_GS_rt_tlm_packet_handler_.vcdu_counter = VCDU_calc_next_counter(CSRV_GS_rt_tlm_packet_handler_.vcdu_counter);
+    // Realtime AOSTF カウンタの設定
+    AOSTF_setup_realtime_vcdu_hdr(&CSRV_GS_rt_tlm_packet_handler_.vcdu, CSRV_GS_rt_tlm_packet_handler_.vcdu_counter);
+    CSRV_GS_rt_tlm_packet_handler_.vcdu_counter = AOSTF_calc_next_counter(CSRV_GS_rt_tlm_packet_handler_.vcdu_counter);
 
     // CLCW の設定
     // CMD の VCID と TLM の VCID は独立で関係がない
     // TLM の VCID 種別（Realtime, Replay)によらず CLCW を設定して良い
     // CLCW が対応する CMD の VCID は CLCW の内部で指定される
-    VCDU_set_clcw(&CSRV_GS_rt_tlm_packet_handler_.vcdu, GS_form_clcw());
+    AOSTF_set_clcw(&CSRV_GS_rt_tlm_packet_handler_.vcdu, GS_form_clcw());
 
-    // 完成した VCDU を RT VCDU として送出
+    // 完成した AOSTF を RT AOSTF として送出
     GS_send_vcdu(&gs_driver_, &CSRV_GS_rt_tlm_packet_handler_.vcdu);
   }
 
@@ -161,17 +161,17 @@ static RESULT CSRV_GS_rp_tlm_packet_handler_app_(void)
                                  &CSRV_GS_rp_tlm_packet_handler_.vcdu.m_pdu);
     if (ack != T2M_SUCCESS) return RESULT_OK;
 
-    // Replay VCDU カウンタの設定
-    VCDU_setup_replay_vcdu_hdr(&CSRV_GS_rp_tlm_packet_handler_.vcdu, CSRV_GS_rp_tlm_packet_handler_.vcdu_counter);
-    CSRV_GS_rp_tlm_packet_handler_.vcdu_counter = VCDU_calc_next_counter(CSRV_GS_rp_tlm_packet_handler_.vcdu_counter);
+    // Replay AOSTF カウンタの設定
+    AOSTF_setup_replay_vcdu_hdr(&CSRV_GS_rp_tlm_packet_handler_.vcdu, CSRV_GS_rp_tlm_packet_handler_.vcdu_counter);
+    CSRV_GS_rp_tlm_packet_handler_.vcdu_counter = AOSTF_calc_next_counter(CSRV_GS_rp_tlm_packet_handler_.vcdu_counter);
 
     // CLCW の設定
     // CMD の VCIDと TLM の VCID は独立で関係がない
     // TLM の VCID 種別（Realtime, Replay) によらず CLCW を設定して良い
     // CLCW が対応する CMD の VCID は CLCW の内部で指定される
-    VCDU_set_clcw(&CSRV_GS_rp_tlm_packet_handler_.vcdu, GS_form_clcw());
+    AOSTF_set_clcw(&CSRV_GS_rp_tlm_packet_handler_.vcdu, GS_form_clcw());
 
-    // 完成した VCDU を RP VCDU として送出
+    // 完成した AOSTF を RP AOSTF として送出
     GS_send_vcdu(&gs_driver_, &CSRV_GS_rp_tlm_packet_handler_.vcdu);
   }
 

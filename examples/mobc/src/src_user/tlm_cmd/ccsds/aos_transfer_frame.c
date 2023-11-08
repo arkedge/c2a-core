@@ -3,54 +3,54 @@
 
 #include <string.h> // for memcpy
 
-static void VCDU_set_common_hdr_(VCDU* vcdu);
-static void VCDU_clear_spare_(VCDU* vcdu);
+static void AOSTF_set_common_hdr_(AOSTF* vcdu);
+static void AOSTF_clear_spare_(AOSTF* vcdu);
 
-void VCDU_generate_byte_stream(const VCDU* vcdu,
-                               uint8_t byte_stream[VCDU_LEN])
+void AOSTF_generate_byte_stream(const AOSTF* vcdu,
+                               uint8_t byte_stream[AOSTF_LEN])
 {
-  memcpy(byte_stream, vcdu->header, VCDU_HEADER_SIZE);
-  byte_stream += VCDU_HEADER_SIZE;
+  memcpy(byte_stream, vcdu->header, AOSTF_HEADER_SIZE);
+  byte_stream += AOSTF_HEADER_SIZE;
 
   M_PDU_generate_byte_stream(&(vcdu->m_pdu), byte_stream);
   byte_stream += M_PDU_LEN;
 
-  memcpy(byte_stream, vcdu->trailer, VCDU_TRAILER_SIZE);
+  memcpy(byte_stream, vcdu->trailer, AOSTF_TRAILER_SIZE);
 }
 
-void VCDU_setup_fill_vcdu(VCDU* vcdu)
+void AOSTF_setup_fill_vcdu(AOSTF* vcdu)
 {
-  VCDU_set_common_hdr_(vcdu);
-  VCDU_set_vcid(vcdu, VCDU_VCID_FILL);
+  AOSTF_set_common_hdr_(vcdu);
+  AOSTF_set_vcid(vcdu, AOSTF_VCID_FILL);
   M_PDU_setup_idle_m_pdu(&(vcdu->m_pdu));
 }
 
-void VCDU_setup_realtime_vcdu_hdr(VCDU* vcdu,
+void AOSTF_setup_realtime_vcdu_hdr(AOSTF* vcdu,
                                   uint32_t counter)
 {
-  VCDU_set_common_hdr_(vcdu);
-  VCDU_set_vcid(vcdu, VCDU_VCID_REALTIME);
-  VCDU_set_vcdu_counter(vcdu, counter);
+  AOSTF_set_common_hdr_(vcdu);
+  AOSTF_set_vcid(vcdu, AOSTF_VCID_REALTIME);
+  AOSTF_set_vcdu_counter(vcdu, counter);
 }
 
-void VCDU_setup_replay_vcdu_hdr(VCDU* vcdu,
+void AOSTF_setup_replay_vcdu_hdr(AOSTF* vcdu,
                                 uint32_t counter)
 {
-  VCDU_set_common_hdr_(vcdu);
-  VCDU_set_replay_flag(vcdu, VCDU_REPLAY_TRUE);
-  VCDU_set_vcid(vcdu, VCDU_VCID_REPLAY);
-  VCDU_set_vcdu_counter(vcdu, counter);
+  AOSTF_set_common_hdr_(vcdu);
+  AOSTF_set_replay_flag(vcdu, AOSTF_REPLAY_TRUE);
+  AOSTF_set_vcid(vcdu, AOSTF_VCID_REPLAY);
+  AOSTF_set_vcdu_counter(vcdu, counter);
 }
 
-static void VCDU_set_common_hdr_(VCDU* vcdu)
+static void AOSTF_set_common_hdr_(AOSTF* vcdu)
 {
-  VCDU_set_ver(vcdu, VCDU_VER_2);
-  VCDU_set_scid(vcdu, VCDU_SCID_SAMPLE_SATELLITE); // FIXME: 仮
-  VCDU_set_replay_flag(vcdu, VCDU_REPLAY_FALSE);
-  VCDU_clear_spare_(vcdu);
+  AOSTF_set_ver(vcdu, AOSTF_VER_2);
+  AOSTF_set_scid(vcdu, AOSTF_SCID_SAMPLE_SATELLITE); // FIXME: 仮
+  AOSTF_set_replay_flag(vcdu, AOSTF_REPLAY_FALSE);
+  AOSTF_clear_spare_(vcdu);
 }
 
-static void VCDU_clear_spare_(VCDU* vcdu)
+static void AOSTF_clear_spare_(AOSTF* vcdu)
 {
   unsigned int pos = 5;
   uint8_t mask = 0x7f; // 01111111b
@@ -58,25 +58,25 @@ static void VCDU_clear_spare_(VCDU* vcdu)
   vcdu->header[pos] &= (uint8_t)(~mask);
 }
 
-VCDU_VER VCDU_get_ver(const VCDU* vcdu)
+AOSTF_VER AOSTF_get_ver(const AOSTF* vcdu)
 {
   unsigned int pos = 0;
   uint8_t mask = 0xc0; // 11000000b
 
-  VCDU_VER ver = (VCDU_VER)((vcdu->header[pos] & mask) >> 6);
+  AOSTF_VER ver = (AOSTF_VER)((vcdu->header[pos] & mask) >> 6);
 
   switch (ver)
   {
-  case VCDU_VER_2:
+  case AOSTF_VER_2:
     return ver;
 
   default:
-    return VCDU_VER_UNKNOWN;
+    return AOSTF_VER_UNKNOWN;
   }
 }
 
-void VCDU_set_ver(VCDU* vcdu,
-                  VCDU_VER ver)
+void AOSTF_set_ver(AOSTF* vcdu,
+                  AOSTF_VER ver)
 {
   unsigned int pos = 0;
   uint8_t mask = 0xc0; // 11000000b
@@ -86,7 +86,7 @@ void VCDU_set_ver(VCDU* vcdu,
   vcdu->header[pos] |= val;
 }
 
-VCDU_SCID VCDU_get_scdi(const VCDU* vcdu)
+AOSTF_SCID AOSTF_get_scdi(const AOSTF* vcdu)
 {
   unsigned int pos = 0;
   uint8_t mask1 = 0x3f; // 00111111b
@@ -98,16 +98,16 @@ VCDU_SCID VCDU_get_scdi(const VCDU* vcdu)
 
   switch (scid)
   {
-  case VCDU_SCID_SAMPLE_SATELLITE:
-    return (VCDU_SCID)scid;
+  case AOSTF_SCID_SAMPLE_SATELLITE:
+    return (AOSTF_SCID)scid;
 
   default:
-    return VCDU_SCID_UNKNOWN;
+    return AOSTF_SCID_UNKNOWN;
   }
 }
 
-void VCDU_set_scid(VCDU* vcdu,
-                   VCDU_SCID scid)
+void AOSTF_set_scid(AOSTF* vcdu,
+                   AOSTF_SCID scid)
 {
   unsigned int pos = 0;
   uint8_t mask1 = 0x3f; // 00111111b
@@ -119,27 +119,27 @@ void VCDU_set_scid(VCDU* vcdu,
   vcdu->header[pos + 1] |= (uint8_t)((scid << 6) & mask2);
 }
 
-VCDU_VCID VCDU_get_vcid(const VCDU* vcdu)
+AOSTF_VCID AOSTF_get_vcid(const AOSTF* vcdu)
 {
   unsigned int pos = 1;
   uint8_t mask = 0x3f; // 00111111b
 
-  VCDU_VCID vcid = (VCDU_VCID)(vcdu->header[pos] & mask);
+  AOSTF_VCID vcid = (AOSTF_VCID)(vcdu->header[pos] & mask);
 
   switch (vcid)
   {
-  case VCDU_VCID_REALTIME: // FALLTHROUGH
-  case VCDU_VCID_REPLAY: // FALLTHROUGH
-  case VCDU_VCID_FILL: // FALLTHROUGH
+  case AOSTF_VCID_REALTIME: // FALLTHROUGH
+  case AOSTF_VCID_REPLAY: // FALLTHROUGH
+  case AOSTF_VCID_FILL: // FALLTHROUGH
     return vcid;
 
   default:
-    return VCDU_VCID_UNKNOWN;
+    return AOSTF_VCID_UNKNOWN;
   }
 }
 
-void VCDU_set_vcid(VCDU* vcdu,
-                   VCDU_VCID vcid)
+void AOSTF_set_vcid(AOSTF* vcdu,
+                   AOSTF_VCID vcid)
 {
   unsigned int pos = 1;
   uint8_t mask = 0x3f; // 00111111b
@@ -148,7 +148,7 @@ void VCDU_set_vcid(VCDU* vcdu,
   vcdu->header[pos] |= (uint8_t)(vcid & mask);
 }
 
-uint32_t VCDU_get_vcdu_counter(const VCDU* vcdu)
+uint32_t AOSTF_get_vcdu_counter(const AOSTF* vcdu)
 {
   unsigned int pos = 2;
 
@@ -161,7 +161,7 @@ uint32_t VCDU_get_vcdu_counter(const VCDU* vcdu)
   return counter;
 }
 
-void VCDU_set_vcdu_counter(VCDU* vcdu,
+void AOSTF_set_vcdu_counter(AOSTF* vcdu,
                            uint32_t counter)
 {
   unsigned int pos = 2;
@@ -171,16 +171,16 @@ void VCDU_set_vcdu_counter(VCDU* vcdu,
   vcdu->header[pos + 2] = (uint8_t)(counter & 0xff);
 }
 
-VCDU_REPLAY_FLAG VCDU_get_replay_flag(const VCDU* vcdu)
+AOSTF_REPLAY_FLAG AOSTF_get_replay_flag(const AOSTF* vcdu)
 {
   unsigned int pos = 5;
   uint8_t mask = 0x80; // 10000000b
 
-  return (VCDU_REPLAY_FLAG)((vcdu->header[pos] & mask) >> 7);
+  return (AOSTF_REPLAY_FLAG)((vcdu->header[pos] & mask) >> 7);
 }
 
-void VCDU_set_replay_flag(VCDU* vcdu,
-                          VCDU_REPLAY_FLAG flag)
+void AOSTF_set_replay_flag(AOSTF* vcdu,
+                          AOSTF_REPLAY_FLAG flag)
 {
   unsigned int pos = 5;
   uint8_t mask = 0x80; // 10000000b
@@ -189,7 +189,7 @@ void VCDU_set_replay_flag(VCDU* vcdu,
   vcdu->header[pos] |= (uint8_t)((flag << 7) & mask);
 }
 
-uint32_t VCDU_get_clcw(const VCDU* vcdu)
+uint32_t AOSTF_get_clcw(const AOSTF* vcdu)
 {
   unsigned int pos = 0;
 
@@ -204,7 +204,7 @@ uint32_t VCDU_get_clcw(const VCDU* vcdu)
   return clcw;
 }
 
-void VCDU_set_clcw(VCDU* vcdu,
+void AOSTF_set_clcw(AOSTF* vcdu,
                    uint32_t clcw)
 {
   unsigned int pos = 0;
@@ -215,8 +215,8 @@ void VCDU_set_clcw(VCDU* vcdu,
   vcdu->trailer[pos + 3] = (uint8_t)(clcw & 0xff);
 }
 
-uint32_t VCDU_calc_next_counter(uint32_t prev)
+uint32_t AOSTF_calc_next_counter(uint32_t prev)
 {
-  return (prev + 1) % VCDU_COUNTER_MAX;
+  return (prev + 1) % AOSTF_COUNTER_MAX;
 }
 #pragma section
