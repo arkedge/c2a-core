@@ -254,6 +254,7 @@ CCP_CmdRet Cmd_TLCD_DEPLOY_BLOCK(const CommonCmdPacket* packet)
   TLCD_ID id = (TLCD_ID)CCP_get_param_from_packet(packet, 0, uint8_t);
   bct_id_t block_no = CCP_get_param_from_packet(packet, 1, bct_id_t);
   PL_ACK   ack;
+  const uint32_t note = ((0x000000ff & id) << 24) | (0x00ffffff & block_no);
 
   if (CCP_get_param_len(packet) != (1 + SIZE_OF_BCT_ID_T))
   {
@@ -281,7 +282,7 @@ CCP_CmdRet Cmd_TLCD_DEPLOY_BLOCK(const CommonCmdPacket* packet)
     EL_record_event((EL_GROUP)EL_CORE_GROUP_TLCD_DEPLOY_BLOCK,
                     (uint32_t)PL_BC_LIST_CLEARED,
                     EL_ERROR_LEVEL_HIGH,
-                    (uint32_t)( ((0x000000ff & id) << 24) | (0x00ffffff & block_no) ));
+                    note);
     return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_CONTEXT, (uint32_t)ack);
   }
   else if (ack != PL_SUCCESS)
@@ -289,7 +290,7 @@ CCP_CmdRet Cmd_TLCD_DEPLOY_BLOCK(const CommonCmdPacket* packet)
     EL_record_event((EL_GROUP)EL_CORE_GROUP_TLCD_DEPLOY_BLOCK,
                     (uint32_t)ack,
                     EL_ERROR_LEVEL_LOW,
-                    (uint32_t)( ((0x000000ff & id) << 24) | (0x00ffffff & block_no) ));
+                    note);
     if (ack == PL_BC_TIME_ADJUSTED)
     {
       return CCP_make_cmd_ret(CCP_EXEC_SUCCESS, (uint32_t)ack);
