@@ -1,13 +1,12 @@
 #pragma section REPRO
-#include "aostf.h"
+#include "aos_transfer_frame.h"
 
 #include <string.h> // for memcpy
 
 static void AOSTF_set_common_hdr_(AOSTF* aostf);
 static void AOSTF_clear_spare_(AOSTF* aostf);
 
-void AOSTF_generate_byte_stream(const AOSTF* aostf,
-                               uint8_t byte_stream[AOSTF_LEN])
+void AOSTF_generate_byte_stream(const AOSTF* aostf, uint8_t byte_stream[AOSTF_LEN])
 {
   memcpy(byte_stream, aostf->header, AOSTF_HEADER_SIZE);
   byte_stream += AOSTF_HEADER_SIZE;
@@ -25,16 +24,14 @@ void AOSTF_setup_fill_aostf(AOSTF* aostf)
   M_PDU_setup_idle_m_pdu(&(aostf->m_pdu));
 }
 
-void AOSTF_setup_realtime_aostf_hdr(AOSTF* aostf,
-                                  uint32_t counter)
+void AOSTF_setup_realtime_aostf_hdr(AOSTF* aostf, uint32_t counter)
 {
   AOSTF_set_common_hdr_(aostf);
   AOSTF_set_vcid(aostf, AOSTF_VCID_REALTIME);
   AOSTF_set_aostf_counter(aostf, counter);
 }
 
-void AOSTF_setup_replay_aostf_hdr(AOSTF* aostf,
-                                uint32_t counter)
+void AOSTF_setup_replay_aostf_hdr(AOSTF* aostf, uint32_t counter)
 {
   AOSTF_set_common_hdr_(aostf);
   AOSTF_set_replay_flag(aostf, AOSTF_REPLAY_TRUE);
@@ -75,8 +72,7 @@ AOSTF_VER AOSTF_get_ver(const AOSTF* aostf)
   }
 }
 
-void AOSTF_set_ver(AOSTF* aostf,
-                  AOSTF_VER ver)
+void AOSTF_set_ver(AOSTF* aostf, AOSTF_VER ver)
 {
   unsigned int pos = 0;
   uint8_t mask = 0xc0; // 11000000b
@@ -106,8 +102,7 @@ AOSTF_SCID AOSTF_get_scdi(const AOSTF* aostf)
   }
 }
 
-void AOSTF_set_scid(AOSTF* aostf,
-                   AOSTF_SCID scid)
+void AOSTF_set_scid(AOSTF* aostf, AOSTF_SCID scid)
 {
   unsigned int pos = 0;
   uint8_t mask1 = 0x3f; // 00111111b
@@ -138,8 +133,7 @@ AOSTF_VCID AOSTF_get_vcid(const AOSTF* aostf)
   }
 }
 
-void AOSTF_set_vcid(AOSTF* aostf,
-                   AOSTF_VCID vcid)
+void AOSTF_set_vcid(AOSTF* aostf, AOSTF_VCID vcid)
 {
   unsigned int pos = 1;
   uint8_t mask = 0x3f; // 00111111b
@@ -161,8 +155,7 @@ uint32_t AOSTF_get_aostf_counter(const AOSTF* aostf)
   return counter;
 }
 
-void AOSTF_set_aostf_counter(AOSTF* aostf,
-                           uint32_t counter)
+void AOSTF_set_aostf_counter(AOSTF* aostf, uint32_t counter)
 {
   unsigned int pos = 2;
 
@@ -179,8 +172,7 @@ AOSTF_REPLAY_FLAG AOSTF_get_replay_flag(const AOSTF* aostf)
   return (AOSTF_REPLAY_FLAG)((aostf->header[pos] & mask) >> 7);
 }
 
-void AOSTF_set_replay_flag(AOSTF* aostf,
-                          AOSTF_REPLAY_FLAG flag)
+void AOSTF_set_replay_flag(AOSTF* aostf, AOSTF_REPLAY_FLAG flag)
 {
   unsigned int pos = 5;
   uint8_t mask = 0x80; // 10000000b
@@ -204,8 +196,7 @@ uint32_t AOSTF_get_clcw(const AOSTF* aostf)
   return clcw;
 }
 
-void AOSTF_set_clcw(AOSTF* aostf,
-                   uint32_t clcw)
+void AOSTF_set_clcw(AOSTF* aostf, uint32_t clcw)
 {
   unsigned int pos = 0;
 
@@ -219,4 +210,5 @@ uint32_t AOSTF_calc_next_counter(uint32_t prev)
 {
   return (prev + 1) % AOSTF_COUNTER_MAX;
 }
+
 #pragma section
