@@ -13,7 +13,7 @@ typedef struct
   uint8_t header[AOSTF_HEADER_SIZE];
   M_PDU m_pdu;
   uint8_t trailer[AOSTF_TRAILER_SIZE];
-} AOSTF;
+} AosTransferFrame;
 
 typedef enum
 {
@@ -41,37 +41,37 @@ typedef enum
   AOSTF_REPLAY_TRUE = 1 // 1b: Replay Transfer Frame
 } AOSTF_REPLAY_FLAG;
 
-void AOSTF_generate_byte_stream(const AOSTF* aostf, uint8_t byte_stream[AOSTF_LEN]);
+void AOSTF_generate_byte_stream(const AosTransferFrame* aostf, uint8_t byte_stream[AOSTF_LEN]);
 
-void AOSTF_setup_fill_aostf(AOSTF* aostf);
+void AOSTF_setup_fill_aostf(AosTransferFrame* aostf);
 
-void AOSTF_setup_realtime_aostf_hdr(AOSTF* aostf, uint32_t counter);
+void AOSTF_setup_realtime_aostf_hdr(AosTransferFrame* aostf, uint32_t counter);
 
-void AOSTF_setup_replay_aostf_hdr(AOSTF* aostf, uint32_t counter);
+void AOSTF_setup_replay_aostf_hdr(AosTransferFrame* aostf, uint32_t counter);
 
-AOSTF_VER AOSTF_get_ver(const AOSTF* aostf);
+AOSTF_VER AOSTF_get_ver(const AosTransferFrame* aostf);
 
-void AOSTF_set_ver(AOSTF* aostf, AOSTF_VER ver);
+void AOSTF_set_ver(AosTransferFrame* aostf, AOSTF_VER ver);
 
-AOSTF_SCID AOSTF_get_scdi(const AOSTF* aostf);
+AOSTF_SCID AOSTF_get_scdi(const AosTransferFrame* aostf);
 
-void AOSTF_set_scid(AOSTF* aostf, AOSTF_SCID scid);
+void AOSTF_set_scid(AosTransferFrame* aostf, AOSTF_SCID scid);
 
-AOSTF_VCID AOSTF_get_vcid(const AOSTF* aostf);
+AOSTF_VCID AOSTF_get_vcid(const AosTransferFrame* aostf);
 
-void AOSTF_set_vcid(AOSTF* aostf, AOSTF_VCID vcid);
+void AOSTF_set_vcid(AosTransferFrame* aostf, AOSTF_VCID vcid);
 
-uint32_t AOSTF_get_aostf_counter(const AOSTF* aostf);
+uint32_t AOSTF_get_aostf_counter(const AosTransferFrame* aostf);
 
-void AOSTF_set_aostf_counter(AOSTF* aostf, uint32_t counter);
+void AOSTF_set_aostf_counter(AosTransferFrame* aostf, uint32_t counter);
 
-AOSTF_REPLAY_FLAG AOSTF_get_replay_flag(const AOSTF* aostf);
+AOSTF_REPLAY_FLAG AOSTF_get_replay_flag(const AosTransferFrame* aostf);
 
-void AOSTF_set_replay_flag(AOSTF* aostf, AOSTF_REPLAY_FLAG flag);
+void AOSTF_set_replay_flag(AosTransferFrame* aostf, AOSTF_REPLAY_FLAG flag);
 
-uint32_t AOSTF_get_clcw(const AOSTF* aostf);
+uint32_t AOSTF_get_clcw(const AosTransferFrame* aostf);
 
-void AOSTF_set_clcw(AOSTF* aostf, uint32_t clcw);
+void AOSTF_set_clcw(AosTransferFrame* aostf, uint32_t clcw);
 
 uint32_t AOSTF_calc_next_counter(uint32_t prev);
 

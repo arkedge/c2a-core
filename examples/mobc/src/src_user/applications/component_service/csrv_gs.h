@@ -19,7 +19,7 @@
 typedef struct
 {
   TcpToMPdu tc_packet_to_m_pdu; //!< PL から取り出した tc_packet を M_PDU に変換する
-  AOSTF aostf;              //!< 送信するAOSTF
+  AosTransferFrame aostf;              //!< 送信するAOSTF
   uint32_t aostf_counter;  //!< AOSTF counter
 } CSRV_GS_TlmPacketHandler;
 

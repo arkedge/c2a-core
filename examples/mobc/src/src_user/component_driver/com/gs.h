@@ -113,6 +113,6 @@ CDS_REC_ERR_CODE GS_rec_tctf(GS_Driver* gs_driver);
  * @param[in] aostf:      送信する AOSTF. 場合によってはそのまま DS に渡すので， local変数ではなくstaticな変数を渡すこと
  * @return CDS_CMD_ERR_CODE: 送信結果
  */
-CDS_CMD_ERR_CODE GS_send_aostf(GS_Driver* gs_driver, const AOSTF* aostf);
+CDS_CMD_ERR_CODE GS_send_aostf(GS_Driver* gs_driver, const AosTransferFrame* aostf);
 
 #endif

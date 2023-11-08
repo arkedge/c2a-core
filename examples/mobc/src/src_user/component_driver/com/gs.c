@@ -254,11 +254,11 @@ static CDS_ERR_CODE GS_analyze_rec_data_(CDS_StreamConfig* p_stream_config, void
   return CDS_ERR_CODE_OK;
 }
 
-CDS_CMD_ERR_CODE GS_send_aostf(GS_Driver* gs_driver, const AOSTF* aostf)
+CDS_CMD_ERR_CODE GS_send_aostf(GS_Driver* gs_driver, const AosTransferFrame* aostf)
 {
   CDS_ERR_CODE ret_ccsds = CDS_ERR_CODE_OK;
   CDS_ERR_CODE ret_uart  = CDS_ERR_CODE_OK;
-  size_t aostf_size = sizeof(AOSTF);
+  size_t aostf_size = sizeof(AosTransferFrame);
 
   // パディングが無ければ元を GS_tx_frame_ にコピーさせる (444Byte) のコピーが無駄
   if (aostf_size == AOSTF_LEN)
