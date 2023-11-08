@@ -49,9 +49,9 @@
 
 typedef struct
 {
-  uint8_t header[AOSTF_HEADER_SIZE];
-  M_PDU   m_pdu;
-  uint8_t trailer[AOSTF_TRAILER_SIZE];
+  uint8_t                      header[AOSTF_HEADER_SIZE];
+  MultiplexingProtocolDataUnit m_pdu;
+  uint8_t                      trailer[AOSTF_TRAILER_SIZE];
 } AosTransferFrame;
 
 typedef enum

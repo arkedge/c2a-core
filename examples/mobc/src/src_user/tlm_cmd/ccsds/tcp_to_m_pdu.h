@@ -53,6 +53,6 @@ void T2M_initialize(TcpToMPdu* tcp_to_m_pdu);
  * @param[out] m_pdu: 生成される M_PDU
  * @return T2M_ACK
  */
-T2M_ACK T2M_form_m_pdu(TcpToMPdu* tcp_to_m_pdu, PacketList* pl, M_PDU* m_pdu);
+T2M_ACK T2M_form_m_pdu(TcpToMPdu* tcp_to_m_pdu, PacketList* pl, MultiplexingProtocolDataUnit* m_pdu);
 
 #endif
