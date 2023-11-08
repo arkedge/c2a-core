@@ -40,7 +40,7 @@
 #ifndef AOS_TRANSFER_FRAME_H_
 #define AOS_TRANSFER_FRAME_H_
 
-#include "m_pdu.h"
+#include "multiplexing_protocol_data_unit.h"
 
 #define AOSTF_HEADER_SIZE   (6u)
 #define AOSTF_TRAILER_SIZE  (4u)
