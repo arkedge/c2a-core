@@ -1,3 +1,42 @@
+/**
+ * @file
+ * @brief CCSDS で規定される AOS Transfer Frame の実装
+ * @note  packet 構造
+ *        |---------+-------+-------+--------------------------|
+ *        | Pos     | Pos   | Size  | Name                     |
+ *        | [octet] | [bit] | [bit] |                          |
+ *        |---------+-------+-------+--------------------------|
+ *        | === Primary Header ================================|
+ *        |---------+-------+-------+--------------------------|
+ *        |       0 |     0 |     2 | Version Number           |
+ *        |       0 |     2 |     8 | Spacecraft ID            |
+ *        |       1 |     2 |     6 | Virtual Channel ID       |
+ *        |       2 |     0 |    24 | Virtual Channel          |
+ *        |         |       |       |           Frame Count    |
+ *        |       5 |     0 |     1 | Replay Flag              |
+ *        |       5 |     1 |     1 | VC Frame Count           |
+ *        |         |       |       |           Usage Flag     |
+ *        |       5 |     2 |     2 | Reserved Spare           |
+ *        |       5 |     4 |     4 | VC Frame Count Cycle     |
+ *        |---------+-------+-------+--------------------------|
+ *        | === User Data Field ===============================|
+ *        |---------+-------+-------+--------------------------|
+ *        |       6 |     0 |     * | M_PDU など               |
+ *        |---------+-------+-------+--------------------------|
+ *        | === Trailer =======================================|
+ *        |---------+-------+-------+--------------------------|
+ *        |   N - 4 |     0 |    32 | CLCW                     |
+ *        |---------+-------+-------+--------------------------|
+ *
+ *        Primary Header:
+ *          Version Number と Spacecraft ID をまとめて Master Channel ID と呼ぶ
+ *            以下をまとめて Signaling Field と呼ぶ
+ *          Frame Header Error Control がある Option もある
+ *        Transfer Frame Insert Zone:
+ *          Primary Header の後に Transfer Frame Insert Zone がある Option もある
+ *        Trailer:
+ *          ここでの定義以外にさまざまな Option がある
+ */
 #ifndef AOS_TRANSFER_FRAME_H_
 #define AOS_TRANSFER_FRAME_H_
 
@@ -11,7 +50,7 @@
 typedef struct
 {
   uint8_t header[AOSTF_HEADER_SIZE];
-  M_PDU m_pdu;
+  M_PDU   m_pdu;
   uint8_t trailer[AOSTF_TRAILER_SIZE];
 } AosTransferFrame;
 
@@ -30,15 +69,15 @@ typedef enum
 typedef enum
 {
   AOSTF_VCID_REALTIME = 0x01, // 000001b: Realtime Transfer Frame
-  AOSTF_VCID_REPLAY = 0x02, // 000010b: Stored Transfer Frame
-  AOSTF_VCID_FILL = 0x3f, // 111111b: Fill Transfer Frame
+  AOSTF_VCID_REPLAY   = 0x02, // 000010b: Stored Transfer Frame
+  AOSTF_VCID_FILL     = 0x3f, // 111111b: Fill Transfer Frame
   AOSTF_VCID_UNKNOWN
 } AOSTF_VCID;
 
 typedef enum
 {
   AOSTF_REPLAY_FALSE = 0, // 0b: Realtime Transfer Frame
-  AOSTF_REPLAY_TRUE = 1 // 1b: Replay Transfer Frame
+  AOSTF_REPLAY_TRUE   = 1 // 1b: Replay Transfer Frame
 } AOSTF_REPLAY_FLAG;
 
 void AOSTF_generate_byte_stream(const AosTransferFrame* aostf, uint8_t byte_stream[AOSTF_LEN]);

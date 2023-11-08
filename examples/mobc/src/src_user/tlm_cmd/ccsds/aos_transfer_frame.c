@@ -1,4 +1,9 @@
 #pragma section REPRO
+/**
+ * @file
+ * @brief CCSDS で規定される AOS Transfer Frame の実装
+ * @note  詳細は aos_transfer_frame.h を参照
+ */
 #include "aos_transfer_frame.h"
 
 #include <string.h> // for memcpy
@@ -66,7 +71,6 @@ AOSTF_VER AOSTF_get_ver(const AosTransferFrame* aostf)
   {
   case AOSTF_VER_2:
     return ver;
-
   default:
     return AOSTF_VER_UNKNOWN;
   }
@@ -96,7 +100,6 @@ AOSTF_SCID AOSTF_get_scdi(const AosTransferFrame* aostf)
   {
   case AOSTF_SCID_SAMPLE_SATELLITE:
     return (AOSTF_SCID)scid;
-
   default:
     return AOSTF_SCID_UNKNOWN;
   }
@@ -124,10 +127,9 @@ AOSTF_VCID AOSTF_get_vcid(const AosTransferFrame* aostf)
   switch (vcid)
   {
   case AOSTF_VCID_REALTIME: // FALLTHROUGH
-  case AOSTF_VCID_REPLAY: // FALLTHROUGH
-  case AOSTF_VCID_FILL: // FALLTHROUGH
+  case AOSTF_VCID_REPLAY:   // FALLTHROUGH
+  case AOSTF_VCID_FILL:     // FALLTHROUGH
     return vcid;
-
   default:
     return AOSTF_VCID_UNKNOWN;
   }
