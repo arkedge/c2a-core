@@ -1,6 +1,7 @@
 /**
  * @file
  * @brief PacketList から TCPacket を取ってきてそれを送信可能な M_PDU へと変換する
+ * @note  FIXME: これはリファクタしてなんとかしたい・・・
  */
 #ifndef TCP_TO_M_PDU_H_
 #define TCP_TO_M_PDU_H_

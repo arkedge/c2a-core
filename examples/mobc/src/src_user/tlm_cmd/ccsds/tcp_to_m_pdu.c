@@ -2,6 +2,7 @@
 /**
  * @file
  * @brief PacketList から TCPacket を取ってきてそれを送信可能な M_PDU へと変換する
+ * @note  FIXME: これはリファクタしてなんとかしたい・・・
  */
 
 #include "tcp_to_m_pdu.h"
