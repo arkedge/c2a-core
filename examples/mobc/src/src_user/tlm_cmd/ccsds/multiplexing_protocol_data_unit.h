@@ -16,8 +16,8 @@
  *        |       2 |     0 |     * | いくつかの Space Packet  |
  *        |---------+-------+-------+--------------------------|
  */
-#ifndef M_PDU_H_
-#define M_PDU_H_
+#ifndef MULTIPLEXING_PROTOCOL_DATA_UNIT_H_
+#define MULTIPLEXING_PROTOCOL_DATA_UNIT_H_
 
 #include <stddef.h>
 #include <stdint.h>

@@ -2,9 +2,9 @@
 /**
  * @file
  * @brief CCSDS で規定される M_PDU (Multiplexing Protocol Data Unit) の実装
- * @note  詳細は m_pdu.h を参照
+ * @note  詳細は multiplexing_protocol_data_unit.h を参照
  */
-#include "m_pdu.h"
+#include "multiplexing_protocol_data_unit.h"
 #include "string.h" // for memcpy
 
 static void M_PDU_clear_spare_(M_PDU* m_pdu);
