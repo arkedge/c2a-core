@@ -10,7 +10,7 @@
 #include <src_core/hal/uart.h>
 #include <src_core/hal/ccsds.h>
 #include "../../hal/ccsds_user.h"
-#include "../../tlm_cmd/ccsds/vcdu.h"
+#include "../../tlm_cmd/ccsds/aostf.h"
 #include "gs_validate.h"
 
 #define GS_RX_HEADER_NUM (3)
@@ -54,7 +54,7 @@ typedef struct
   {
     cycle_t send_cycle;                       //!< 最後に送信したときの時刻
     AOSTF_VCID vcid;                           //!< 送信した TLM のタイプ
-    uint32_t vcdu_counter;                    //!< AOSTF counter
+    uint32_t aostf_counter;                    //!< AOSTF counter
   } tx;
 } GS_Info;
 
@@ -110,9 +110,9 @@ CDS_REC_ERR_CODE GS_rec_tctf(GS_Driver* gs_driver);
  * @note  CDS_send_general_cmd が使われているが, これは DS は MOBC コンポ間を想定しているため, MOBC から見るとコンポに cmd を送信している様に見える, が 今回は MOBC から地上に TLM を送信している
  * @note TLM 送信, 形式は AOSTF
  * @param[in] gs_driver: ドライバー
- * @param[in] vcdu:      送信する AOSTF. 場合によってはそのまま DS に渡すので， local変数ではなくstaticな変数を渡すこと
+ * @param[in] aostf:      送信する AOSTF. 場合によってはそのまま DS に渡すので， local変数ではなくstaticな変数を渡すこと
  * @return CDS_CMD_ERR_CODE: 送信結果
  */
-CDS_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const AOSTF* vcdu);
+CDS_CMD_ERR_CODE GS_send_aostf(GS_Driver* gs_driver, const AOSTF* aostf);
 
 #endif

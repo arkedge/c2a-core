@@ -123,21 +123,21 @@ static RESULT CSRV_GS_rt_tlm_packet_handler_app_(void)
   {
     T2M_ACK ack = T2M_form_m_pdu(&CSRV_GS_rt_tlm_packet_handler_.tc_packet_to_m_pdu,
                                  &PH_rt_tlm_list,
-                                 &CSRV_GS_rt_tlm_packet_handler_.vcdu.m_pdu);
+                                 &CSRV_GS_rt_tlm_packet_handler_.aostf.m_pdu);
     if (ack != T2M_SUCCESS) return RESULT_OK;
 
     // Realtime AOSTF カウンタの設定
-    AOSTF_setup_realtime_vcdu_hdr(&CSRV_GS_rt_tlm_packet_handler_.vcdu, CSRV_GS_rt_tlm_packet_handler_.vcdu_counter);
-    CSRV_GS_rt_tlm_packet_handler_.vcdu_counter = AOSTF_calc_next_counter(CSRV_GS_rt_tlm_packet_handler_.vcdu_counter);
+    AOSTF_setup_realtime_aostf_hdr(&CSRV_GS_rt_tlm_packet_handler_.aostf, CSRV_GS_rt_tlm_packet_handler_.aostf_counter);
+    CSRV_GS_rt_tlm_packet_handler_.aostf_counter = AOSTF_calc_next_counter(CSRV_GS_rt_tlm_packet_handler_.aostf_counter);
 
     // CLCW の設定
     // CMD の VCID と TLM の VCID は独立で関係がない
     // TLM の VCID 種別（Realtime, Replay)によらず CLCW を設定して良い
     // CLCW が対応する CMD の VCID は CLCW の内部で指定される
-    AOSTF_set_clcw(&CSRV_GS_rt_tlm_packet_handler_.vcdu, GS_form_clcw());
+    AOSTF_set_clcw(&CSRV_GS_rt_tlm_packet_handler_.aostf, GS_form_clcw());
 
     // 完成した AOSTF を RT AOSTF として送出
-    GS_send_vcdu(&gs_driver_, &CSRV_GS_rt_tlm_packet_handler_.vcdu);
+    GS_send_aostf(&gs_driver_, &CSRV_GS_rt_tlm_packet_handler_.aostf);
   }
 
   return RESULT_OK;
@@ -158,21 +158,21 @@ static RESULT CSRV_GS_rp_tlm_packet_handler_app_(void)
   {
     T2M_ACK ack = T2M_form_m_pdu(&CSRV_GS_rp_tlm_packet_handler_.tc_packet_to_m_pdu,
                                  &PH_rp_tlm_list,
-                                 &CSRV_GS_rp_tlm_packet_handler_.vcdu.m_pdu);
+                                 &CSRV_GS_rp_tlm_packet_handler_.aostf.m_pdu);
     if (ack != T2M_SUCCESS) return RESULT_OK;
 
     // Replay AOSTF カウンタの設定
-    AOSTF_setup_replay_vcdu_hdr(&CSRV_GS_rp_tlm_packet_handler_.vcdu, CSRV_GS_rp_tlm_packet_handler_.vcdu_counter);
-    CSRV_GS_rp_tlm_packet_handler_.vcdu_counter = AOSTF_calc_next_counter(CSRV_GS_rp_tlm_packet_handler_.vcdu_counter);
+    AOSTF_setup_replay_aostf_hdr(&CSRV_GS_rp_tlm_packet_handler_.aostf, CSRV_GS_rp_tlm_packet_handler_.aostf_counter);
+    CSRV_GS_rp_tlm_packet_handler_.aostf_counter = AOSTF_calc_next_counter(CSRV_GS_rp_tlm_packet_handler_.aostf_counter);
 
     // CLCW の設定
     // CMD の VCIDと TLM の VCID は独立で関係がない
     // TLM の VCID 種別（Realtime, Replay) によらず CLCW を設定して良い
     // CLCW が対応する CMD の VCID は CLCW の内部で指定される
-    AOSTF_set_clcw(&CSRV_GS_rp_tlm_packet_handler_.vcdu, GS_form_clcw());
+    AOSTF_set_clcw(&CSRV_GS_rp_tlm_packet_handler_.aostf, GS_form_clcw());
 
     // 完成した AOSTF を RP AOSTF として送出
-    GS_send_vcdu(&gs_driver_, &CSRV_GS_rp_tlm_packet_handler_.vcdu);
+    GS_send_aostf(&gs_driver_, &CSRV_GS_rp_tlm_packet_handler_.aostf);
   }
 
   return RESULT_OK;

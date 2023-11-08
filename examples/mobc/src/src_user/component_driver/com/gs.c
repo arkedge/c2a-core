@@ -115,7 +115,7 @@ CDS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
 
     gs_driver->info[i].tx.send_cycle = 0;
     gs_driver->info[i].tx.vcid = AOSTF_VCID_UNKNOWN;
-    gs_driver->info[i].tx.vcdu_counter = 0;
+    gs_driver->info[i].tx.aostf_counter = 0;
   }
 
   gs_driver->ccsds_info.buffer_num = 8;
@@ -254,21 +254,21 @@ static CDS_ERR_CODE GS_analyze_rec_data_(CDS_StreamConfig* p_stream_config, void
   return CDS_ERR_CODE_OK;
 }
 
-CDS_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const AOSTF* vcdu)
+CDS_CMD_ERR_CODE GS_send_aostf(GS_Driver* gs_driver, const AOSTF* aostf)
 {
   CDS_ERR_CODE ret_ccsds = CDS_ERR_CODE_OK;
   CDS_ERR_CODE ret_uart  = CDS_ERR_CODE_OK;
-  size_t vcdu_size = sizeof(AOSTF);
+  size_t aostf_size = sizeof(AOSTF);
 
   // パディングが無ければ元を GS_tx_frame_ にコピーさせる (444Byte) のコピーが無駄
-  if (vcdu_size == AOSTF_LEN)
+  if (aostf_size == AOSTF_LEN)
   {
-    CDSSC_set_tx_frame(&gs_driver->driver_ccsds.super.stream_config[GS_TX_STREAM], (uint8_t*)vcdu);
-    CDSSC_set_tx_frame(&gs_driver->driver_uart.super.stream_config[GS_TX_STREAM], (uint8_t*)vcdu);
+    CDSSC_set_tx_frame(&gs_driver->driver_ccsds.super.stream_config[GS_TX_STREAM], (uint8_t*)aostf);
+    CDSSC_set_tx_frame(&gs_driver->driver_uart.super.stream_config[GS_TX_STREAM], (uint8_t*)aostf);
   }
   else
   {
-    AOSTF_generate_byte_stream(vcdu, GS_tx_frame_); // 送信元にセット 消したいなぁ...
+    AOSTF_generate_byte_stream(aostf, GS_tx_frame_); // 送信元にセット 消したいなぁ...
     CDSSC_set_tx_frame(&gs_driver->driver_ccsds.super.stream_config[GS_TX_STREAM], GS_tx_frame_);
     CDSSC_set_tx_frame(&gs_driver->driver_uart.super.stream_config[GS_TX_STREAM], GS_tx_frame_);
   }
@@ -278,8 +278,8 @@ CDS_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const AOSTF* vcdu)
   if (gs_driver->ccsds_info.buffer_num)
   {
     gs_driver->info[GS_PORT_TYPE_CCSDS].tx.send_cycle = TMGR_get_master_total_cycle();
-    gs_driver->info[GS_PORT_TYPE_CCSDS].tx.vcid = AOSTF_get_vcid(vcdu);
-    gs_driver->info[GS_PORT_TYPE_CCSDS].tx.vcdu_counter = AOSTF_get_vcdu_counter(vcdu);
+    gs_driver->info[GS_PORT_TYPE_CCSDS].tx.vcid = AOSTF_get_vcid(aostf);
+    gs_driver->info[GS_PORT_TYPE_CCSDS].tx.aostf_counter = AOSTF_get_aostf_counter(aostf);
 
     // DS 側の名称が cmd なだけで送信しているのは TLM
     ret_ccsds = CDS_send_general_cmd(&gs_driver->driver_ccsds.super, GS_TX_STREAM);
@@ -289,8 +289,8 @@ CDS_CMD_ERR_CODE GS_send_vcdu(GS_Driver* gs_driver, const AOSTF* vcdu)
   if (gs_driver->driver_uart.is_tlm_on)
   {
     gs_driver->info[GS_PORT_TYPE_UART].tx.send_cycle = TMGR_get_master_total_cycle();
-    gs_driver->info[GS_PORT_TYPE_UART].tx.vcid = AOSTF_get_vcid(vcdu);
-    gs_driver->info[GS_PORT_TYPE_UART].tx.vcdu_counter = AOSTF_get_vcdu_counter(vcdu);
+    gs_driver->info[GS_PORT_TYPE_UART].tx.vcid = AOSTF_get_vcid(aostf);
+    gs_driver->info[GS_PORT_TYPE_UART].tx.aostf_counter = AOSTF_get_aostf_counter(aostf);
 
     // DS 側の名称が cmd なだけで送信しているのは TLM
     ret_uart  = CDS_send_general_cmd(&gs_driver->driver_uart.super,  GS_TX_STREAM);

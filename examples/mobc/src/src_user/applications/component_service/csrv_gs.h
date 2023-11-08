@@ -9,7 +9,7 @@
 
 #include "../../component_driver/com/gs.h"
 #include "../../tlm_cmd/ccsds/tcp_to_m_pdu.h"
-#include "../../tlm_cmd/ccsds/vcdu.h"
+#include "../../tlm_cmd/ccsds/aostf.h"
 #include <src_core/system/application_manager/app_info.h>
 
 /**
@@ -19,8 +19,8 @@
 typedef struct
 {
   TcpToMPdu tc_packet_to_m_pdu; //!< PL から取り出した tc_packet を M_PDU に変換する
-  AOSTF vcdu;              //!< 送信するAOSTF
-  uint32_t vcdu_counter;  //!< AOSTF counter
+  AOSTF aostf;              //!< 送信するAOSTF
+  uint32_t aostf_counter;  //!< AOSTF counter
 } CSRV_GS_TlmPacketHandler;
 
 extern const GS_Driver* const gs_driver;

@@ -41,45 +41,45 @@ typedef enum
   AOSTF_REPLAY_TRUE = 1 // 1b: Replay Transfer Frame
 } AOSTF_REPLAY_FLAG;
 
-void AOSTF_generate_byte_stream(const AOSTF* vcdu,
+void AOSTF_generate_byte_stream(const AOSTF* aostf,
                                uint8_t byte_stream[AOSTF_LEN]);
 
-void AOSTF_setup_fill_vcdu(AOSTF* vcdu);
+void AOSTF_setup_fill_aostf(AOSTF* aostf);
 
-void AOSTF_setup_realtime_vcdu_hdr(AOSTF* vcdu,
+void AOSTF_setup_realtime_aostf_hdr(AOSTF* aostf,
                                   uint32_t counter);
 
-void AOSTF_setup_replay_vcdu_hdr(AOSTF* vcdu,
+void AOSTF_setup_replay_aostf_hdr(AOSTF* aostf,
                                 uint32_t counter);
 
-AOSTF_VER AOSTF_get_ver(const AOSTF* vcdu);
+AOSTF_VER AOSTF_get_ver(const AOSTF* aostf);
 
-void AOSTF_set_ver(AOSTF* vcdu,
+void AOSTF_set_ver(AOSTF* aostf,
                   AOSTF_VER ver);
 
-AOSTF_SCID AOSTF_get_scdi(const AOSTF* vcdu);
+AOSTF_SCID AOSTF_get_scdi(const AOSTF* aostf);
 
-void AOSTF_set_scid(AOSTF* vcdu,
+void AOSTF_set_scid(AOSTF* aostf,
                    AOSTF_SCID scid);
 
-AOSTF_VCID AOSTF_get_vcid(const AOSTF* vcdu);
+AOSTF_VCID AOSTF_get_vcid(const AOSTF* aostf);
 
-void AOSTF_set_vcid(AOSTF* vcdu,
+void AOSTF_set_vcid(AOSTF* aostf,
                    AOSTF_VCID vcid);
 
-uint32_t AOSTF_get_vcdu_counter(const AOSTF* vcdu);
+uint32_t AOSTF_get_aostf_counter(const AOSTF* aostf);
 
-void AOSTF_set_vcdu_counter(AOSTF* vcdu,
+void AOSTF_set_aostf_counter(AOSTF* aostf,
                            uint32_t counter);
 
-AOSTF_REPLAY_FLAG AOSTF_get_replay_flag(const AOSTF* vcdu);
+AOSTF_REPLAY_FLAG AOSTF_get_replay_flag(const AOSTF* aostf);
 
-void AOSTF_set_replay_flag(AOSTF* vcdu,
+void AOSTF_set_replay_flag(AOSTF* aostf,
                           AOSTF_REPLAY_FLAG flag);
 
-uint32_t AOSTF_get_clcw(const AOSTF* vcdu);
+uint32_t AOSTF_get_clcw(const AOSTF* aostf);
 
-void AOSTF_set_clcw(AOSTF* vcdu,
+void AOSTF_set_clcw(AOSTF* aostf,
                    uint32_t clcw);
 
 uint32_t AOSTF_calc_next_counter(uint32_t prev);
