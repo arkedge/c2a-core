@@ -15,7 +15,7 @@ set(C2A_SRCS
   normal_block_command_definition/nbc_respond_eh_for_test.c
   normal_block_command_definition/nbc_test_bcl.c
   ccsds/aos_transfer_frame.c
-  ccsds/m_pdu.c
+  ccsds/multiplexing_protocol_data_unit.c
   ccsds/tc_transfer_frame.c
   ccsds/tcp_to_m_pdu.c
   ccsds/tc_segment.c

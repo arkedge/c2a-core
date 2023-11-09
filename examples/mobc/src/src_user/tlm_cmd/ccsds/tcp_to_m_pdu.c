@@ -2,6 +2,7 @@
 /**
  * @file
  * @brief PacketList から TCPacket を取ってきてそれを送信可能な M_PDU へと変換する
+ * @note  FIXME: これはリファクタしてなんとかしたい・・・
  */
 
 #include "tcp_to_m_pdu.h"
@@ -23,7 +24,7 @@ void T2M_initialize(TcpToMPdu* tcp_to_m_pdu)
   return;
 }
 
-T2M_ACK T2M_form_m_pdu(TcpToMPdu* tcp_to_m_pdu, PacketList* pl, M_PDU* m_pdu)
+T2M_ACK T2M_form_m_pdu(TcpToMPdu* tcp_to_m_pdu, PacketList* pl, MultiplexingProtocolDataUnit* m_pdu)
 {
   // M_PDUが完成する or TC Packetがなくなるまで実施
   while (tcp_to_m_pdu->m_pdu_wp != M_PDU_DATA_SIZE)
