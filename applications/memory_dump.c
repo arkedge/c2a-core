@@ -110,7 +110,7 @@ CCP_CmdRet Cmd_MEM_DUMP_REGION_SEQ(const CommonCmdPacket* packet)
   if (num_dumps >= 8)
   {
     // パケット生成回数の上限は8回とする。
-    // 32kbpsでのDL時に8VCDU/secで1秒分の通信量。
+    // 32kbpsでのDL時に8AOSTF/secで1秒分の通信量。
     // これを超える場合は複数回コマンドを送信して対応する。
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_PARAMETER);
   }
@@ -132,7 +132,7 @@ CCP_CmdRet Cmd_MEM_DUMP_REGION_RND(const CommonCmdPacket* packet)
   if (num_dumps >= 8)
   {
     // パケット生成回数の上限は8回とする。
-    // 32kbpsでのDL時に8VCDU/secで1秒分の通信量。
+    // 32kbpsでのDL時に8AOSTF/secで1秒分の通信量。
     // これを超える場合は複数回コマンドを送信して対応する。
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_PARAMETER);
   }
@@ -170,7 +170,7 @@ CCP_CmdRet Cmd_MEM_DUMP_SINGLE(const CommonCmdPacket* packet)
   if (num_dumps >= 8)
   {
     // パケット生成回数の上限は8回とする。
-    // 32kbpsでのDL時に8VCDU/secで1秒分の通信量。
+    // 32kbpsでのDL時に8AOSTF/secで1秒分の通信量。
     // これを超える場合は複数回コマンドを送信して対応する。
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_PARAMETER);
   }

@@ -2,6 +2,21 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
+## v4.1.0 (Unreleased)
+
+### Fixed
+
+- [#193](https://github.com/arkedge/c2a-core/pull/193): VCDU を AOS transfer frame に rename する
+
+### Migration Guide
+- [#193](https://github.com/arkedge/c2a-core/pull/193): 影響範囲は MOBC のみ
+  1. `src_user/tlm_cmd/ccsds/vcdu.{c,h}` を消し，`src_user/tlm_cmd/ccsds/aos_transfer_frame.{c,h}` を `examples/mobc` からコピーする．CMakeLists.txt も修正する．
+  1. `VCDU` を `AOSTF` に置換する（TLM DB の csv なども）．
+  1. `vcdu` を `aostf` に置換する（TLM DB の csv なども）．
+  1. `vcdu.h` を `aos_transfer_frame.h` に置換する（include の修正）．
+  1. コンパイルが通らないところを直す．想定されるものは以下．
+     - `VCDU` 構造体 が `AosTransferFrame` 構造体に変わったので，変数定義の型名が変わっているはず．
+
 ## v4.0.1 (2023-11-09)
 
 ### Fixed

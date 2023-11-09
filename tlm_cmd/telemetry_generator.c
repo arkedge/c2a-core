@@ -72,7 +72,7 @@ CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
   if (num_dumps >= 8)
   {
     // パケット生成回数の上限は8回とする。
-    // 32kbpsでのDL時に8VCDU/secで1秒分の通信量。
+    // 32kbpsでのDL時に8AOSTF/secで1秒分の通信量。
     // これを超える場合は複数回コマンドを送信して対応する。
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_PARAMETER);
   }
@@ -224,7 +224,7 @@ static CCP_CmdRet TG_generate_tlm_(TLM_CODE tlm_id,
   {
     // FIXME: 要検討？
     // パケット生成回数の上限は 8 回とする。
-    // 32 kbpsでの DL 時に 8 VCDU / sec で 1 秒分の通信量。
+    // 32 kbpsでの DL 時に 8 AOSTF / sec で 1 秒分の通信量。
     // これを超える場合は複数回コマンドを送信して対応する。
     return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, TLM_CODE_MAX);
   }

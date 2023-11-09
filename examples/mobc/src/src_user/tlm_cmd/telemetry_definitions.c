@@ -180,7 +180,7 @@ static TF_TLM_FUNC_ACK Tlm_MOBC_(uint8_t* packet, uint16_t* len, uint16_t max_le
   TF_copy_u32(&packet[322], (uint32_t)gs_driver->latest_info->tx.send_cycle);
   TF_copy_u32(&packet[326], gs_driver->driver_ccsds.ccsds_config.bitrate);
   TF_copy_u8(&packet[330], (uint8_t)gs_driver->latest_info->tx.vcid);
-  TF_copy_u32(&packet[331], gs_driver->latest_info->tx.vcdu_counter);
+  TF_copy_u32(&packet[331], gs_driver->latest_info->tx.aostf_counter);
 #endif
 
   *len = 335;
@@ -3564,7 +3564,7 @@ static TF_TLM_FUNC_ACK Tlm_GS_(uint8_t* packet, uint16_t* len, uint16_t max_len)
   TF_copy_u8(&packet[40], (uint8_t)gs_driver->info[0].rx.tctf.bd_rec_status);
   TF_copy_u32(&packet[41], (uint32_t)gs_driver->info[0].tx.send_cycle);
   TF_copy_u8(&packet[45], (uint8_t)gs_driver->info[0].tx.vcid);
-  TF_copy_u32(&packet[46], gs_driver->info[0].tx.vcdu_counter);
+  TF_copy_u32(&packet[46], gs_driver->info[0].tx.aostf_counter);
   TF_copy_u8(&packet[50], gs_driver->ccsds_info.buffer_num);
   TF_copy_u8(&packet[51], gs_driver->driver_uart.uart_config.ch);
   TF_copy_u32(&packet[52], gs_driver->driver_uart.uart_config.baudrate);
@@ -3582,7 +3582,7 @@ static TF_TLM_FUNC_ACK Tlm_GS_(uint8_t* packet, uint16_t* len, uint16_t max_len)
   TF_copy_u8(&packet[73], (uint8_t)gs_driver->info[1].rx.tctf.bd_rec_status);
   TF_copy_u32(&packet[74], (uint32_t)gs_driver->info[1].tx.send_cycle);
   TF_copy_u8(&packet[78], (uint8_t)gs_driver->info[1].tx.vcid);
-  TF_copy_u32(&packet[79], gs_driver->info[1].tx.vcdu_counter);
+  TF_copy_u32(&packet[79], gs_driver->info[1].tx.aostf_counter);
   TF_copy_u8(&packet[83], gs_driver->driver_uart.is_tlm_on);
   TF_copy_u8(&packet[84], gs_validate_info->type_a_counter);
   TF_copy_u8(&packet[85], gs_validate_info->type_b_counter);
@@ -3591,10 +3591,10 @@ static TF_TLM_FUNC_ACK Tlm_GS_(uint8_t* packet, uint16_t* len, uint16_t max_len)
   TF_copy_u8(&packet[88], gs_validate_info->positive_window_width);
   TF_copy_u32(&packet[89], (uint32_t)CSRV_GS_rt_tlm_packet_handler->tc_packet_to_m_pdu.flush_interval);
   TF_copy_u32(&packet[93], (uint32_t)CSRV_GS_rt_tlm_packet_handler->tc_packet_to_m_pdu.last_updated);
-  TF_copy_u32(&packet[97], (uint32_t)CSRV_GS_rt_tlm_packet_handler->vcdu_counter);
+  TF_copy_u32(&packet[97], (uint32_t)CSRV_GS_rt_tlm_packet_handler->aostf_counter);
   TF_copy_u32(&packet[101], (uint32_t)CSRV_GS_rp_tlm_packet_handler->tc_packet_to_m_pdu.flush_interval);
   TF_copy_u32(&packet[105], (uint32_t)CSRV_GS_rp_tlm_packet_handler->tc_packet_to_m_pdu.last_updated);
-  TF_copy_u32(&packet[109], (uint32_t)CSRV_GS_rp_tlm_packet_handler->vcdu_counter);
+  TF_copy_u32(&packet[109], (uint32_t)CSRV_GS_rp_tlm_packet_handler->aostf_counter);
 #endif
 
   *len = 113;
