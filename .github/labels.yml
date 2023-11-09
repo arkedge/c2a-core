@@ -61,3 +61,7 @@
 - name: "WINGS"
   description: ""
   color: "1503bb"
+
+- name: "Gaia"
+  description: ""
+  color: "0052cc"
