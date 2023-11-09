@@ -7,6 +7,7 @@
 ### Fixed
 
 - [#193](https://github.com/arkedge/c2a-core/pull/193): VCDU を AOS transfer frame に rename する
+- [#197](https://github.com/arkedge/c2a-core/pull/197): M_PDU をコード規約に合わせるなどのリファクタ
 
 ### Migration Guide
 - [#193](https://github.com/arkedge/c2a-core/pull/193): 影響範囲は MOBC のみ
@@ -16,6 +17,11 @@
   1. `vcdu.h` を `aos_transfer_frame.h` に置換する（include の修正）．
   1. コンパイルが通らないところを直す．想定されるものは以下．
      - `VCDU` 構造体 が `AosTransferFrame` 構造体に変わったので，変数定義の型名が変わっているはず．
+- [#197](https://github.com/arkedge/c2a-core/pull/197): 影響範囲は MOBC のみ
+  1. `src_user/tlm_cmd/ccsds/m_pdu.{c,h}` を消し，`src_user/tlm_cmd/ccsds/multiplexing_protocol_data_unit.{c,h}` をコピーする． `CMakeLists.txt` も修正する．
+  1. `m_pdu.h` を `multiplexing_protocol_data_unit.h` に置換する（include の修正）．
+  1. コンパイルが通らないところを直す．想定されるものは以下．
+     - `M_PDU` 構造体 が `MultiplexingProtocolDataUnit` 構造体に変わったので，変数定義の型名が変わっているはず．
 
 ## v4.0.1 (2023-11-09)
 
