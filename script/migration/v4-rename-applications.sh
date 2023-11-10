@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Script -> script migration"
+echo "Applications -> applications migration"
 
 function find_all() {
   find . -name "*" -not \( -path "*/.git/*" -o -path "*/src_core/*" -o -path "*.xlsm" \) -type f -print0
@@ -56,7 +56,7 @@ echo "rename ref: UserDefined"
 for ((i=0; i<${#user_defined_org[@]}; i++)); do
   echo "  ${user_defined_org[i]} -> ${user_defined_new[i]}"
 
-  find_all | xargs -0 sed -i -e "s#UserDefined/${drv_org[i]}#user_defined/${drv_new[i]}#g"
+  find_all | xargs -0 sed -i -e "s#UserDefined/${user_defined_org[i]}#user_defined/${user_defined_new[i]}#g"
   find_all | xargs -0 sed -i -e "s#UserDefined\\\${drv_org}#user_defined\\\${drv_new}#g"
 done
 
