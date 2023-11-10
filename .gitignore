@@ -68,3 +68,7 @@ tlmcmddb*.json
 # Added by cargo
 /target
 /Cargo.lock
+
+# Doxygen
+doxygen.log
+docs/html/
