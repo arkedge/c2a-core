@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Script -> script migration"
+echo "Applications -> applications migration"
 
 function find_all() {
   find . -name "*" -not \( -path "*/.git/*" -o -path "*/src_core/*" -o -path "*.xlsm" \) -type f -print0
@@ -36,31 +36,31 @@ done
 
 echo "rename ref: Applications/*"
 
+echo "  DriverInstances -> driver_instances"
 find_all | xargs -0 sed -i -e "s#Applications/DriverInstances#applications/driver_instances#g"
 find_all | xargs -0 sed -i -e "s#Applications\\\DriverInstances#applications\\\driver_instances#g"
+find_all | xargs -0 sed -i -e "s#DriverInstances/#driver_instances/#g"
 
+echo "  Middleware -> middleware"
 find_all | xargs -0 sed -i -e "s#Applications/Middleware#applications/middleware#g"
 find_all | xargs -0 sed -i -e "s#Applications\\\Middleware#applications\\\middleware#g"
-
-find_all | xargs -0 sed -i -e "s#Applications/UserDefined#applications/user_defined#g"
-find_all | xargs -0 sed -i -e "s#Applications\\\UserDefined#applications\\\user_defined#g"
-
-find_all | xargs -0 sed -i -e "s#/Applications#/applications#g"
-find_all | xargs -0 sed -i -e "s#\\\Applications#\\\applications#g"
-
-# CMake
-find_all | xargs -0 sed -i -e "s#DriverInstances/#driver_instances/#g"
 find_all | xargs -0 sed -i -e "s#Middleware/#middleware/#g"
 
-echo "rename ref: UserDefined"
+echo "  UserDefined -> user_defined"
 for ((i=0; i<${#user_defined_org[@]}; i++)); do
-  echo "  ${user_defined_org[i]} -> ${user_defined_new[i]}"
+  echo "    ${user_defined_org[i]} -> ${user_defined_new[i]}"
 
-  find_all | xargs -0 sed -i -e "s#UserDefined/${drv_org[i]}#user_defined/${drv_new[i]}#g"
-  find_all | xargs -0 sed -i -e "s#UserDefined\\\${drv_org}#user_defined\\\${drv_new}#g"
+  find_all | xargs -0 sed -i -e "s#UserDefined/${user_defined_org[i]}#user_defined/${user_defined_new[i]}#g"
+  find_all | xargs -0 sed -i -e "s#UserDefined\\\${user_defined_org[i]}#user_defined\\\${user_defined_new[i]}#g"
 done
-
+echo "    ."
+find_all | xargs -0 sed -i -e "s#Applications/UserDefined#applications/user_defined#g"
+find_all | xargs -0 sed -i -e "s#Applications\\\UserDefined#applications\\\user_defined#g"
 find_all | xargs -0 sed -i -e "s#UserDefined/#user_defined/#g"
+
+echo "  ."
+find_all | xargs -0 sed -i -e "s#/Applications#/applications#g"
+find_all | xargs -0 sed -i -e "s#\\\Applications#\\\applications#g"
 
 # Settings
 echo "rename dir: src_user/Settings/Applications -> src_user/Settings/applications"
