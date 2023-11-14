@@ -41,7 +41,7 @@ mv src/src_user/Settings/system/EventHandlerRules src/src_user/Settings/system/e
 find_settings | xargs -0 sed -i -e "s#System/EventHandlerRules#system/event_handler_rules#g"
 find_settings | xargs -0 sed -i -e "s#System#system#g"
 
-find_all | xargs -0 sed -i -e "s#Settings/System/EventHandlerRules#Setting/system/event_handler_rules#g"
+find_all | xargs -0 sed -i -e "s#Settings/System/EventHandlerRules#Settings/system/event_handler_rules#g"
 find_all | xargs -0 sed -i -e "s#Settings\\\System\\\EventHandlerRules#Settings\\\system\\\event_handler_rules#g"
 
 find_all | xargs -0 sed -i -e "s#Settings/System#Settings/system#g"
