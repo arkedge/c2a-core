@@ -38,7 +38,9 @@ find_all | xargs -0 sed -i -e "s#TlmCmd\\\#tlm_cmd\\\#g"
 # CMake
 echo "rename ref: TlmCmd/*"
 find_all | xargs -0 sed -i -e "s#Ccsds/#ccsds/#g"
+find_all | xargs -0 sed -i -e "s#Ccsds\\\#ccsds\\\#g"
 find_all | xargs -0 sed -i -e "s#NormalBlockCommandDefinition/#normal_block_command_definition/#g"
+find_all | xargs -0 sed -i -e "s#NormalBlockCommandDefinition\\\#normal_block_command_definition\\\#g"
 
 # Settings
 echo "rename settings dir: Settings/TlmCmd -> Settings/tlm_cmd"
