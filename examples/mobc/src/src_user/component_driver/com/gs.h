@@ -10,7 +10,7 @@
 #include <src_core/hal/uart.h>
 #include <src_core/hal/ccsds.h>
 #include "../../hal/ccsds_user.h"
-#include "../../tlm_cmd/ccsds/aos_transfer_frame.h"
+#include <src_core/tlm_cmd/ccsds/mobc/aos_transfer_frame.h>
 #include "gs_validate.h"
 
 #define GS_RX_HEADER_NUM (3)
