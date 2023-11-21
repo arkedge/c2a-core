@@ -232,12 +232,25 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 
 注意: migration 方法やスクリプトの修正などもありえるため，本 Migration Guide 及び Migration Script は c2a-core v4 系のその時点での最新版を参照すること．例えば，使う c2a-core version が v4.0.0 であっても，v4.1.0 や v4.2.0 がリリースされていれば，その時点のものを参照すること．
 
-- v4.0.0-alpha.0
+- pytest への [rye](https://rye-up.com/) の導入（RECOMMENDED）
+  - [#59](https://github.com/arkedge/c2a-core/pull/59): Gaia pytest の導入
+  - c2a-core [example user](./examples) では [WINGS](https://github.com/ut-issl/wings) に変わる新たな地上局システムである [Gaia](https://github.com/arkedge/gaia) を用いており，pytest のバックエンドシステムを [Gaia](https://github.com/arkedge/gaia) に切り替えている（RECOMMENDED）
+  - この切り替えと同時に，pytest project の依存関係管理のために [rye](https://rye-up.com/) を導入している．
+  - [Gaia](https://github.com/arkedge/gaia)への切り替えの有無に関わらず，pytest を含む Python の環境整備には [rye](https://rye-up.com/) を推奨する（RECOMMENDED）
+- 現在使用している c2a-core version を確認する（MUST）
+  - [ut-issl/c2a-core](https://github.com/ut-issl/c2a-core) v3.8 系以前: サポート外．まずは v3.9 系までアップデートすること．
+  - [ut-issl/c2a-core v3.9.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.9.0): サポート外．[ut-issl/c2a-core v3.9.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.9.1) が結果的に breaking な release となってしまっているため，必ず [ut-issl/c2a-core v3.9.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.9.1) を経由して v3.10 系にアップデートすること．
+  - [ut-issl/c2a-core v3.9.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.9.1) ~ [ut-issl/c2a-core v3.9.2](https://github.com/ut-issl/c2a-core/releases/tag/v3.9.2): 移行はほぼ確実に可能と思われるが，明示的なサポートはしない．容易にアップデートが可能であるはずなため，事前に[ut-issl/c2a-core v3.10.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.0) へアップデートすること．
+  - [ut-issl/c2a-core v3.10.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.0): [v4.0.0](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0) ~ [v4.0.1](https://github.com/arkedge/c2a-core/releases/tag/v4.0.1) への移行をサポート．
+  - [ut-issl/c2a-core v3.10.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.1): 限定的にサポート．
+    - [v4.0.0](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0) ~ [v4.0.1](https://github.com/arkedge/c2a-core/releases/tag/v4.0.1) への移行: 可能ではあるものの，[ut-issl/c2a-core v3.10.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.0) からの差分は一時的に失われることになる
+    - v4.0.2(TBD) で移行をサポート予定
+- [v4.0.0-alpha.0](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-alpha.0)
   - [#19](https://github.com/arkedge/c2a-core/pull/18) の変更を取り込む
-- v4.0.0-alpha.1
+- [v4.0.0-alpha.1](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-alpha.1)
   - [#21](https://github.com/arkedge/c2a-core/pull/21), [#24](https://github.com/arkedge/c2a-core/pull/24): IfWrapper -> HAL の rename: [v4-rename-ifwrapper.sh](./script/migration/v4-rename-ifwrapper.sh) を実行
   - [#25](https://github.com/arkedge/c2a-core/pull/25): `IfWrapper/dc.h` を使用していた場合は，一旦 C2A user にヘッダを移す（`src/src_user/hal/dc.h`）
-- v4.0.0-alpha.2
+- [v4.0.0-alpha.2](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-alpha.2)
   - [#18](https://github.com/arkedge/c2a-core/pull/18) の変更を取り込む
 - [yanked] [v4.0.0-beta.0](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.0): このバージョンは yank されているため，tag は存在するが使わないこと
 - [v4.0.0-beta.1](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.1)
@@ -254,18 +267,32 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
     - [workflows-c2a v4.3.0](https://github.com/arkedge/workflows-c2a/releases/tag/v4.3.0) からこの構造に対応
     - ただし，この挙動変更は workflows-c2a に対しては breaking change なので，新規に [.github/workflows/check-coding-rule-v4.yml](https://github.com/arkedge/workflows-c2a/blob/v4.3.0/.github/workflows/check-coding-rule-v4.yml) という workflow を生やしており，こちらに移行する必要がある（[workflows-c2a#63](https://github.com/arkedge/workflows-c2a/pull/63)）
 - [v4.0.0-beta.2](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.2)
+  - [#100](https://github.com/arkedge/c2a-core/pull/100): rye の `build-backend` に pdm を指定する
+    - [c2a-enum-loader](./enum-loader) の相対パスでの指定への切り替えのためにすることになる（SHALL）
+    - これにより，rye の lockfile にそれを実行した PC での絶対パスが吐かれてしまうという既知の問題があるが，これは別途今後対処予定（[#106](https://github.com/arkedge/c2a-core/issues/106)）であり，v4.0.0 の段階では一旦許容するものとしている
   - [#99](https://github.com/arkedge/c2a-core/pull/99): [c2a-enum-loader](./enum-loader) を `src/src_core/enum-loader` のものに切り替える
+    - このバージョンから [ut-issl/c2a-enum-loader](https://github.com/ut-issl/c2a-enum-loader/) が c2a-core リポジトリに同梱されるようになった
+    - そのため，pytest で c2a-enum-loader を指定している部分を切り替える必要がある（SHOULD）
+      - `src/src_user/Test/pyproject.toml` の `dependencies` の `c2aenum` の部分を以下のようにする
+      - `"c2aenum @ file:///${PROJECT_ROOT}/../../src_core/enum-loader"`
   - [#111](https://github.com/arkedge/c2a-core/pull/111): [c2a-tlm-cmd-code-generator](./code-generator) を c2a-core のものに切り替える
-    - [v4.0.0-beta.2](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.2) 時点では `src/src_core/tlm-cmd-code-generator`
-    - [v4.0.0-beta.5](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.5)（[#153](https://github.com/arkedge/c2a-core/pull/153)）以降は `src/src_core/code-generator`
-  - [#86](https://github.com/arkedge/c2a-core/pull/86): CMake の option 修正
-    - これは C2A user ごとに設定が異なるので，手動で確認・修正する必要がある
+    - このバージョンから [ut-issl/c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) が c2a-core リポジトリに同梱されるようになった
+    - そのため，各 C2A user でのコード生成は以下のディレクトリで実行することになる（SHALL）
+      - [v4.0.0-beta.2](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.2) 時点では `src/src_core/tlm-cmd-code-generator`
+      - [v4.0.0-beta.5](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.5)（[#153](https://github.com/arkedge/c2a-core/pull/153)）以降は `src/src_core/code-generator`
+  - [#86](https://github.com/arkedge/c2a-core/pull/86): C2A 全体で共通の CMake の option 修正
+    - C2A 全体での CMake option の命名の [コーディングルール](https://github.com/arkedge/c2a-core/blob/6a32752b6d5cea1ef5a5eb68c410cf705315170d/docs/general/coding_rule.md#cmake-option) が追加された
+    - C2A user ごとに設定があるので，手動で確認・修正する必要がある
+    - C2A user・c2a-core を横断する設定なので，c2a-core と命名を揃えなければならない（MUST）
+    - c2a-core でのマージ順などの関係上リリースが分かれているが，[#132](https://github.com/arkedge/c2a-core/pull/132) と同様の対応はこれと同種のものとして v4.0.0-beta.2 に更新するタイミングでまとめてやってもよい（MAY）
+      - あくまで c2a-core リポジトリでの作業としては C2A 全体で共通の option の整理を [#86](https://github.com/arkedge/c2a-core/pull/86) で，C2A user 固有の設定を [#132](https://github.com/arkedge/c2a-core/pull/132) で別途実施しているが，必ず v4.0.0-beta.3 でやらなければならない理由があるわけではない
 - [v4.0.0-beta.3](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.3)
   - [#122](https://github.com/arkedge/c2a-core/pull/122): Drivers ディレクトリの rename を実行（[v4-rename-driver.sh](./script/migration/v4-rename-driver.sh)）
     - [c2a-tlm-cmd-code-generator](./code-generator) にも更新があるので，念のため再度コード生成を行うこと（migration script の実行時点で diff が出て，それと変わらないはず）
   - [#132](https://github.com/arkedge/c2a-core/pull/132): C2A user 側の CMake option の整理
-    - これは C2A user ごとに設定が異なるので，手動で確認・修正する必要がある
-  - `C2A_USE_SCI_COM_WINGS` を default OFF にする
+    - C2A user ごとに設定が異なるので，手動で確認・修正する必要がある
+    - ただし，example user なので基本的には各 C2A user でもテンプレート的にこの実装が用いられているはずであり，同じ/同様の option 名を使っている場合は example user での命名に揃えることが推奨される（RECOMMENDED）
+  - `C2A_USE_SCI_COM_WINGS` を default OFF にする（RECOMMENDED）
     - このオプションを使う場合（つまり，SILS-S2E で WINGS と疎通する場合），S2E user の `CMakeLists.txt` ないしビルドスクリプト側でこのオプションを ON にして使うこと．あくまで C2A user 単体としては，この機能は optional であるべき．
 - [v4.0.0-beta.4](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.4)
   - [#146](https://github.com/arkedge/c2a-core/pull/146), [#147](https://github.com/arkedge/c2a-core/pull/147): Driver -> Component Driver の rename を実行（[v4-rename-driver2](./script/migration/v4-rename-driver2.sh)）
@@ -278,8 +305,6 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 - v4.0.0
   - [#167](https://github.com/arkedge/c2a-core/pull/167), [#168](https://github.com/arkedge/c2a-core/pull/168): `src/src_user/Settings` -> `src/src_user/settings`
   - [#172](https://github.com/arkedge/c2a-core/pull/172): `src/src_user/settings/tlm_cmd/data_base` -> `tlm-cmd-db` の rename を実行（[v4-move-db-dir.sh](script/migration/v4-move-db-dir.sh)）
-- pytest への rye の導入
-  - [#100](https://github.com/arkedge/c2a-core/pull/100): `build-backend` に pdm を指定する
 
 
 ## Previous Releases
