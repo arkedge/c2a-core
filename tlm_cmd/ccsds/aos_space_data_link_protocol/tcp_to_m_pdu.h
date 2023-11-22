@@ -10,9 +10,9 @@
 
 #include <stddef.h> // for size_t
 
-#include <src_core/tlm_cmd/packet_list.h>
 #include "multiplexing_protocol_data_unit.h"
-#include <src_core/system/time_manager/time_manager.h>
+#include "../../packet_list.h"
+#include "../../../system/time_manager/time_manager.h"
 
 /**
  * @enum  T2M_ACK

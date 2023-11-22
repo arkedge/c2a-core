@@ -20,7 +20,7 @@
 #define TC_SEGMENT_H_
 
 #include <stdint.h>
-#include <src_core/tlm_cmd/ccsds/space_packet_protocol/cmd_space_packet.h>
+#include "../space_packet_protocol/cmd_space_packet.h"
 #include <src_user/settings/tlm_cmd/ccsds/space_packet_typedef_params.h>
 
 #define TCS_HEADER_SIZE (1)
