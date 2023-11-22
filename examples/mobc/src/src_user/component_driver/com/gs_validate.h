@@ -14,7 +14,7 @@
 
 #include <stdint.h>
 
-#include <src_core/tlm_cmd/ccsds/mobc/tc_transfer_frame.h>
+#include <src_core/tlm_cmd/ccsds/tc_space_data_link_protocol/tc_transfer_frame.h>
 
 /**
  * @enum GS_VALIDATE_ERR
