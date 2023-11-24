@@ -114,6 +114,4 @@ if(C2A_USE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_LIB>)
 endif()
 
-
-
 include(common.cmake)
