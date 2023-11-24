@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(C2A_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL)
+project(C2A_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL)
 
 set(C2A_SRCS
   aos_transfer_frame.c
