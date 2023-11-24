@@ -20,6 +20,11 @@ option(C2A_USE_ALL_CORE_APPS        "Use C2A-core all Applications" ON)
 option(C2A_USE_ALL_CORE_TEST_APPS   "Use C2A-core all Test Applications" ON)
 option(C2A_USE_ALL_CORE_LIB         "Use C2A-core all library" ON)
 
+## C2A CCSDS select
+# See alse; /docs/core/ccsds.md
+option(C2A_USE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL  "Use C2A-core CCSDS AOS SPACE DATA LINK PROTOCOL" OFF)
+option(C2A_USE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL   "Use C2A-core CCSDS TC SPACE DATA LINK PROTOCOL" OFF)
+
 option(C2A_USE_SIMPLE_LIBC          "Use C2A-core hosted simple libc (c2a-core/library/libc) implementation" OFF)
 
 set(C2A_CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
@@ -98,5 +103,17 @@ if(C2A_USE_ALL_CORE_LIB)
   add_subdirectory(library)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_LIB>)
 endif()
+
+if(C2A_USE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL)
+  add_subdirectory(tlm_cmd/ccsds/aos_space_data_link_protocol)
+  target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_LIB>)
+endif()
+
+if(C2A_USE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL)
+  add_subdirectory(tlm_cmd/ccsds/tc_space_data_link_protocol)
+  target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_LIB>)
+endif()
+
+
 
 include(common.cmake)
