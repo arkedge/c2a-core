@@ -47,7 +47,7 @@ void AOSTF_setup_replay_aostf_hdr(AosTransferFrame* aostf, uint32_t counter)
 static void AOSTF_set_common_hdr_(AosTransferFrame* aostf)
 {
   AOSTF_set_ver(aostf, AOSTF_VER_2);
-  AOSTF_set_scid(aostf, AOSTF_SCID_SAMPLE_SATELLITE); // FIXME: 仮
+  AOSTF_set_scid(aostf, AOSTF_SCID_MY_ID);
   AOSTF_set_replay_flag(aostf, AOSTF_REPLAY_FALSE);
   AOSTF_clear_spare_(aostf);
 }
@@ -96,13 +96,7 @@ AOSTF_SCID AOSTF_get_scdi(const AosTransferFrame* aostf)
   scid <<= 2;
   scid |= ((aostf->header[pos + 1] & mask2) >> 6);
 
-  switch (scid)
-  {
-  case AOSTF_SCID_SAMPLE_SATELLITE:
-    return (AOSTF_SCID)scid;
-  default:
-    return AOSTF_SCID_UNKNOWN;
-  }
+  return AOSTF_get_scid_from_uint8((uint8_t)scid);
 }
 
 void AOSTF_set_scid(AosTransferFrame* aostf, AOSTF_SCID scid)

@@ -84,8 +84,8 @@ CDS_INIT_ERR_CODE GS_init(GS_Driver* gs_driver,
   GS_rx_header_[2][0] |= (uint8_t)((TCTF_TYPE_BC & 0x0f) << 4);
   for (stream = 0; stream < GS_RX_HEADER_NUM; ++stream)
   {
-    GS_rx_header_[stream][0] |= (uint8_t)((TCTF_SCID_SAMPLE_SATELLITE & 0x3ff) >> 8);
-    GS_rx_header_[stream][1] |= (uint8_t)(TCTF_SCID_SAMPLE_SATELLITE & 0xff);
+    GS_rx_header_[stream][0] |= (uint8_t)((TCTD_SCID_MY_ID & 0x3ff) >> 8);
+    GS_rx_header_[stream][1] |= (uint8_t)(TCTD_SCID_MY_ID & 0xff);
   }
 
   ret_ccsds = CDS_init_streams(&gs_driver->driver_ccsds.super,
