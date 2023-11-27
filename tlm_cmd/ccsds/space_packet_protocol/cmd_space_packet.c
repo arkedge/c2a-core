@@ -290,7 +290,7 @@ void CSP_set_common_hdr(CmdSpacePacket* csp)
   // ここでは Secondary Header は必須
   CSP_set_2nd_hdr_flag(csp, SP_2ND_HDR_FLAG_PRESENT);
   // APID
-  CSP_set_apid(csp, CCP_APID_TO_ME);
+  CSP_set_apid(csp, CCP_APID_CMD_TO_ME);
   // ここでは Sequence Flag は Standalone Packet に固定
   CSP_set_seq_flag(csp, SP_SEQ_FLAG_SINGLE);
   // ここでは Sequence Count は 0 固定
