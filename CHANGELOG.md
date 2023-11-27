@@ -297,6 +297,7 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 - [v4.0.0-beta.4](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.4)
   - [#146](https://github.com/arkedge/c2a-core/pull/146), [#147](https://github.com/arkedge/c2a-core/pull/147): Driver -> Component Driver の rename を実行（[v4-rename-driver2](./script/migration/v4-rename-driver2.sh)）
   - [#143](https://github.com/arkedge/c2a-core/pull/143), [#144](https://github.com/arkedge/c2a-core/pull/144), [#150](https://github.com/arkedge/c2a-core/pull/150): Driver instance -> Component Service の rename を実行（[v4-rename-driver-instance.sh](script/migration/v4-rename-driver-instance.sh)）
+    - 略語の 'DI' は短すぎるため，文脈が明らかなものしか sed していない．適宜検索して置き換えること（特にコマンド名になっているようなものに注意）．
 - [v4.0.0-beta.5](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.5)
   - [#153](https://github.com/arkedge/c2a-core/pull/153): code generator のパス変更: `src/src_core/tlm-cmd-code-generator` -> `src/src_core/code-generator`
   - [#138](https://github.com/arkedge/c2a-core/pull/138): C2A user の pytest のディレクトリ構成のリファクタ: [v4-rename-test-dir.sh](./script/migration/v4-rename-test-dir.sh) を実行
