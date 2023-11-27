@@ -4,6 +4,10 @@
 
 ## v4.1.0 (Unreleased)
 
+### Enhancements
+
+- [#214](https://github.com/arkedge/c2a-core/pull/214): CCSDS の主 MOBC 向け Data Link Layer のコードを Core 管理にする
+
 ### Fixed
 
 - [#193](https://github.com/arkedge/c2a-core/pull/193): VCDU を AOS transfer frame に rename する
@@ -30,6 +34,13 @@
      - `#include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet_typedef.h>`
      - `#include <src_core/tlm_cmd/ccsds/tlm_space_packet.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/tlm_space_packet.h>`
      - `#include <src_core/tlm_cmd/ccsds/cmd_space_packet.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/cmd_space_packet.h>`
+- [#214](https://github.com/arkedge/c2a-core/pull/214): 影響範囲は MOBC のみ
+  1. `src_user/tlm_cmd/ccsds/` 内部の Data Link Layer に関連するコードを消すし， `CMakeLists.txt` も修正する．
+  1. c2a user のトップレベルの `CMakeLists.txt` にて， `C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL`, `C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL` をともに `ON` に設定する．
+     - `examples/mobc/CMakeLists.txt` を参考にできる．
+  1. コンパイルが通らないところを直す．想定されるものは以下．
+     - `src_core/tlm_cmd/ccsds/` のファイルの場所が変わったことにより， include パスを修正する．コンパイルが通らないところを直す．
+
 
 ## v4.0.1 (2023-11-09)
 
