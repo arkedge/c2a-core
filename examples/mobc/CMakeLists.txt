@@ -20,7 +20,7 @@ option(C2A_BUILD_WITH_SILS_MOCKUP "Build C2A with SILS mockup for check undefine
 
 option(C2A_BUILD_FOR_SILS "Build C2A for SILS target" ON)
 
-# core に同封されている CCSDS の実装を使う
+# core に同梱されている CCSDS の実装を使う
 set(C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL ON)
 set(C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL ON)
 
