@@ -45,6 +45,17 @@
 #error TCTCF LEN IS LONGER THAN TCTF MAX LEN
 #endif
 
+// ここで TCTF_SCID, TCTD_SCID_MY_ID を定義する
+// TCTF_SCID_UNKNOWN は必須
+/* 例
+typedef enum
+{
+  TCTF_SCID_SAMPLE_SATELLITE = 0x000,
+  TCTF_SCID_UNKNOWN
+} TCTF_SCID;
+*/
+#include <src_user/settings/tlm_cmd/ccsds/tc_transfer_frame_define.h>
+
 /**
  * @struct TcTransferFrame
  * @brief  TC Transfer Frame のパケット構造体
@@ -77,17 +88,6 @@ typedef enum
   TCTF_TYPE_BC = 3, // 11b: FARM Control Command
   TCTF_TYPE_UNKNOWN
 } TCTF_TYPE;
-
-/**
- * @enum  TCTF_SCID
- * @brief Spacecraft ID
- * @note  10 bit
- */
-typedef enum
-{
-  TCTF_SCID_SAMPLE_SATELLITE = 0x157, // SCID for command of sample satellite
-  TCTF_SCID_UNKNOWN
-} TCTF_SCID;
 
 /**
  * @enum  TCTF_VCID

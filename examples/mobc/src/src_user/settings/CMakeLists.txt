@@ -17,7 +17,9 @@ set(C2A_SRCS
   system/event_handler_rules/event_handler_rules.c
   system/event_handler_rules/event_handler_rule_test.c
   tlm_cmd/common_cmd_packet_define.c
+  tlm_cmd/ccsds/aos_transfer_frame_define.c
   tlm_cmd/ccsds/apid_define.c
+  tlm_cmd/ccsds/tc_transfer_frame_define.c
 )
 
 if(C2A_BUILD_AS_CXX)
