@@ -1,3 +1,4 @@
+#pragma section REPRO
 /**
  * @file
  * @brief C2A が依存する libc 関数 memchr を自前実装し，c2a-core から提供することで，C2A の移植性を高める．
@@ -22,3 +23,4 @@ void* memchr(const void* buf, int c, size_t n)
 
   return NULL;
 }
+#pragma section

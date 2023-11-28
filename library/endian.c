@@ -1,8 +1,8 @@
+#pragma section REPRO
 /**
  * @file
  * @brief エンディアンに関するものを定義する
  */
-#pragma section REPRO
 #include "endian.h"
 #include <src_user/settings/build_settings.h>
 #include <stdint.h>
