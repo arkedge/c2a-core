@@ -15,9 +15,11 @@ mv src/src_user/hal/if_list.c src/src_user/Settings/component_driver_super/hal_h
 sed -i -e "s#IF_LIST_H_#HAL_HANDLER_REGISTRY_H_#g" src/src_user/Settings/component_driver_super/hal_handler_registry.h
 
 ### ref
-sed -i -e "s#\"if_list\.h\"#\"hal_handler_registry\.h\"#g" src/src_user/Settings/component_driver_super/hal_handler_registry.c
-
 find_all | xargs -0 sed -i -e "s#src_user/hal/if_list\.h#src_user/Settings/component_driver_super/hal_handler_registry\.h#g"
+find_all | xargs -0 sed -i -e "s#src_user\\\hal\\\if_list\.h#src_user\\\Settings\\\component_driver_super\\\hal_handler_registry\.h#g"
+find_all | xargs -0 sed -i -e "s#src_user\\\hal\\\if_list\.c#src_user\\\Settings\\\component_driver_super\\\hal_handler_registry\.c#g"
+
+sed -i -e "s#\"if_list\.h\"#\"hal_handler_registry\.h\"#g" src/src_user/Settings/component_driver_super/hal_handler_registry.c
 
 ## CMake
 echo "remove src/src_user/hal/if_list.c from CMakeLists.txt"
