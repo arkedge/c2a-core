@@ -6,13 +6,17 @@ function find_all() {
 }
 
 ## c2a-core ref
-header_org=("common_tlm_cmd_packet_for_driver_super.h" "eb90_frame_for_driver_super.h" "eb90_packet_for_driver_super.h")
-header_new=("cdrv_common_tlm_cmd_packet.h" "cdrv_eb90_frame.h" "cdrv_eb90_packet.h")
+src_org=("common_tlm_cmd_packet_for_driver_super" "eb90_frame_for_driver_super" "eb90_packet_for_driver_super")
+src_new=("cdrv_common_tlm_cmd_packet" "cdrv_eb90_frame" "cdrv_eb90_packet")
 
 echo "rename c2a-core header file name prefix & remove _for_driver_super suffix"
-for i in ${!header_org[@]}; do
-  echo "  ${header_org[$i]} -> ${header_new[$i]}"
-  find_all | xargs -0 sed -i -e "s#${header_org[$i]}#${header_new[$i]}#g"
+for i in ${!src_org[@]}; do
+  echo "  ${src_org[$i]}.h -> ${src_new[$i]}.h"
+  find_all | xargs -0 sed -i -e "s#${src_org[$i]}\.h#${src_new[$i]}\.h#g"
+
+  # rename c2a-core source impl ref for not CMake environment
+  echo "  ${src_org[$i]}.c -> ${src_new[$i]}.c"
+  find_all | xargs -0 sed -i -e "s#${src_org[$i]}\.c#${src_new[$i]}\.c#g"
 done
 
 echo "rename init func"
