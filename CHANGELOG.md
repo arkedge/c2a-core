@@ -303,8 +303,8 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
   - [#138](https://github.com/arkedge/c2a-core/pull/138): C2A user の pytest のディレクトリ構成のリファクタ: [v4-rename-test-dir.sh](./script/migration/v4-rename-test-dir.sh) を実行
   - [#154](https://github.com/arkedge/c2a-core/pull/154), [#155](https://github.com/arkedge/c2a-core/pull/155): [v4-rename-component-driver-prefix.sh](./script/migration/v4-rename-component-driver-prefix.sh) を実行
   - [#165](https://github.com/arkedge/c2a-core/pull/165), [#166](https://github.com/arkedge/c2a-core/pull/166), [#169](https://github.com/arkedge/c2a-core/pull/169): [v4-rename-if-list.sh](./script/migration/v4-rename-if-list.sh)
-- v4.0.0
-  - [#167](https://github.com/arkedge/c2a-core/pull/167), [#168](https://github.com/arkedge/c2a-core/pull/168): `src/src_user/Settings` -> `src/src_user/settings`
+- [v4.0.0](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0)
+  - [#167](https://github.com/arkedge/c2a-core/pull/167), [#168](https://github.com/arkedge/c2a-core/pull/168): `src/src_user/Settings` -> `src/src_user/settings`: [v4-rename-settings.sh](./script/migration/v4-rename-settings.sh) を実行
   - [#172](https://github.com/arkedge/c2a-core/pull/172): `src/src_user/settings/tlm_cmd/data_base` -> `tlm-cmd-db` の rename を実行（[v4-move-db-dir.sh](script/migration/v4-move-db-dir.sh)）
 
 
