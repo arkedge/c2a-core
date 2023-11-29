@@ -27,6 +27,7 @@ for ((i=0; i<${#tl_org[@]}; i++)); do
   sed -i -e "s#modes/task_lists/${tl_org[i]}#modes/task_lists/${tl_new[i]}#g" src/src_user/settings/CMakeLists.txt
 
   find_all | xargs -0 sed -i -e "s#Settings/Modes/TaskLists/${tl_org[i]}#settings/modes/task_lists/${tl_new[i]}#g"
+  find_all | xargs -0 sed -i -e "s#Settings\\\Modes\\\TaskLists\\\\${tl_org[i]}#settings\\\modes\\\task_lists\\\\${tl_new[i]}#g"
 
   if [ -e src/src_user/settings/modes/task_lists/${tl_org[i]} ]; then
     mv src/src_user/settings/modes/task_lists/${tl_org[i]} src/src_user/settings/modes/task_lists/${tl_new[i]}
@@ -34,6 +35,7 @@ for ((i=0; i<${#tl_org[@]}; i++)); do
 
 done
 find_all | xargs -0 sed -i -e "s#Settings/Modes/TaskLists#settings/modes/task_lists#g"
+find_all | xargs -0 sed -i -e "s#Settings\\\Modes\\\TaskLists#settings\\\modes\\\task_lists#g"
 
 
 echo "                            /modes/Transitions -> transitions"
@@ -45,18 +47,27 @@ mv src/src_user/settings/modes/Transitions src/src_user/settings/modes/transitio
 for ((i=0; i<${#tr_org[@]}; i++)); do
   echo "                                  /transitions/${tr_org[i]} -> ${tr_new[i]}"
 
+  sed -i -e "s#modes/transitions/${tr_org[i]}#modes/transitions/${tr_new[i]}#g" src/src_user/settings/CMakeLists.txt
+
   find_all | xargs -0 sed -i -e "s#Settings/Modes/Transitions/${tr_org[i]}#settings/modes/transitions/${tr_new[i]}#g"
+  find_all | xargs -0 sed -i -e "s#Settings\\\Modes\\\Transitions\\\\${tr_org[i]}#settings\\\modes\\\transitions\\\\${tr_new[i]}#g"
 
   if [ -e src/src_user/settings/modes/transitions/${tr_org[i]} ]; then
     mv src/src_user/settings/modes/transitions/${tr_org[i]} src/src_user/settings/modes/transitions/${tr_new[i]}
   fi
 done
 find_all | xargs -0 sed -i -e "s#Settings/Modes/Transitions#settings/modes/transitions#g"
+find_all | xargs -0 sed -i -e "s#Settings\\\Modes\\\Transitions#settings\\\modes\\\transitions#g"
 
 # ref
 find_all | xargs -0 sed -i -e "s#Settings/Modes#settings/modes#g"
+find_all | xargs -0 sed -i -e "s#Settings\\\Modes#settings\\\modes#g"
+
 find_all | xargs -0 sed -i -e "s#Settings/AnomalyHandlerRules#settings/anomaly_handler_rules#g"
+find_all | xargs -0 sed -i -e "s#Settings\\\AnomalyHandlerRules#settings\\\anomaly_handler_rules#g"
+
 find_all | xargs -0 sed -i -e "s#Settings/AnomalyLogger#settings/anomaly_logger#g"
+find_all | xargs -0 sed -i -e "s#Settings\\\AnomalyLogger#settings\\\anomaly_logger#g"
 
 find_all | xargs -0 sed -i -e "s#Settings/ComponentDriverSuper#settings/component_driver_super#g"
 find_all | xargs -0 sed -i -e "s#Settings\\\ComponentDriverSuper#settings\\\component_driver_super#g"
