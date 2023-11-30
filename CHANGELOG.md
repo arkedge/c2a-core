@@ -8,6 +8,7 @@
 
 - [#193](https://github.com/arkedge/c2a-core/pull/193): VCDU を AOS transfer frame に rename する
 - [#197](https://github.com/arkedge/c2a-core/pull/197): M_PDU をコード規約に合わせるなどのリファクタ
+- [#222](https://github.com/arkedge/c2a-core/pull/222): Add Section 漏れの修正
 
 ### Migration Guide
 - [#193](https://github.com/arkedge/c2a-core/pull/193): 影響範囲は MOBC のみ
