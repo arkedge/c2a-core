@@ -53,9 +53,9 @@ set(C2A_SRCS
   tlm_cmd/packet_list.c
   tlm_cmd/telemetry_frame.c
   tlm_cmd/telemetry_generator.c
-  tlm_cmd/ccsds/cmd_space_packet.c
-  tlm_cmd/ccsds/space_packet.c
-  tlm_cmd/ccsds/tlm_space_packet.c
+  tlm_cmd/ccsds/space_packet_protocol/cmd_space_packet.c
+  tlm_cmd/ccsds/space_packet_protocol/space_packet.c
+  tlm_cmd/ccsds/space_packet_protocol/tlm_space_packet.c
 )
 
 if(C2A_USE_STDINT_WRAPPER)
