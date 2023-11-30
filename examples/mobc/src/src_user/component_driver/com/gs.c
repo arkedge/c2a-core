@@ -13,7 +13,7 @@
 #include "../../tlm_cmd/ccsds/tc_transfer_frame.h"
 #include <src_core/component_driver/driver_super.h>
 #include <src_core/tlm_cmd/packet_handler.h>
-#include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>
+#include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet_typedef.h>
 
 
 #define GS_RX_HEADER_SIZE (2)

@@ -5,7 +5,7 @@
  * @note   CTP:  CommonTlmPacket
  */
 #include <src_core/tlm_cmd/common_tlm_packet.h>
-#include <src_core/tlm_cmd/ccsds/tlm_space_packet.h>
+#include <src_core/tlm_cmd/ccsds/space_packet_protocol/tlm_space_packet.h>
 #include <src_core/system/time_manager/time_manager.h>
 #include <string.h>
 

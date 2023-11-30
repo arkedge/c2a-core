@@ -5,7 +5,7 @@
 #ifndef COMMON_CMD_PACKET_DEFINE_H_
 #define COMMON_CMD_PACKET_DEFINE_H_
 
-#include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>
+#include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet_typedef.h>
 #include "./ccsds/apid_define.h"
 
 // CommonCmdPacket として CmdSpacePacket をつかう

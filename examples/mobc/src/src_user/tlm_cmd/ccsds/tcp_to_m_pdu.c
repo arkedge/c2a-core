@@ -7,7 +7,7 @@
 
 #include "tcp_to_m_pdu.h"
 // FIXME: CTP ではなく TSP を使ってしまっている．できれば抽象化するべき
-#include <src_core/tlm_cmd/ccsds/tlm_space_packet.h>
+#include <src_core/tlm_cmd/ccsds/space_packet_protocol/tlm_space_packet.h>
 
 void T2M_initialize(TcpToMPdu* tcp_to_m_pdu)
 {

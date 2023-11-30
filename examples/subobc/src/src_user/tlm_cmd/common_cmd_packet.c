@@ -5,7 +5,7 @@
  * @note   CCP:  CommonCmdPacket
  */
 #include <src_core/tlm_cmd/common_cmd_packet.h>
-#include <src_core/tlm_cmd/ccsds/cmd_space_packet.h>
+#include <src_core/tlm_cmd/ccsds/space_packet_protocol/cmd_space_packet.h>
 #include <string.h>
 
 
