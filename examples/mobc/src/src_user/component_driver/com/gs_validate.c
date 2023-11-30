@@ -6,7 +6,7 @@
 
 #include "gs_validate.h"
 #include "../../tlm_cmd/ccsds/tc_segment.h"
-#include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>
+#include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet_typedef.h>
 
 #define GS_RECEIVE_WINDOW (256)
 #define GS_POSITIVE_WINDOW_WIDTH_DEFAULT (64) // FIXME: 要検討

@@ -9,6 +9,7 @@
 - [#193](https://github.com/arkedge/c2a-core/pull/193): VCDU を AOS transfer frame に rename する
 - [#197](https://github.com/arkedge/c2a-core/pull/197): M_PDU をコード規約に合わせるなどのリファクタ
 - [#222](https://github.com/arkedge/c2a-core/pull/222): Add Section 漏れの修正
+- [#225](https://github.com/arkedge/c2a-core/pull/225): CCSDS の Space Packet Protocol に関連するコードのディレクトリを移動
 
 ### Migration Guide
 - [#193](https://github.com/arkedge/c2a-core/pull/193): 影響範囲は MOBC のみ
@@ -23,6 +24,12 @@
   1. `m_pdu.h` を `multiplexing_protocol_data_unit.h` に置換する（include の修正）．
   1. コンパイルが通らないところを直す．想定されるものは以下．
      - `M_PDU` 構造体 が `MultiplexingProtocolDataUnit` 構造体に変わったので，変数定義の型名が変わっているはず．
+- [#225](https://github.com/arkedge/c2a-core/pull/225)
+  1. コンパイルが通るように，以下の include の修正を行う．
+     - `#include <src_core/tlm_cmd/ccsds/space_packet.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet.h>`
+     - `#include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet_typedef.h>`
+     - `#include <src_core/tlm_cmd/ccsds/tlm_space_packet.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/tlm_space_packet.h>`
+     - `#include <src_core/tlm_cmd/ccsds/cmd_space_packet.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/cmd_space_packet.h>`
 
 ## v4.0.1 (2023-11-09)
 

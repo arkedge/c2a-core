@@ -75,7 +75,7 @@ typedef enum
 #include <stdint.h>
 #include "space_packet_typedef.h"
 #include "space_packet.h"
-#include "../common_tlm_packet.h"
+#include "../../common_tlm_packet.h"
 
 #if TSP_MAX_LEN <= SP_PRM_HDR_LEN
 #error TSP_MAX_LEN is too small
