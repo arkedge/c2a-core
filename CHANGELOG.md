@@ -4,6 +4,10 @@
 
 ## v4.1.0 (Unreleased)
 
+### Enhancements
+
+- [#214](https://github.com/arkedge/c2a-core/pull/214): CCSDS の主 MOBC 向け Data Link Layer のコードを Core 管理にする
+
 ### Fixed
 
 - [#193](https://github.com/arkedge/c2a-core/pull/193): VCDU を AOS transfer frame に rename する
@@ -30,6 +34,27 @@
      - `#include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet_typedef.h>`
      - `#include <src_core/tlm_cmd/ccsds/tlm_space_packet.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/tlm_space_packet.h>`
      - `#include <src_core/tlm_cmd/ccsds/cmd_space_packet.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/cmd_space_packet.h>`
+- [#214](https://github.com/arkedge/c2a-core/pull/214): 影響範囲は MOBC の CCSDS Data Link Layer の実装
+  1. AOS Space Data Link Protocol の実装を c2a-core のものに切り替える
+     1. `src_user/tlm_cmd/ccsds/` 内の既存の実装を消す
+        - `aos_transfer_frame.{c,h}`
+        - `multiplexing_protocol_data_unit.{c,h}`
+        - `tcp_to_m_pdu.{c,h}`
+     1. c2a-core の実装を使うように切り替える
+        - `src_core/ccsds/aos_space_data_link_protocol/` 内のソースファイルをビルド対象に追加する
+        - CMake の場合， `C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL` option を `ON` にするだけでよい (C2A user top の `CMakeLists.txt`)
+          - `examples/mobc/CMakeLists.txt` を参考にできる．
+     1. コンパイルが通らないところを直す．ファイルの場所が変わったことによる include path の修正が想定される．
+  1. TC Space Data Link Protocol の実装を c2a-core のものに切り替える
+     1. `src_user/tlm_cmd/ccsds/` 内の既存の実装を消す
+        - `tc_segment.{c,h}`
+        - `tc_transfer_frame.{c,h}`
+     1. c2a-core の実装を使うように切り替える
+        - `src_core/ccsds/tc_space_data_link_protocol/` 内のソースファイルをビルド対象に追加する
+        - CMake の場合， `C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL` option を `ON` にするだけでよい (C2A user top の `CMakeLists.txt`)
+          - `examples/mobc/CMakeLists.txt` を参考にできる．
+     1. コンパイルが通らないところを直す．ファイルの場所が変わったことによる include path の修正が想定される．
+
 
 ## v4.0.1 (2023-11-09)
 

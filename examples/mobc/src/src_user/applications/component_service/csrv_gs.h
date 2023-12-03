@@ -8,8 +8,8 @@
 #include <stdint.h>
 
 #include "../../component_driver/com/gs.h"
-#include "../../tlm_cmd/ccsds/tcp_to_m_pdu.h"
-#include "../../tlm_cmd/ccsds/aos_transfer_frame.h"
+#include <src_core/tlm_cmd/ccsds/aos_space_data_link_protocol/tcp_to_m_pdu.h>
+#include <src_core/tlm_cmd/ccsds/aos_space_data_link_protocol/aos_transfer_frame.h>
 #include <src_core/system/application_manager/app_info.h>
 
 /**

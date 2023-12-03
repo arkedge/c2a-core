@@ -10,7 +10,7 @@
 #include <stdint.h>
 
 #include "../../hal/ccsds_user.h"
-#include "../../tlm_cmd/ccsds/tc_transfer_frame.h"
+#include <src_core/tlm_cmd/ccsds/tc_space_data_link_protocol/tc_transfer_frame.h>
 #include <src_core/component_driver/driver_super.h>
 #include <src_core/tlm_cmd/packet_handler.h>
 #include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet_typedef.h>

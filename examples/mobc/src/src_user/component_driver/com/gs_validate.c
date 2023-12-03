@@ -5,7 +5,7 @@
  */
 
 #include "gs_validate.h"
-#include "../../tlm_cmd/ccsds/tc_segment.h"
+#include <src_core/tlm_cmd/ccsds/tc_space_data_link_protocol/tc_segment.h>
 #include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet_typedef.h>
 
 #define GS_RECEIVE_WINDOW (256)
