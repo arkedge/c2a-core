@@ -50,18 +50,11 @@ TCTF_SCID TCTF_get_scid(const TcTransferFrame* tctf)
   uint8_t mask = 0x03; // 0000 0011b
 
   // pos = 0の下位2bitsとpos = 1の8bitsを合わせた10bits
-  TCTF_SCID scid = (TCTF_SCID)(tctf->packet[pos] & mask);
-  scid = (TCTF_SCID)(scid << 8);
-  scid = (TCTF_SCID)(scid + tctf->packet[pos + 1]);
+  uint16_t scid = (uint16_t)(tctf->packet[pos] & mask);
+  scid = (uint16_t)(scid << 8);
+  scid = (uint16_t)(scid + tctf->packet[pos + 1]);
 
-  switch (scid)
-  {
-  case TCTF_SCID_SAMPLE_SATELLITE:
-    return scid;
-
-  default:
-    return TCTF_SCID_UNKNOWN;
-  }
+  return TCTF_get_scid_from_uint16(scid);
 }
 
 TCTF_VCID TCTF_get_vcid(const TcTransferFrame* tctf)

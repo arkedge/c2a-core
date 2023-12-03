@@ -47,6 +47,17 @@
 #define AOSTF_LEN           (AOSTF_HEADER_SIZE + M_PDU_LEN + AOSTF_TRAILER_SIZE)
 #define AOSTF_COUNTER_MAX   (0x01000000) // 24bit長
 
+// ここで AOSTF_SCID, AOSTF_SCID_MY_ID を定義する
+// AOSTF_SCID_UNKNOWN は必須
+/* 例
+typedef enum
+{
+  AOSTF_SCID_SAMPLE_SATELLITE = 0x00,
+  AOSTF_SCID_UNKNOWN
+} AOSTF_SCID;
+*/
+#include <src_user/settings/tlm_cmd/ccsds/aos_transfer_frame_define.h>
+
 typedef struct
 {
   uint8_t                      header[AOSTF_HEADER_SIZE];
@@ -59,12 +70,6 @@ typedef enum
   AOSTF_VER_2 = 1, // 01b: Version2
   AOSTF_VER_UNKNOWN
 } AOSTF_VER;
-
-typedef enum
-{
-  AOSTF_SCID_SAMPLE_SATELLITE = 0x00,
-  AOSTF_SCID_UNKNOWN
-} AOSTF_SCID;
 
 typedef enum
 {

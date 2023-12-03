@@ -7,6 +7,7 @@
 ### Enhancements
 
 - [#214](https://github.com/arkedge/c2a-core/pull/214): CCSDS の主 MOBC 向け Data Link Layer のコードを Core 管理にする
+- [#214](https://github.com/arkedge/c2a-core/pull/219): CCSDS の主 MOBC 向け Data Link Layer の SCID をユーザー設定として切り出す
 
 ### Fixed
 
@@ -54,6 +55,8 @@
         - CMake の場合， `C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL` option を `ON` にするだけでよい (C2A user top の `CMakeLists.txt`)
           - `examples/mobc/CMakeLists.txt` を参考にできる．
      1. コンパイルが通らないところを直す．ファイルの場所が変わったことによる include path の修正が想定される．
+- [#219](https://github.com/arkedge/c2a-core/pull/219): 影響範囲は MOBC のみ
+  1. PR の diff (`examples/mobc/src/`) に出ている修正を， user にも反映させる．
 
 
 ## v4.0.1 (2023-11-09)
