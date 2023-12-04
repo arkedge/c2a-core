@@ -102,7 +102,7 @@ CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
   {
     // Primary Header
     // FIXME: Space Packet 依存を直す
-    TSP_setup_primary_hdr(&TG_ctp_, CTP_APID_FROM_ME, TG_get_next_seq_count_(), len);
+    TSP_setup_primary_hdr(&TG_ctp_, CTP_APID_TLM_FROM_ME, TG_get_next_seq_count_(), len);
 
     // Secondary Header
     TSP_set_board_time(&TG_ctp_, (uint32_t)(TMGR_get_master_total_cycle()));
@@ -246,7 +246,7 @@ static CCP_CmdRet TG_generate_tlm_(TLM_CODE tlm_id,
   // 自身の OBC のテレメ生成を前提としているので， Cmd_GENERATE_TLM のように sub OBC 判定はいれない
 
   // Primary Header
-  TSP_setup_primary_hdr(&TG_ctp_, CTP_APID_FROM_ME, TG_get_next_seq_count_(), packet_len);
+  TSP_setup_primary_hdr(&TG_ctp_, CTP_APID_TLM_FROM_ME, TG_get_next_seq_count_(), packet_len);
 
   // Secondary Header
   TSP_set_2nd_hdr_ver(&TG_ctp_, TSP_2ND_HDR_VER_1);

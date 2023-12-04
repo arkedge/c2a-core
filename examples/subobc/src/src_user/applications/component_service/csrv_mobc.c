@@ -112,8 +112,8 @@ static RESULT CSRV_MOBC_rt_tlm_packet_handler_(void)
     PL_drop_executed(&PH_rt_tlm_list);
 
     // FIXME: 現状，WINGS の問題から DUMP TLMは考えない．
-    //        APID_AOBC_TLM 以外を弾いている．
-    if (CTP_get_apid(&packet) != APID_AOBC_TLM)
+    //        APID_TLM_AOBC 以外を弾いている．
+    if (CTP_get_apid(&packet) != APID_TLM_AOBC)
     {
       // FIXME: アノマリいれる？ 最後のエラーは以下で保存されるので不要な気もする．
       //        AOBC のアノマリ基準は？

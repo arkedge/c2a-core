@@ -39,12 +39,12 @@ PH_ACK PH_user_analyze_cmd(const CommonCmdPacket* packet)
   {
     switch (apid)
     {
-    case APID_AOBC_CMD:
+    case APID_CMD_TO_AOBC:
       return (PH_add_aobc_cmd_(packet) == PH_ACK_SUCCESS) ? PH_ACK_FORWARDED : PH_ACK_PL_LIST_FULL;
-    case APID_TOBC_CMD:
+    case APID_CMD_TO_TOBC:
       return (PH_add_tobc_cmd_(packet) == PH_ACK_SUCCESS) ? PH_ACK_FORWARDED : PH_ACK_PL_LIST_FULL;
     default:
-      // APID_MOBC_CMD
+      // APID_CMD_TO_MOBC
       // 不正な APID
       // はここに
       return PH_ACK_UNKNOWN;
@@ -74,10 +74,10 @@ CCP_CmdRet PH_user_cmd_router(const CommonCmdPacket* packet)
   APID apid = CCP_get_apid(packet);
   switch (apid)
   {
-  case APID_AOBC_CMD:
+  case APID_CMD_TO_AOBC:
     // AOBCに配送
     return CSRV_AOBC_dispatch_command(packet);
-  case APID_TOBC_CMD:
+  case APID_CMD_TO_TOBC:
     // TOBCに配送
     // return CSRV_TOBC_dispatch_command(packet);
   default:
@@ -95,7 +95,7 @@ TF_TLM_FUNC_ACK PH_user_telemetry_router(APID apid,
 {
   switch (apid)
   {
-    case APID_AOBC_TLM:
+    case APID_TLM_AOBC:
       return AOBC_pick_up_tlm_buffer(aobc_driver, (AOBC_TLM_CODE)tlm_id, packet, len, max_len);
     default:
       return TF_TLM_FUNC_ACK_NOT_DEFINED;

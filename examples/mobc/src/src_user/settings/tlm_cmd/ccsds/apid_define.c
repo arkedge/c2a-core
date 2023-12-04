@@ -11,14 +11,14 @@ APID APID_get_apid_from_uint16(uint16_t apid)
 {
   switch ((APID)apid)
   {
-  case APID_MOBC_CMD:   // FALLTHROUGH
-  case APID_AOBC_CMD:   // FALLTHROUGH
-  case APID_TOBC_CMD:   // FALLTHROUGH
-  case APID_TCAL_TLM:   // FALLTHROUGH
-  case APID_MOBC_TLM:   // FALLTHROUGH
-  case APID_AOBC_TLM:   // FALLTHROUGH
-  case APID_TOBC_TLM:   // FALLTHROUGH
-  case APID_DUMP_TLM:   // FALLTHROUGH
+  case APID_CMD_TO_MOBC:  // FALLTHROUGH
+  case APID_CMD_TO_AOBC:  // FALLTHROUGH
+  case APID_CMD_TO_TOBC:  // FALLTHROUGH
+  case APID_TLM_TCAL:     // FALLTHROUGH
+  case APID_TLM_MOBC:     // FALLTHROUGH
+  case APID_TLM_AOBC:     // FALLTHROUGH
+  case APID_TLM_TOBC:     // FALLTHROUGH
+  case APID_TLM_DUMP:     // FALLTHROUGH
   case APID_FILL_PKT:
     return (APID)apid;
 

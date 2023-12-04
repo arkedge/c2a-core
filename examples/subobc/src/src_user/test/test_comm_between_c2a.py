@@ -22,7 +22,7 @@ ope = wings_utils.get_wings_operation()
 
 SUB_OBC = "AOBC"
 Tlm_CODE_SUB_OBC_HK = c2a_enum.Tlm_CODE_AOBC_HK
-TLM_APID_SUB_OBC = c2a_enum.APID_AOBC_TLM
+TLM_APID_SUB_OBC = c2a_enum.APID_TLM_AOBC
 USE_BCT_ID = 100
 
 # NOP だと id が 0x00 なのでちがうのを

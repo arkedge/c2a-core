@@ -8,6 +8,7 @@
 
 - [#214](https://github.com/arkedge/c2a-core/pull/214): CCSDS の主 MOBC 向け Data Link Layer のコードを Core 管理にする
 - [#214](https://github.com/arkedge/c2a-core/pull/219): CCSDS の主 MOBC 向け Data Link Layer の SCID をユーザー設定として切り出す
+- [#220](https://github.com/arkedge/c2a-core/pull/220): APID の命名規則を策定 (命名規則は `tlm_cmd/common_tlm_cmd_packet.h` を参照)
 
 ### Fixed
 
@@ -57,6 +58,8 @@
      1. コンパイルが通らないところを直す．ファイルの場所が変わったことによる include path の修正が想定される．
 - [#219](https://github.com/arkedge/c2a-core/pull/219): 影響範囲は MOBC のみ
   1. PR の diff (`examples/mobc/src/`) に出ている修正を， user にも反映させる．
+- [#220](https://github.com/arkedge/c2a-core/pull/220)
+  1. `tlm_cmd/common_tlm_cmd_packet.h` にある命名規則に従うように， APID の命名を更新する．
 
 
 ## v4.0.1 (2023-11-09)

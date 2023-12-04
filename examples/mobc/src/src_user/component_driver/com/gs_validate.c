@@ -139,9 +139,9 @@ static GS_VALIDATE_ERR GS_check_cmd_space_packet_headers_(const CmdSpacePacket* 
   }
 
   apid = CSP_get_apid(csp);
-  if ( !( apid == APID_MOBC_CMD ||
-          apid == APID_AOBC_CMD ||
-          apid == APID_TOBC_CMD ) )
+  if ( !( apid == APID_CMD_TO_MOBC ||
+          apid == APID_CMD_TO_AOBC ||
+          apid == APID_CMD_TO_TOBC ) )
   {
     return GS_VALIDATE_ERR_APID;
   }

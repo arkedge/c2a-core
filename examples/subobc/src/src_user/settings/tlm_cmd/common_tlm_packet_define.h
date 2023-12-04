@@ -15,6 +15,6 @@ typedef TlmSpacePacket CommonTlmPacket;
 
 // 自分で生成される TLM を示す AIPD を定義
 // FIXME: Space Packet が整備されたら直す
-#define CTP_APID_FROM_ME (APID_AOBC_TLM)
+#define CTP_APID_TLM_FROM_ME (APID_TLM_AOBC)
 
 #endif

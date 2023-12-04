@@ -106,7 +106,7 @@ static CDS_ERR_CODE MOBC_analyze_rec_data_(CDS_StreamConfig* p_stream_config, vo
 
   // MOBC からのコマンドは以下のパターン
   //  APID:
-  //      APID_AOBC_CMD
+  //      APID_CMD_TO_AOBC
   //  CCP_EXEC_TYPE:
   //      CCP_EXEC_TYPE_GS    <- GS から MOBC のキューに入らず直接転送されたもの
   //      CCP_EXEC_TYPE_TL0   <- GS から MOBC のキューに入らず直接転送されたもの
