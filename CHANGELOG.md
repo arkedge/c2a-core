@@ -4,18 +4,45 @@
 
 ## v4.1.0 (Unreleased)
 
-### Enhancements
-
-- [#214](https://github.com/arkedge/c2a-core/pull/214): CCSDS の主 MOBC 向け Data Link Layer のコードを Core 管理にする
-- [#214](https://github.com/arkedge/c2a-core/pull/219): CCSDS の主 MOBC 向け Data Link Layer の SCID をユーザー設定として切り出す
-- [#220](https://github.com/arkedge/c2a-core/pull/220): APID の命名規則を策定 (命名規則は `tlm_cmd/common_tlm_cmd_packet.h` を参照)
-
-### Fixed
+### Breaking Changes
 
 - [#193](https://github.com/arkedge/c2a-core/pull/193): VCDU を AOS transfer frame に rename する
 - [#197](https://github.com/arkedge/c2a-core/pull/197): M_PDU をコード規約に合わせるなどのリファクタ
-- [#222](https://github.com/arkedge/c2a-core/pull/222): Add Section 漏れの修正
-- [#225](https://github.com/arkedge/c2a-core/pull/225): CCSDS の Space Packet Protocol に関連するコードのディレクトリを移動
+- [#199](https://github.com/arkedge/c2a-core/pull/199): Drop c2a-core crate links config
+- [#201](https://github.com/arkedge/c2a-core/pull/201): Refactor release rule
+- [#225](https://github.com/arkedge/c2a-core/pull/225): Space Packet 関連ファイルのディレクトリを変更
+- [#219](https://github.com/arkedge/c2a-core/pull/219): CCSDS data link layer における SCID をユーザー設定として切り出す
+- [#220](https://github.com/arkedge/c2a-core/pull/220): APIDの命名規則の更新
+  - 命名規則は `tlm_cmd/common_tlm_cmd_packet.h` を参照
+
+### Enhancements
+
+- [#214](https://github.com/arkedge/c2a-core/pull/214): CCSDS の主 MOBC 向け Data Link Layer のコードを Core 管理にする
+
+### Fixed
+
+- [#188](https://github.com/arkedge/c2a-core/pull/188): [v3.10.1 Backport] PL_BC_LIST_CLEARED を level high で EL 登録する
+- [#204](https://github.com/arkedge/c2a-core/pull/204): More match v4.0.0 script migration
+- [#205](https://github.com/arkedge/c2a-core/pull/205): Fix v4 applications rename order
+- [#206](https://github.com/arkedge/c2a-core/pull/206): More match system migration
+- [#211](https://github.com/arkedge/c2a-core/pull/211): Fix v4 system rename typo
+- [#212](https://github.com/arkedge/c2a-core/pull/212): More match v4 tlmcmd rename migration
+- [#218](https://github.com/arkedge/c2a-core/pull/218): Feedback from v4.0.0 beta.4
+- [#223](https://github.com/arkedge/c2a-core/pull/223): Feedback from v4.0.0 beta.5 migration
+- [#224](https://github.com/arkedge/c2a-core/pull/224): Feedback from v4.0.0 migration
+- [#222](https://github.com/arkedge/c2a-core/pull/222): add section 漏れを修正
+
+### Documentation
+
+- [#215](https://github.com/arkedge/c2a-core/pull/215): Update v4.0.0 migration guide
+- [#207](https://github.com/arkedge/c2a-core/pull/207): Move doxygen config to top
+- [#208](https://github.com/arkedge/c2a-core/pull/208): Exclude Doxygen stdint_wrapper
+- [#209](https://github.com/arkedge/c2a-core/pull/209): Deploy Doxygen generated HTML to GitHub Pages
+
+### Internal
+
+- [#179](https://github.com/arkedge/c2a-core/pull/179): Update Rust crate bindgen to 0.69.1
+- [#210](https://github.com/arkedge/c2a-core/pull/210): Update dependency ut-issl/s2e-core to v7.1.0
 
 ### Migration Guide
 - [#193](https://github.com/arkedge/c2a-core/pull/193): 影響範囲は MOBC のみ
