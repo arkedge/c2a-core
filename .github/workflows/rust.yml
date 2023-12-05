@@ -33,6 +33,9 @@ jobs:
       - name: cache dependencies
         uses: Swatinem/rust-cache@v2.7.1
 
+      - name: setup c2a-core
+        run: ./setup.sh
+
       - name: reviewdog / clippy
         uses: sksat/action-clippy@v0.3.0
         with:
