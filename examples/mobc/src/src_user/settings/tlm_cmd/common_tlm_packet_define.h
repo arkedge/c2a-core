@@ -5,7 +5,7 @@
 #ifndef COMMON_TLM_PACKET_DEFINE_H_
 #define COMMON_TLM_PACKET_DEFINE_H_
 
-#include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>
+#include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet_typedef.h>
 #include "./ccsds/apid_define.h"
 
 // CommonTlmPacket として TlmSpacePacket をつかう
@@ -15,6 +15,6 @@ typedef TlmSpacePacket CommonTlmPacket;
 
 // 自分で生成される TLM を示す AIPD を定義
 // FIXME: Space Packet が整備されたら直す
-#define CTP_APID_FROM_ME (APID_MOBC_TLM)
+#define CTP_APID_TLM_FROM_ME (APID_TLM_MOBC)
 
 #endif

@@ -25,7 +25,7 @@ typedef enum
   CCP_DEST_TYPE_TO_APID   = 0xf
 } CCP_DEST_TYPE;
 */
-// さらに， CCP_APID_TO_ME, CCP_MAX_LEN, CommonCmdPacket として使うパケット型を指定する
+// さらに， CCP_APID_CMD_TO_ME, CCP_MAX_LEN, CommonCmdPacket として使うパケット型を指定する
 #include <src_user/settings/tlm_cmd/common_cmd_packet_define.h>
 
 // ここで APID を定義する

@@ -11,7 +11,7 @@
 #include <src_user/tlm_cmd/telemetry_definitions.h>
 #include <src_user/tlm_cmd/user_packet_handler.h>
 #include <src_user/settings/tlm_cmd/common_tlm_packet_define.h>
-#include "./ccsds/tlm_space_packet.h"   // FIXME: TSP 依存性はNGなので， TCP → SP 大工事終わったら直す
+#include "./ccsds/space_packet_protocol/tlm_space_packet.h"   // FIXME: TSP 依存性はNGなので， TCP → SP 大工事終わったら直す
 
 
 /**
@@ -72,7 +72,7 @@ CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
   if (num_dumps >= 8)
   {
     // パケット生成回数の上限は8回とする。
-    // 32kbpsでのDL時に8VCDU/secで1秒分の通信量。
+    // 32kbpsでのDL時に8AOSTF/secで1秒分の通信量。
     // これを超える場合は複数回コマンドを送信して対応する。
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_PARAMETER);
   }
@@ -102,7 +102,7 @@ CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
   {
     // Primary Header
     // FIXME: Space Packet 依存を直す
-    TSP_setup_primary_hdr(&TG_ctp_, CTP_APID_FROM_ME, TG_get_next_seq_count_(), len);
+    TSP_setup_primary_hdr(&TG_ctp_, CTP_APID_TLM_FROM_ME, TG_get_next_seq_count_(), len);
 
     // Secondary Header
     TSP_set_board_time(&TG_ctp_, (uint32_t)(TMGR_get_master_total_cycle()));
@@ -224,7 +224,7 @@ static CCP_CmdRet TG_generate_tlm_(TLM_CODE tlm_id,
   {
     // FIXME: 要検討？
     // パケット生成回数の上限は 8 回とする。
-    // 32 kbpsでの DL 時に 8 VCDU / sec で 1 秒分の通信量。
+    // 32 kbpsでの DL 時に 8 AOSTF / sec で 1 秒分の通信量。
     // これを超える場合は複数回コマンドを送信して対応する。
     return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, TLM_CODE_MAX);
   }
@@ -246,7 +246,7 @@ static CCP_CmdRet TG_generate_tlm_(TLM_CODE tlm_id,
   // 自身の OBC のテレメ生成を前提としているので， Cmd_GENERATE_TLM のように sub OBC 判定はいれない
 
   // Primary Header
-  TSP_setup_primary_hdr(&TG_ctp_, CTP_APID_FROM_ME, TG_get_next_seq_count_(), packet_len);
+  TSP_setup_primary_hdr(&TG_ctp_, CTP_APID_TLM_FROM_ME, TG_get_next_seq_count_(), packet_len);
 
   // Secondary Header
   TSP_set_2nd_hdr_ver(&TG_ctp_, TSP_2ND_HDR_VER_1);

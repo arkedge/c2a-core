@@ -5,8 +5,8 @@
  */
 
 #include "gs_validate.h"
-#include "../../tlm_cmd/ccsds/tc_segment.h"
-#include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>
+#include <src_core/tlm_cmd/ccsds/tc_space_data_link_protocol/tc_segment.h>
+#include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet_typedef.h>
 
 #define GS_RECEIVE_WINDOW (256)
 #define GS_POSITIVE_WINDOW_WIDTH_DEFAULT (64) // FIXME: 要検討
@@ -84,7 +84,7 @@ GS_VALIDATE_ERR GS_validate_tctf(const TcTransferFrame* tctf)
 static GS_VALIDATE_ERR GS_check_tctf_header_(const TcTransferFrame* tctf)
 {
   if (TCTF_get_ver(tctf) != TCTF_VER_1) return GS_VALIDATE_ERR_TCTF_VER;
-  if (TCTF_get_scid(tctf) != TCTF_SCID_SAMPLE_SATELLITE) return GS_VALIDATE_ERR_TCTF_SCID;
+  if (TCTF_get_scid(tctf) != TCTD_SCID_MY_ID) return GS_VALIDATE_ERR_TCTF_SCID;
   if (TCTF_get_vcid(tctf) != TCTF_VCID_REALTIME) return GS_VALIDATE_ERR_TCTF_VCID;
 
   return GS_VALIDATE_ERR_OK;
@@ -139,9 +139,9 @@ static GS_VALIDATE_ERR GS_check_cmd_space_packet_headers_(const CmdSpacePacket* 
   }
 
   apid = CSP_get_apid(csp);
-  if ( !( apid == APID_MOBC_CMD ||
-          apid == APID_AOBC_CMD ||
-          apid == APID_TOBC_CMD ) )
+  if ( !( apid == APID_CMD_TO_MOBC ||
+          apid == APID_CMD_TO_AOBC ||
+          apid == APID_CMD_TO_TOBC ) )
   {
     return GS_VALIDATE_ERR_APID;
   }

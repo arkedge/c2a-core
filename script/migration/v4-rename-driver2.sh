@@ -19,6 +19,7 @@ mv src/src_user/Settings/DriverSuper src/src_user/Settings/component_driver_supe
 
 find_all | xargs -0 sed -i -e "s#\${C2A_USER_DIR}/driver#\${C2A_USER_DIR}/component_driver#g"
 find_all | xargs -0 sed -i -e "s#/driver/#/component_driver/#g"
+find_all | xargs -0 sed -i -e "s#\\\driver\\\#\\\component_driver\\\#g"
 
 ## _init_dssc(), _from_dssc(), _to_dssc()
 find_all | xargs -0 sed -i "s/dssc/cdssc/g"

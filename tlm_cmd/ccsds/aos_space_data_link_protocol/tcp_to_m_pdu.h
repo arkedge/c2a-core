@@ -1,6 +1,7 @@
 /**
  * @file
  * @brief PacketList から TCPacket を取ってきてそれを送信可能な M_PDU へと変換する
+ * @note  FIXME: これはリファクタしてなんとかしたい・・・
  */
 #ifndef TCP_TO_M_PDU_H_
 #define TCP_TO_M_PDU_H_
@@ -9,9 +10,9 @@
 
 #include <stddef.h> // for size_t
 
-#include <src_core/tlm_cmd/packet_list.h>
-#include "m_pdu.h"
-#include <src_core/system/time_manager/time_manager.h>
+#include "multiplexing_protocol_data_unit.h"
+#include "../../packet_list.h"
+#include "../../../system/time_manager/time_manager.h"
 
 /**
  * @enum  T2M_ACK
@@ -52,6 +53,6 @@ void T2M_initialize(TcpToMPdu* tcp_to_m_pdu);
  * @param[out] m_pdu: 生成される M_PDU
  * @return T2M_ACK
  */
-T2M_ACK T2M_form_m_pdu(TcpToMPdu* tcp_to_m_pdu, PacketList* pl, M_PDU* m_pdu);
+T2M_ACK T2M_form_m_pdu(TcpToMPdu* tcp_to_m_pdu, PacketList* pl, MultiplexingProtocolDataUnit* m_pdu);
 
 #endif

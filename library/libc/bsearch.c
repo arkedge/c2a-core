@@ -1,3 +1,4 @@
+#pragma section REPRO
 /**
  * @file
  * @brief C2A が依存する libc 関数 bsearch を自前実装し，c2a-core から提供することで，C2A の移植性を高める．
@@ -49,3 +50,4 @@ void *bsearch(const void* key, const void* base, size_t nmemb, size_t size, comp
   // not found
   return NULL;
 }
+#pragma section

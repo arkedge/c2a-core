@@ -5,7 +5,7 @@
  * @note  詳細は space_packet.h を参照
  */
 #include "space_packet.h"
-#include "../../library/endian.h"
+#include "../../../library/endian.h"
 #include <string.h>
 
 

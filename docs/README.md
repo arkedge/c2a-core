@@ -37,6 +37,7 @@ C2A に関する説明の棲み分けは，次のようになっています．
 1. Core Layer
    1. Overview
    1. [Communication](./core/communication.md)
+   1. [CCSDS](./core/ccsds.md)
    1. [Tips](./core/tips.md)
 1. Component Driver
    1. [Overview](./component_driver/overview.md)

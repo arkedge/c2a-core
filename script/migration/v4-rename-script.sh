@@ -28,14 +28,14 @@ mv src/src_user/script/CI src/src_user/script/ci
 mv src/src_user/script/Git src/src_user/script/git
 
 echo "rename ref: src_user/Script -> src_user/script"
-find_all | xargs -0 sed -i -e "s#src_user/Script/AddSection#src_user/script/add_section#g"
-find_all | xargs -0 sed -i -e "s#src_user\\\Script\\\AddSection#src_user\\\script\\\add_section#g"
+find_all | xargs -0 sed -i -e "s#Script/AddSection#script/add_section#g"
+find_all | xargs -0 sed -i -e "s#Script\\\AddSection#script\\\add_section#g"
 
-find_all | xargs -0 sed -i -e "s#src_user/Script/CI#src_user/script/ci#g"
-find_all | xargs -0 sed -i -e "s#src_user\\\Script\\\CI#src_user\\\script\\\ci#g"
+find_all | xargs -0 sed -i -e "s#Script/CI#script/ci#g"
+find_all | xargs -0 sed -i -e "s#Script\\\CI#script\\\ci#g"
 
-find_all | xargs -0 sed -i -e "s#src_user/Script/Git#src_user/script/git#g"
-find_all | xargs -0 sed -i -e "s#src_user\\\Script\\\Git#src_user\\\script\\\git#g"
+find_all | xargs -0 sed -i -e "s#Script/Git#script/git#g"
+find_all | xargs -0 sed -i -e "s#Script\\\Git#script\\\git#g"
 
 find_all | xargs -0 sed -i -e "s#src_user/Script#src_user/script#g"
 find_all | xargs -0 sed -i -e "s#src_user\\\Script#src_user\\\script#g"

@@ -236,7 +236,7 @@ CCP_CmdRet PH_dispatch_command(const CommonCmdPacket* packet)
   }
 
   // FIXME: CTCP, SpacePacket 整理で直す
-  if (CCP_get_apid(packet) == CCP_APID_TO_ME)
+  if (CCP_get_apid(packet) == CCP_APID_CMD_TO_ME)
   {
     // 自分宛てのコマンドの場合は対応処理を呼び出し。
     return CA_execute_cmd(packet);

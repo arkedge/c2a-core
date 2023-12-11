@@ -1,5 +1,5 @@
 [workspace.package]
-version = "4.0.1"
+version = "4.1.0"
 
 [workspace]
 resolver = "2"
@@ -31,8 +31,6 @@ c2a-uart-kble = { path = "./hal/uart-kble" }
 name = "c2a-core"
 version.workspace = true
 edition = "2021"
-
-links = "c2a-core"
 
 description = "Core of Command Centric Architecture"
 readme = "README.md"

@@ -1,0 +1,49 @@
+name: Deploy C2A Reference
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: install deps
+        run: |
+          sudo apt-get update -y
+          sudo apt install -y doxygen graphviz
+
+      - uses: actions/checkout@v4.1.1
+
+      - name: C2A setup
+        run: ./setup.sh
+
+      - name: Build Doxygen
+        run: doxygen
+
+      - uses: actions/upload-pages-artifact@v2.0.0
+        with:
+          path: docs/html
+
+  deploy:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: build
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2.0.4

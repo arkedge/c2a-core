@@ -2,11 +2,12 @@
 /**
  * @file
  * @brief PacketList から TCPacket を取ってきてそれを送信可能な M_PDU へと変換する
+ * @note  FIXME: これはリファクタしてなんとかしたい・・・
  */
 
 #include "tcp_to_m_pdu.h"
 // FIXME: CTP ではなく TSP を使ってしまっている．できれば抽象化するべき
-#include <src_core/tlm_cmd/ccsds/tlm_space_packet.h>
+#include "../space_packet_protocol/tlm_space_packet.h"
 
 void T2M_initialize(TcpToMPdu* tcp_to_m_pdu)
 {
@@ -15,7 +16,7 @@ void T2M_initialize(TcpToMPdu* tcp_to_m_pdu)
   tcp_to_m_pdu->m_pdu_wp = 0;
   tcp_to_m_pdu->fhp_valid = 0;
   // 強制送出待ち時間の初期値は10秒
-  // 32kbpsなら8VCDU/secの送信能力
+  // 32kbpsなら8AOSTF/secの送信能力
   tcp_to_m_pdu->flush_interval = OBCT_sec2cycle(10);
   // 最終更新時刻は現在時刻に設定
   tcp_to_m_pdu->last_updated = TMGR_get_master_total_cycle();
@@ -23,7 +24,7 @@ void T2M_initialize(TcpToMPdu* tcp_to_m_pdu)
   return;
 }
 
-T2M_ACK T2M_form_m_pdu(TcpToMPdu* tcp_to_m_pdu, PacketList* pl, M_PDU* m_pdu)
+T2M_ACK T2M_form_m_pdu(TcpToMPdu* tcp_to_m_pdu, PacketList* pl, MultiplexingProtocolDataUnit* m_pdu)
 {
   // M_PDUが完成する or TC Packetがなくなるまで実施
   while (tcp_to_m_pdu->m_pdu_wp != M_PDU_DATA_SIZE)

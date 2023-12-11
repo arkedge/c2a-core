@@ -31,7 +31,12 @@
     "CommonCmdPacket",
     "SpacePacket",
     "TlmSpacePacket",
-    "CmdSpacePacket"
+    "CmdSpacePacket",
+    "AosTransferFrame",
+    "MultiplexingProtocolDataUnit",
+    "TcpToMPdu",
+    "TcSegment",
+    "TcTransferFrame"
   ],
   "comment_additional_type" : [
     "FIXME: TCP はもう存在しないはずなので，どこかで消す",

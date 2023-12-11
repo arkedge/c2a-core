@@ -166,13 +166,13 @@ https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e
     - BC: GS から MOBC に届き， MOBC で BC 登録されずに，そのまま AOBC へ配送される．配送時， Destination Type は自分宛 (TO_ME) に上書きされ， AOBC で BC として登録 & 実行される．
 - 地上局 SW での実装まとめ
   - MOBC 宛
-    - APID: APID_MOBC_CMD
+    - APID: APID_CMD_TO_MOBC
     - CCP_DEST_TYPE: CCP_DEST_TYPE_TO_ME
   - AOBC 宛（AOBC 直送）
-    - APID: APID_AOBC_CMD
+    - APID: APID_CMD_TO_AOBC
     - CCP_DEST_TYPE: CCP_DEST_TYPE_TO_AOBC
   - AOBC 宛（MOBC でキューに入り，実行時に AOBC に転送）
-    - APID: APID_AOBC_CMD
+    - APID: APID_CMD_TO_AOBC
     - CCP_DEST_TYPE: CCP_DEST_TYPE_TO_ME
 
 

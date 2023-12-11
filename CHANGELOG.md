@@ -2,6 +2,91 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
+## v4.1.0 (2023-12-11)
+
+### Breaking Changes
+
+- [#193](https://github.com/arkedge/c2a-core/pull/193): VCDU を AOS transfer frame に rename する
+- [#197](https://github.com/arkedge/c2a-core/pull/197): M_PDU をコード規約に合わせるなどのリファクタ
+- [#199](https://github.com/arkedge/c2a-core/pull/199): Drop c2a-core crate links config
+- [#201](https://github.com/arkedge/c2a-core/pull/201): Refactor release rule
+- [#225](https://github.com/arkedge/c2a-core/pull/225): Space Packet 関連ファイルのディレクトリを変更
+- [#214](https://github.com/arkedge/c2a-core/pull/214): CCSDS の主に MOBC 向け Data Link Layer のコードを Core 管理にする
+- [#219](https://github.com/arkedge/c2a-core/pull/219): CCSDS data link layer における SCID をユーザー設定として切り出す
+- [#220](https://github.com/arkedge/c2a-core/pull/220): APIDの命名規則の更新
+  - 命名規則は `tlm_cmd/common_tlm_cmd_packet.h` を参照
+
+### Fixed
+
+- [#188](https://github.com/arkedge/c2a-core/pull/188): [v3.10.1 Backport] PL_BC_LIST_CLEARED を level high で EL 登録する
+- [#204](https://github.com/arkedge/c2a-core/pull/204): More match v4.0.0 script migration
+- [#205](https://github.com/arkedge/c2a-core/pull/205): Fix v4 applications rename order
+- [#206](https://github.com/arkedge/c2a-core/pull/206): More match system migration
+- [#211](https://github.com/arkedge/c2a-core/pull/211): Fix v4 system rename typo
+- [#212](https://github.com/arkedge/c2a-core/pull/212): More match v4 tlmcmd rename migration
+- [#218](https://github.com/arkedge/c2a-core/pull/218): Feedback from v4.0.0 beta.4
+- [#223](https://github.com/arkedge/c2a-core/pull/223): Feedback from v4.0.0 beta.5 migration
+- [#224](https://github.com/arkedge/c2a-core/pull/224): Feedback from v4.0.0 migration
+- [#222](https://github.com/arkedge/c2a-core/pull/222): add section 漏れを修正
+
+### Documentation
+
+- [#215](https://github.com/arkedge/c2a-core/pull/215): Update v4.0.0 migration guide
+- [#207](https://github.com/arkedge/c2a-core/pull/207): Move doxygen config to top
+- [#208](https://github.com/arkedge/c2a-core/pull/208): Exclude Doxygen stdint_wrapper
+- [#209](https://github.com/arkedge/c2a-core/pull/209): Deploy Doxygen generated HTML to GitHub Pages
+
+### Internal
+
+- [#179](https://github.com/arkedge/c2a-core/pull/179): Update Rust crate bindgen to 0.69.1
+- [#210](https://github.com/arkedge/c2a-core/pull/210): Update dependency ut-issl/s2e-core to v7.1.0
+- [#229](https://github.com/arkedge/c2a-core/pull/229): Run Rust CI on all workspace crates
+
+### Migration Guide
+- [#193](https://github.com/arkedge/c2a-core/pull/193): 影響範囲は MOBC のみ
+  1. `src_user/tlm_cmd/ccsds/vcdu.{c,h}` を消し，`src_user/tlm_cmd/ccsds/aos_transfer_frame.{c,h}` を `examples/mobc` からコピーする． `CMakeLists.txt` も修正する．
+  1. `VCDU` を `AOSTF` に置換する（TLM DB の csv なども）．
+  1. `vcdu` を `aostf` に置換する（TLM DB の csv なども）．
+  1. `vcdu.h` を `aos_transfer_frame.h` に置換する（include の修正）．
+  1. コンパイルが通らないところを直す．想定されるものは以下．
+     - `VCDU` 構造体 が `AosTransferFrame` 構造体に変わったので，変数定義の型名が変わっているはず．
+- [#197](https://github.com/arkedge/c2a-core/pull/197): 影響範囲は MOBC のみ
+  1. `src_user/tlm_cmd/ccsds/m_pdu.{c,h}` を消し，`src_user/tlm_cmd/ccsds/multiplexing_protocol_data_unit.{c,h}` を `examples/mobc` からコピーする． `CMakeLists.txt` も修正する．
+  1. `m_pdu.h` を `multiplexing_protocol_data_unit.h` に置換する（include の修正）．
+  1. コンパイルが通らないところを直す．想定されるものは以下．
+     - `M_PDU` 構造体 が `MultiplexingProtocolDataUnit` 構造体に変わったので，変数定義の型名が変わっているはず．
+- [#225](https://github.com/arkedge/c2a-core/pull/225)
+  1. コンパイルが通るように，以下の include の修正を行う．
+     - `#include <src_core/tlm_cmd/ccsds/space_packet.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet.h>`
+     - `#include <src_core/tlm_cmd/ccsds/space_packet_typedef.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/space_packet_typedef.h>`
+     - `#include <src_core/tlm_cmd/ccsds/tlm_space_packet.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/tlm_space_packet.h>`
+     - `#include <src_core/tlm_cmd/ccsds/cmd_space_packet.h>` -> `#include <src_core/tlm_cmd/ccsds/space_packet_protocol/cmd_space_packet.h>`
+- [#214](https://github.com/arkedge/c2a-core/pull/214): 影響範囲は MOBC の CCSDS Data Link Layer の実装
+  1. AOS Space Data Link Protocol の実装を c2a-core のものに切り替える
+     1. `src_user/tlm_cmd/ccsds/` 内の既存の実装を消す
+        - `aos_transfer_frame.{c,h}`
+        - `multiplexing_protocol_data_unit.{c,h}`
+        - `tcp_to_m_pdu.{c,h}`
+     1. c2a-core の実装を使うように切り替える
+        - `src_core/ccsds/aos_space_data_link_protocol/` 内のソースファイルをビルド対象に追加する
+        - CMake の場合， `C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL` option を `ON` にするだけでよい (C2A user top の `CMakeLists.txt`)
+          - `examples/mobc/CMakeLists.txt` を参考にできる．
+     1. コンパイルが通らないところを直す．ファイルの場所が変わったことによる include path の修正が想定される．
+  1. TC Space Data Link Protocol の実装を c2a-core のものに切り替える
+     1. `src_user/tlm_cmd/ccsds/` 内の既存の実装を消す
+        - `tc_segment.{c,h}`
+        - `tc_transfer_frame.{c,h}`
+     1. c2a-core の実装を使うように切り替える
+        - `src_core/ccsds/tc_space_data_link_protocol/` 内のソースファイルをビルド対象に追加する
+        - CMake の場合， `C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL` option を `ON` にするだけでよい (C2A user top の `CMakeLists.txt`)
+          - `examples/mobc/CMakeLists.txt` を参考にできる．
+     1. コンパイルが通らないところを直す．ファイルの場所が変わったことによる include path の修正が想定される．
+- [#219](https://github.com/arkedge/c2a-core/pull/219): 影響範囲は MOBC のみ
+  1. PR の diff (`examples/mobc/src/`) に出ている修正を， user にも反映させる．
+- [#220](https://github.com/arkedge/c2a-core/pull/220)
+  1. `tlm_cmd/common_tlm_cmd_packet.h` にある命名規則に従うように， APID の命名を更新する．
+
+
 ## v4.0.1 (2023-11-09)
 
 ### Fixed
@@ -211,12 +296,25 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
 
 注意: migration 方法やスクリプトの修正などもありえるため，本 Migration Guide 及び Migration Script は c2a-core v4 系のその時点での最新版を参照すること．例えば，使う c2a-core version が v4.0.0 であっても，v4.1.0 や v4.2.0 がリリースされていれば，その時点のものを参照すること．
 
-- v4.0.0-alpha.0
+- pytest への [rye](https://rye-up.com/) の導入（RECOMMENDED）
+  - [#59](https://github.com/arkedge/c2a-core/pull/59): Gaia pytest の導入
+  - c2a-core [example user](./examples) では [WINGS](https://github.com/ut-issl/wings) に変わる新たな地上局システムである [Gaia](https://github.com/arkedge/gaia) を用いており，pytest のバックエンドシステムを [Gaia](https://github.com/arkedge/gaia) に切り替えている（RECOMMENDED）
+  - この切り替えと同時に，pytest project の依存関係管理のために [rye](https://rye-up.com/) を導入している．
+  - [Gaia](https://github.com/arkedge/gaia)への切り替えの有無に関わらず，pytest を含む Python の環境整備には [rye](https://rye-up.com/) を推奨する（RECOMMENDED）
+- 現在使用している c2a-core version を確認する（MUST）
+  - [ut-issl/c2a-core](https://github.com/ut-issl/c2a-core) v3.8 系以前: サポート外．まずは v3.9 系までアップデートすること．
+  - [ut-issl/c2a-core v3.9.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.9.0): サポート外．[ut-issl/c2a-core v3.9.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.9.1) が結果的に breaking な release となってしまっているため，必ず [ut-issl/c2a-core v3.9.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.9.1) を経由して v3.10 系にアップデートすること．
+  - [ut-issl/c2a-core v3.9.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.9.1) ~ [ut-issl/c2a-core v3.9.2](https://github.com/ut-issl/c2a-core/releases/tag/v3.9.2): 移行はほぼ確実に可能と思われるが，明示的なサポートはしない．容易にアップデートが可能であるはずなため，事前に[ut-issl/c2a-core v3.10.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.0) へアップデートすること．
+  - [ut-issl/c2a-core v3.10.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.0): [v4.0.0](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0) ~ [v4.0.1](https://github.com/arkedge/c2a-core/releases/tag/v4.0.1) への移行をサポート．
+  - [ut-issl/c2a-core v3.10.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.1): 限定的にサポート．
+    - [v4.0.0](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0) ~ [v4.0.1](https://github.com/arkedge/c2a-core/releases/tag/v4.0.1) への移行: 可能ではあるものの，[ut-issl/c2a-core v3.10.0](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.0) からの差分は一時的に失われることになる
+    - v4.0.2(TBD) で移行をサポート予定
+- [v4.0.0-alpha.0](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-alpha.0)
   - [#19](https://github.com/arkedge/c2a-core/pull/18) の変更を取り込む
-- v4.0.0-alpha.1
+- [v4.0.0-alpha.1](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-alpha.1)
   - [#21](https://github.com/arkedge/c2a-core/pull/21), [#24](https://github.com/arkedge/c2a-core/pull/24): IfWrapper -> HAL の rename: [v4-rename-ifwrapper.sh](./script/migration/v4-rename-ifwrapper.sh) を実行
   - [#25](https://github.com/arkedge/c2a-core/pull/25): `IfWrapper/dc.h` を使用していた場合は，一旦 C2A user にヘッダを移す（`src/src_user/hal/dc.h`）
-- v4.0.0-alpha.2
+- [v4.0.0-alpha.2](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-alpha.2)
   - [#18](https://github.com/arkedge/c2a-core/pull/18) の変更を取り込む
 - [yanked] [v4.0.0-beta.0](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.0): このバージョンは yank されているため，tag は存在するが使わないこと
 - [v4.0.0-beta.1](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.1)
@@ -233,32 +331,45 @@ Rust エコシステム / C2A Boom の導入については，ArkEdge Space Inc.
     - [workflows-c2a v4.3.0](https://github.com/arkedge/workflows-c2a/releases/tag/v4.3.0) からこの構造に対応
     - ただし，この挙動変更は workflows-c2a に対しては breaking change なので，新規に [.github/workflows/check-coding-rule-v4.yml](https://github.com/arkedge/workflows-c2a/blob/v4.3.0/.github/workflows/check-coding-rule-v4.yml) という workflow を生やしており，こちらに移行する必要がある（[workflows-c2a#63](https://github.com/arkedge/workflows-c2a/pull/63)）
 - [v4.0.0-beta.2](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.2)
+  - [#100](https://github.com/arkedge/c2a-core/pull/100): rye の `build-backend` に pdm を指定する
+    - [c2a-enum-loader](./enum-loader) の相対パスでの指定への切り替えのためにすることになる（SHALL）
+    - これにより，rye の lockfile にそれを実行した PC での絶対パスが吐かれてしまうという既知の問題があるが，これは別途今後対処予定（[#106](https://github.com/arkedge/c2a-core/issues/106)）であり，v4.0.0 の段階では一旦許容するものとしている
   - [#99](https://github.com/arkedge/c2a-core/pull/99): [c2a-enum-loader](./enum-loader) を `src/src_core/enum-loader` のものに切り替える
+    - このバージョンから [ut-issl/c2a-enum-loader](https://github.com/ut-issl/c2a-enum-loader/) が c2a-core リポジトリに同梱されるようになった
+    - そのため，pytest で c2a-enum-loader を指定している部分を切り替える必要がある（SHOULD）
+      - `src/src_user/Test/pyproject.toml` の `dependencies` の `c2aenum` の部分を以下のようにする
+      - `"c2aenum @ file:///${PROJECT_ROOT}/../../src_core/enum-loader"`
   - [#111](https://github.com/arkedge/c2a-core/pull/111): [c2a-tlm-cmd-code-generator](./code-generator) を c2a-core のものに切り替える
-    - [v4.0.0-beta.2](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.2) 時点では `src/src_core/tlm-cmd-code-generator`
-    - [v4.0.0-beta.5](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.5)（[#153](https://github.com/arkedge/c2a-core/pull/153)）以降は `src/src_core/code-generator`
-  - [#86](https://github.com/arkedge/c2a-core/pull/86): CMake の option 修正
-    - これは C2A user ごとに設定が異なるので，手動で確認・修正する必要がある
+    - このバージョンから [ut-issl/c2a-tlm-cmd-code-generator](https://github.com/ut-issl/c2a-tlm-cmd-code-generator) が c2a-core リポジトリに同梱されるようになった
+    - そのため，各 C2A user でのコード生成は以下のディレクトリで実行することになる（SHALL）
+      - [v4.0.0-beta.2](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.2) 時点では `src/src_core/tlm-cmd-code-generator`
+      - [v4.0.0-beta.5](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.5)（[#153](https://github.com/arkedge/c2a-core/pull/153)）以降は `src/src_core/code-generator`
+  - [#86](https://github.com/arkedge/c2a-core/pull/86): C2A 全体で共通の CMake の option 修正
+    - C2A 全体での CMake option の命名の [コーディングルール](https://github.com/arkedge/c2a-core/blob/6a32752b6d5cea1ef5a5eb68c410cf705315170d/docs/general/coding_rule.md#cmake-option) が追加された
+    - C2A user ごとに設定があるので，手動で確認・修正する必要がある
+    - C2A user・c2a-core を横断する設定なので，c2a-core と命名を揃えなければならない（MUST）
+    - c2a-core でのマージ順などの関係上リリースが分かれているが，[#132](https://github.com/arkedge/c2a-core/pull/132) と同様の対応はこれと同種のものとして v4.0.0-beta.2 に更新するタイミングでまとめてやってもよい（MAY）
+      - あくまで c2a-core リポジトリでの作業としては C2A 全体で共通の option の整理を [#86](https://github.com/arkedge/c2a-core/pull/86) で，C2A user 固有の設定を [#132](https://github.com/arkedge/c2a-core/pull/132) で別途実施しているが，必ず v4.0.0-beta.3 でやらなければならない理由があるわけではない
 - [v4.0.0-beta.3](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.3)
   - [#122](https://github.com/arkedge/c2a-core/pull/122): Drivers ディレクトリの rename を実行（[v4-rename-driver.sh](./script/migration/v4-rename-driver.sh)）
     - [c2a-tlm-cmd-code-generator](./code-generator) にも更新があるので，念のため再度コード生成を行うこと（migration script の実行時点で diff が出て，それと変わらないはず）
   - [#132](https://github.com/arkedge/c2a-core/pull/132): C2A user 側の CMake option の整理
-    - これは C2A user ごとに設定が異なるので，手動で確認・修正する必要がある
-  - `C2A_USE_SCI_COM_WINGS` を default OFF にする
+    - C2A user ごとに設定が異なるので，手動で確認・修正する必要がある
+    - ただし，example user なので基本的には各 C2A user でもテンプレート的にこの実装が用いられているはずであり，同じ/同様の option 名を使っている場合は example user での命名に揃えることが推奨される（RECOMMENDED）
+  - `C2A_USE_SCI_COM_WINGS` を default OFF にする（RECOMMENDED）
     - このオプションを使う場合（つまり，SILS-S2E で WINGS と疎通する場合），S2E user の `CMakeLists.txt` ないしビルドスクリプト側でこのオプションを ON にして使うこと．あくまで C2A user 単体としては，この機能は optional であるべき．
 - [v4.0.0-beta.4](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.4)
   - [#146](https://github.com/arkedge/c2a-core/pull/146), [#147](https://github.com/arkedge/c2a-core/pull/147): Driver -> Component Driver の rename を実行（[v4-rename-driver2](./script/migration/v4-rename-driver2.sh)）
   - [#143](https://github.com/arkedge/c2a-core/pull/143), [#144](https://github.com/arkedge/c2a-core/pull/144), [#150](https://github.com/arkedge/c2a-core/pull/150): Driver instance -> Component Service の rename を実行（[v4-rename-driver-instance.sh](script/migration/v4-rename-driver-instance.sh)）
+    - 略語の 'DI' は短すぎるため，文脈が明らかなものしか sed していない．適宜検索して置き換えること（特にコマンド名になっているようなものに注意）．
 - [v4.0.0-beta.5](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0-beta.5)
   - [#153](https://github.com/arkedge/c2a-core/pull/153): code generator のパス変更: `src/src_core/tlm-cmd-code-generator` -> `src/src_core/code-generator`
   - [#138](https://github.com/arkedge/c2a-core/pull/138): C2A user の pytest のディレクトリ構成のリファクタ: [v4-rename-test-dir.sh](./script/migration/v4-rename-test-dir.sh) を実行
   - [#154](https://github.com/arkedge/c2a-core/pull/154), [#155](https://github.com/arkedge/c2a-core/pull/155): [v4-rename-component-driver-prefix.sh](./script/migration/v4-rename-component-driver-prefix.sh) を実行
   - [#165](https://github.com/arkedge/c2a-core/pull/165), [#166](https://github.com/arkedge/c2a-core/pull/166), [#169](https://github.com/arkedge/c2a-core/pull/169): [v4-rename-if-list.sh](./script/migration/v4-rename-if-list.sh)
-- v4.0.0
-  - [#167](https://github.com/arkedge/c2a-core/pull/167), [#168](https://github.com/arkedge/c2a-core/pull/168): `src/src_user/Settings` -> `src/src_user/settings`
+- [v4.0.0](https://github.com/arkedge/c2a-core/releases/tag/v4.0.0)
+  - [#167](https://github.com/arkedge/c2a-core/pull/167), [#168](https://github.com/arkedge/c2a-core/pull/168): `src/src_user/Settings` -> `src/src_user/settings`: [v4-rename-settings.sh](./script/migration/v4-rename-settings.sh) を実行
   - [#172](https://github.com/arkedge/c2a-core/pull/172): `src/src_user/settings/tlm_cmd/data_base` -> `tlm-cmd-db` の rename を実行（[v4-move-db-dir.sh](script/migration/v4-move-db-dir.sh)）
-- pytest への rye の導入
-  - [#100](https://github.com/arkedge/c2a-core/pull/100): `build-backend` に pdm を指定する
 
 
 ## Previous Releases
