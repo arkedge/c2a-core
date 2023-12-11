@@ -40,6 +40,7 @@
 
 - [#179](https://github.com/arkedge/c2a-core/pull/179): Update Rust crate bindgen to 0.69.1
 - [#210](https://github.com/arkedge/c2a-core/pull/210): Update dependency ut-issl/s2e-core to v7.1.0
+- [#229](https://github.com/arkedge/c2a-core/pull/229): Run Rust CI on all workspace crates
 
 ### Migration Guide
 - [#193](https://github.com/arkedge/c2a-core/pull/193): 影響範囲は MOBC のみ
