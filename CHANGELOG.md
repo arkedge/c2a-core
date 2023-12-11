@@ -11,13 +11,10 @@
 - [#199](https://github.com/arkedge/c2a-core/pull/199): Drop c2a-core crate links config
 - [#201](https://github.com/arkedge/c2a-core/pull/201): Refactor release rule
 - [#225](https://github.com/arkedge/c2a-core/pull/225): Space Packet 関連ファイルのディレクトリを変更
+- [#214](https://github.com/arkedge/c2a-core/pull/214): CCSDS の主に MOBC 向け Data Link Layer のコードを Core 管理にする
 - [#219](https://github.com/arkedge/c2a-core/pull/219): CCSDS data link layer における SCID をユーザー設定として切り出す
 - [#220](https://github.com/arkedge/c2a-core/pull/220): APIDの命名規則の更新
   - 命名規則は `tlm_cmd/common_tlm_cmd_packet.h` を参照
-
-### Enhancements
-
-- [#214](https://github.com/arkedge/c2a-core/pull/214): CCSDS の主 MOBC 向け Data Link Layer のコードを Core 管理にする
 
 ### Fixed
 
