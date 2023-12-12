@@ -2,6 +2,16 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
+## v4.0.2 (2023-12-19)
+
+v4.0 系の最初のメンテナンスのためのリリース．
+このようなメンテナンスのためのリリースは v4.1.0/[#201](https://github.com/arkedge/c2a-core/pull/201) でのリリースルールの変更によって可能となったが，v4.0 系でもこのバージョン以降は例外的に新たなリリースルールに則ってメンテナンスを行えるものとする．
+
+### Fixed
+
+- [ut-issl/c2a-core v3.10.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.1) からの backport
+  - [#236](https://github.com/arkedge/c2a-core/pull/236): [stable-4.0] backport PL_BC_LIST_CLEARED を level high で EL 登録する
+
 ## v4.0.1 (2023-11-09)
 
 ### Fixed
