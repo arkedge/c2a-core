@@ -365,8 +365,8 @@ def OutputTlmBufferC_(file_path, name, body, settings):
 #pragma section REPRO
 /**
  * @file
- * @brief  テレメトリバッファー（テレメ中継）
- * @note   このコードは自動生成されています！
+ * @brief テレメトリバッファー（テレメ中継）
+ * @note  このコードは自動生成されています！
  */
 #include <src_core/component_driver/cdrv_common_tlm_cmd_packet.h>
 #include "./{_obc_name_lower}_telemetry_definitions.h"
@@ -403,8 +403,8 @@ def OutputTlmBufferH_(file_path, name, body, settings):
     output += """
 /**
  * @file
- * @brief  テレメトリバッファー（テレメ中継）
- * @note   このコードは自動生成されています！
+ * @brief テレメトリバッファー（テレメ中継）
+ * @note  このコードは自動生成されています！
  */
 #ifndef {_obc_name_upper}_TELEMETRY_BUFFER_H_
 #define {_obc_name_upper}_TELEMETRY_BUFFER_H_
@@ -444,8 +444,8 @@ def OutputTlmDataDefH_(file_path, name, body, settings):
     output += """
 /**
  * @file
- * @brief  バッファリングされているテレメをパースしてMOBC内でかんたんに利用できるようにするためのテレメデータ構造体定義
- * @note   このコードは自動生成されています！
+ * @brief バッファリングされているテレメをパースしてMOBC内でかんたんに利用できるようにするためのテレメデータ構造体定義
+ * @note  このコードは自動生成されています！
  */
 #ifndef {_obc_name_upper}_TELEMETRY_DATA_DEFINITIONS_H_
 #define {_obc_name_upper}_TELEMETRY_DATA_DEFINITIONS_H_

@@ -188,8 +188,8 @@ def OutputCmdDefC_(file_path, body, settings):
 #pragma section REPRO
 /**
  * @file
- * @brief  コマンド定義
- * @note   このコードは自動生成されています！
+ * @brief コマンド定義
+ * @note  このコードは自動生成されています！
  */
 #include <src_core/tlm_cmd/command_analyze.h>
 #include "command_definitions.h"
@@ -220,8 +220,8 @@ def OutputCmdDefH_(file_path, body, settings):
     output += """
 /**
  * @file
- * @brief  コマンド定義
- * @note   このコードは自動生成されています！
+ * @brief コマンド定義
+ * @note  このコードは自動生成されています！
  */
 #ifndef COMMAND_DEFINITIONS_H_
 #define COMMAND_DEFINITIONS_H_
@@ -253,8 +253,8 @@ def OutputBctDef_(file_path, body, settings):
     output += """
 /**
  * @file
- * @brief  ブロックコマンド定義
- * @note   このコードは自動生成されています！
+ * @brief ブロックコマンド定義
+ * @note  このコードは自動生成されています！
  */
 #ifndef BLOCK_COMMAND_DEFINITIONS_H_
 #define BLOCK_COMMAND_DEFINITIONS_H_
@@ -293,8 +293,8 @@ def OutputOtherObcCmdDefH_(file_path, name, body, settings):
     output += """
 /**
  * @file
- * @brief  コマンド定義
- * @note   このコードは自動生成されています！
+ * @brief コマンド定義
+ * @note  このコードは自動生成されています！
  */
 #ifndef {_obc_name_upper}_COMMAND_DEFINITIONS_H_
 #define {_obc_name_upper}_COMMAND_DEFINITIONS_H_

@@ -152,8 +152,8 @@ def OutputTlmDefC_(file_path, body, settings):
 #pragma section REPRO
 /**
  * @file
- * @brief  テレメトリ定義
- * @note   このコードは自動生成されています！
+ * @brief テレメトリ定義
+ * @note  このコードは自動生成されています！
  */
 #include <src_core/tlm_cmd/telemetry_frame.h>
 #include "telemetry_definitions.h"
@@ -181,8 +181,8 @@ def OutputTlmDefH_(file_path, body, settings):
     output += """
 /**
  * @file
- * @brief  テレメトリ定義
- * @note   このコードは自動生成されています！
+ * @brief テレメトリ定義
+ * @note  このコードは自動生成されています！
  */
 #ifndef TELEMETRY_DEFINITIONS_H_
 #define TELEMETRY_DEFINITIONS_H_
@@ -218,8 +218,8 @@ def OutputOtherObcTlmDefH(file_path, name, body, settings):
     output += """
 /**
  * @file
- * @brief  テレメトリ定義
- * @note   このコードは自動生成されています！
+ * @brief テレメトリ定義
+ * @note  このコードは自動生成されています！
  */
 #ifndef {_obc_name_upper}_TELEMETRY_DEFINITIONS_H_
 #define {_obc_name_upper}_TELEMETRY_DEFINITIONS_H_
