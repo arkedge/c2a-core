@@ -1,7 +1,7 @@
 /**
  * @file
- * @brief  テレメトリ定義
- * @note   このコードは自動生成されています！
+ * @brief テレメトリ定義
+ * @note  このコードは自動生成されています！
  */
 #ifndef AOBC_TELEMETRY_DEFINITIONS_H_
 #define AOBC_TELEMETRY_DEFINITIONS_H_

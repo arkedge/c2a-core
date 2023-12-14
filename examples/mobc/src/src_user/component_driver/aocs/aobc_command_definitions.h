@@ -1,7 +1,7 @@
 /**
  * @file
- * @brief  コマンド定義
- * @note   このコードは自動生成されています！
+ * @brief コマンド定義
+ * @note  このコードは自動生成されています！
  */
 #ifndef AOBC_COMMAND_DEFINITIONS_H_
 #define AOBC_COMMAND_DEFINITIONS_H_

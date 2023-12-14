@@ -1,7 +1,7 @@
 /**
  * @file
- * @brief  テレメトリバッファー（テレメ中継）
- * @note   このコードは自動生成されています！
+ * @brief テレメトリバッファー（テレメ中継）
+ * @note  このコードは自動生成されています！
  */
 #ifndef AOBC_TELEMETRY_BUFFER_H_
 #define AOBC_TELEMETRY_BUFFER_H_

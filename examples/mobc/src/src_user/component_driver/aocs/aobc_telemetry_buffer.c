@@ -1,8 +1,8 @@
 #pragma section REPRO
 /**
  * @file
- * @brief  テレメトリバッファー（テレメ中継）
- * @note   このコードは自動生成されています！
+ * @brief テレメトリバッファー（テレメ中継）
+ * @note  このコードは自動生成されています！
  */
 #include <src_core/component_driver/cdrv_common_tlm_cmd_packet.h>
 #include "./aobc_telemetry_definitions.h"

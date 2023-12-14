@@ -1,7 +1,7 @@
 /**
  * @file
- * @brief  バッファリングされているテレメをパースしてMOBC内でかんたんに利用できるようにするためのテレメデータ構造体定義
- * @note   このコードは自動生成されています！
+ * @brief バッファリングされているテレメをパースしてMOBC内でかんたんに利用できるようにするためのテレメデータ構造体定義
+ * @note  このコードは自動生成されています！
  */
 #ifndef AOBC_TELEMETRY_DATA_DEFINITIONS_H_
 #define AOBC_TELEMETRY_DATA_DEFINITIONS_H_

@@ -1,8 +1,8 @@
 #pragma section REPRO
 /**
  * @file
- * @brief  テレメトリ定義
- * @note   このコードは自動生成されています！
+ * @brief テレメトリ定義
+ * @note  このコードは自動生成されています！
  */
 #include <src_core/tlm_cmd/telemetry_frame.h>
 #include "telemetry_definitions.h"

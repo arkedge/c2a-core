@@ -1,7 +1,7 @@
 /**
  * @file
- * @brief  ブロックコマンド定義
- * @note   このコードは自動生成されています！
+ * @brief ブロックコマンド定義
+ * @note  このコードは自動生成されています！
  */
 #ifndef BLOCK_COMMAND_DEFINITIONS_H_
 #define BLOCK_COMMAND_DEFINITIONS_H_
