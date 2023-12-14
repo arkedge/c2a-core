@@ -91,5 +91,5 @@ def GetCommitHash_(path):
             ["git", "rev-parse", "HEAD"], cwd=path, text=True, capture_output=True, check=True
         )
         return result.stdout.strip()
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError:
         return "0000000000000000000000000000000000000000"
