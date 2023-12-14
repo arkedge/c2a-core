@@ -2,6 +2,15 @@
  * @file
  * @brief ブロックコマンド定義
  * @note  このコードは自動生成されています！
+ * @note  コード生成 db commit hash: ec4ce770d07fb3fa6824f36bd8d5253895174240
+ * @note  コード生成パラメータ:
+ *          path_to_src:           ../examples/mobc/src/
+ *          path_to_db:            ../examples/mobc/tlm-cmd-db/
+ *          db_prefix:             SAMPLE_MOBC
+ *          tlm_id_range:          [0x00, 0x100]
+ *          is_cmd_prefixed_in_db: 0
+ *          input_file_encoding:   utf-8
+ *          output_file_encoding:  utf-8
  */
 #ifndef BLOCK_COMMAND_DEFINITIONS_H_
 #define BLOCK_COMMAND_DEFINITIONS_H_
