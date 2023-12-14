@@ -4,6 +4,7 @@ cmd def
 """
 
 import sys
+import my_mod.util
 
 # import pprint
 
@@ -170,7 +171,7 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
             + name_lower
             + "_command_definitions.h"
         )
-        OutputOtherObcCmdDefH_(output_file_path, obc_name, body_h, settings)
+        OutputOtherObcCmdDefH_(output_file_path, obc_name, body_h, settings, i)
 
 
 def GetCmdNameAndCmdCode_(name, is_cmd_prefixed_in_db):
@@ -189,7 +190,13 @@ def OutputCmdDefC_(file_path, body, settings):
 /**
  * @file
  * @brief コマンド定義
- * @note  このコードは自動生成されています！
+"""[
+        1:
+    ]  # 最初の改行を除く
+
+    output += my_mod.util.GenerateSettingNote(settings)
+
+    output += """
  */
 #include <src_core/tlm_cmd/command_analyze.h>
 #include "command_definitions.h"
@@ -221,7 +228,13 @@ def OutputCmdDefH_(file_path, body, settings):
 /**
  * @file
  * @brief コマンド定義
- * @note  このコードは自動生成されています！
+"""[
+        1:
+    ]  # 最初の改行を除く
+
+    output += my_mod.util.GenerateSettingNote(settings)
+
+    output += """
  */
 #ifndef COMMAND_DEFINITIONS_H_
 #define COMMAND_DEFINITIONS_H_
@@ -254,7 +267,13 @@ def OutputBctDef_(file_path, body, settings):
 /**
  * @file
  * @brief ブロックコマンド定義
- * @note  このコードは自動生成されています！
+"""[
+        1:
+    ]  # 最初の改行を除く
+
+    output += my_mod.util.GenerateSettingNote(settings)
+
+    output += """
  */
 #ifndef BLOCK_COMMAND_DEFINITIONS_H_
 #define BLOCK_COMMAND_DEFINITIONS_H_
@@ -284,7 +303,7 @@ void BC_load_defaults(void);
         fh.write(output)
 
 
-def OutputOtherObcCmdDefH_(file_path, name, body, settings):
+def OutputOtherObcCmdDefH_(file_path, name, body, settings, obc_idx):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()
@@ -294,7 +313,13 @@ def OutputOtherObcCmdDefH_(file_path, name, body, settings):
 /**
  * @file
  * @brief コマンド定義
- * @note  このコードは自動生成されています！
+"""[
+        1:
+    ]  # 最初の改行を除く
+
+    output += my_mod.util.GenerateSubObcSettingNote(settings, obc_idx)
+
+    output += """
  */
 #ifndef {_obc_name_upper}_COMMAND_DEFINITIONS_H_
 #define {_obc_name_upper}_COMMAND_DEFINITIONS_H_

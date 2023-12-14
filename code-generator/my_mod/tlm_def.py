@@ -4,6 +4,7 @@ tlm def
 """
 
 import sys
+import my_mod.util
 
 
 def GenerateTlmDef(settings, tlm_db):
@@ -143,7 +144,7 @@ def GenerateOtherObcTlmDef(settings, other_obc_dbs):
             + obc_name.lower()
             + "_telemetry_definitions.h"
         )
-        OutputOtherObcTlmDefH(output_file_path, obc_name, body_h, settings)
+        OutputOtherObcTlmDefH(output_file_path, obc_name, body_h, settings, i)
 
 
 def OutputTlmDefC_(file_path, body, settings):
@@ -153,7 +154,13 @@ def OutputTlmDefC_(file_path, body, settings):
 /**
  * @file
  * @brief テレメトリ定義
- * @note  このコードは自動生成されています！
+"""[
+        1:
+    ]  # 最初の改行を除く
+
+    output += my_mod.util.GenerateSettingNote(settings)
+
+    output += """
  */
 #include <src_core/tlm_cmd/telemetry_frame.h>
 #include "telemetry_definitions.h"
@@ -182,7 +189,13 @@ def OutputTlmDefH_(file_path, body, settings):
 /**
  * @file
  * @brief テレメトリ定義
- * @note  このコードは自動生成されています！
+"""[
+        1:
+    ]  # 最初の改行を除く
+
+    output += my_mod.util.GenerateSettingNote(settings)
+
+    output += """
  */
 #ifndef TELEMETRY_DEFINITIONS_H_
 #define TELEMETRY_DEFINITIONS_H_
@@ -209,7 +222,7 @@ typedef enum
         fh.write(output)
 
 
-def OutputOtherObcTlmDefH(file_path, name, body, settings):
+def OutputOtherObcTlmDefH(file_path, name, body, settings, obc_idx):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()
@@ -219,7 +232,13 @@ def OutputOtherObcTlmDefH(file_path, name, body, settings):
 /**
  * @file
  * @brief テレメトリ定義
- * @note  このコードは自動生成されています！
+"""[
+        1:
+    ]  # 最初の改行を除く
+
+    output += my_mod.util.GenerateSubObcSettingNote(settings, obc_idx)
+
+    output += """
  */
 #ifndef {_obc_name_upper}_TELEMETRY_DEFINITIONS_H_
 #define {_obc_name_upper}_TELEMETRY_DEFINITIONS_H_
