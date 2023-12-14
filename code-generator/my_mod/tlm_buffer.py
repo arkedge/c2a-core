@@ -343,17 +343,25 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             + settings["other_obc_data"][i]["driver_path"]
         )
         OutputTlmBufferC_(
-            output_file_path + obc_name.lower() + "_telemetry_buffer.c", obc_name, body_c, settings, i
+            output_file_path + obc_name.lower() + "_telemetry_buffer.c",
+            obc_name,
+            body_c,
+            settings,
+            i,
         )
         OutputTlmBufferH_(
-            output_file_path + obc_name.lower() + "_telemetry_buffer.h", obc_name, body_h, settings, i
+            output_file_path + obc_name.lower() + "_telemetry_buffer.h",
+            obc_name,
+            body_h,
+            settings,
+            i,
         )
         OutputTlmDataDefH_(
             output_file_path + obc_name.lower() + "_telemetry_data_definitions.h",
             obc_name,
             tlmdef_body_h,
             settings,
-            i
+            i,
         )
 
 
