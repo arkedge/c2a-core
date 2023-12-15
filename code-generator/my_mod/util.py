@@ -21,8 +21,8 @@ def GenerateSettingNote(settings):
     note += " *          db_prefix:             "
     note += settings["db_prefix"]
     note += "\n"
-    note += " *          tlm_id_range:          ["
-    note += settings["tlm_id_range"][0] + ", " + settings["tlm_id_range"][1] + "]"
+    note += " *          tlm_id_range:          "
+    note += "[" + settings["tlm_id_range"][0] + ", " + settings["tlm_id_range"][1] + "]"
     note += "\n"
     note += " *          is_cmd_prefixed_in_db: "
     note += str(settings["is_cmd_prefixed_in_db"])
@@ -59,7 +59,7 @@ def GenerateSubObcSettingNote(settings, obc_idx):
     note += sub_obc_settings["db_prefix"]
     note += "\n"
     note += " *          tlm_id_range:            "
-    note += sub_obc_settings["tlm_id_range"][0] + ", " + sub_obc_settings["tlm_id_range"][1] + "]"
+    note += "[" + sub_obc_settings["tlm_id_range"][0] + ", " + sub_obc_settings["tlm_id_range"][1] + "]"
     note += "\n"
     note += " *          is_cmd_prefixed_in_db:   "
     note += str(sub_obc_settings["is_cmd_prefixed_in_db"])
