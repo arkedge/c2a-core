@@ -13,12 +13,6 @@ def GenerateSettingNote(settings):
     note += GetCommitHash_(settings["path_to_db"])
     note += "\n"
     note += " * @note  コード生成パラメータ:\n"
-    note += " *          path_to_src:           "
-    note += settings["path_to_src"]
-    note += "\n"
-    note += " *          path_to_db:            "
-    note += settings["path_to_db"]
-    note += "\n"
     note += " *          db_prefix:             "
     note += settings["db_prefix"]
     note += "\n"
@@ -35,6 +29,7 @@ def GenerateSettingNote(settings):
     note += settings["output_file_encoding"]
     note += "\n"
     # is_main_obc については，生成状況によって異なるので出力しない
+    # path_to_src, path_to_db については，実行環境によって異なるので出力しない
 
     return note
 
@@ -63,9 +58,6 @@ def GenerateSubObcSettingNote(settings, obc_idx):
     note += " *          input_file_encoding:     "
     note += sub_obc_settings["input_file_encoding"]
     note += "\n"
-    note += " *          path_to_db:              "
-    note += sub_obc_settings["path_to_db"]
-    note += "\n"
     note += " *          max_tlm_num:             "
     note += str(sub_obc_settings["max_tlm_num"])
     note += "\n"
@@ -81,6 +73,7 @@ def GenerateSubObcSettingNote(settings, obc_idx):
     note += " *          code_when_tlm_not_found: "
     note += sub_obc_settings["code_when_tlm_not_found"]
     note += "\n"
+    # path_to_db については，実行環境によって異なるので出力しない
 
     return note
 
