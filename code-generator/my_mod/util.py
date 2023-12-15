@@ -4,12 +4,17 @@ util
 """
 
 import subprocess
+import re
 
 
 def GenerateSettingNote(settings):
     note = ""
     note += " * @note  このコードは自動生成されています！\n"
-    note += " * @note  コード生成 db commit hash: "
+    note += " * @note  コード生成 tlm-cmd-db:\n"
+    note += " *          repository:     "
+    note += GetRepoName_(settings["path_to_db"])
+    note += "\n"
+    note += " *          db commit hash: "
     note += GetCommitHash_(settings["path_to_db"])
     note += "\n"
     note += " * @note  コード生成パラメータ:\n"
@@ -39,7 +44,11 @@ def GenerateSubObcSettingNote(settings, obc_idx):
 
     note = ""
     note += " * @note  このコードは自動生成されています！\n"
-    note += " * @note  コード生成 db commit hash: "
+    note += " * @note  コード生成 tlm-cmd-db:\n"
+    note += " *          repository:     "
+    note += GetRepoName_(sub_obc_settings["path_to_db"])
+    note += "\n"
+    note += " *          db commit hash: "
     note += GetCommitHash_(sub_obc_settings["path_to_db"])
     note += "\n"
     note += " * @note  コード生成パラメータ:\n"
@@ -86,3 +95,19 @@ def GetCommitHash_(path):
         return result.stdout.strip()
     except subprocess.CalledProcessError:
         return "0000000000000000000000000000000000000000"
+
+
+def GetRepoName_(path):
+    try:
+        # GitリモートURLを取得
+        result = subprocess.run(["git", "remote", "-v"], cwd=path, text=True, capture_output=True, check=True)
+        url = result.stdout.split('\n')[0].split('\t')[1].split(' ')[0]  # 最初のリモートURLを取得
+
+        # URLからユーザー名とリポジトリ名を抽出
+        match = re.search(r'github.com[:/](.+)/(.+)\.git', url)
+        if match:
+            return f"{match.group(1)}/{match.group(2)}"
+        else:
+            return "User/Repository name not found"
+    except subprocess.CalledProcessError:
+        return "User/Repository name not found"

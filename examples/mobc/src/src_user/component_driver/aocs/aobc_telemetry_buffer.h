@@ -2,14 +2,15 @@
  * @file
  * @brief テレメトリバッファー（テレメ中継）
  * @note  このコードは自動生成されています！
- * @note  コード生成 db commit hash: ec4ce770d07fb3fa6824f36bd8d5253895174240
+ * @note  コード生成 tlm-cmd-db:
+ *          repository:     arkedge/c2a-core
+ *          db commit hash: 58ecdef00f908ac19f3512a1155eaef65244cd81
  * @note  コード生成パラメータ:
  *          name:                    AOBC
  *          db_prefix:               SAMPLE_AOBC
  *          tlm_id_range:            0x90, 0xc0]
  *          is_cmd_prefixed_in_db:   0
  *          input_file_encoding:     utf-8
- *          path_to_db:              ../examples/subobc/tlm-cmd-db/
  *          max_tlm_num:             256
  *          driver_path:             aocs/
  *          driver_type:             AOBC_Driver
