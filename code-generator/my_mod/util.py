@@ -104,6 +104,10 @@ def GetRepoName_(path):
         result = subprocess.run(["git", "remote", "-v"], cwd=path, text=True, capture_output=True, check=True)
         url = result.stdout.split('\n')[0].split('\t')[1].split(' ')[0]  # 最初のリモートURLを取得
 
+        # URLの末尾に.gitがなければ追加
+        if not url.endswith(".git"):
+            url += ".git"
+
         # URLからユーザー名とリポジトリ名を抽出（HTTPSとSSHの両方に対応）
         match = re.search(r'(?:github\.com[:/])(.+)/(.+)\.git', url)
         if match:
