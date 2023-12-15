@@ -25,6 +25,8 @@ jobs:
         working-directory: ./code-generator
         run: |
           cp "./settings_${{ matrix.user }}.json" ./settings.json
+          # sub obc の tlm cmd db は見ない
+          sed -i 's/  "is_main_obc" : 1,/  "is_main_obc" : 0,/g' ./settings.json
           python GenerateC2ACode.py
 
       - name: check diff
