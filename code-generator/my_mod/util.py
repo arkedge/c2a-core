@@ -137,6 +137,13 @@ def GetDbHash_(path):
 
 
 def CalcMd5_(path):
+    # 改行コード問題がうざいので，全部 CRLF に変換して計算
+    with open(path, 'r', encoding='utf-8') as file:
+        content = file.read()
+    content_crlf = content.replace('\n', '\r\n')
+    return hashlib.md5(content_crlf.encode('utf-8')).hexdigest()
+
+
     hash_md5 = hashlib.md5()
     with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
