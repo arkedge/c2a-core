@@ -15,6 +15,7 @@ def GenerateSettingNote(settings):
     note += GetRepoName_(settings["path_to_db"])
     note += "\n"
     note += " *          db commit hash: "
+    note += "xxxx"
     # note += GetCommitHash_(settings["path_to_db"])
     note += "\n"
     note += " * @note  コード生成パラメータ:\n"
@@ -103,8 +104,8 @@ def GetRepoName_(path):
         result = subprocess.run(["git", "remote", "-v"], cwd=path, text=True, capture_output=True, check=True)
         url = result.stdout.split('\n')[0].split('\t')[1].split(' ')[0]  # 最初のリモートURLを取得
 
-        # URLからユーザー名とリポジトリ名を抽出
-        match = re.search(r'github.com[:/](.+)/(.+)\.git', url)
+        # URLからユーザー名とリポジトリ名を抽出（HTTPSとSSHの両方に対応）
+        match = re.search(r'(?:github\.com[:/])(.+)/(.+)\.git', url)
         if match:
             return f"{match.group(1)}/{match.group(2)}"
         else:
