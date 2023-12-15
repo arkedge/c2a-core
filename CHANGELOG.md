@@ -6,6 +6,7 @@
 
 ### Enhancements
 - [#240](https://github.com/arkedge/c2a-core/pull/240): code-generator の出力コードに，設定情報を残すようにする
+- [#243](https://github.com/arkedge/c2a-core/pull/243): code-generator に max_tlm_num のアサーションを追加
 
 ### Migration Guide
 - [#240](https://github.com/arkedge/c2a-core/pull/240): user 側でのコードレベルでの対応は不要
