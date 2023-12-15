@@ -130,15 +130,15 @@ def GetDbHash_(path):
     csv_files_info = FindCsvFilesAndCalculateMd5_(path)
 
     # ファイル名でソートし，MD5 を結合したのち，その MD5 を計算
-    sorted_info = sorted(csv_files_info, key=lambda x: x['filepath'])
-    concatenated_md5s = ''.join(info['md5'] for info in sorted_info)
+    sorted_info = sorted(csv_files_info, key=lambda x: x["filepath"])
+    concatenated_md5s = "".join(info["md5"] for info in sorted_info)
     final_md5 = hashlib.md5(concatenated_md5s.encode()).hexdigest()
     return final_md5
 
 
 def CalcMd5_(path):
     hash_md5 = hashlib.md5()
-    with open(path, 'rb') as f:
+    with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
@@ -153,5 +153,3 @@ def FindCsvFilesAndCalculateMd5_(path):
                 md5 = CalcMd5_(file_path)
                 csv_files_info.append({"filepath": file_path, "md5": md5})
     return csv_files_info
-
-
