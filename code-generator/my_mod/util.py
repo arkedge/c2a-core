@@ -15,7 +15,7 @@ def GenerateSettingNote(settings):
     note += GetRepoName_(settings["path_to_db"])
     note += "\n"
     note += " *          db commit hash: "
-    note += GetCommitHash_(settings["path_to_db"])
+    # note += GetCommitHash_(settings["path_to_db"])
     note += "\n"
     note += " * @note  コード生成パラメータ:\n"
     note += " *          db_prefix:             "
