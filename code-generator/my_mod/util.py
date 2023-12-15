@@ -15,8 +15,8 @@ def GenerateSettingNote(settings):
     note += GetRepoName_(settings["path_to_db"])
     note += "\n"
     note += " *          db commit hash: "
-    note += "xxxx"
     # note += GetCommitHash_(settings["path_to_db"])
+    note += GetLatestDirCommitHash_(settings["path_to_db"])
     note += "\n"
     note += " * @note  コード生成パラメータ:\n"
     note += " *          db_prefix:             "
@@ -60,7 +60,9 @@ def GenerateSubObcSettingNote(settings, obc_idx):
     note += sub_obc_settings["db_prefix"]
     note += "\n"
     note += " *          tlm_id_range:            "
-    note += "[" + sub_obc_settings["tlm_id_range"][0] + ", " + sub_obc_settings["tlm_id_range"][1] + "]"
+    note += (
+        "[" + sub_obc_settings["tlm_id_range"][0] + ", " + sub_obc_settings["tlm_id_range"][1] + "]"
+    )
     note += "\n"
     note += " *          is_cmd_prefixed_in_db:   "
     note += str(sub_obc_settings["is_cmd_prefixed_in_db"])
@@ -98,18 +100,34 @@ def GetCommitHash_(path):
         return "0000000000000000000000000000000000000000"
 
 
+# あるディレクトリの最後に更新されたコミットハッシュを取得する
+def GetLatestDirCommitHash_(path):
+    try:
+        result = subprocess.run(
+            ["git", "log", "-n", "1", "--format=%H", "--", path],
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        return result.stdout.strip()
+    except subprocess.CalledProcessError:
+        return "0000000000000000000000000000000000000000"
+
+
 def GetRepoName_(path):
     try:
         # GitリモートURLを取得
-        result = subprocess.run(["git", "remote", "-v"], cwd=path, text=True, capture_output=True, check=True)
-        url = result.stdout.split('\n')[0].split('\t')[1].split(' ')[0]  # 最初のリモートURLを取得
+        result = subprocess.run(
+            ["git", "remote", "-v"], cwd=path, text=True, capture_output=True, check=True
+        )
+        url = result.stdout.split("\n")[0].split("\t")[1].split(" ")[0]  # 最初のリモートURLを取得
 
         # URLの末尾に.gitがなければ追加
         if not url.endswith(".git"):
             url += ".git"
 
         # URLからユーザー名とリポジトリ名を抽出（HTTPSとSSHの両方に対応）
-        match = re.search(r'(?:github\.com[:/])(.+)/(.+)\.git', url)
+        match = re.search(r"(?:github\.com[:/])(.+)/(.+)\.git", url)
         if match:
             return f"{match.group(1)}/{match.group(2)}"
         else:
