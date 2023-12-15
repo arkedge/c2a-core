@@ -3,8 +3,8 @@
  * @brief ブロックコマンド定義
  * @note  このコードは自動生成されています！
  * @note  コード生成 tlm-cmd-db:
- *          repository:     arkedge/c2a-core
- *          db commit hash: 56c0502ad54caac8d6a9065dcb6fdbd6e913f3e9
+ *          repository:    arkedge/c2a-core
+ *          db hash (MD5): e2120a2aaff3346ef5570adeda7a1cd6
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]

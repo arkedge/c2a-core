@@ -5,18 +5,21 @@ util
 
 import subprocess
 import re
+import os
+import hashlib
 
 
 def GenerateSettingNote(settings):
     note = ""
     note += " * @note  このコードは自動生成されています！\n"
     note += " * @note  コード生成 tlm-cmd-db:\n"
-    note += " *          repository:     "
+    note += " *          repository:    "
     note += GetRepoName_(settings["path_to_db"])
     note += "\n"
-    note += " *          db commit hash: "
+    note += " *          db hash (MD5): "
     # note += GetCommitHash_(settings["path_to_db"])
-    note += GetLatestDirCommitHash_(settings["path_to_db"])
+    # note += GetLatestDirCommitHash_(settings["path_to_db"])
+    note += GetDbHash_(settings["path_to_db"])
     note += "\n"
     note += " * @note  コード生成パラメータ:\n"
     note += " *          db_prefix:             "
@@ -100,20 +103,6 @@ def GetCommitHash_(path):
         return "0000000000000000000000000000000000000000"
 
 
-# あるディレクトリの最後に更新されたコミットハッシュを取得する
-def GetLatestDirCommitHash_(path):
-    try:
-        result = subprocess.run(
-            ["git", "log", "-n", "1", "--format=%H", "--", path],
-            text=True,
-            capture_output=True,
-            check=True,
-        )
-        return result.stdout.strip()
-    except subprocess.CalledProcessError:
-        return "0000000000000000000000000000000000000000"
-
-
 def GetRepoName_(path):
     try:
         # GitリモートURLを取得
@@ -134,3 +123,35 @@ def GetRepoName_(path):
             return "User/Repository name not found"
     except subprocess.CalledProcessError:
         return "User/Repository name not found"
+
+
+# 入力 DB の csv をファイル名でソートし MD5 を計算，その MD5 をすべて cat して MD5 を計算したものを返す
+def GetDbHash_(path):
+    csv_files_info = FindCsvFilesAndCalculateMd5_(path)
+
+    # ファイル名でソートし，MD5 を結合したのち，その MD5 を計算
+    sorted_info = sorted(csv_files_info, key=lambda x: x['filepath'])
+    concatenated_md5s = ''.join(info['md5'] for info in sorted_info)
+    final_md5 = hashlib.md5(concatenated_md5s.encode()).hexdigest()
+    return final_md5
+
+
+def CalcMd5_(path):
+    hash_md5 = hashlib.md5()
+    with open(path, 'rb') as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
+
+def FindCsvFilesAndCalculateMd5_(path):
+    csv_files_info = []
+    for root, dirs, files in os.walk(path):
+        for name in files:
+            if name.endswith(".csv"):
+                file_path = os.path.join(root, name)
+                md5 = CalcMd5_(file_path)
+                csv_files_info.append({"filepath": file_path, "md5": md5})
+    return csv_files_info
+
+
