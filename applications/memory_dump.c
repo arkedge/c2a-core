@@ -14,9 +14,7 @@ const MemoryDump* const memory_dump = &memory_dump_;
 
 // FIXME: CTCP 大改修が終わったら直す
 // https://github.com/ut-issl/c2a-core/pull/217
-#if 0
 static CommonTlmPacket MEM_ctp_; // データサイズが大きいのでstatic確保
-#endif
 
 static RESULT MEM_init_(void);
 
@@ -24,7 +22,6 @@ static uint8_t MEM_get_next_adu_counter_(void);
 
 // FIXME: CTCP 大改修が終わったら直す
 // https://github.com/ut-issl/c2a-core/pull/217
-#if 0
 static CCP_EXEC_STS MEM_dump_region_(uint8_t category,
                                      uint8_t num_dumps);
 
@@ -44,7 +41,6 @@ static void MEM_setup_header_(TCP* packet,
 
 static void MEM_send_packet_(const CommonTlmPacket* packet,
                              uint8_t num_dumps);
-#endif
 
 AppInfo MEM_create_app(void)
 {
@@ -97,7 +93,6 @@ CCP_CmdRet Cmd_MEM_SET_REGION(const CommonCmdPacket* packet)
 
 // FIXME: CTCP 大改修が終わったら直す
 // https://github.com/ut-issl/c2a-core/pull/217
-#if 0
 CCP_CmdRet Cmd_MEM_DUMP_REGION_SEQ(const CommonCmdPacket* packet)
 {
   const uint8_t* param = CCP_get_param_head(packet);
@@ -202,7 +197,6 @@ CCP_CmdRet Cmd_MEM_DUMP_SINGLE(const CommonCmdPacket* packet)
 
   return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
 }
-#endif
 
 CCP_CmdRet Cmd_MEM_LOAD(const CommonCmdPacket* packet)
 {
@@ -283,7 +277,6 @@ static uint8_t MEM_get_next_adu_counter_(void)
 
 // FIXME: CTCP 大改修が終わったら直す
 // https://github.com/ut-issl/c2a-core/pull/217
-#if 0
 static CCP_EXEC_STS MEM_dump_region_(uint8_t category,
                                      uint8_t num_dumps)
 {
@@ -424,6 +417,5 @@ static void MEM_send_packet_(const CommonTlmPacket* packet,
     PH_analyze_packet(packet);      // FIXME: CTCP, SpacePacket 整理で直す
   }
 }
-#endif
 
 #pragma section
