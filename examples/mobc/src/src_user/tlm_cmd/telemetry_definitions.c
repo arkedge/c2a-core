@@ -198,19 +198,19 @@ static TF_TLM_FUNC_ACK Tlm_MOBC_(uint8_t* packet, uint16_t* len, uint16_t max_le
 
 static TF_TLM_FUNC_ACK Tlm_MEM_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 {
-  if (49 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+  if (50 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
 
 #ifndef BUILD_SETTINGS_FAST_BUILD
-  TF_copy_u32(&packet[26], memory_dump->begin);
-  TF_copy_u32(&packet[30], memory_dump->end);
-  TF_copy_u32(&packet[34], memory_dump->adu_size);
-  TF_copy_u16(&packet[38], memory_dump->adu_seq);
-  TF_copy_u8(&packet[40], memory_dump->adu_counter);
-  TF_copy_u32(&packet[41], memory_dump->dest);
-  TF_copy_u32(&packet[45], memory_dump->rp);
+  TF_copy_u32(&packet[26], memory_dump->settings.begin);
+  TF_copy_u32(&packet[30], memory_dump->settings.end);
+  TF_copy_u32(&packet[34], memory_dump->settings.copy_dest);
+  TF_copy_u32(&packet[38], memory_dump->internal.data_size);
+  TF_copy_u16(&packet[42], memory_dump->internal.data_seq);
+  TF_copy_u16(&packet[44], memory_dump->internal.max_data_seq);
+  TF_copy_u32(&packet[46], memory_dump->internal.copy_rp);
 #endif
 
-  *len = 49;
+  *len = 50;
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 
