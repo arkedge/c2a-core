@@ -69,7 +69,7 @@ CCP_CmdRet Cmd_MEM_LOAD(const CommonCmdPacket* packet);
 /**
  * @brief Cmd_MEM_COPY_REGION のコピー先を設定
  */
-CCP_CmdRet Cmd_MEM_SET_DESTINATION(const CommonCmdPacket* packet);
+CCP_CmdRet Cmd_MEM_SET_DESTINATION_FOR_COPY(const CommonCmdPacket* packet);
 
 /**
  * @brief 指定した幅で， dest に copy_rp をコピーしていく
