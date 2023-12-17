@@ -64,6 +64,7 @@ examples/subobc/src/src_core
 examples/subobc/build
 *.pyc
 tlmcmddb*.json
+node_modules/
 
 # Added by cargo
 /target
