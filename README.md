@@ -13,7 +13,7 @@
 
 
 ## ドキュメント
-- ドキュメント:  https://github.com/arkedge/c2a-core/tree/develop/docs
+- ドキュメント:  https://github.com/arkedge/c2a-core/tree/main/docs
 - リファレンス (TBD):  https://github.com/ut-issl/c2a-reference
 - [CHANGELOG](./CHANGELOG.md)
 
@@ -44,7 +44,6 @@
 
 ### ブランチ
 - `main`: リリース版（[詳細](./docs/general/release.md)）
-- `develop`: 概ね検証された最新版（beta 機能含む）
 - `feature/*` : 開発ブランチ
 - `hotfix/*` : 重大バグ修正用ブランチ
 
