@@ -44,7 +44,8 @@ npm run devtools:sils
 
 
 ### C2A そのもの + c2a-devtools の実行 (VS Code を用いたデバッグ)
-MOBC 環境 (`/examples/mobc/`) を例にする．
+MOBC 環境 (`/examples/mobc/`) を例にする．  
+この手順によって，ブレークポイント等を用いた開発が可能となる．
 
 1. 1 つ目のターミナルで `/examples/mobc/` に移動し，次を実行する．
 ```
@@ -52,6 +53,7 @@ npm run devtools:debug
 ```
 2. VS Code のデバッガで `Debug executable 'c2a-example-mobc` を実行する．
 3. 2 つ目のターミナルで c2a-devtools を実行し，ブラウザを開くと，テレコマ通信が可能となる．
+
 
 ### pytest の実行
 以下を参照のこと．
@@ -62,4 +64,4 @@ npm run devtools:debug
 
 ## その他
 `npm run *` コマンドについては，以下のファイルなどを参照すること．  
-https://github.com/arkedge/c2a-core/blob/d5001811f6fb8da116bdba1030a535a639dbffb7/examples/mobc/package.json
+https://github.com/arkedge/c2a-core/blob/d5001811f6fb8da116bdba1030a535a639dbffb7/examples/mobc/package.json#L1-L25
