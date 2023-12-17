@@ -173,7 +173,7 @@ static MEM_ACK MEM_form_packet_(CommonTlmPacket* ctp,
   // Secondary Header
   TSP_set_2nd_hdr_ver(&MEM_ctp_, TSP_2ND_HDR_VER_1);
   TSP_set_board_time(&MEM_ctp_, (uint32_t)(TMGR_get_master_total_cycle()));
-  CTP_set_id(&MEM_ctp_, 0x00);      // 決め打ち
+  CTP_set_id(&MEM_ctp_, (TLM_CODE)0x00);      // 決め打ち
   // FIXME: 他の時刻も入れる
   CTP_set_global_time(&MEM_ctp_);
   CTP_set_on_board_subnet_time(&MEM_ctp_);
@@ -292,7 +292,7 @@ CCP_CmdRet Cmd_MEM_DUMP_SINGLE(const CommonCmdPacket* packet)
   // Secondary Header
   TSP_set_2nd_hdr_ver(&MEM_ctp_, TSP_2ND_HDR_VER_1);
   TSP_set_board_time(&MEM_ctp_, (uint32_t)(TMGR_get_master_total_cycle()));
-  CTP_set_id(&MEM_ctp_, 0x00);      // 決め打ち
+  CTP_set_id(&MEM_ctp_, (TLM_CODE)0x00);      // 決め打ち
   // FIXME: 他の時刻も入れる
   CTP_set_global_time(&MEM_ctp_);
   CTP_set_on_board_subnet_time(&MEM_ctp_);
