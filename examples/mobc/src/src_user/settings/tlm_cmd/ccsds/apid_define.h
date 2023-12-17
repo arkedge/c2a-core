@@ -23,7 +23,7 @@ typedef enum
   APID_TLM_MOBC = 0x510,      //!< 10100010000b: APID for MOBC で生成される TLM
   APID_TLM_AOBC = 0x511,      //!< 10100010001b: APID for AOBC で生成される TLM
   APID_TLM_TOBC = 0x512,      //!< 10100010002b: APID for TOBC で生成される TLM
-  APID_TLM_DUMP = 0x710,      //!< 11100010000b: APID for DUMP TLM (FIXME: 現在まともに使ってない)
+  APID_TLM_DUMP = 0x710,      //!< 11100010000b: APID for DUMP TLM
   APID_FILL_PKT = 0x7ff,      //!< 11111111111b: APID for FILL PACKET
   APID_UNKNOWN
 } APID;
