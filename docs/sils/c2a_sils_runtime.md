@@ -13,7 +13,7 @@
 ```
 sudo apt install gcc-multilib protobuf-compiler libclang-dev cmake g++ g++-multilib
 ```
-3. `/examples/subobc/` や `/examples/mobc/` で次を実行する．
+3. `/examples/mobc/` や `/examples/subobc/` で次を実行する．
 ```
 npm install
 ```
@@ -23,7 +23,7 @@ npm install
 様々なパターンが存在するため，いくつかの例を示す．
 
 ### C2A そのものののみの実行
-`/examples/subobc/` や `/examples/mobc/` で
+`/examples/mobc/` や `/examples/subobc/` で
 ```
 cargo run
 ```
@@ -33,8 +33,33 @@ cargo run
 [c2a-devtools](https://github.com/arkedge/c2a-devtools) によって，c2a-sils-runtime によって実行されている SILS に対して，テレコマ通信が可能である．
 使い方の詳細は，上記リンク先を参照のこと．
 
+### C2A そのもの + c2a-devtools の実行
+MOBC 環境 (`/examples/mobc/`) を例にする．
+
+1. 1 つ目のターミナルで `/examples/mobc/` に移動し，次を実行する．
+```
+npm run devtools:sils
+```
+2. 2 つ目のターミナルで c2a-devtools を実行し，ブラウザを開くと，テレコマ通信が可能となる．
+
+
+### C2A そのもの + c2a-devtools の実行 (VS Code を用いたデバッグ)
+MOBC 環境 (`/examples/mobc/`) を例にする．
+
+1. 1 つ目のターミナルで `/examples/mobc/` に移動し，次を実行する．
+```
+npm run devtools:debug
+```
+2. VS Code のデバッガで `Debug executable 'c2a-example-mobc` を実行する．
+3. 2 つ目のターミナルで c2a-devtools を実行し，ブラウザを開くと，テレコマ通信が可能となる．
+
 ### pytest の実行
 以下を参照のこと．
 
 - [mobc pytest](../../examples/mobc/src/src_user/Test/README.md)
 - [subobc pytest](../../examples/subobc/src/src_user/Test/README.md)
+
+
+## その他
+`npm run *` コマンドについては，以下のファイルなどを参照すること．  
+https://github.com/arkedge/c2a-core/blob/d5001811f6fb8da116bdba1030a535a639dbffb7/examples/mobc/package.json

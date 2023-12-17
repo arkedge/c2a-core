@@ -31,6 +31,7 @@
 - C2A の SILS runtime として，以下のような実装が存在する．
   - [c2a-sils-runtime](./sils-runtime)
     - 今後の標準的な C2A の SILS runtime．これが導入済みの C2A user は基本的に `cargo run` すれば動作する．
+    - ドキュメント: [docs/sils/c2a_sils_runtime.md](./docs/sils/c2a_sils_runtime.md)
   - [S2E](https://github.com/ut-issl/s2e-core)
     - 宇宙環境シミュレータ．元々の SILS runtime 実装であり，姿勢制御モジュールなど，宇宙環境模擬が必要な C2A user についてはこちらを用いて検証を行う．
     - 最小限の SILS-S2E は [S2E User for C2A Core](https://github.com/ut-issl/s2e-user-for-c2a-core) で実行可能．
