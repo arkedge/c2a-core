@@ -1,8 +1,17 @@
 #pragma section REPRO
 /**
  * @file
- * @brief  テレメトリ定義
- * @note   このコードは自動生成されています！
+ * @brief テレメトリ定義
+ * @note  このコードは自動生成されています！
+ * @note  コード生成 tlm-cmd-db:
+ *          repository:    arkedge/c2a-core
+ *          db hash (MD5): e2120a2aaff3346ef5570adeda7a1cd6
+ * @note  コード生成パラメータ:
+ *          db_prefix:             SAMPLE_MOBC
+ *          tlm_id_range:          [0x00, 0x100]
+ *          is_cmd_prefixed_in_db: 0
+ *          input_file_encoding:   utf-8
+ *          output_file_encoding:  utf-8
  */
 #include <src_core/tlm_cmd/telemetry_frame.h>
 #include "telemetry_definitions.h"

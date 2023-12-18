@@ -16,13 +16,15 @@ $ python GenerateC2ACode.py
 ## 設定
 実行時のパスと同じディレクトリに `settings.json` を置いて設定する．
 
-`is_main_obc` は，MOBC（地上局と通信するOBC．2nd OBCのtlm/cmdを取りまとめる）かそれ以外のOBC（2nd OBC．MOBCと通信するOBC）かを制御する．  
-`1` とした場合，MOBCを意図したコードが生成され，加えて以下が生成される．
-- 2nd_obc_command_definitions.h
-- 2nd_obc_telemetry_definitions.h
-- 2nd_obc_telemetry_buffer.c
-- 2nd_obc_telemetry_buffer.h
-- 2nd_obc_telemetry_data_definitions.h
+`is_main_obc` は，MOBC（地上局と通信するOBC．sub OBCのtlm/cmdを取りまとめる）かそれ以外のOBC（sub OBC．MOBCと通信するOBC）かを制御する．  
+`1` とした場合，MOBC用のコードに加えて以下が生成される．
+- sub_obc_command_definitions.h
+- sub_obc_telemetry_definitions.h
+- sub_obc_telemetry_buffer.c
+- sub_obc_telemetry_buffer.h
+- sub_obc_telemetry_data_definitions.h
+
+なお，MOBC の場合でも， `0` にすることで， sub OBC のコードを生成せず， MOBC のコードのみを生成することができる
 
 設定の記述例（JSON としては invalid だがコメント付き）
 ```
@@ -42,7 +44,8 @@ $ python GenerateC2ACode.py
   # 出力ファイルのエンコーディング
   "output_file_encoding" : "utf-8",
   # MOBCか？（他のOBCのtlm/cmdを取りまとめるか？） 0/1
-  # 2nd OBCのコードを生成するときなどは 0 にする
+  # sub OBCのコードを生成するときなどは 0 にする
+  # MOBC の場合でも， 0 にすることで， sub OBC のコードを生成せず， MOBC のコードのみを生成することができる
   # 0 の場合，以後のパラメタは無効
   "is_main_obc" : 1,
   "other_obc_data" : [
@@ -97,4 +100,4 @@ $ pip install -r requirements.txt
 
 ## その他
 - [settings_mobc.json](./settings_mobc.json), [settings_subobc.json](./settings_subobc.json) は c2a-core example user での設定
-- MOBCと2nd OBCのC2A間通信の例は （TBA）．
+- MOBCとsub OBCのC2A間通信の例は （TBA）．

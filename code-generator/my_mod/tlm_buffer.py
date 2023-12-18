@@ -4,6 +4,7 @@ tlm buffer
 """
 
 import sys
+import my_mod.util
 
 # from collections import OrderedDict
 # import pprint
@@ -342,20 +343,29 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             + settings["other_obc_data"][i]["driver_path"]
         )
         OutputTlmBufferC_(
-            output_file_path + obc_name.lower() + "_telemetry_buffer.c", obc_name, body_c, settings
+            output_file_path + obc_name.lower() + "_telemetry_buffer.c",
+            obc_name,
+            body_c,
+            settings,
+            i,
         )
         OutputTlmBufferH_(
-            output_file_path + obc_name.lower() + "_telemetry_buffer.h", obc_name, body_h, settings
+            output_file_path + obc_name.lower() + "_telemetry_buffer.h",
+            obc_name,
+            body_h,
+            settings,
+            i,
         )
         OutputTlmDataDefH_(
             output_file_path + obc_name.lower() + "_telemetry_data_definitions.h",
             obc_name,
             tlmdef_body_h,
             settings,
+            i,
         )
 
 
-def OutputTlmBufferC_(file_path, name, body, settings):
+def OutputTlmBufferC_(file_path, name, body, settings, obc_idx):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()
@@ -365,8 +375,14 @@ def OutputTlmBufferC_(file_path, name, body, settings):
 #pragma section REPRO
 /**
  * @file
- * @brief  テレメトリバッファー（テレメ中継）
- * @note   このコードは自動生成されています！
+ * @brief テレメトリバッファー（テレメ中継）
+"""[
+        1:
+    ]  # 最初の改行を除く
+
+    output += my_mod.util.GenerateSubObcSettingNote(settings, obc_idx)
+
+    output += """
  */
 #include <src_core/component_driver/cdrv_common_tlm_cmd_packet.h>
 #include "./{_obc_name_lower}_telemetry_definitions.h"
@@ -394,7 +410,7 @@ def OutputTlmBufferC_(file_path, name, body, settings):
         )
 
 
-def OutputTlmBufferH_(file_path, name, body, settings):
+def OutputTlmBufferH_(file_path, name, body, settings, obc_idx):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()
@@ -403,8 +419,14 @@ def OutputTlmBufferH_(file_path, name, body, settings):
     output += """
 /**
  * @file
- * @brief  テレメトリバッファー（テレメ中継）
- * @note   このコードは自動生成されています！
+ * @brief テレメトリバッファー（テレメ中継）
+"""[
+        1:
+    ]  # 最初の改行を除く
+
+    output += my_mod.util.GenerateSubObcSettingNote(settings, obc_idx)
+
+    output += """
  */
 #ifndef {_obc_name_upper}_TELEMETRY_BUFFER_H_
 #define {_obc_name_upper}_TELEMETRY_BUFFER_H_
@@ -435,7 +457,7 @@ def OutputTlmBufferH_(file_path, name, body, settings):
         )
 
 
-def OutputTlmDataDefH_(file_path, name, body, settings):
+def OutputTlmDataDefH_(file_path, name, body, settings, obc_idx):
     name_upper = name.upper()
     name_lower = name.lower()
     name_capit = name.capitalize()
@@ -444,8 +466,14 @@ def OutputTlmDataDefH_(file_path, name, body, settings):
     output += """
 /**
  * @file
- * @brief  バッファリングされているテレメをパースしてMOBC内でかんたんに利用できるようにするためのテレメデータ構造体定義
- * @note   このコードは自動生成されています！
+ * @brief バッファリングされているテレメをパースしてMOBC内でかんたんに利用できるようにするためのテレメデータ構造体定義
+"""[
+        1:
+    ]  # 最初の改行を除く
+
+    output += my_mod.util.GenerateSubObcSettingNote(settings, obc_idx)
+
+    output += """
  */
 #ifndef {_obc_name_upper}_TELEMETRY_DATA_DEFINITIONS_H_
 #define {_obc_name_upper}_TELEMETRY_DATA_DEFINITIONS_H_
