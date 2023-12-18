@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成 tlm-cmd-db:
  *          repository:     arkedge/c2a-core
- *          db commit hash: 1903b95d5b784283e7dcf8dee8012b1ee9dd4fa3
+ *          db commit hash: 91e336f10d6789c2e85d9acf48d91e3341c25229
  * @note  コード生成パラメータ:
  *          name:                    AOBC
  *          db_prefix:               SAMPLE_AOBC

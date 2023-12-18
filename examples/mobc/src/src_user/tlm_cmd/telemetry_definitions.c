@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成 tlm-cmd-db:
  *          repository:    arkedge/c2a-core
- *          db hash (MD5): e2120a2aaff3346ef5570adeda7a1cd6
+ *          db hash (MD5): da0eb83c38c00e04242184cdd6d225c6
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -198,19 +198,19 @@ static TF_TLM_FUNC_ACK Tlm_MOBC_(uint8_t* packet, uint16_t* len, uint16_t max_le
 
 static TF_TLM_FUNC_ACK Tlm_MEM_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 {
-  if (49 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+  if (50 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
 
 #ifndef BUILD_SETTINGS_FAST_BUILD
-  TF_copy_u32(&packet[26], memory_dump->begin);
-  TF_copy_u32(&packet[30], memory_dump->end);
-  TF_copy_u32(&packet[34], memory_dump->adu_size);
-  TF_copy_u16(&packet[38], memory_dump->adu_seq);
-  TF_copy_u8(&packet[40], memory_dump->adu_counter);
-  TF_copy_u32(&packet[41], memory_dump->dest);
-  TF_copy_u32(&packet[45], memory_dump->rp);
+  TF_copy_u32(&packet[26], memory_dump->settings.begin);
+  TF_copy_u32(&packet[30], memory_dump->settings.end);
+  TF_copy_u32(&packet[34], memory_dump->settings.copy_dest);
+  TF_copy_u32(&packet[38], memory_dump->internal.data_size);
+  TF_copy_u16(&packet[42], memory_dump->internal.data_seq);
+  TF_copy_u16(&packet[44], memory_dump->internal.max_data_seq);
+  TF_copy_u32(&packet[46], memory_dump->internal.copy_rp);
 #endif
 
-  *len = 49;
+  *len = 50;
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 

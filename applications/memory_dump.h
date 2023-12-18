@@ -4,60 +4,78 @@
 #include "../system/application_manager/app_info.h"
 #include "../tlm_cmd/common_cmd_packet.h"
 
-#define MEM_TLM_ID      (0xff)
-#define MEM_DUMP_WIDTH  (CTCP_MAX_LEN - 18)     // テレメパケット最大長 - ヘッダ長
-#define MEM_MAX_SPAN    (0x00800000)            // 最大ダンプ幅は16MB(ADUサイズ制約)
 
-typedef enum
-{
-  MEM_SUCCESS,
-  MEM_NO_DATA
-} MEM_ACK;
-
+/**
+ * @struct MEM_Settings
+ * @brief  設定値
+ */
 typedef struct
 {
-  uint32_t begin;
-  uint32_t end;
-  uint32_t adu_size;
-  uint16_t adu_seq;
-  uint8_t  adu_counter;
-  uint32_t dest;
-  uint32_t rp;
+  uint32_t begin;       //!< 操作アドレス範囲の先頭アドレス
+  uint32_t end;         //!< 操作アドレス範囲の末尾アドレス
+  uint32_t copy_dest;   //!< コピー先アドレス
+} MEM_Settings;
+
+/**
+ * @struct MEM_Internal
+ * @brief  内部状態変数
+ */
+typedef struct
+{
+  uint32_t data_size;     //!< 操作データサイズ
+  uint16_t data_seq;      //!< 操作データシーケンス番号
+  uint16_t max_data_seq;  //!< 最大シーケンス番号（分割数 - 1）
+  uint32_t copy_rp;       //!< コピー Read Pointer
+} MEM_Internal;
+
+/**
+ * @struct MemoryDump
+ * @brief  MemoryDump の AppInfo 構造体
+ */
+typedef struct
+{
+  MEM_Settings settings;    //!< 設定値
+  MEM_Internal internal;    //!< 内部状態変数
 } MemoryDump;
 
 extern const MemoryDump* const memory_dump;
 
 AppInfo MEM_create_app(void);
 
-
-// 2018/08/24
-// 自分の解釈をコメントとして追加
+/**
+ * @brief Cmd_MEM_DUMP_REGION, Cmd_MEM_COPY_REGION する範囲を設定
+ */
 CCP_CmdRet Cmd_MEM_SET_REGION(const CommonCmdPacket* packet);
 
-// FIXME: CTCP 大改修が終わったら直す
-// https://github.com/ut-issl/c2a-core/pull/217
-#if 0
-CCP_CmdRet Cmd_MEM_DUMP_REGION_SEQ(const CommonCmdPacket* packet);
-// 1パケットに入り切らない場合は，最初のADU分割された最初のパケットのみダンプ
-// もう一度送ると，その次のパケットがダンプ
-// 最後はちゃんと止まる
+/**
+ * @brief 指定したメモリ領域を blob tlm としてダウンリンクする (1 tlm だけ生成)
+ * @note  1 パケットに入り切らない場合は，分割される．
+ * @note  分割される場合，複数回コマンドを実行することで，次のデータがダウンリンクされる．
+ * @note  最後まで送信されている場合，なにも送信されない．
+ *        したがって，このコマンドをループ実行すると，自動でダウンリンクが停止する．
+ */
+CCP_CmdRet Cmd_MEM_DUMP_REGION(const CommonCmdPacket* packet);
 
-CCP_CmdRet Cmd_MEM_DUMP_REGION_RND(const CommonCmdPacket* packet);
-// ADU分割された場合，その途中のパケットからダンプ
-
+/**
+ * @brief 指定したメモリアドレスから，1 CTP に格納できる最大サイズ分だけダンプして blob tlm としてダウンリンクする (1 tlm だけ生成)
+ */
 CCP_CmdRet Cmd_MEM_DUMP_SINGLE(const CommonCmdPacket* packet);
-// アドレスを指定して，ダンプ？
-// Cmd_MEM_SET_REGION は無視？
-#endif
 
+/**
+ * @brief 指定したアドレスに書き込み（アップロード）
+ */
 CCP_CmdRet Cmd_MEM_LOAD(const CommonCmdPacket* packet);
-// MEMにアップリンクして書き込み
 
-CCP_CmdRet Cmd_MEM_SET_DESTINATION(const CommonCmdPacket* packet);
-// Cmd_MEM_COPY_REGION_SEQのコピー先を指定
+/**
+ * @brief Cmd_MEM_COPY_REGION のコピー先を設定
+ */
+CCP_CmdRet Cmd_MEM_SET_DESTINATION_FOR_COPY(const CommonCmdPacket* packet);
 
-CCP_CmdRet Cmd_MEM_COPY_REGION_SEQ(const CommonCmdPacket* packet);
-// destにrpを指定幅だけコピーしていく
-// これもCmd_MEM_DUMP_REGION_SEQと同様に，何度も繰り返し発行して使う．
+/**
+ * @brief 指定した幅で， dest に copy_rp をコピーしていく
+ * @note  1 回のコマンド実行で指定幅だけコピーする
+ * @note  Cmd_MEM_DUMP_REGION と同様に，何度も繰り返し発行して使う
+ */
+CCP_CmdRet Cmd_MEM_COPY_REGION(const CommonCmdPacket* packet);
 
 #endif
