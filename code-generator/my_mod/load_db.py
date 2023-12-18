@@ -132,17 +132,27 @@ def LoadOtherObcTlm(settings):
     other_obc_dbs = {}
 
     for i in range(len(settings["other_obc_data"])):
-        if not settings["other_obc_data"][i]["is_enable"]:
+        other_obc_settings = settings["other_obc_data"][i]
+        if not other_obc_settings["is_enable"]:
             continue
-        tlm_db_path = settings["other_obc_data"][i]["path_to_db"] + r"TLM_DB/calced_data/"
+
+        # max_tlm_num のアサーション
+        if other_obc_settings["max_tlm_num"] <= int(other_obc_settings["tlm_id_range"][1], 0):
+            print(
+                "Error: max_tlm_num is invalid at " + other_obc_settings["name"] + " DB.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+        tlm_db_path = other_obc_settings["path_to_db"] + r"TLM_DB/calced_data/"
 
         tlm_db = LoadTlmCSV_(
             tlm_db_path,
-            settings["other_obc_data"][i]["db_prefix"],
-            settings["other_obc_data"][i]["tlm_id_range"],
-            settings["other_obc_data"][i]["input_file_encoding"],
+            other_obc_settings["db_prefix"],
+            other_obc_settings["tlm_id_range"],
+            other_obc_settings["input_file_encoding"],
         )
-        other_obc_dbs[settings["other_obc_data"][i]["name"]] = tlm_db
+        other_obc_dbs[other_obc_settings["name"]] = tlm_db
 
     # pprint.pprint(other_obc_dbs)
     return other_obc_dbs
