@@ -8,9 +8,19 @@
 - [#240](https://github.com/arkedge/c2a-core/pull/240): code-generator の出力コードに，設定情報を残すようにする
 - [#243](https://github.com/arkedge/c2a-core/pull/243): code-generator に max_tlm_num のアサーションを追加
 
+### Breaking Changes
+
+- [#245](https://github.com/arkedge/c2a-core/pull/245): memory dump application のリファクタリング
+
 ### Migration Guide
 - [#240](https://github.com/arkedge/c2a-core/pull/240): user 側でのコードレベルでの対応は不要
   - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
+- [#245](https://github.com/arkedge/c2a-core/pull/245): 影響範囲は memory dump application を使う OBC のみ
+  - Tlm Cmd DB を，`examples/mobc` のものと同様にする．
+    - cmd: `MEM_*`
+    - tlm: `MEM`
+  - 設定ファイルを格納する．
+    - `examples/mobc/src/src_user/settings/applications/memory_dump_define.h` を参考に．
 
 
 ## v4.1.0 (2023-12-11)
