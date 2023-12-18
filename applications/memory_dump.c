@@ -17,7 +17,7 @@
 #define MEM_MAX_DATA_SIZE       (0x00800000)      /*!< 最大ダンプ幅は 16MB
                                                        FIXME: CTCP 改修前の ADU 分割における ADUサイズ制約ままなので，見直すべき */
 
-// ここで MEM_DUMP_TLM_APID を定義する
+// ここで MEM_DUMP_TLM_APID, MEM_DUMP_TLM_ID を定義する
 #include <src_user/settings/applications/memory_dump_define.h>
 
 /**
@@ -66,6 +66,22 @@ static MEM_ACK MEM_form_packet_(CommonTlmPacket* ctp,
  * @return SP_SEQ_FLAG
  */
 static SP_SEQ_FLAG MEM_judge_seq_flag_(const MEM_Internal* internal);
+
+
+/**
+ * @brief 生成するパケットの header を判定
+ * @param[out] ctp:        生成するパケット
+ * @param[in]  dest_flags: Dest Flags
+ * @param[in]  dest_info:  Dest Info
+ * @param[in]  seq_flag:   Dest SP_SEQ_FLAG
+ * @param[in]  data_len:   CTP 内部のデータサイズの長さ
+ * @return void
+ */
+static void MEM_set_ctp_header_(CommonTlmPacket* ctp,
+                                ctp_dest_flags_t dest_flags,
+                                uint8_t dest_info,
+                                SP_SEQ_FLAG seq_flag,
+                                uint16_t data_len);
 
 /**
  * @brief 次のパケットで用いる Sequence Count を取得
@@ -166,22 +182,10 @@ static MEM_ACK MEM_form_packet_(CommonTlmPacket* ctp,
   seq_flag = MEM_judge_seq_flag_(&memory_dump_.internal);
 
   // ヘッダ設定
-  // Primary Header
-  TSP_setup_primary_hdr(&MEM_ctp_, MEM_DUMP_TLM_APID, MEM_get_next_seq_count_(), len + SP_PRM_HDR_LEN + TSP_SND_HDR_LEN);
-  TSP_set_seq_flag(&MEM_ctp_, seq_flag);
-
-  // Secondary Header
-  TSP_set_2nd_hdr_ver(&MEM_ctp_, TSP_2ND_HDR_VER_1);
-  TSP_set_board_time(&MEM_ctp_, (uint32_t)(TMGR_get_master_total_cycle()));
-  CTP_set_id(&MEM_ctp_, (TLM_CODE)0x00);      // 決め打ち
-  // FIXME: 他の時刻も入れる
-  CTP_set_global_time(&MEM_ctp_);
-  CTP_set_on_board_subnet_time(&MEM_ctp_);
-  CTP_set_dest_flags(&MEM_ctp_, dest_flags);
-  TSP_set_dest_info(&MEM_ctp_, dest_info);
+  MEM_set_ctp_header_(ctp, dest_flags, dest_info, seq_flag, len);
 
   // ダンプデータをコピー
-  memcpy(CTP_get_user_data_head(&MEM_ctp_), (const void*)rp, len);
+  memcpy(CTP_get_user_data_head(ctp), (const void*)rp, len);
 
   return MEM_ACK_SUCCESS;
 }
@@ -208,6 +212,28 @@ static SP_SEQ_FLAG MEM_judge_seq_flag_(const MEM_Internal* internal)
   {
     return SP_SEQ_FLAG_CONT;
   }
+}
+
+
+static void MEM_set_ctp_header_(CommonTlmPacket* ctp,
+                                ctp_dest_flags_t dest_flags,
+                                uint8_t dest_info,
+                                SP_SEQ_FLAG seq_flag,
+                                uint16_t data_len)
+{
+  // Primary Header
+  TSP_setup_primary_hdr(ctp, MEM_DUMP_TLM_APID, MEM_get_next_seq_count_(), data_len + SP_PRM_HDR_LEN + TSP_SND_HDR_LEN);
+  TSP_set_seq_flag(ctp, seq_flag);
+
+  // Secondary Header
+  TSP_set_2nd_hdr_ver(ctp, TSP_2ND_HDR_VER_1);
+  TSP_set_board_time(ctp, (uint32_t)(TMGR_get_master_total_cycle()));
+  CTP_set_id(ctp, MEM_DUMP_TLM_ID);
+  // FIXME: 他の時刻も入れる
+  CTP_set_global_time(ctp);
+  CTP_set_on_board_subnet_time(ctp);
+  CTP_set_dest_flags(ctp, dest_flags);
+  TSP_set_dest_info(ctp, dest_info);
 }
 
 
@@ -286,21 +312,11 @@ CCP_CmdRet Cmd_MEM_DUMP_SINGLE(const CommonCmdPacket* packet)
   }
 
   // ヘッダ設定
-  // Primary Header
-  TSP_setup_primary_hdr(&MEM_ctp_, MEM_DUMP_TLM_APID, MEM_get_next_seq_count_(), CTP_MAX_LEN);
-
-  // Secondary Header
-  TSP_set_2nd_hdr_ver(&MEM_ctp_, TSP_2ND_HDR_VER_1);
-  TSP_set_board_time(&MEM_ctp_, (uint32_t)(TMGR_get_master_total_cycle()));
-  CTP_set_id(&MEM_ctp_, (TLM_CODE)0x00);      // 決め打ち
-  // FIXME: 他の時刻も入れる
-  CTP_set_global_time(&MEM_ctp_);
-  CTP_set_on_board_subnet_time(&MEM_ctp_);
-  CTP_set_dest_flags(&MEM_ctp_, dest_flags);
-  TSP_set_dest_info(&MEM_ctp_, dest_info);
-
+  MEM_set_ctp_header_(&MEM_ctp_, dest_flags, dest_info, SP_SEQ_FLAG_SINGLE, MEM_MAX_CTP_DATA_SIZE);
   // ダンプデータをコピー
   memcpy(CTP_get_user_data_head(&MEM_ctp_), (const void*)begin, MEM_MAX_CTP_DATA_SIZE);
+  // テレメ送出
+  MEM_send_packet_(&MEM_ctp_, dump_num);
 
   return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
 }

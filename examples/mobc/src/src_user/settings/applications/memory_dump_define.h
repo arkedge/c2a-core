@@ -8,5 +8,6 @@
 #include "../tlm_cmd/ccsds/apid_define.h"
 
 #define MEM_DUMP_TLM_APID  (APID_TLM_DUMP)   //!< MemoryDump で利用する APID
+#define MEM_DUMP_TLM_ID    ((TLM_CODE)0x00)  //!< MemoryDump で利用する TLM ID
 
 #endif
