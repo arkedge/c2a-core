@@ -12,6 +12,10 @@
 
 - [#245](https://github.com/arkedge/c2a-core/pull/245): memory dump application のリファクタリング
 
+### Fixed
+
+- [#246](https://github.com/arkedge/c2a-core/pull/246): `node_modules` を `.gitignore` に追加
+
 ### Migration Guide
 - [#240](https://github.com/arkedge/c2a-core/pull/240): user 側でのコードレベルでの対応は不要
   - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
