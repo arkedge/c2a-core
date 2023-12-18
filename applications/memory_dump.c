@@ -161,7 +161,6 @@ static MEM_ACK MEM_form_packet_(CommonTlmPacket* ctp,
   uint32_t rp;      //!< Read Pointer
   uint32_t len;
   SP_SEQ_FLAG seq_flag;
-  // uint8_t* data;
 
   rp = settings->begin + (memory_dump_.internal.data_seq * MEM_MAX_CTP_DATA_SIZE);
   if (rp >= settings->end)
