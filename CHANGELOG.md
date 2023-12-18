@@ -7,6 +7,10 @@
 ### Enhancements
 - [#240](https://github.com/arkedge/c2a-core/pull/240): code-generator の出力コードに，設定情報を残すようにする
 
+### Migration Guide
+- [#240](https://github.com/arkedge/c2a-core/pull/240): user 側でのコードレベルでの対応は不要
+  - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
+
 
 ## v4.1.0 (2023-12-11)
 
