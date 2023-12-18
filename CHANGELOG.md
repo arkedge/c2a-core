@@ -15,6 +15,7 @@
 ### Fixed
 
 - [#246](https://github.com/arkedge/c2a-core/pull/246): `node_modules` を `.gitignore` に追加
+- [#249](https://github.com/arkedge/c2a-core/pull/249): `.nvmrc` の追加
 
 ### Documentation
 
