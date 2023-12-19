@@ -18,8 +18,6 @@ def GenerateSettingNote(settings):
     note += GetRepo_(settings["path_to_db"])
     note += "\n"
     note += " *          CSV files MD5: "
-    # note += GetCommitHash_(settings["path_to_db"])
-    # note += GetLatestDirCommitHash_(settings["path_to_db"])
     note += GetDbHash_(settings["path_to_db"])
     note += "\n"
     note += " * @note  コード生成パラメータ:\n"
@@ -52,6 +50,9 @@ def GenerateSubObcSettingNote(settings, obc_idx):
     note += " * @note  コード生成元 tlm-cmd-db:\n"
     note += " *          repository:     "
     note += GetRepo_(sub_obc_settings["path_to_db"])
+    note += "\n"
+    note += " *          CSV files MD5: "
+    note += GetDbHash_(settings["path_to_db"])
     note += "\n"
     note += " *          db commit hash: "
     note += GetCommitHash_(sub_obc_settings["path_to_db"])
