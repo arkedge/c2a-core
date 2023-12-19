@@ -137,11 +137,12 @@ def GetDbHash_(path):
 
 
 def CalcMd5_(path):
-    # 改行コード問題がうざいので，全部 CRLF に変換して計算
+    # Windows 環境で改行コードが CRLF になっているとハッシュ値が変わってしまう
+    # そのため，MD5 の計算は CRLF -> LF してから行う
     with open(path, "r", encoding="utf-8") as file:
         content = file.read()
-    content_crlf = content.replace("\n", "\r\n")
-    return hashlib.md5(content_crlf.encode("utf-8")).hexdigest()
+    content_lf = content.replace("\r\n", "\n")
+    return hashlib.md5(content_lf.encode("utf-8")).hexdigest()
 
     hash_md5 = hashlib.md5()
     with open(path, "rb") as f:
