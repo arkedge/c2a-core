@@ -2,7 +2,7 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
-## v4.2.0 (Unreleased-12-11)
+## v4.2.0 (Unreleased)
 
 ### Enhancements
 - [#240](https://github.com/arkedge/c2a-core/pull/240): code-generator の出力コードに，設定情報を残すようにする
