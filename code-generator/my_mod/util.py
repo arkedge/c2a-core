@@ -111,7 +111,7 @@ def GetRepo_(path):
             text=True,
             capture_output=True,
             check=True,
-        ).stdout
+        ).stdout.strip()
 
         # HTTPS と SSH の remote URL の差異を吸収（削除）
         remote_url = RemovePrefix_(remote_url, "git@")
