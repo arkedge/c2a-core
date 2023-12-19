@@ -5,6 +5,7 @@ util
 
 import subprocess
 import re
+import sys
 import os
 import hashlib
 
@@ -14,7 +15,7 @@ def GenerateSettingNote(settings):
     note += " * @note  このコードは自動生成されています！\n"
     note += " * @note  コード生成元 tlm-cmd-db:\n"
     note += " *          repository:    "
-    note += GetRepoName_(settings["path_to_db"])
+    note += GetRepo_(settings["path_to_db"])
     note += "\n"
     note += " *          CSV files MD5: "
     # note += GetCommitHash_(settings["path_to_db"])
@@ -50,7 +51,7 @@ def GenerateSubObcSettingNote(settings, obc_idx):
     note += " * @note  このコードは自動生成されています！\n"
     note += " * @note  コード生成元 tlm-cmd-db:\n"
     note += " *          repository:     "
-    note += GetRepoName_(sub_obc_settings["path_to_db"])
+    note += GetRepo_(sub_obc_settings["path_to_db"])
     note += "\n"
     note += " *          db commit hash: "
     note += GetCommitHash_(sub_obc_settings["path_to_db"])
@@ -100,29 +101,44 @@ def GetCommitHash_(path):
         )
         return result.stdout.strip()
     except subprocess.CalledProcessError:
-        return "0000000000000000000000000000000000000000"
+        print("failed to get commit hash(" + path + ")")
+        return "unknown"
 
 
-def GetRepoName_(path):
+def GetRepo_(path):
+    # GitHub などの場合: github.com/user/repo のようにする
+    # 取得に失敗した場合（Git 管理していないものなど）: unknown を返し，warning を出す
+
     try:
-        # GitリモートURLを取得
+        subprocess.run(["git", "--version"])
+    except:
+        print("failed to execute git command", file=sys.stderr)
+        return "unknown/unknown"
+
+    try:
         result = subprocess.run(
-            ["git", "remote", "-v"], cwd=path, text=True, capture_output=True, check=True
+            ["git", "remote"], cwd=path, text=True, capture_output=True, check=True
         )
-        url = result.stdout.split("\n")[0].split("\t")[1].split(" ")[0]  # 最初のリモートURLを取得
+        remote = result.stdout.split("\n")[0]  # 最初の remote を取得
+
+        remote_url = subprocess.run(
+            ["git", "remote", "get-url", remote], cwd=path, text=True, capture_output=True, check=True
+        ).stdout
 
         # URLの末尾に.gitがなければ追加
-        if not url.endswith(".git"):
-            url += ".git"
+        if not remote_url.endswith(".git"):
+            remote_url += ".git"
 
-        # URLからユーザー名とリポジトリ名を抽出（HTTPSとSSHの両方に対応）
-        match = re.search(r"(?:github\.com[:/])(.+)/(.+)\.git", url)
+        # URLからユーザー名/リポジトリ名を抽出（HTTPSとSSHの両方に対応）
+        match = re.search(r"(?:github\.com[:/])(.+)/(.+)\.git", remote_url)
         if match:
             return f"{match.group(1)}/{match.group(2)}"
         else:
-            return "User/Repository name not found"
+            print("failed to found user/repo", file=sys.stderr)
+            return "unknown/unknown"
     except subprocess.CalledProcessError:
-        return "User/Repository name not found"
+        print("failed to execute: git remote", file=sys.stderr)
+        return "unknown/unknown"
 
 
 # 入力 DB の csv をファイル名でソートし MD5 を計算，その MD5 をすべて cat して MD5 を計算したものを返す
