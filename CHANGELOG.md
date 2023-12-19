@@ -111,6 +111,15 @@
 - [#220](https://github.com/arkedge/c2a-core/pull/220)
   1. `tlm_cmd/common_tlm_cmd_packet.h` にある命名規則に従うように， APID の命名を更新する．
 
+### Compatible C2A Tools
+
+- [ut-issl/tlm-cmd-db v2.4.0](https://github.com/ut-issl/tlm-cmd-db/releases/tag/v2.4.0)
+- [ut-issl/python-wings-interface v1.5.1](https://github.com/ut-issl/python-wings-interface/releases/tag/v1.5.1)
+- [arkedge/gaia v0.5.0](https://github.com/arkedge/gaia/releases/tag/v0.5.0)
+- [tlmcmddb-cli 0.2.0](https://crates.io/crates/tlmcmddb-cli/0.2.0)
+- [kble 0.2.0](https://crates.io/crates/kble/0.2.0)
+- [C2A DevTools](https://github.com/arkedge/c2a-devtools)
+
 
 ## v4.0.1 (2023-11-09)
 
