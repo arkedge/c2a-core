@@ -42,17 +42,27 @@ def GenerateSubObcSettingNote(settings, obc_idx):
     note += " * @note  コード生成パラメータ:\n"
     note += " *          name:                    " + sub_obc_settings["name"] + "\n"
     note += " *          db_prefix:               " + sub_obc_settings["db_prefix"] + "\n"
-    note += " *          tlm_id_range:            "
     note += (
-        "[" + sub_obc_settings["tlm_id_range"][0] + ", " + sub_obc_settings["tlm_id_range"][1] + "]\n"
+        " *          tlm_id_range:            "
+        + "["
+        + sub_obc_settings["tlm_id_range"][0]
+        + ", "
+        + sub_obc_settings["tlm_id_range"][1]
+        + "]\n"
     )
-    note += " *          is_cmd_prefixed_in_db:   " + str(sub_obc_settings["is_cmd_prefixed_in_db"]) + "\n"
+    note += (
+        " *          is_cmd_prefixed_in_db:   "
+        + str(sub_obc_settings["is_cmd_prefixed_in_db"])
+        + "\n"
+    )
     note += " *          input_file_encoding:     " + sub_obc_settings["input_file_encoding"] + "\n"
     note += " *          max_tlm_num:             " + str(sub_obc_settings["max_tlm_num"]) + "\n"
     note += " *          driver_path:             " + sub_obc_settings["driver_path"] + "\n"
     note += " *          driver_type:             " + sub_obc_settings["driver_type"] + "\n"
     note += " *          driver_name:             " + sub_obc_settings["driver_name"] + "\n"
-    note += " *          code_when_tlm_not_found: " + sub_obc_settings["code_when_tlm_not_found"] + "\n"
+    note += (
+        " *          code_when_tlm_not_found: " + sub_obc_settings["code_when_tlm_not_found"] + "\n"
+    )
     # path_to_db については，実行環境によって異なるので出力しない
 
     return note
@@ -68,11 +78,13 @@ def GetCommitHash_(path):
         print("failed to get commit hash(" + path + ")")
         return "unknown"
 
+
 # Python 3.8 には str.removeprefix() が無い
 def RemovePrefix_(text, prefix):
     if text.startswith(prefix):
-        text = text[len(prefix):]
+        text = text[len(prefix) :]
     return text
+
 
 def GetRepo_(path):
     # GitHub などの場合: github.com/user/repo のようにする
@@ -95,13 +107,17 @@ def GetRepo_(path):
             return "unknown/unknown/unknown"
 
         remote_url = subprocess.run(
-            ["git", "remote", "get-url", remote], cwd=path, text=True, capture_output=True, check=True
+            ["git", "remote", "get-url", remote],
+            cwd=path,
+            text=True,
+            capture_output=True,
+            check=True,
         ).stdout
 
         # HTTPS と SSH の remote URL の差異を吸収（削除）
         remote_url = RemovePrefix_(remote_url, "git@")
         remote_url = RemovePrefix_(remote_url, "https://")
-        remote_url = remote_url.replace(':', '/')
+        remote_url = remote_url.replace(":", "/")
 
         # URLの末尾に.gitがなければ追加
         if not remote_url.endswith(".git"):
