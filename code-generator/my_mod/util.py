@@ -14,28 +14,15 @@ def GenerateSettingNote(settings):
     note = ""
     note += " * @note  このコードは自動生成されています！\n"
     note += " * @note  コード生成元 tlm-cmd-db:\n"
-    note += " *          repository:    "
-    note += GetRepo_(settings["path_to_db"])
-    note += "\n"
-    note += " *          CSV files MD5: "
-    note += GetDbHash_(settings["path_to_db"])
-    note += "\n"
+    note += " *          repository:    " + GetRepo_(settings["path_to_db"]) + "\n"
+    note += " *          CSV files MD5: " + GetDbHash_(settings["path_to_db"]) + "\n"
     note += " * @note  コード生成パラメータ:\n"
-    note += " *          db_prefix:             "
-    note += settings["db_prefix"]
-    note += "\n"
+    note += " *          db_prefix:             " + settings["db_prefix"] + "\n"
     note += " *          tlm_id_range:          "
-    note += "[" + settings["tlm_id_range"][0] + ", " + settings["tlm_id_range"][1] + "]"
-    note += "\n"
-    note += " *          is_cmd_prefixed_in_db: "
-    note += str(settings["is_cmd_prefixed_in_db"])
-    note += "\n"
-    note += " *          input_file_encoding:   "
-    note += settings["input_file_encoding"]
-    note += "\n"
-    note += " *          output_file_encoding:  "
-    note += settings["output_file_encoding"]
-    note += "\n"
+    note += "[" + settings["tlm_id_range"][0] + ", " + settings["tlm_id_range"][1] + "]\n"
+    note += " *          is_cmd_prefixed_in_db: " + str(settings["is_cmd_prefixed_in_db"]) + "\n"
+    note += " *          input_file_encoding:   " + settings["input_file_encoding"] + "\n"
+    note += " *          output_file_encoding:  " + settings["output_file_encoding"] + "\n"
     # is_main_obc については，生成状況によって異なるので出力しない
     # path_to_src, path_to_db については，実行環境によって異なるので出力しない
 
@@ -49,47 +36,23 @@ def GenerateSubObcSettingNote(settings, obc_idx):
     note += " * @note  このコードは自動生成されています！\n"
     note += " * @note  コード生成元 tlm-cmd-db:\n"
     note += " *          repository:     "
-    note += GetRepo_(sub_obc_settings["path_to_db"])
-    note += "\n"
-    note += " *          CSV files MD5: "
-    note += GetDbHash_(settings["path_to_db"])
-    note += "\n"
-    note += " *          db commit hash: "
-    note += GetCommitHash_(sub_obc_settings["path_to_db"])
-    note += "\n"
+    note += GetRepo_(sub_obc_settings["path_to_db"]) + "\n"
+    note += " *          CSV files MD5: " + GetDbHash_(settings["path_to_db"]) + "\n"
+    note += " *          db commit hash: " + GetCommitHash_(sub_obc_settings["path_to_db"]) + "\n"
     note += " * @note  コード生成パラメータ:\n"
-    note += " *          name:                    "
-    note += sub_obc_settings["name"]
-    note += "\n"
-    note += " *          db_prefix:               "
-    note += sub_obc_settings["db_prefix"]
-    note += "\n"
+    note += " *          name:                    " + sub_obc_settings["name"] + "\n"
+    note += " *          db_prefix:               " + sub_obc_settings["db_prefix"] + "\n"
     note += " *          tlm_id_range:            "
     note += (
-        "[" + sub_obc_settings["tlm_id_range"][0] + ", " + sub_obc_settings["tlm_id_range"][1] + "]"
+        "[" + sub_obc_settings["tlm_id_range"][0] + ", " + sub_obc_settings["tlm_id_range"][1] + "]\n"
     )
-    note += "\n"
-    note += " *          is_cmd_prefixed_in_db:   "
-    note += str(sub_obc_settings["is_cmd_prefixed_in_db"])
-    note += "\n"
-    note += " *          input_file_encoding:     "
-    note += sub_obc_settings["input_file_encoding"]
-    note += "\n"
-    note += " *          max_tlm_num:             "
-    note += str(sub_obc_settings["max_tlm_num"])
-    note += "\n"
-    note += " *          driver_path:             "
-    note += sub_obc_settings["driver_path"]
-    note += "\n"
-    note += " *          driver_type:             "
-    note += sub_obc_settings["driver_type"]
-    note += "\n"
-    note += " *          driver_name:             "
-    note += sub_obc_settings["driver_name"]
-    note += "\n"
-    note += " *          code_when_tlm_not_found: "
-    note += sub_obc_settings["code_when_tlm_not_found"]
-    note += "\n"
+    note += " *          is_cmd_prefixed_in_db:   " + str(sub_obc_settings["is_cmd_prefixed_in_db"]) + "\n"
+    note += " *          input_file_encoding:     " + sub_obc_settings["input_file_encoding"] + "\n"
+    note += " *          max_tlm_num:             " + str(sub_obc_settings["max_tlm_num"]) + "\n"
+    note += " *          driver_path:             " + sub_obc_settings["driver_path"] + "\n"
+    note += " *          driver_type:             " + sub_obc_settings["driver_type"] + "\n"
+    note += " *          driver_name:             " + sub_obc_settings["driver_name"] + "\n"
+    note += " *          code_when_tlm_not_found: " + sub_obc_settings["code_when_tlm_not_found"] + "\n"
     # path_to_db については，実行環境によって異なるので出力しない
 
     return note
