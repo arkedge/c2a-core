@@ -144,12 +144,6 @@ def CalcMd5_(path):
     content_lf = content.replace("\r\n", "\n")
     return hashlib.md5(content_lf.encode("utf-8")).hexdigest()
 
-    hash_md5 = hashlib.md5()
-    with open(path, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
-
 
 def FindCsvFilesAndCalculateMd5_(path):
     csv_files_info = []
