@@ -104,16 +104,21 @@ def GetCommitHash_(path):
         print("failed to get commit hash(" + path + ")")
         return "unknown"
 
+# Python 3.8 には str.removeprefix() が無い
+def RemovePrefix_(text, prefix):
+    if text.startswith(prefix):
+        text = text[len(prefix):]
+    return text
 
 def GetRepo_(path):
     # GitHub などの場合: github.com/user/repo のようにする
     # 取得に失敗した場合（Git 管理していないものなど）: unknown を返し，warning を出す
 
     try:
-        subprocess.run(["git", "--version"])
+        subprocess.run(["git", "--version"], capture_output=True, check=True)
     except:
         print("failed to execute git command", file=sys.stderr)
-        return "unknown/unknown"
+        return "unknown/unknown/unknown"
 
     try:
         result = subprocess.run(
@@ -121,24 +126,27 @@ def GetRepo_(path):
         )
         remote = result.stdout.split("\n")[0]  # 最初の remote を取得
 
+        if not remote:
+            print("failed to get git remote", file=sys.stderr)
+            return "unknown/unknown/unknown"
+
         remote_url = subprocess.run(
             ["git", "remote", "get-url", remote], cwd=path, text=True, capture_output=True, check=True
         ).stdout
+
+        # HTTPS と SSH の remote URL の差異を吸収（削除）
+        remote_url = RemovePrefix_(remote_url, "git@")
+        remote_url = RemovePrefix_(remote_url, "https://")
+        remote_url = remote_url.replace(':', '/')
 
         # URLの末尾に.gitがなければ追加
         if not remote_url.endswith(".git"):
             remote_url += ".git"
 
-        # URLからユーザー名/リポジトリ名を抽出（HTTPSとSSHの両方に対応）
-        match = re.search(r"(?:github\.com[:/])(.+)/(.+)\.git", remote_url)
-        if match:
-            return f"{match.group(1)}/{match.group(2)}"
-        else:
-            print("failed to found user/repo", file=sys.stderr)
-            return "unknown/unknown"
+        return remote_url
     except subprocess.CalledProcessError:
         print("failed to execute: git remote", file=sys.stderr)
-        return "unknown/unknown"
+        return "unknown/unknown/unknown"
 
 
 # 入力 DB の csv をファイル名でソートし MD5 を計算，その MD5 をすべて cat して MD5 を計算したものを返す
