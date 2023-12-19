@@ -12,6 +12,7 @@ v4.0 系の最初のメンテナンスのためのリリース．
 - [ut-issl/c2a-core v3.10.1](https://github.com/ut-issl/c2a-core/releases/tag/v3.10.1) からの backport
   - [#236](https://github.com/arkedge/c2a-core/pull/236): [stable-4.0] backport PL_BC_LIST_CLEARED を level high で EL 登録する
 
+
 ## v4.0.1 (2023-11-09)
 
 ### Fixed
