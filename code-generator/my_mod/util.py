@@ -12,11 +12,11 @@ import hashlib
 def GenerateSettingNote(settings):
     note = ""
     note += " * @note  このコードは自動生成されています！\n"
-    note += " * @note  コード生成 tlm-cmd-db:\n"
+    note += " * @note  コード生成元 tlm-cmd-db:\n"
     note += " *          repository:    "
     note += GetRepoName_(settings["path_to_db"])
     note += "\n"
-    note += " *          db hash (MD5): "
+    note += " *          CSV files MD5: "
     # note += GetCommitHash_(settings["path_to_db"])
     # note += GetLatestDirCommitHash_(settings["path_to_db"])
     note += GetDbHash_(settings["path_to_db"])
@@ -48,7 +48,7 @@ def GenerateSubObcSettingNote(settings, obc_idx):
 
     note = ""
     note += " * @note  このコードは自動生成されています！\n"
-    note += " * @note  コード生成 tlm-cmd-db:\n"
+    note += " * @note  コード生成元 tlm-cmd-db:\n"
     note += " *          repository:     "
     note += GetRepoName_(sub_obc_settings["path_to_db"])
     note += "\n"
