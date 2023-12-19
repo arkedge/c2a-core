@@ -4,7 +4,6 @@ util
 """
 
 import subprocess
-import re
 import sys
 import os
 import hashlib
@@ -92,7 +91,7 @@ def GetRepo_(path):
 
     try:
         subprocess.run(["git", "--version"], capture_output=True, check=True)
-    except:
+    except subprocess.CalledProcessError:
         print("failed to execute git command", file=sys.stderr)
         return "unknown/unknown/unknown"
 
