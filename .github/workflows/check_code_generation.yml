@@ -21,10 +21,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.1
 
-      - name: run code-generator
+      - name: prepare code-generator settings
         working-directory: ./code-generator
         run: |
           cp "./settings_${{ matrix.user }}.json" ./settings.json
+
+      # FIXME: subobc の生成コードには commit hash が焼かれていて現状だと diff が出てしまうため，とりあえずスキップする
+      - name: skip subobc code generation
+        working-directory: ./code-generator
+        run: |
+          jq '.is_main_obc = 0' < settings.json > settings_tmp.json
+          mv settings_tmp.json settings.json
+
+
+      - name: run code-generator
+        working-directory: ./code-generator
+        run: |
           python GenerateC2ACode.py
 
       - name: check diff
