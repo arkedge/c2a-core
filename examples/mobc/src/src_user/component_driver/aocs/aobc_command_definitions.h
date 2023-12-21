@@ -2,9 +2,10 @@
  * @file
  * @brief コマンド定義
  * @note  このコードは自動生成されています！
- * @note  コード生成 tlm-cmd-db:
- *          repository:     arkedge/c2a-core
- *          db commit hash: 91e336f10d6789c2e85d9acf48d91e3341c25229
+ * @note  コード生成元 tlm-cmd-db:
+ *          repository:     github.com/arkedge/c2a-core.git
+ *          CSV files MD5:  5da53df42b35605f4b54affc4a518dd7
+ *          db commit hash: 9ed588f4feffa93b4530d7677111ee0ca28247d6
  * @note  コード生成パラメータ:
  *          name:                    AOBC
  *          db_prefix:               SAMPLE_AOBC
