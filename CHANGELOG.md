@@ -7,7 +7,6 @@
 ### Enhancements
 - [#240](https://github.com/arkedge/c2a-core/pull/240): code-generator の出力コードに，設定情報を残すようにする
 - [#243](https://github.com/arkedge/c2a-core/pull/243): code-generator に max_tlm_num のアサーションを追加
-- [#247](https://github.com/arkedge/c2a-core/pull/247): VS Code 等を使ったデバッグ手順を追加
 
 ### Breaking Changes
 
@@ -16,6 +15,10 @@
 ### Fixed
 
 - [#246](https://github.com/arkedge/c2a-core/pull/246): `node_modules` を `.gitignore` に追加
+
+### Documentation
+
+- [#247](https://github.com/arkedge/c2a-core/pull/247): VS Code 等を使ったデバッグ手順を追加 / README の微修正
 
 ### Migration Guide
 - [#240](https://github.com/arkedge/c2a-core/pull/240): user 側でのコードレベルでの対応は不要
