@@ -27,6 +27,13 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_h = ""
         tlmdef_body_h = ""
 
+        body_c += (
+            "static void {_obc_name_upper}_copy_packet_to_tlm_buffer_(const CommonTlmPacket* packet, {_obc_name_upper}_TLM_CODE tlm_id, "
+            + driver_type
+            + "* "
+            + driver_name
+            + ");\n"
+        )
         for tlm in tlm_db:
             tlm_name = tlm["tlm_name"]
             tlm_name_lower = tlm_name.lower()
@@ -173,6 +180,20 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_c += "  }}\n"
         body_c += "}}\n"
         body_c += "\n"
+        body_c += (
+            "static void {_obc_name_upper}_copy_packet_to_tlm_buffer_(const CommonTlmPacket* packet, {_obc_name_upper}_TLM_CODE tlm_id, "
+            + driver_type
+            + "* "
+            + driver_name
+            + ")\n"
+        )
+        body_c += "{{\n"
+        body_c += (
+            "  CTP_copy_packet(&(" + driver_name + "->tlm_buffer.tlm[tlm_id].packet), packet);\n"
+        )
+        body_c += "  " + driver_name + "->tlm_buffer.tlm[tlm_id].is_null_packet = 0;\n"
+        body_c += "}}\n"
+        body_c += "\n"
         for tlm in tlm_db:
             conv_tpye_to_temp = {
                 "int8_t": "temp_i8",
@@ -219,12 +240,10 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "\n"
             body_c += "  // GS へのテレメ中継のためのバッファーへのコピー\n"
             body_c += (
-                "  CTP_copy_packet(&("
+                "  {_obc_name_upper}_copy_packet_to_tlm_buffer_(packet, tlm_id, "
                 + driver_name
-                + "->tlm_buffer.tlm[tlm_id].packet), packet);\n"
+                + ");\n"
             )
-            body_c += "  " + driver_name + "->tlm_buffer.tlm[tlm_id].is_null_packet = 0;\n"
-            body_c += "  // TODO: CRC チェック\n"
             body_c += "\n"
 
             body_c += "  // MOBC 内部でテレメデータへアクセスしやすいようにするための構造体へのパース\n"
