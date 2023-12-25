@@ -6,7 +6,7 @@
  * @note  コード生成元 tlm-cmd-db:
  *          repository:     github.com/arkedge/c2a-core.git
  *          CSV files MD5:  5da53df42b35605f4b54affc4a518dd7
- *          db commit hash: 9ed588f4feffa93b4530d7677111ee0ca28247d6
+ *          db commit hash: 6cbced9c99c405d7773b3554e3bd0d903707d01a
  * @note  コード生成パラメータ:
  *          name:                    AOBC
  *          db_prefix:               SAMPLE_AOBC
@@ -25,6 +25,7 @@
 #include "./aobc.h"
 #include <string.h>
 
+static void AOBC_copy_packet_to_tlm_buffer_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver);
 static CDS_ERR_CODE AOBC_analyze_tlm_aobc_aobc_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver);
 static CDS_ERR_CODE AOBC_analyze_tlm_aobc_hk_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver);
 
@@ -62,6 +63,12 @@ CDS_ERR_CODE AOBC_buffer_tlm_packet(CDS_StreamConfig* p_stream_config, AOBC_Driv
   }
 }
 
+static void AOBC_copy_packet_to_tlm_buffer_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver)
+{
+  CTP_copy_packet(&(aobc_driver->tlm_buffer.tlm[tlm_id].packet), packet);
+  aobc_driver->tlm_buffer.tlm[tlm_id].is_null_packet = 0;
+}
+
 static CDS_ERR_CODE AOBC_analyze_tlm_aobc_aobc_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver)
 {
   const uint8_t* f = packet->packet;
@@ -75,9 +82,7 @@ static CDS_ERR_CODE AOBC_analyze_tlm_aobc_aobc_(const CommonTlmPacket* packet, A
   double temp_d = 0.0;
 
   // GS へのテレメ中継のためのバッファーへのコピー
-  CTP_copy_packet(&(aobc_driver->tlm_buffer.tlm[tlm_id].packet), packet);
-  aobc_driver->tlm_buffer.tlm[tlm_id].is_null_packet = 0;
-  // TODO: CRC チェック
+  AOBC_copy_packet_to_tlm_buffer_(packet, tlm_id, aobc_driver);
 
   // MOBC 内部でテレメデータへアクセスしやすいようにするための構造体へのパース
   ENDIAN_memcpy(&temp_u16, &(f[0]), 2);
@@ -223,9 +228,7 @@ static CDS_ERR_CODE AOBC_analyze_tlm_aobc_hk_(const CommonTlmPacket* packet, AOB
   double temp_d = 0.0;
 
   // GS へのテレメ中継のためのバッファーへのコピー
-  CTP_copy_packet(&(aobc_driver->tlm_buffer.tlm[tlm_id].packet), packet);
-  aobc_driver->tlm_buffer.tlm[tlm_id].is_null_packet = 0;
-  // TODO: CRC チェック
+  AOBC_copy_packet_to_tlm_buffer_(packet, tlm_id, aobc_driver);
 
   // MOBC 内部でテレメデータへアクセスしやすいようにするための構造体へのパース
   ENDIAN_memcpy(&temp_u16, &(f[0]), 2);
