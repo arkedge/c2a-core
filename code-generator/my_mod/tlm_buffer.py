@@ -175,8 +175,25 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
                 + ");\n"
             )
         body_c += "  default:\n"
-        body_c += "    " + settings["other_obc_data"][i]["code_when_tlm_not_found"] + "\n"
+        body_c += "    // DO NOTHING\n"
+        body_c += "    break;\n"
+        body_c += "  }}\n"
+        body_c += "\n"
+        body_c += "  " + settings["other_obc_data"][i]["code_when_tlm_not_found"] + "\n"
+        body_c += "\n"
+        body_c += "  if (tlm_id >= {_obc_name_upper}_MAX_TLM_NUM)\n"
+        body_c += "  {{\n"
         body_c += "    return CDS_ERR_CODE_ERR;\n"
+        body_c += "  }}\n"
+        body_c += "  else\n"
+        body_c += "  {{\n"
+        body_c += "    // MOBC 側に定義がない tlm でも， GS まで届けられるようにバッファリングはする\n"
+        body_c += (
+            "    {_obc_name_upper}_copy_packet_to_tlm_buffer_(&{_obc_name_upper}_ctp_, tlm_id, "
+            + driver_name
+            + ");\n"
+        )
+        body_c += "    return CDS_ERR_CODE_OK;\n"
         body_c += "  }}\n"
         body_c += "}}\n"
         body_c += "\n"
