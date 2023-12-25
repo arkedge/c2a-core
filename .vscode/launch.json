@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'c2a-example-mobc'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--package=c2a-example-mobc"
+                ],
+                "filter": {
+                    "name": "c2a-example-mobc",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/examples/mobc"
+        }
+    ]
+}
