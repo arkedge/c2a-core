@@ -4,7 +4,7 @@ util
 """
 
 import subprocess
-import re
+import sys
 import os
 import hashlib
 
@@ -12,31 +12,16 @@ import hashlib
 def GenerateSettingNote(settings):
     note = ""
     note += " * @note  このコードは自動生成されています！\n"
-    note += " * @note  コード生成 tlm-cmd-db:\n"
-    note += " *          repository:    "
-    note += GetRepoName_(settings["path_to_db"])
-    note += "\n"
-    note += " *          db hash (MD5): "
-    # note += GetCommitHash_(settings["path_to_db"])
-    # note += GetLatestDirCommitHash_(settings["path_to_db"])
-    note += GetDbHash_(settings["path_to_db"])
-    note += "\n"
+    note += " * @note  コード生成元 tlm-cmd-db:\n"
+    note += " *          repository:    " + GetRepo_(settings["path_to_db"]) + "\n"
+    note += " *          CSV files MD5: " + GetDbHash_(settings["path_to_db"]) + "\n"
     note += " * @note  コード生成パラメータ:\n"
-    note += " *          db_prefix:             "
-    note += settings["db_prefix"]
-    note += "\n"
+    note += " *          db_prefix:             " + settings["db_prefix"] + "\n"
     note += " *          tlm_id_range:          "
-    note += "[" + settings["tlm_id_range"][0] + ", " + settings["tlm_id_range"][1] + "]"
-    note += "\n"
-    note += " *          is_cmd_prefixed_in_db: "
-    note += str(settings["is_cmd_prefixed_in_db"])
-    note += "\n"
-    note += " *          input_file_encoding:   "
-    note += settings["input_file_encoding"]
-    note += "\n"
-    note += " *          output_file_encoding:  "
-    note += settings["output_file_encoding"]
-    note += "\n"
+    note += "[" + settings["tlm_id_range"][0] + ", " + settings["tlm_id_range"][1] + "]\n"
+    note += " *          is_cmd_prefixed_in_db: " + str(settings["is_cmd_prefixed_in_db"]) + "\n"
+    note += " *          input_file_encoding:   " + settings["input_file_encoding"] + "\n"
+    note += " *          output_file_encoding:  " + settings["output_file_encoding"] + "\n"
     # is_main_obc については，生成状況によって異なるので出力しない
     # path_to_src, path_to_db については，実行環境によって異なるので出力しない
 
@@ -48,46 +33,35 @@ def GenerateSubObcSettingNote(settings, obc_idx):
 
     note = ""
     note += " * @note  このコードは自動生成されています！\n"
-    note += " * @note  コード生成 tlm-cmd-db:\n"
+    note += " * @note  コード生成元 tlm-cmd-db:\n"
     note += " *          repository:     "
-    note += GetRepoName_(sub_obc_settings["path_to_db"])
-    note += "\n"
-    note += " *          db commit hash: "
-    note += GetCommitHash_(sub_obc_settings["path_to_db"])
-    note += "\n"
+    note += GetRepo_(sub_obc_settings["path_to_db"]) + "\n"
+    note += " *          CSV files MD5:  " + GetDbHash_(settings["path_to_db"]) + "\n"
+    note += " *          db commit hash: " + GetCommitHash_(sub_obc_settings["path_to_db"]) + "\n"
     note += " * @note  コード生成パラメータ:\n"
-    note += " *          name:                    "
-    note += sub_obc_settings["name"]
-    note += "\n"
-    note += " *          db_prefix:               "
-    note += sub_obc_settings["db_prefix"]
-    note += "\n"
-    note += " *          tlm_id_range:            "
+    note += " *          name:                    " + sub_obc_settings["name"] + "\n"
+    note += " *          db_prefix:               " + sub_obc_settings["db_prefix"] + "\n"
     note += (
-        "[" + sub_obc_settings["tlm_id_range"][0] + ", " + sub_obc_settings["tlm_id_range"][1] + "]"
+        " *          tlm_id_range:            "
+        + "["
+        + sub_obc_settings["tlm_id_range"][0]
+        + ", "
+        + sub_obc_settings["tlm_id_range"][1]
+        + "]\n"
     )
-    note += "\n"
-    note += " *          is_cmd_prefixed_in_db:   "
-    note += str(sub_obc_settings["is_cmd_prefixed_in_db"])
-    note += "\n"
-    note += " *          input_file_encoding:     "
-    note += sub_obc_settings["input_file_encoding"]
-    note += "\n"
-    note += " *          max_tlm_num:             "
-    note += str(sub_obc_settings["max_tlm_num"])
-    note += "\n"
-    note += " *          driver_path:             "
-    note += sub_obc_settings["driver_path"]
-    note += "\n"
-    note += " *          driver_type:             "
-    note += sub_obc_settings["driver_type"]
-    note += "\n"
-    note += " *          driver_name:             "
-    note += sub_obc_settings["driver_name"]
-    note += "\n"
-    note += " *          code_when_tlm_not_found: "
-    note += sub_obc_settings["code_when_tlm_not_found"]
-    note += "\n"
+    note += (
+        " *          is_cmd_prefixed_in_db:   "
+        + str(sub_obc_settings["is_cmd_prefixed_in_db"])
+        + "\n"
+    )
+    note += " *          input_file_encoding:     " + sub_obc_settings["input_file_encoding"] + "\n"
+    note += " *          max_tlm_num:             " + str(sub_obc_settings["max_tlm_num"]) + "\n"
+    note += " *          driver_path:             " + sub_obc_settings["driver_path"] + "\n"
+    note += " *          driver_type:             " + sub_obc_settings["driver_type"] + "\n"
+    note += " *          driver_name:             " + sub_obc_settings["driver_name"] + "\n"
+    note += (
+        " *          code_when_tlm_not_found: " + sub_obc_settings["code_when_tlm_not_found"] + "\n"
+    )
     # path_to_db については，実行環境によって異なるので出力しない
 
     return note
@@ -100,29 +74,58 @@ def GetCommitHash_(path):
         )
         return result.stdout.strip()
     except subprocess.CalledProcessError:
-        return "0000000000000000000000000000000000000000"
+        print("Warn: failed to get commit hash(" + path + ")", file=sys.stderr)
+        return "unknown"
 
 
-def GetRepoName_(path):
+# Python 3.8 には str.removeprefix() が無い
+def RemovePrefix_(text, prefix):
+    if text.startswith(prefix):
+        text = text[len(prefix) :]
+    return text
+
+
+def GetRepo_(path):
+    # GitHub などの場合: github.com/user/repo のようにする
+    # 取得に失敗した場合（Git 管理していないものなど）: unknown を返し，warning を出す
+
     try:
-        # GitリモートURLを取得
+        subprocess.run(["git", "--version"], capture_output=True, check=True)
+    except subprocess.CalledProcessError:
+        print("Warn: failed to execute git command", file=sys.stderr)
+        return "unknown/unknown/unknown"
+
+    try:
         result = subprocess.run(
-            ["git", "remote", "-v"], cwd=path, text=True, capture_output=True, check=True
+            ["git", "remote"], cwd=path, text=True, capture_output=True, check=True
         )
-        url = result.stdout.split("\n")[0].split("\t")[1].split(" ")[0]  # 最初のリモートURLを取得
+        remote = result.stdout.split("\n")[0]  # 最初の remote を取得
+
+        if not remote:
+            print("Warn: failed to get git remote", file=sys.stderr)
+            return "unknown/unknown/unknown"
+
+        remote_url = subprocess.run(
+            ["git", "remote", "get-url", remote],
+            cwd=path,
+            text=True,
+            capture_output=True,
+            check=True,
+        ).stdout.strip()
+
+        # HTTPS と SSH の remote URL の差異を吸収（削除）
+        remote_url = RemovePrefix_(remote_url, "git@")
+        remote_url = RemovePrefix_(remote_url, "https://")
+        remote_url = remote_url.replace(":", "/")
 
         # URLの末尾に.gitがなければ追加
-        if not url.endswith(".git"):
-            url += ".git"
+        if not remote_url.endswith(".git"):
+            remote_url += ".git"
 
-        # URLからユーザー名とリポジトリ名を抽出（HTTPSとSSHの両方に対応）
-        match = re.search(r"(?:github\.com[:/])(.+)/(.+)\.git", url)
-        if match:
-            return f"{match.group(1)}/{match.group(2)}"
-        else:
-            return "User/Repository name not found"
+        return remote_url
     except subprocess.CalledProcessError:
-        return "User/Repository name not found"
+        print("Warn: failed to execute: git remote", file=sys.stderr)
+        return "unknown/unknown/unknown"
 
 
 # 入力 DB の csv をファイル名でソートし MD5 を計算，その MD5 をすべて cat して MD5 を計算したものを返す
@@ -137,17 +140,12 @@ def GetDbHash_(path):
 
 
 def CalcMd5_(path):
-    # 改行コード問題がうざいので，全部 CRLF に変換して計算
+    # Windows 環境で改行コードが CRLF になっているとハッシュ値が変わってしまう
+    # そのため，MD5 の計算は CRLF -> LF してから行う
     with open(path, "r", encoding="utf-8") as file:
         content = file.read()
-    content_crlf = content.replace("\n", "\r\n")
-    return hashlib.md5(content_crlf.encode("utf-8")).hexdigest()
-
-    hash_md5 = hashlib.md5()
-    with open(path, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
+    content_lf = content.replace("\r\n", "\n")
+    return hashlib.md5(content_lf.encode("utf-8")).hexdigest()
 
 
 def FindCsvFilesAndCalculateMd5_(path):

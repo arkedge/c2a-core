@@ -2,9 +2,9 @@
  * @file
  * @brief テレメトリ定義
  * @note  このコードは自動生成されています！
- * @note  コード生成 tlm-cmd-db:
- *          repository:    arkedge/c2a-core
- *          db hash (MD5): a68cdf10ca467fd750b1d988780fcb5b
+ * @note  コード生成元 tlm-cmd-db:
+ *          repository:    github.com/arkedge/c2a-core.git
+ *          CSV files MD5: 7bd311e714ca9b903ba0bfe4bb4538ea
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_AOBC
  *          tlm_id_range:          [0x00, 0x100]
