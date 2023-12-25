@@ -6,7 +6,7 @@
  * @note  コード生成元 tlm-cmd-db:
  *          repository:     github.com/arkedge/c2a-core.git
  *          CSV files MD5:  5da53df42b35605f4b54affc4a518dd7
- *          db commit hash: 6cbced9c99c405d7773b3554e3bd0d903707d01a
+ *          db commit hash: bc0d4a0da979ce3f530f155b119ae17bc83f156d
  * @note  コード生成パラメータ:
  *          name:                    AOBC
  *          db_prefix:               SAMPLE_AOBC
@@ -58,8 +58,21 @@ CDS_ERR_CODE AOBC_buffer_tlm_packet(CDS_StreamConfig* p_stream_config, AOBC_Driv
   case AOBC_Tlm_CODE_AOBC_HK:
     return AOBC_analyze_tlm_aobc_hk_(&AOBC_ctp_, tlm_id, aobc_driver);
   default:
-    aobc_driver->info.comm.rx_err_code = AOBC_RX_ERR_CODE_TLM_NOT_FOUND;
+    // DO NOTHING
+    break;
+  }
+
+  aobc_driver->info.comm.rx_err_code = AOBC_RX_ERR_CODE_TLM_NOT_FOUND;
+
+  if (tlm_id >= AOBC_MAX_TLM_NUM)
+  {
     return CDS_ERR_CODE_ERR;
+  }
+  else
+  {
+    // MOBC 側に定義がない tlm でも， GS まで届けられるようにバッファリングはする
+    AOBC_copy_packet_to_tlm_buffer_(&AOBC_ctp_, tlm_id, aobc_driver);
+    return CDS_ERR_CODE_OK;
   }
 }
 
