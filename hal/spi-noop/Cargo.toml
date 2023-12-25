@@ -5,4 +5,4 @@ version.workspace = true
 edition = "2021"
 
 [dependencies]
-c2a-core.workspace = true
+c2a-core = "4"
