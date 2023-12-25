@@ -64,4 +64,4 @@ npm run devtools:debug
 
 ## その他
 `npm run *` コマンドについては，以下のファイルなどを参照すること．  
-https://github.com/arkedge/c2a-core/blob/36fc14ece03a81fbce02993c6d38731679dd2b66/examples/mobc/package.json#L1-L25
+https://github.com/arkedge/c2a-core/blob/63af0662d09ecf427e035602935891abc09d09dd/examples/mobc/package.json#L1-L25
