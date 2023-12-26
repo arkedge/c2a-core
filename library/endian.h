@@ -41,7 +41,7 @@ void* ENDIAN_memcpy(void* dest, const void* src, size_t size);
 void ENDIAN_conv(void* after, const void* before, size_t size);
 
 /**
- * @brief  システムのエンディアンを判定する
+ * @brief  実行環境のエンディアンを判定する
  * @param  void
  * @return ENDIAN_TYPE
  */
