@@ -29,15 +29,16 @@ void C2A_core_init(void)
   // エンディアンの設定が正しいかの確認
 #ifdef IS_LITTLE_ENDIAN
   if (ENDIAN_detect_system_endian() != ENDIAN_TYPE_LITTLE)
-  {
-    Printf("WARNING: ENDIAN MISMATCH BETWEEN BUILD SETTINGS AND RUNTIME!\n");
-  }
 #else
   if (ENDIAN_detect_system_endian() != ENDIAN_TYPE_BIG)
+#endif
   {
     Printf("WARNING: ENDIAN MISMATCH BETWEEN BUILD SETTINGS AND RUNTIME!\n");
   }
-#endif
+  else
+  {
+    Printf("C2A_init: Endian OK.\n");
+  }
 
   // C2A の初期化
   CA_initialize();            // Cmd Analyze
