@@ -3,8 +3,8 @@
     "config:base"
   ],
   "labels": ["priority::medium", "tools"],
-  "additionalReviewers": ["meltingrabbit", "sksat"],
-  "assignees": ["meltingrabbit", "sksat"],
+  "additionalReviewers": ["sksat"],
+  "assignees": ["sksat"],
   "regexManagers": [
     {
       "fileMatch": [".github/workflows/*"],
