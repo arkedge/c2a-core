@@ -7,6 +7,7 @@
 ### Enhancements
 - [#240](https://github.com/arkedge/c2a-core/pull/240): code-generator の出力コードに，設定情報を残すようにする
 - [#243](https://github.com/arkedge/c2a-core/pull/243): code-generator に max_tlm_num のアサーションを追加
+- [#256](https://github.com/arkedge/c2a-core/pull/256): code-generator: MOBC が定義を持っていない Sub OBC の tlm でも GS に Forward できるようにする
 
 ### Breaking Changes
 
@@ -30,6 +31,8 @@
     - tlm: `MEM`
   - 設定ファイルを格納する．
     - `examples/mobc/src/src_user/settings/applications/memory_dump_define.h` を参考に．
+- [#256](https://github.com/arkedge/c2a-core/pull/256): user 側でのコードレベルでの対応は不要
+  - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
 
 
 ## v4.1.0 (2023-12-11)

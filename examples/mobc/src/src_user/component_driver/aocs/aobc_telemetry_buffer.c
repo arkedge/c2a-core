@@ -6,7 +6,7 @@
  * @note  コード生成元 tlm-cmd-db:
  *          repository:     github.com/arkedge/c2a-core.git
  *          CSV files MD5:  5da53df42b35605f4b54affc4a518dd7
- *          db commit hash: 9ed588f4feffa93b4530d7677111ee0ca28247d6
+ *          db commit hash: bc0d4a0da979ce3f530f155b119ae17bc83f156d
  * @note  コード生成パラメータ:
  *          name:                    AOBC
  *          db_prefix:               SAMPLE_AOBC
@@ -25,6 +25,7 @@
 #include "./aobc.h"
 #include <string.h>
 
+static void AOBC_copy_packet_to_tlm_buffer_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver);
 static CDS_ERR_CODE AOBC_analyze_tlm_aobc_aobc_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver);
 static CDS_ERR_CODE AOBC_analyze_tlm_aobc_hk_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver);
 
@@ -57,9 +58,28 @@ CDS_ERR_CODE AOBC_buffer_tlm_packet(CDS_StreamConfig* p_stream_config, AOBC_Driv
   case AOBC_Tlm_CODE_AOBC_HK:
     return AOBC_analyze_tlm_aobc_hk_(&AOBC_ctp_, tlm_id, aobc_driver);
   default:
-    aobc_driver->info.comm.rx_err_code = AOBC_RX_ERR_CODE_TLM_NOT_FOUND;
+    // DO NOTHING
+    break;
+  }
+
+  aobc_driver->info.comm.rx_err_code = AOBC_RX_ERR_CODE_TLM_NOT_FOUND;
+
+  if (tlm_id >= AOBC_MAX_TLM_NUM)
+  {
     return CDS_ERR_CODE_ERR;
   }
+  else
+  {
+    // MOBC 側に定義がない tlm でも， GS まで届けられるようにバッファリングはする
+    AOBC_copy_packet_to_tlm_buffer_(&AOBC_ctp_, tlm_id, aobc_driver);
+    return CDS_ERR_CODE_OK;
+  }
+}
+
+static void AOBC_copy_packet_to_tlm_buffer_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver)
+{
+  CTP_copy_packet(&(aobc_driver->tlm_buffer.tlm[tlm_id].packet), packet);
+  aobc_driver->tlm_buffer.tlm[tlm_id].is_null_packet = 0;
 }
 
 static CDS_ERR_CODE AOBC_analyze_tlm_aobc_aobc_(const CommonTlmPacket* packet, AOBC_TLM_CODE tlm_id, AOBC_Driver* aobc_driver)
@@ -75,9 +95,7 @@ static CDS_ERR_CODE AOBC_analyze_tlm_aobc_aobc_(const CommonTlmPacket* packet, A
   double temp_d = 0.0;
 
   // GS へのテレメ中継のためのバッファーへのコピー
-  CTP_copy_packet(&(aobc_driver->tlm_buffer.tlm[tlm_id].packet), packet);
-  aobc_driver->tlm_buffer.tlm[tlm_id].is_null_packet = 0;
-  // TODO: CRC チェック
+  AOBC_copy_packet_to_tlm_buffer_(packet, tlm_id, aobc_driver);
 
   // MOBC 内部でテレメデータへアクセスしやすいようにするための構造体へのパース
   ENDIAN_memcpy(&temp_u16, &(f[0]), 2);
@@ -223,9 +241,7 @@ static CDS_ERR_CODE AOBC_analyze_tlm_aobc_hk_(const CommonTlmPacket* packet, AOB
   double temp_d = 0.0;
 
   // GS へのテレメ中継のためのバッファーへのコピー
-  CTP_copy_packet(&(aobc_driver->tlm_buffer.tlm[tlm_id].packet), packet);
-  aobc_driver->tlm_buffer.tlm[tlm_id].is_null_packet = 0;
-  // TODO: CRC チェック
+  AOBC_copy_packet_to_tlm_buffer_(packet, tlm_id, aobc_driver);
 
   // MOBC 内部でテレメデータへアクセスしやすいようにするための構造体へのパース
   ENDIAN_memcpy(&temp_u16, &(f[0]), 2);

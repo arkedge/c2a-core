@@ -27,6 +27,13 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
         body_h = ""
         tlmdef_body_h = ""
 
+        body_c += (
+            "static void {_obc_name_upper}_copy_packet_to_tlm_buffer_(const CommonTlmPacket* packet, {_obc_name_upper}_TLM_CODE tlm_id, "
+            + driver_type
+            + "* "
+            + driver_name
+            + ");\n"
+        )
         for tlm in tlm_db:
             tlm_name = tlm["tlm_name"]
             tlm_name_lower = tlm_name.lower()
@@ -168,9 +175,40 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
                 + ");\n"
             )
         body_c += "  default:\n"
-        body_c += "    " + settings["other_obc_data"][i]["code_when_tlm_not_found"] + "\n"
+        body_c += "    // DO NOTHING\n"
+        body_c += "    break;\n"
+        body_c += "  }}\n"
+        body_c += "\n"
+        body_c += "  " + settings["other_obc_data"][i]["code_when_tlm_not_found"] + "\n"
+        body_c += "\n"
+        body_c += "  if (tlm_id >= {_obc_name_upper}_MAX_TLM_NUM)\n"
+        body_c += "  {{\n"
         body_c += "    return CDS_ERR_CODE_ERR;\n"
         body_c += "  }}\n"
+        body_c += "  else\n"
+        body_c += "  {{\n"
+        body_c += "    // MOBC 側に定義がない tlm でも， GS まで届けられるようにバッファリングはする\n"
+        body_c += (
+            "    {_obc_name_upper}_copy_packet_to_tlm_buffer_(&{_obc_name_upper}_ctp_, tlm_id, "
+            + driver_name
+            + ");\n"
+        )
+        body_c += "    return CDS_ERR_CODE_OK;\n"
+        body_c += "  }}\n"
+        body_c += "}}\n"
+        body_c += "\n"
+        body_c += (
+            "static void {_obc_name_upper}_copy_packet_to_tlm_buffer_(const CommonTlmPacket* packet, {_obc_name_upper}_TLM_CODE tlm_id, "
+            + driver_type
+            + "* "
+            + driver_name
+            + ")\n"
+        )
+        body_c += "{{\n"
+        body_c += (
+            "  CTP_copy_packet(&(" + driver_name + "->tlm_buffer.tlm[tlm_id].packet), packet);\n"
+        )
+        body_c += "  " + driver_name + "->tlm_buffer.tlm[tlm_id].is_null_packet = 0;\n"
         body_c += "}}\n"
         body_c += "\n"
         for tlm in tlm_db:
@@ -219,12 +257,10 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
             body_c += "\n"
             body_c += "  // GS へのテレメ中継のためのバッファーへのコピー\n"
             body_c += (
-                "  CTP_copy_packet(&("
+                "  {_obc_name_upper}_copy_packet_to_tlm_buffer_(packet, tlm_id, "
                 + driver_name
-                + "->tlm_buffer.tlm[tlm_id].packet), packet);\n"
+                + ");\n"
             )
-            body_c += "  " + driver_name + "->tlm_buffer.tlm[tlm_id].is_null_packet = 0;\n"
-            body_c += "  // TODO: CRC チェック\n"
             body_c += "\n"
 
             body_c += "  // MOBC 内部でテレメデータへアクセスしやすいようにするための構造体へのパース\n"
