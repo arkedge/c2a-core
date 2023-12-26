@@ -3,6 +3,7 @@
 
 #include "./library/git_revision.h"
 #include "./library/print.h"
+#include "./library/endian.h"
 #include "./system/task_manager/task_dispatcher.h"
 #include "./system/application_manager/app_manager.h"
 #include "./system/event_manager/event_manager.h"
@@ -15,6 +16,7 @@
 #include "./tlm_cmd/telemetry_frame.h"
 
 #include <src_user/applications/app_registry.h>
+#include <src_user/settings/build_settings.h>
 
 // git revisionをコードに埋め込む
 const char GIT_REV_CORE[41]         = GIT_REVISION_C2A_CORE;
@@ -24,6 +26,20 @@ const uint32_t GIT_REV_USER_SHORT   = GIT_REVISION_C2A_USER_SHORT;
 
 void C2A_core_init(void)
 {
+  // エンディアンの設定が正しいかの確認
+#ifdef IS_LITTLE_ENDIAN
+  if (ENDIAN_detect_system_endian() != ENDIAN_TYPE_LITTLE)
+  {
+    Printf("WARNING: ENDIAN MISMATCH BETWEEN BUILD SETTINGS AND RUNTIME!\n");
+  }
+#else
+  if (ENDIAN_detect_system_endian() != ENDIAN_TYPE_BIG)
+  {
+    Printf("WARNING: ENDIAN MISMATCH BETWEEN BUILD SETTINGS AND RUNTIME!\n");
+  }
+#endif
+
+  // C2A の初期化
   CA_initialize();            // Cmd Analyze
   Printf("C2A_init: CA_initialize done.\n");
   TF_initialize();            // TLM frame

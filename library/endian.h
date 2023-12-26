@@ -40,4 +40,11 @@ void* ENDIAN_memcpy(void* dest, const void* src, size_t size);
  */
 void ENDIAN_conv(void* after, const void* before, size_t size);
 
+/**
+ * @brief  システムのエンディアンを判定する
+ * @param  void
+ * @return ENDIAN_TYPE
+ */
+ENDIAN_TYPE ENDIAN_detect_system_endian(void);
+
 #endif
