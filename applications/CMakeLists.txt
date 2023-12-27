@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 project(C2A_CORE_APPS)
 
 set(C2A_SRCS
+  ccp_dump.c
   divided_cmd_utility.c
   gs_command_dispatcher.c
   event_utility.c
