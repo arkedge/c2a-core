@@ -21,7 +21,7 @@ BCT_MAX_BLOCKS = 383
 CDIS_IDX_OF_TL_GS = 3
 
 
-class cmd:
+class Cmd:
     ti: int
     id: int
     params: list
@@ -206,7 +206,7 @@ def check_ccp_common_part(tlm_CCP_DUMP):
 
 
 def init_cmd_class(ti, id, params):
-    cmd = cmd()
+    cmd = Cmd()
     cmd.ti = ti
     cmd.id = id
     cmd.params = params
