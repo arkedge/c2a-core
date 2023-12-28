@@ -64,7 +64,7 @@ typedef struct
   } info;                       //!< ダンブ情報（ダンプするパラメタ）
   struct
   {
-    CommonCmdPacket packet;     //!< ダンプした CCP
+    CommonCmdPacket ccp;     //!< ダンプした CCP
     CCP_DUMP_TARGET target;     //!< ダンプ元
     CCP_DUMP_STATUS status;     //!< ダンプ結果
     ObcTime dump_time;          //!< ダンプした時刻

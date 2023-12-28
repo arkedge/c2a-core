@@ -96,7 +96,7 @@ static RESULT CCP_DUMP_cdis_(const CommandDispatcher* cdis)
   ccp = (const CommonCmdPacket*)PL_get_packet(node);
 
   // CCP_copy_packet はパケット長しかコピーしない．ここではダンプなので，末端の不定もふくめてコピーする
-  memcpy(ccp_dump_.dump.packet.packet, ccp->packet, CSP_MAX_LEN);
+  memcpy(ccp_dump_.dump.ccp.packet, ccp->packet, CSP_MAX_LEN);
   return RESULT_OK;
 }
 
@@ -134,9 +134,9 @@ static RESULT CCP_DUMP_bct_(void)
   CCP_DUMP_BctDump* bct_dump = &ccp_dump_.info.bct;
 
   // BCT は CCP 長さが短いので，末尾を 0 埋めしておく
-  memset(&ccp_dump_.dump.packet, 0x00, sizeof(CommonCmdPacket));
+  memset(&ccp_dump_.dump.ccp, 0x00, sizeof(CommonCmdPacket));
 
-  if (BCT_load_cmd(&bct_dump->pos, &ccp_dump_.dump.packet) == BCT_SUCCESS)
+  if (BCT_load_cmd(&bct_dump->pos, &ccp_dump_.dump.ccp) == BCT_SUCCESS)
   {
     return RESULT_OK;
   }
