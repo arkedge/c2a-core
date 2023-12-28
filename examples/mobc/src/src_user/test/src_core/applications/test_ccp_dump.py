@@ -90,9 +90,9 @@ def test_ccp_dump_cdis():
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.DEST_TYPE"], 16) == 0
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.EXEC_TYPE"], 16) == 1
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.TI"] == tlc0.ti
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM0"], 16) == tlc0.params[0]
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM1"], 16) == tlc0.params[1]
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM2"], 16) == tlc0.params[2]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM0"], 16) == tlc0.params[0]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM1"], 16) == tlc0.params[1]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM2"], 16) == tlc0.params[2]
 
     assert "SUC" == wings.util.send_rt_cmd_and_confirm(
         ope, c2a_enum.Cmd_CODE_CCP_DUMP_CDIS, (CDIS_IDX_OF_TL_GS, 1), c2a_enum.Tlm_CODE_HK
@@ -106,9 +106,9 @@ def test_ccp_dump_cdis():
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.DEST_TYPE"], 16) == 0
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.EXEC_TYPE"], 16) == 1
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.TI"] == tlc1.ti
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM0"], 16) == tlc1.params[0]
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM1"], 16) == tlc1.params[1]
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM2"], 16) == tlc1.params[2]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM0"], 16) == tlc1.params[0]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM1"], 16) == tlc1.params[1]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM2"], 16) == tlc1.params[2]
 
     # 空の TL0
     clear_tl0()
@@ -147,9 +147,9 @@ def test_ccp_dump_bct():
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.DEST_TYPE"], 16) == 0
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.EXEC_TYPE"], 16) == 2
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.TI"] == bc0.ti
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM0"], 16) == bc0.params[0]
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM1"], 16) == bc0.params[1]
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM2"], 16) == bc0.params[2]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM0"], 16) == bc0.params[0]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM1"], 16) == bc0.params[1]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM2"], 16) == bc0.params[2]
 
     assert "SUC" == wings.util.send_rt_cmd_and_confirm(
         ope, c2a_enum.Cmd_CODE_CCP_DUMP_BCT, (c2a_enum.BC_TEST_USE_PYTEST, 1), c2a_enum.Tlm_CODE_HK
@@ -163,9 +163,9 @@ def test_ccp_dump_bct():
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.DEST_TYPE"], 16) == 0
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.EXEC_TYPE"], 16) == 2
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.TI"] == bc1.ti
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM0"], 16) == bc1.params[0]
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM1"], 16) == bc1.params[1]
-    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM2"], 16) == bc1.params[2]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM0"], 16) == bc1.params[0]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM1"], 16) == bc1.params[1]
+    assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PARAM2"], 16) == bc1.params[2]
 
     clear_bct(c2a_enum.BC_TEST_USE_PYTEST)
 
