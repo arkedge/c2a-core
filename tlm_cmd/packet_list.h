@@ -192,6 +192,13 @@ const PL_Node* PL_get_tail(const PacketList* pl);
 const PL_Node* PL_get_next(const PL_Node* node);
 
 /**
+ * @brief Node から packet を取得
+ * @param[in] node: Node
+ * @return packet
+ */
+const void* PL_get_packet(const PL_Node* node);
+
+/**
  * @brief PacketList の先頭に packet を挿入
  * @param[in] pl: PacketList
  * @param[in] packet: 挿入する packet

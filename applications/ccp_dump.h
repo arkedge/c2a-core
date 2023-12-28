@@ -8,6 +8,7 @@
 #include "../system/application_manager/app_info.h"
 #include "../tlm_cmd/common_cmd_packet.h"
 #include "../tlm_cmd/block_command_table.h"
+#include "../system/time_manager/obc_time.h"
 
 /**
  * @enum   CCP_DUMP_TARGET
@@ -66,6 +67,7 @@ typedef struct
     CommonCmdPacket packet;     //!< ダンプした CCP
     CCP_DUMP_TARGET target;     //!< ダンプ元
     CCP_DUMP_STATUS status;     //!< ダンプ結果
+    ObcTime dump_time;          //!< ダンプした時刻
   } dump;
 } CcpDump;
 
