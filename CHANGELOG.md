@@ -19,7 +19,7 @@
 - [#249](https://github.com/arkedge/c2a-core/pull/249): `.nvmrc` の追加
 - [#261](https://github.com/arkedge/c2a-core/pull/261): TL TLM に TL に登録された cmd 数を追加
 - [#265](https://github.com/arkedge/c2a-core/pull/265): code-generator: subobc の MD5 の計算のバグ修正
-- [#267](https://github.com/arkedge/c2a-core/pull/267): core tlm の tlm id の再採番
+- [#267](https://github.com/arkedge/c2a-core/pull/267): core tlm の tlm id の再採番 (CDIS, CA)
 
 ### Documentation
 
