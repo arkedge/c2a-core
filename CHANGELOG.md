@@ -8,6 +8,7 @@
 - [#240](https://github.com/arkedge/c2a-core/pull/240): code-generator の出力コードに，設定情報を残すようにする
 - [#243](https://github.com/arkedge/c2a-core/pull/243): code-generator に max_tlm_num のアサーションを追加
 - [#256](https://github.com/arkedge/c2a-core/pull/256): code-generator: MOBC が定義を持っていない Sub OBC の tlm でも GS に Forward できるようにする
+- [#263](https://github.com/arkedge/c2a-core/pull/263): CDIS や BCT に保存された CCP をダンプする App を追加
 
 ### Breaking Changes
 
@@ -44,6 +45,9 @@
   - 以下の tlm id を変更したため，これらを user 側の tlm db に上書きし，tlm db を再度読み込み，再出力することで更新する．
     - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDIS.csv`
     - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CA.csv`
+- [#263](https://github.com/arkedge/c2a-core/pull/263): user 側でのコードレベルでの対応は不要
+  - CcpDump App を追加したため，この App を利用する user は，`applications/ccp_dump.c` をビルド対象に加える．
+  - さらに， `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CCP_DUMP.csv` を user 側の tlm db に追加し，コード生成をする．
 
 
 ## v4.1.0 (2023-12-11)
