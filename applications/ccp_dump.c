@@ -24,7 +24,7 @@ static CcpDump ccp_dump_;
 const CcpDump* const ccp_dump = &ccp_dump_;
 
 
-AppInfo MEM_create_app(void)
+AppInfo CCP_DUMP_create_app(void)
 {
   return AI_create_app_info("ccpdump", CCP_DUMP_init_, NULL);
 }
