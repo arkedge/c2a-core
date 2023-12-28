@@ -5,8 +5,8 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:     github.com/arkedge/c2a-core.git
- *          CSV files MD5:  fab1e97975ab6bc4824720ff3cc8d498
- *          db commit hash: 588dd2c10543d78c1ea39ca6b7cac11de2ffb69e
+ *          CSV files MD5:  7bd311e714ca9b903ba0bfe4bb4538ea
+ *          db commit hash: b9b644b2faeb088cd3aec10ed8fb36237e934e04
  * @note  コード生成パラメータ:
  *          name:                    AOBC
  *          db_prefix:               SAMPLE_AOBC
