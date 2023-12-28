@@ -43,9 +43,11 @@ static RESULT CCP_DUMP_init_(void)
 CCP_CmdRet Cmd_CCP_DUMP_CDIS(const CommonCmdPacket* packet)
 {
   CCP_DUMP_CdisDump* cdis_dump = &ccp_dump_.info.cdis;
+  const CommandDispatcher* cdis;
   cdis_dump->cdis_idx  = CCP_get_param_from_packet(packet, 0, uint8_t);
   cdis_dump->queue_idx = CCP_get_param_from_packet(packet, 1, uint16_t);
-  const CommandDispatcher* cdis = CDIS_MGR_get_cdis(cdis_dump->cdis_idx);
+
+  cdis = CDIS_MGR_get_cdis(cdis_dump->cdis_idx);
 
   ccp_dump_.dump.target = CCP_DUMP_TARGET_CDIS;
 
@@ -130,6 +132,9 @@ CCP_CmdRet Cmd_CCP_DUMP_BCT(const CommonCmdPacket* packet)
 static RESULT CCP_DUMP_bct_(void)
 {
   CCP_DUMP_BctDump* bct_dump = &ccp_dump_.info.bct;
+
+  // BCT は CCP 長さが短いので，末尾を 0 埋めしておく
+  memset(&ccp_dump_.dump.packet, 0x00, sizeof(CommonCmdPacket));
 
   if (BCT_load_cmd(&bct_dump->pos, &ccp_dump_.dump.packet) == BCT_SUCCESS)
   {
