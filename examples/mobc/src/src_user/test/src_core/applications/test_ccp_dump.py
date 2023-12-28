@@ -84,7 +84,7 @@ def test_ccp_dump_cdis():
     tlm_CCP_DUMP = get_ccp_dump_tlm()
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.TARGET"] == "CDIS"
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.STATUS"] == "OK"
-    check_common_ccp(tlm_CCP_DUMP)
+    check_ccp_common_part(tlm_CCP_DUMP)
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PH.PACKET_LEN"] == 11
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.CMD_ID"], 16) == tlc0.id
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.DEST_TYPE"], 16) == 0
@@ -100,7 +100,7 @@ def test_ccp_dump_cdis():
     tlm_CCP_DUMP = get_ccp_dump_tlm()
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.TARGET"] == "CDIS"
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.STATUS"] == "OK"
-    acheck_common_ccp(tlm_CCP_DUMP)
+    check_ccp_common_part(tlm_CCP_DUMP)
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PH.PACKET_LEN"] == 11
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.CMD_ID"], 16) == tlc1.id
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.DEST_TYPE"], 16) == 0
@@ -141,7 +141,7 @@ def test_ccp_dump_bct():
     tlm_CCP_DUMP = get_ccp_dump_tlm()
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.TARGET"] == "BCT"
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.STATUS"] == "OK"
-    check_common_ccp(tlm_CCP_DUMP)
+    check_ccp_common_part(tlm_CCP_DUMP)
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PH.PACKET_LEN"] == 11
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.CMD_ID"], 16) == bc0.id
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.DEST_TYPE"], 16) == 0
@@ -157,7 +157,7 @@ def test_ccp_dump_bct():
     tlm_CCP_DUMP = get_ccp_dump_tlm()
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.TARGET"] == "BCT"
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.STATUS"] == "OK"
-    check_common_ccp(tlm_CCP_DUMP)
+    check_ccp_common_part(tlm_CCP_DUMP)
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PH.PACKET_LEN"] == 11
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.CMD_ID"], 16) == bc1.id
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.SH.DEST_TYPE"], 16) == 0
@@ -166,6 +166,8 @@ def test_ccp_dump_bct():
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM0"], 16) == bc1.params[0]
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM1"], 16) == bc1.params[1]
     assert int(tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM2"], 16) == bc1.params[2]
+
+    clear_bct(c2a_enum.BC_TEST_USE_PYTEST)
 
 
 def get_ccp_dump_tlm():
@@ -191,7 +193,7 @@ def clear_bct(id):
     )
 
 
-def check_common_ccp(tlm_CCP_DUMP):
+def check_ccp_common_part(tlm_CCP_DUMP):
     assert tlm_CCP_DUMP["CCP_DUMP.SH.TI"] - tlm_CCP_DUMP["CCP_DUMP.DUMP.DUMP_TIME.TOTAL_CYCLE"] > 0
     assert (
         tlm_CCP_DUMP["CCP_DUMP.SH.TI"] - tlm_CCP_DUMP["CCP_DUMP.DUMP.DUMP_TIME.TOTAL_CYCLE"] < 100
