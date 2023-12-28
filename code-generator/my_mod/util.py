@@ -36,7 +36,7 @@ def GenerateSubObcSettingNote(settings, obc_idx):
     note += " * @note  コード生成元 tlm-cmd-db:\n"
     note += " *          repository:     "
     note += GetRepo_(sub_obc_settings["path_to_db"]) + "\n"
-    note += " *          CSV files MD5:  " + GetDbHash_(settings["path_to_db"]) + "\n"
+    note += " *          CSV files MD5:  " + GetDbHash_(sub_obc_settings["path_to_db"]) + "\n"
     note += " *          db commit hash: " + GetCommitHash_(sub_obc_settings["path_to_db"]) + "\n"
     note += " * @note  コード生成パラメータ:\n"
     note += " *          name:                    " + sub_obc_settings["name"] + "\n"
