@@ -67,8 +67,12 @@ def test_ccp_dump_cdis():
     # TL 登録
     now_ti = tlm_CCP_DUMP["CCP_DUMP.SH.TI"]
 
-    tlc0 = init_tlc_class(now_ti + 10000, c2a_enum.Cmd_CODE_TG_FORWARD_RT_TLM, [0x12, 0x34, 0x56])
-    tlc1 = init_tlc_class(now_ti + 20000, c2a_enum.Cmd_CODE_TG_FORWARD_RT_TLM, [0xAB, 0xCD, 0xEF])
+    tlc0 = init_tlc_class(
+        now_ti + 10000, c2a_enum.Cmd_CODE_TG_FORWARD_AS_RT_TLM, [0x12, 0x34, 0x56]
+    )
+    tlc1 = init_tlc_class(
+        now_ti + 20000, c2a_enum.Cmd_CODE_TG_FORWARD_AS_RT_TLM, [0xAB, 0xCD, 0xEF]
+    )
 
     wings.util.send_tl_cmd(ope, tlc0.ti, tlc0.id, (0x1234, 0x56))
     wings.util.send_tl_cmd(ope, tlc0.ti, tlc0.id, (0xABCD, 0xEF))
@@ -81,7 +85,9 @@ def test_ccp_dump_cdis():
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.TARGET"] == "CDIS"
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.STATUS"] == "OK"
     assert tlm_CCP_DUMP["CCP_DUMP.SH.TI"] - tlm_CCP_DUMP["CCP_DUMP.DUMP.DUMP_TIME.TOTAL_CYCLE"] > 0
-    assert tlm_CCP_DUMP["CCP_DUMP.SH.TI"] - tlm_CCP_DUMP["CCP_DUMP.DUMP.DUMP_TIME.TOTAL_CYCLE"] < 100
+    assert (
+        tlm_CCP_DUMP["CCP_DUMP.SH.TI"] - tlm_CCP_DUMP["CCP_DUMP.DUMP.DUMP_TIME.TOTAL_CYCLE"] < 100
+    )
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PH.VER"] == 0
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PH.TYPE"] == 1
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PH.SH_FLAG"] == 1
@@ -103,7 +109,9 @@ def test_ccp_dump_cdis():
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.TARGET"] == "CDIS"
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.STATUS"] == "OK"
     assert tlm_CCP_DUMP["CCP_DUMP.SH.TI"] - tlm_CCP_DUMP["CCP_DUMP.DUMP.DUMP_TIME.TOTAL_CYCLE"] > 0
-    assert tlm_CCP_DUMP["CCP_DUMP.SH.TI"] - tlm_CCP_DUMP["CCP_DUMP.DUMP.DUMP_TIME.TOTAL_CYCLE"] < 100
+    assert (
+        tlm_CCP_DUMP["CCP_DUMP.SH.TI"] - tlm_CCP_DUMP["CCP_DUMP.DUMP.DUMP_TIME.TOTAL_CYCLE"] < 100
+    )
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PH.VER"] == 0
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PH.TYPE"] == 1
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PH.SH_FLAG"] == 1
@@ -118,10 +126,21 @@ def test_ccp_dump_cdis():
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM1"] == tlc1.params[1]
     assert tlm_CCP_DUMP["CCP_DUMP.DUMP.CCP.PATAM2"] == tlc1.params[2]
 
+    # 空の TL0
+    clear_tl0()
+    assert "PRM" == wings.util.send_rt_cmd_and_confirm(
+        ope, c2a_enum.Cmd_CODE_CCP_DUMP_CDIS, (CDIS_IDX_OF_TL_GS, 0), c2a_enum.Tlm_CODE_HK
+    )
+    tlm_CCP_DUMP = get_ccp_dump_tlm()
+    assert tlm_CCP_DUMP["CCP_DUMP.DUMP.TARGET"] == "CDIS"
+    assert tlm_CCP_DUMP["CCP_DUMP.DUMP.STATUS"] == "NOT_FOUND"
+
 
 @pytest.mark.real
 @pytest.mark.sils
 def test_ccp_dump_bct():
+    # BCT は空では不定がはいってるだけ． Cmd_CCP_DUMP_BCT で空を取得してもエラーにならない
+    clear_bct(c2a_enum.BC_TEST_USE_PYTEST)
     pass
 
 
@@ -146,6 +165,12 @@ def init_tlc_class(ti, id, params):
     tlc.ti = ti
     tlc.id = id
     tlc.params = params
+
+
+def clear_bct(id):
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope, c2a_enum.Cmd_CODE_BCT_CLEAR_BLOCK, (id,), c2a_enum.Tlm_CODE_HK
+    )
 
 
 if __name__ == "__main__":
