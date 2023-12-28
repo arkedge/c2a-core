@@ -206,6 +206,7 @@ def check_ccp_common_part(tlm_CCP_DUMP):
 
 
 def init_cmd_class(ti, id, params):
+    cmd = cmd()
     cmd.ti = ti
     cmd.id = id
     cmd.params = params
