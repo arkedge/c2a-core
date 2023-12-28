@@ -1,5 +1,5 @@
 ,Target,OBC,Local Var,,,,,,,,,,,,,,
-,PacketID,0x24,const CommandDispatcher* cdis = command_dispatcher_manager->cdises[command_dispatcher_manager->idx_for_tlm];,,,,,,,,,,,,,,
+,PacketID,0x24,,,,,,,,,,,,,,,
 ,Enable/Disable,ENABLE,,,,,,,,,,,,,,,
 ,IsRestricted,FALSE,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
