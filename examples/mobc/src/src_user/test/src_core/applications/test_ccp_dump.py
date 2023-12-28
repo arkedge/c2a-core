@@ -75,7 +75,7 @@ def test_ccp_dump_cdis():
     )
 
     wings.util.send_tl_cmd(ope, tlc0.ti, tlc0.id, (0x1234, 0x56))
-    wings.util.send_tl_cmd(ope, tlc0.ti, tlc0.id, (0xABCD, 0xEF))
+    wings.util.send_tl_cmd(ope, tlc1.ti, tlc1.id, (0xABCD, 0xEF))
 
     # TL 確認
     assert "SUC" == wings.util.send_rt_cmd_and_confirm(
@@ -132,7 +132,7 @@ def test_ccp_dump_bct():
     bc1 = init_cmd_class(20000, c2a_enum.Cmd_CODE_TG_FORWARD_AS_RT_TLM, [0xAB, 0xCD, 0xEF])
 
     ope.send_bl_cmd(bc0.ti, bc0.id, (0x1234, 0x56))
-    ope.send_bl_cmd(bc0.ti, bc0.id, (0xABCD, 0xEF))
+    ope.send_bl_cmd(bc1.ti, bc1.id, (0xABCD, 0xEF))
 
     # BCT 確認
     assert "SUC" == wings.util.send_rt_cmd_and_confirm(
