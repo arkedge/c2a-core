@@ -28,6 +28,7 @@ typedef struct
     TLCD_ID tl_id;            //!< TL の ID
     uint8_t page_no;          //!< TL_BCT_DIGSET_TL_DIGEST_PAGE_SIZE のページネーション
     ObcTime time_stamp;       //!< digest 計算時刻
+    uint8_t digests_num;      //!< 計算した digests の数
   } info;
   uint16_t digests[TL_BCT_DIGSET_TL_DIGEST_PAGE_SIZE];  //!< TL の digest
 } TL_BCT_DIGSET_TlDigest;
@@ -42,6 +43,7 @@ typedef struct
   {
     bct_id_t block;           //!< BCT block
     ObcTime time_stamp;       //!< digest 計算時刻
+    uint8_t digests_num;      //!< 計算した digests の数
   } info;
   uint16_t digests[BCT_MAX_CMD_NUM];  //!< BCT の digest
 } TL_BCT_DIGSET_BctDigest;
