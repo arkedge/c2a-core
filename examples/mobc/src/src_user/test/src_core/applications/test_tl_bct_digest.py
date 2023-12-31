@@ -3,6 +3,7 @@
 
 import os
 import sys
+import binascii
 
 import isslwings as wings
 import pytest
@@ -25,7 +26,8 @@ class Cmd:
     ti: int
     id: int
     exec_type: int
-    params: list
+    params: list  # uint の引数のみ対応．今回のテストの趣旨としてこれでOKとした．
+    param_size: list
     digest: int
 
 
@@ -74,15 +76,56 @@ def test_tl_bct_digest_cmd_assertion():
     check_tl_digest(tlm, [])
 
     assert "PRM" == wings.util.send_rt_cmd_and_confirm(
-        ope, c2a_enum.Cmd_CODE_TL_BCT_DIGEST_BCT, (c2a_enum.BCT_MAX_BLOCKS,), c2a_enum.Tlm_CODE_HK
+        ope, c2a_enum.Cmd_CODE_TL_BCT_DIGEST_BCT, (BCT_MAX_BLOCKS,), c2a_enum.Tlm_CODE_HK
     )
     tlm = get_bct_digest_tlm()
-    assert tlm["BCT_DIGEST.INFO.BLOCK"] == c2a_enum.BCT_MAX_BLOCKS
+    assert tlm["BCT_DIGEST.INFO.BLOCK"] == BCT_MAX_BLOCKS
     assert tlm["BCT_DIGEST.INFO.STATUS"] == "PARAM_ERR"
     assert tlm["BCT_DIGEST.INFO.DIGESTS_NUM"] == 0
     assert tlm["BCT_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] == 0
     assert tlm["BCT_DIGEST.INFO.TIME_STAMP.STEP"] == 0
     check_tl_digest(tlm, [])
+
+
+@pytest.mark.real
+@pytest.mark.sils
+def test_tl_digest():
+    # 空
+    clear_tl0()
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_TL_BCT_DIGEST_TL,
+        (c2a_enum.TLCD_ID_FROM_GS, 0),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    tlm = get_tl_digest_tlm()
+    assert tlm["TL_DIGEST.INFO.TL_ID"] == c2a_enum.TLCD_ID_FROM_GS
+    assert tlm["TL_DIGEST.INFO.PAGE_NO"] == 0
+    assert tlm["TL_DIGEST.INFO.STATUS"] == "NO_CCP"
+    assert tlm["TL_DIGEST.INFO.DIGESTS_NUM"] == 0
+    assert tlm["TL_DIGEST.INFO.QUEUED"] == 0
+    assert tlm["TL_DIGEST.SH.TI"] - tlm["TL_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] > 0
+    assert tlm["TL_DIGEST.SH.TI"] - tlm["TL_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] < 100
+    check_tl_digest(tlm, [])
+
+    # 2 つ登録
+    digest = []
+    offset_ti = tlm["TL_DIGEST.SH.TI"] + 10000
+    cmd = init_cmd_class(
+        offset_ti,
+        c2a_enum.Cmd_CODE_TG_FORWARD_AS_RT_TLM,
+        c2a_enum.CCP_EXEC_TYPE_TL_FROM_GS,
+        [0x1234, 0x56],
+        [2, 1],
+    )
+    digest.append(cmd.digest)
+    register_cmd(cmd)
+
+    cmd = init_cmd_class(
+        offset_ti + 1, c2a_enum.Cmd_CODE_NOP, c2a_enum.CCP_EXEC_TYPE_TL_FROM_GS, [], []
+    )
+    digest.append(cmd.digest)
+    register_cmd(cmd)
 
 
 def check_tl_digest(tlm, digests):
@@ -123,13 +166,86 @@ def clear_bct(id):
     )
 
 
-def init_cmd_class(ti, id, exec_type, params):
+def init_cmd_class(ti, id, exec_type, params, param_size):
     cmd = Cmd()
     cmd.ti = ti
     cmd.id = id
     cmd.exec_type = exec_type
     cmd.params = params
+    cmd.param_size = param_size
+    cmd.digest = calc_cmd_digest(cmd)
     return cmd
+
+
+def calc_cmd_digest(cmd):
+    data = []
+
+    tmp = 0
+    # Version No
+    tmp += 0
+    # Packet Type
+    tmp += 1
+    tmp << 1
+    # Sec. HDR Flag
+    tmp += 1
+    tmp << 11
+    # APID
+    tmp += c2a_enum.APID_CMD_TO_MOBC
+
+    data.append(tmp // 256)
+    data.append(tmp % 256)
+
+    tmp = 0
+    # Sequence Flags
+    tmp += 3
+    tmp << 2
+    # Sequence Count
+    tmp += 0
+
+    data.append(tmp // 256)
+    data.append(tmp % 256)
+
+    # Packet Data Len
+    packet_data_len = 15 + sum(cmd.param_size) - 6 - 1
+    data.append(packet_data_len // 256)
+    data.append(packet_data_len % 256)
+
+    # Sec. HDR Ver
+    data.append(1)
+    # Command Type
+    data.append(0)
+    # Command ID
+    data.append(cmd.id // 256)
+    data.append(cmd.id % 256)
+    # Dest Type & Execution Type
+    # Dest Type は 0
+    data.append(cmd.exec_type)
+    # Time Indicator
+    data.append((cmd.ti // 256**3) % 256)
+    data.append((cmd.ti // 256**2) % 256)
+    data.append((cmd.ti // 256) % 256)
+    data.append(cmd.ti % 256)
+
+    for i in range(len(cmd.params)):
+        if cmd.param_size[i] >= 4:
+            data.append((cmd.params[i] // 256**3) % 256)
+        if cmd.param_size[i] >= 3:
+            data.append((cmd.params[i] // 256**2) % 256)
+        if cmd.param_size[i] >= 2:
+            data.append((cmd.params[i] // 256) % 256)
+        if cmd.param_size[i] >= 1:
+            data.append(cmd.params[i] % 256)
+
+    return binascii.crc_hqx(bytes(data), 0xFFFF)
+
+
+def register_cmd(cmd):
+    if cmd.exec_type == c2a_enum.CCP_EXEC_TYPE_TL_FROM_GS:
+        wings.util.send_tl_cmd(ope, cmd.ti, cmd.id, tuple(cmd.params))
+    elif cmd.exec_type == c2a_enum.CCP_EXEC_TYPE_BC:
+        ope.send_bl_cmd(cmd.ti, cmd.id, tuple(cmd.params))
+    else:
+        assert False
 
 
 if __name__ == "__main__":
