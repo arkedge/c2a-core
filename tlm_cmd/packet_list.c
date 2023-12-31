@@ -7,6 +7,7 @@
 
 #include "../system/time_manager/time_manager.h"
 #include "common_tlm_cmd_packet.h"
+#include "./ccsds/space_packet_protocol/cmd_space_packet.h"     // FIXME: CSP 依存をなくすべき
 #include "block_command_executor.h"
 #include "block_command_table.h"
 #include <stdint.h>

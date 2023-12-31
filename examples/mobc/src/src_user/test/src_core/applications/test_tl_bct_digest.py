@@ -109,6 +109,7 @@ def test_tl_digest():
     check_tl_digest(tlm, [])
 
     # 2 つ登録
+    digest_num = 2
     digest = []
     offset_ti = tlm["TL_DIGEST.SH.TI"] + 10000
     cmd = init_cmd_class(
@@ -126,6 +127,22 @@ def test_tl_digest():
     )
     digest.append(cmd.digest)
     register_cmd(cmd)
+
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_TL_BCT_DIGEST_TL,
+        (c2a_enum.TLCD_ID_FROM_GS, 0),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    tlm = get_tl_digest_tlm()
+    assert tlm["TL_DIGEST.INFO.TL_ID"] == c2a_enum.TLCD_ID_FROM_GS
+    assert tlm["TL_DIGEST.INFO.PAGE_NO"] == 0
+    assert tlm["TL_DIGEST.INFO.STATUS"] == "OK"
+    assert tlm["TL_DIGEST.INFO.DIGESTS_NUM"] == digest_num
+    assert tlm["TL_DIGEST.INFO.QUEUED"] == 0
+    assert tlm["TL_DIGEST.SH.TI"] - tlm["TL_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] > 0
+    assert tlm["TL_DIGEST.SH.TI"] - tlm["TL_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] < 100
+    check_tl_digest(digest, [])
 
 
 def check_tl_digest(tlm, digests):
