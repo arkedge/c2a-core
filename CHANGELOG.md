@@ -9,6 +9,7 @@
 - [#243](https://github.com/arkedge/c2a-core/pull/243): code-generator に max_tlm_num のアサーションを追加
 - [#256](https://github.com/arkedge/c2a-core/pull/256): code-generator: MOBC が定義を持っていない Sub OBC の tlm でも GS に Forward できるようにする
 - [#263](https://github.com/arkedge/c2a-core/pull/263): CDIS や BCT に保存された CCP をダンプする App を追加
+- [#268](https://github.com/arkedge/c2a-core/pull/268): GS と FSW 側での同期のために，BCT, TL のダイジェスト (CRC) を下ろせるようにする App の追加
 
 ### Breaking Changes
 
@@ -50,6 +51,12 @@
   - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CCP_DUMP.csv` を user 側の tlm db に追加し，コード生成をする．
   - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CCP_DUMP_*` コマンドを user 側の cmd db に追加し，コード生成をする．
   - `examples/mobc/src/src_user/test/src_core/applications/test_ccp_dump.py` を user 側の test にも加える．
+    - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える．
+- [#268](https://github.com/arkedge/c2a-core/pull/268): user 側でのコードレベルでの対応は不要
+  - TL BCT Digest App を追加したため，この App を利用する user は，`applications/tl_bct_digest.c` をビルド対象に加え，App 登録する．
+  - `examples/mobc/tlm-cmd-db/TLM_DB/{SAMPLE_MOBC_TLM_DB_TL_DIGEST.csv,SAMPLE_MOBC_TLM_DB_BCT_DIGEST.csv}` を user 側の tlm db に追加し，コード生成をする．
+  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `TL_BCT_DIGEST_*` コマンドを user 側の cmd db に追加し，コード生成をする．
+  - `examples/mobc/src/src_user/test/src_core/applications/test_tl_bct_digest.py` を user 側の test にも加える．
     - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える．
 
 
