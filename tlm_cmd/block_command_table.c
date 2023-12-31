@@ -234,6 +234,10 @@ static BCT_ACK BCT_save_cmd_(const BCT_Pos* pos, const CommonCmdPacket* packet)
   // 格納可能なパケットなら内容をコピーし保存
   BCT_set_bc_cmd_data_(pos, (BCT_CmdData*)packet->packet); // const_cast
 
+  // BCT に保存される Cmd の Sequence Count は 0 とする (BCT Digset のため)
+  // FIXME: CSP 依存を CCP 依存にする
+  CSP_set_seq_count((CmdSpacePacket*)(CommonCmdPacket*)BCT_get_bc_cmd_data_(pos), 0); // const_cast
+
   return BCT_SUCCESS;
 }
 

@@ -252,6 +252,7 @@ PL_ACK PL_drop_node(PacketList* pl, PL_Node* prev, PL_Node* current);
 /**
  * @brief CCP が時系列に並ぶように CCP を挿入する
  * @note TimeLine だけでなく TaskList もこれを使い，その場合， now は step_t になることに注意
+ * @note  Sequence Count は登録される際に 0 とされる
  * @param[in,out] pl: CCP を挿入する PacketList
  * @param[in] packet: 挿入する CCP
  * @param[in] now: 基準時刻 (TimeLine なら現在時刻， TaskList なら現在 step)

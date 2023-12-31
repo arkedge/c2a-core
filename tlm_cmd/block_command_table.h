@@ -214,6 +214,7 @@ BCT_ACK BCT_load_cmd(const BCT_Pos* pos, CommonCmdPacket* packet);
 
 /**
  * @brief Cmd を block_command_table->pos に登録する
+ * @note  Sequence Count は BCT に登録される際に 0 とされる
  * @param[in] packet: 登録する Cmd の内容
  * @return BCT_ACK
  */
@@ -221,6 +222,7 @@ BCT_ACK BCT_register_cmd(const CommonCmdPacket* packet);
 
 /**
  * @brief 既に登録されている BC の Cmd の中身を外部から上書きする
+ * @note  Sequence Count は BCT に登録される際に 0 とされる
  * @param[in] pos: 上書きする位置
  * @param[in] packet: 上書きされる packet
  * @return BCT_ACK
