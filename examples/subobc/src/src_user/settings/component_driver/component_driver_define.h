@@ -16,4 +16,9 @@ typedef enum
   CDRV_ID_MAX
 } CDRV_ID;
 
+#define CDRV_USE_HAL_HANDLER_ID_UART    //!< HAL_HANDLER_ID_UART を使うか
+// #define CDRV_USE_HAL_HANDLER_ID_CCSDS   //!< HAL_HANDLER_ID_CCSDS を使うか
+// #define CDRV_USE_HAL_HANDLER_ID_I2C     //!< HAL_HANDLER_ID_I2C を使うか
+// #define CDRV_USE_HAL_HANDLER_ID_SPI     //!< HAL_HANDLER_ID_SPI を使うか
+
 #endif
