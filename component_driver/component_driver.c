@@ -2,7 +2,7 @@
 /**
  * @file
  * @brief 様々な Component Driver に統一的な機能を提供する
- * @note  Cmd としての機能は， ComponentDriverUtil App (TBA) で提供される
+ * @note  Cmd としての機能は， ComponentDriverUtil App で提供される
  */
 #include "component_driver.h"
 #include <stddef.h>
@@ -32,10 +32,10 @@ const UART_Config* CDRV_get_uart_config(CDRV_ID id)
 
 const UART_Config* CDRV_get_uart_config_from_ch(uint8_t ch)
 {
-  CDRV_ID id;
+  uint8_t id;
   for (id = 0; id < CDRV_ID_MAX; id++)
   {
-    const UART_Config* config = CDRV_get_uart_config(id);
+    const UART_Config* config = CDRV_get_uart_config((CDRV_ID)id);
     if (config == NULL) continue;
     if (config->ch == ch) return config;
   }
@@ -59,10 +59,10 @@ const I2C_Config* CDRV_get_i2c_config(CDRV_ID id)
 
 const I2C_Config* CDRV_get_i2c_config_from_ch(uint8_t ch)
 {
-  CDRV_ID id;
+  uint8_t id;
   for (id = 0; id < CDRV_ID_MAX; id++)
   {
-    const I2C_Config* config = CDRV_get_i2c_config(id);
+    const I2C_Config* config = CDRV_get_i2c_config((CDRV_ID)id);
     if (config == NULL) continue;
     if (config->ch == ch) return config;
   }
@@ -86,10 +86,10 @@ const SPI_Config* CDRV_get_spi_config(CDRV_ID id)
 
 const SPI_Config* CDRV_get_spi_config_from_comm_ch(uint8_t comm_ch)
 {
-  CDRV_ID id;
+  uint8_t id;
   for (id = 0; id < CDRV_ID_MAX; id++)
   {
-    const SPI_Config* config = CDRV_get_spi_config(id);
+    const SPI_Config* config = CDRV_get_spi_config((CDRV_ID)id);
     if (config == NULL) continue;
     if (config->comm_ch == comm_ch) return config;
   }
@@ -113,10 +113,10 @@ const CCSDS_Config* CDRV_get_ccsds_config(CDRV_ID id)
 
 const CCSDS_Config* CDRV_get_ccsds_config_from_ch(uint8_t ch)
 {
-  CDRV_ID id;
+  uint8_t id;
   for (id = 0; id < CDRV_ID_MAX; id++)
   {
-    const CCSDS_Config* config = CDRV_get_ccsds_config(id);
+    const CCSDS_Config* config = CDRV_get_ccsds_config((CDRV_ID)id);
     if (config == NULL) continue;
     if (config->ch == ch) return config;
   }
