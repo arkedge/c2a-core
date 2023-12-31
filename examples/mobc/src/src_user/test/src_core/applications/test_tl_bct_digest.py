@@ -7,8 +7,10 @@ import binascii
 import pprint
 
 import isslwings as wings
+import  time
 import pytest
 
+import  time
 ROOT_PATH = "../../../"
 sys.path.append(os.path.dirname(__file__) + "/" + ROOT_PATH + "utils")
 import c2a_enum_utils
@@ -146,7 +148,7 @@ def test_tl_digest():
     check_tl_digest(tlm, digest)
 
     # === 復数ページのためにさらに TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE だけ登録 ===
-    offset_ti = 1000
+    offset_ti += 1000
     for i in range(TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE):
         cmd = init_cmd_class(
             offset_ti + i, c2a_enum.Cmd_CODE_NOP, c2a_enum.CCP_EXEC_TYPE_TL_FROM_GS, [], []
@@ -317,8 +319,10 @@ def calc_cmd_digest(cmd):
 def register_cmd(cmd):
     if cmd.exec_type == c2a_enum.CCP_EXEC_TYPE_TL_FROM_GS:
         wings.util.send_tl_cmd(ope, cmd.ti, cmd.id, tuple(cmd.params))
+        time.sleep(0.2)
     elif cmd.exec_type == c2a_enum.CCP_EXEC_TYPE_BC:
         ope.send_bl_cmd(cmd.ti, cmd.id, tuple(cmd.params))
+        time.sleep(0.2)
     else:
         assert False
 

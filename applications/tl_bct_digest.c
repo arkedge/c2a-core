@@ -96,7 +96,12 @@ CCP_CmdRet Cmd_TL_BCT_DIGEST_TL(const CommonCmdPacket* packet)
     return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, 2);
   }
 
-  tl_digest->info.digests_num = tl_digest->info.queued - tl_digest->info.page_no * TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE;
+  tl_digest->info.digests_num = tl_digest->info.queued % TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE;
+  if (tl_digest->info.queued >= TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE * (tl_digest->info.page_no + 1))
+  {
+    tl_digest->info.digests_num = TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE;
+  }
+
   for (i = 0; i < tl_digest->info.digests_num; i++)
   {
     if (node == NULL)
