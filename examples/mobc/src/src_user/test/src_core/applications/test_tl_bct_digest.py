@@ -194,6 +194,60 @@ def test_tl_digest():
     )
 
 
+@pytest.mark.real
+@pytest.mark.sils
+def test_bct_digest():
+    # === 空 ===
+    clear_bct(c2a_enum.BC_TEST_USE_PYTEST)
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_TL_BCT_DIGEST_BCT,
+        (c2a_enum.BC_TEST_USE_PYTEST,),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    tlm = get_bct_digest_tlm()
+    assert tlm["BCT_DIGEST.INFO.BLOCK"] == c2a_enum.BC_TEST_USE_PYTEST
+    assert tlm["BCT_DIGEST.INFO.STATUS"] == "NO_CCP"
+    assert tlm["BCT_DIGEST.INFO.DIGESTS_NUM"] == 0
+    assert tlm["BCT_DIGEST.SH.TI"] - tlm["BCT_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] > 0
+    assert tlm["BCT_DIGEST.SH.TI"] - tlm["BCT_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] < 100
+    check_bct_digest(tlm, [])
+
+    # === 2 つ登録 ===
+    digest_num = 2
+    digest = []
+    offset_ti = 0
+    cmd = init_cmd_class(
+        offset_ti,
+        c2a_enum.Cmd_CODE_TG_FORWARD_AS_RT_TLM,
+        c2a_enum.CCP_EXEC_TYPE_BC,
+        [0x1234, 0x56],
+        [2, 1],
+    )
+    digest.append(cmd.digest)
+    register_cmd(cmd)
+
+    cmd = init_cmd_class(
+        offset_ti + 1, c2a_enum.Cmd_CODE_NOP, c2a_enum.CCP_EXEC_TYPE_BC, [], []
+    )
+    digest.append(cmd.digest)
+    register_cmd(cmd)
+
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_TL_BCT_DIGEST_TL,
+        (c2a_enum.BC_TEST_USE_PYTEST,),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    tlm = get_bct_digest_tlm()
+    assert tlm["BCT_DIGEST.INFO.BLOCK"] == c2a_enum.BC_TEST_USE_PYTEST
+    assert tlm["BCT_DIGEST.INFO.STATUS"] == "OK"
+    assert tlm["BCT_DIGEST.INFO.DIGESTS_NUM"] == digest_num
+    assert tlm["BCT_DIGEST.SH.TI"] - tlm["BCT_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] > 0
+    assert tlm["BCT_DIGEST.SH.TI"] - tlm["BCT_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] < 100
+    check_bct_digest(tlm, digest)
+
+
 def check_tl_digest(tlm, digests):
     for i in range(TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE):
         if i < len(digests):
