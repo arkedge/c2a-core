@@ -60,7 +60,7 @@
   - `examples/mobc/src/src_user/test/src_core/applications/test_tl_bct_digest.py` を user 側の test にも加える．
     - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える．
 - [#269](https://github.com/arkedge/c2a-core/pull/269):
-  - user 側の include path を，`/settings/component_driver_super/` から `/settings/component_driver/` に一斉置換する．
+  - user 側の include path を，`/component_driver_super/` から `/component_driver/` に一斉置換する．
 
 
 ## v4.1.0 (2023-12-11)
