@@ -84,13 +84,13 @@ def test_tl_bct_digest_cmd_assertion():
     assert tlm["BCT_DIGEST.INFO.DIGESTS_NUM"] == 0
     assert tlm["BCT_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] == 0
     assert tlm["BCT_DIGEST.INFO.TIME_STAMP.STEP"] == 0
-    check_tl_digest(tlm, [])
+    check_bct_digest(tlm, [])
 
 
 @pytest.mark.real
 @pytest.mark.sils
 def test_tl_digest():
-    # 空
+    # === 空 ===
     clear_tl0()
     assert "SUC" == wings.util.send_rt_cmd_and_confirm(
         ope,
@@ -108,7 +108,7 @@ def test_tl_digest():
     assert tlm["TL_DIGEST.SH.TI"] - tlm["TL_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] < 100
     check_tl_digest(tlm, [])
 
-    # 2 つ登録
+    # === 2 つ登録 ===
     digest_num = 2
     digest = []
     offset_ti = tlm["TL_DIGEST.SH.TI"] + 10000
@@ -139,10 +139,56 @@ def test_tl_digest():
     assert tlm["TL_DIGEST.INFO.PAGE_NO"] == 0
     assert tlm["TL_DIGEST.INFO.STATUS"] == "OK"
     assert tlm["TL_DIGEST.INFO.DIGESTS_NUM"] == digest_num
-    assert tlm["TL_DIGEST.INFO.QUEUED"] == 0
+    assert tlm["TL_DIGEST.INFO.QUEUED"] == digest_num
     assert tlm["TL_DIGEST.SH.TI"] - tlm["TL_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] > 0
     assert tlm["TL_DIGEST.SH.TI"] - tlm["TL_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] < 100
-    check_tl_digest(digest, [])
+    check_tl_digest(tlm, digest)
+
+    # === 復数ページのためにさらに TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE だけ登録 ===
+    offset_ti = 1000
+    for i in range(TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE):
+        cmd = init_cmd_class(
+            offset_ti + i, c2a_enum.Cmd_CODE_NOP, c2a_enum.CCP_EXEC_TYPE_TL_FROM_GS, [], []
+        )
+        digest.append(cmd.digest)
+        register_cmd(cmd)
+
+    # 1ページ目
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_TL_BCT_DIGEST_TL,
+        (c2a_enum.TLCD_ID_FROM_GS, 0),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    tlm = get_tl_digest_tlm()
+    assert tlm["TL_DIGEST.INFO.TL_ID"] == c2a_enum.TLCD_ID_FROM_GS
+    assert tlm["TL_DIGEST.INFO.PAGE_NO"] == 0
+    assert tlm["TL_DIGEST.INFO.STATUS"] == "OK"
+    assert tlm["TL_DIGEST.INFO.DIGESTS_NUM"] == TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE
+    assert tlm["TL_DIGEST.INFO.QUEUED"] == digest_num + TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE
+    assert tlm["TL_DIGEST.SH.TI"] - tlm["TL_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] > 0
+    assert tlm["TL_DIGEST.SH.TI"] - tlm["TL_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] < 100
+    check_tl_digest(tlm, digest[0:TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE])
+
+    # 2ページ目
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_TL_BCT_DIGEST_TL,
+        (c2a_enum.TLCD_ID_FROM_GS, 1),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    tlm = get_tl_digest_tlm()
+    assert tlm["TL_DIGEST.INFO.TL_ID"] == c2a_enum.TLCD_ID_FROM_GS
+    assert tlm["TL_DIGEST.INFO.PAGE_NO"] == 0
+    assert tlm["TL_DIGEST.INFO.STATUS"] == "OK"
+    assert tlm["TL_DIGEST.INFO.DIGESTS_NUM"] == digest_num
+    assert tlm["TL_DIGEST.INFO.QUEUED"] == digest_num + TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE
+    assert tlm["TL_DIGEST.SH.TI"] - tlm["TL_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] > 0
+    assert tlm["TL_DIGEST.SH.TI"] - tlm["TL_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] < 100
+    check_tl_digest(
+        tlm,
+        digest[TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE : TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE + digest_num],
+    )
 
 
 def check_tl_digest(tlm, digests):
@@ -151,6 +197,14 @@ def check_tl_digest(tlm, digests):
             assert digests[i] == int(tlm["TL_DIGEST.DIGESTS" + str(i)], 16)
         else:
             assert 0 == int(tlm["TL_DIGEST.DIGESTS" + str(i)], 16)
+
+
+def check_bct_digest(tlm, digests):
+    for i in range(BCT_MAX_CMD_NUM):
+        if i < len(digests):
+            assert digests[i] == int(tlm["BCT_DIGEST.DIGESTS" + str(i)], 16)
+        else:
+            assert 0 == int(tlm["BCT_DIGEST.DIGESTS" + str(i)], 16)
 
 
 def get_tl_digest_tlm():
