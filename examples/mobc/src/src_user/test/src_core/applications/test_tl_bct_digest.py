@@ -7,10 +7,9 @@ import binascii
 import pprint
 
 import isslwings as wings
-import  time
+import time
 import pytest
 
-import  time
 ROOT_PATH = "../../../"
 sys.path.append(os.path.dirname(__file__) + "/" + ROOT_PATH + "utils")
 import c2a_enum_utils
@@ -227,9 +226,7 @@ def test_bct_digest():
     digest.append(cmd.digest)
     register_cmd(cmd)
 
-    cmd = init_cmd_class(
-        offset_ti + 1, c2a_enum.Cmd_CODE_NOP, c2a_enum.CCP_EXEC_TYPE_BC, [], []
-    )
+    cmd = init_cmd_class(offset_ti + 1, c2a_enum.Cmd_CODE_NOP, c2a_enum.CCP_EXEC_TYPE_BC, [], [])
     digest.append(cmd.digest)
     register_cmd(cmd)
 
@@ -251,7 +248,7 @@ def test_bct_digest():
 def check_tl_digest(tlm, digests):
     for i in range(TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE):
         if i < len(digests):
-            print("check_tl_digest: " + hex(digests[i]), " : ",  tlm["TL_DIGEST.DIGESTS" + str(i)])
+            print("check_tl_digest: " + hex(digests[i]), " : ", tlm["TL_DIGEST.DIGESTS" + str(i)])
             assert digests[i] == int(tlm["TL_DIGEST.DIGESTS" + str(i)], 16)
         else:
             assert 0 == int(tlm["TL_DIGEST.DIGESTS" + str(i)], 16)
@@ -260,7 +257,7 @@ def check_tl_digest(tlm, digests):
 def check_bct_digest(tlm, digests):
     for i in range(BCT_MAX_CMD_NUM):
         if i < len(digests):
-            print("check_bct_digest: " + hex(digests[i]), " : ",  tlm["BCT_DIGEST.DIGESTS" + str(i)])
+            print("check_bct_digest: " + hex(digests[i]), " : ", tlm["BCT_DIGEST.DIGESTS" + str(i)])
             assert digests[i] == int(tlm["BCT_DIGEST.DIGESTS" + str(i)], 16)
         else:
             assert 0 == int(tlm["BCT_DIGEST.DIGESTS" + str(i)], 16)
