@@ -12,7 +12,8 @@
 #include "../system/time_manager/obc_time.h"
 #include "./timeline_command_dispatcher_id_define.h"
 
-#define TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE   (TL_TLM_PAGE_SIZE * 2)    //!< TL の digest のページサイズ
+#define TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE   (TL_TLM_PAGE_SIZE * 2)    /*!< TL の digest のページサイズ．
+                                                                           計算にはそれなりの時間がかかるので，テレメサイズだけでなく OBC の計算リソースと相談して決める． */
 // TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE の user オーバーライド（設定）
 #include <src_user/settings/applications/tl_bct_digest_params.h>
 
@@ -26,7 +27,8 @@ typedef enum
 {
   TL_BCT_DIGEST_STATUS_OK,         //!< 計算成功
   TL_BCT_DIGEST_STATUS_PARAM_ERR,  //!< パラメタエラー
-  TL_BCT_DIGEST_STATUS_NO_CCP      //!< digest を計算すべき CCP はなし
+  TL_BCT_DIGEST_STATUS_NO_CCP,     //!< digest を計算すべき CCP はなし
+  TL_BCT_DIGEST_STATUS_UNKNOWN     //!< 不明なエラー
 } TL_BCT_DIGEST_STATUS;
 
 /**

@@ -8,6 +8,7 @@
 #include <string.h>
 #include "../tlm_cmd/command_dispatcher_manager.h"
 #include "../system/time_manager/time_manager.h"
+#include "../library/crc.h"
 
 /**
  * @brief  App 初期化関数
@@ -16,9 +17,12 @@
  */
 static RESULT TL_BCT_DIGEST_init_(void);
 
-static RESULT TL_BCT_DIGEST_cdis_(const CommandDispatcher* cdis);
-static RESULT TL_BCT_DIGEST_bct_(void);
-
+/**
+ * @brief  CCP の digest を計算
+ * @param  ccp: digest を計算する CCP
+ * @return digest
+ */
+static uint16_t TL_BCT_DIGEST_calc_digest_(const CommonCmdPacket* ccp);
 
 static TlBctDigest tl_bct_digest_;
 const TlBctDigest* const tl_bct_digest = &tl_bct_digest_;
@@ -37,9 +41,19 @@ static RESULT TL_BCT_DIGEST_init_(void)
 }
 
 
+static uint16_t TL_BCT_DIGEST_calc_digest_(const CommonCmdPacket* ccp)
+{
+  // 念のため（外部の CCP を扱うので）
+  if (!(CCP_is_valid_packet(ccp)))
+  {
+    return 0;
+  }
+  return CRC_calc_crc_16_ccitt_left(0xffff, ccp->packet, CCP_get_packet_len(ccp), 0);
+}
+
+
 CCP_CmdRet Cmd_TL_BCT_DIGEST_TL(const CommonCmdPacket* packet)
 {
-  const PL_Node* node_head;
   const PL_Node* node;
   const PacketList* pl;
   uint16_t i;
@@ -49,6 +63,7 @@ CCP_CmdRet Cmd_TL_BCT_DIGEST_TL(const CommonCmdPacket* packet)
 
   // 計算結果をクリア
   memset(tl_digest->digests, 0x00, TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE * sizeof(uint16_t));
+  tl_digest->info.digests_num = 0;
 
   if (tl_digest->info.tl_id >= TLCD_ID_MAX)
   {
@@ -62,39 +77,56 @@ CCP_CmdRet Cmd_TL_BCT_DIGEST_TL(const CommonCmdPacket* packet)
   if (tl_digest->info.queued <= tl_digest->info.page_no * TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE)
   {
     tl_digest->info.status = TL_BCT_DIGEST_STATUS_NO_CCP;
-    tl_digest->info.digests_num = 0;
     tl_digest->info.time_stamp = TMGR_get_master_clock();
     // たまたま計算するものがないだけなので， CCP_EXEC_SUCCESS を返す
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
   }
 
   // 計算開始する node まで linked list をすすめる
-  node_head = PL_get_head(pl);
+  node = PL_get_head(pl);
 
-  // for (i = 0; i < cdis_dump->queue_idx; ++i)
-  // {
-  //   node = PL_get_next(node);
-  // }
-  // if (node == NULL)
-  // {
-  //   return RESULT_ERR;
-  // }
+  for (i = 0; i < tl_digest->info.page_no * TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE; ++i)
+  {
+    node = PL_get_next(node);
+  }
+  if (node == NULL)
+  {
+    // ありえないエラー
+    tl_digest->info.status = TL_BCT_DIGEST_STATUS_UNKNOWN;
+    return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, 2);
+  }
 
+  tl_digest->info.digests_num = tl_digest->info.queued - tl_digest->info.page_no * TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE;
+  for (i = 0; i < tl_digest->info.digests_num; i++)
+  {
+    if (node == NULL)
+    {
+      // ありえないエラー
+      tl_digest->info.status = TL_BCT_DIGEST_STATUS_UNKNOWN;
+      return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, 3);
+    }
 
-  // TODO
+    // digest 計算
+    tl_digest->digests[i] = TL_BCT_DIGEST_calc_digest_((const CommonCmdPacket*)PL_get_packet(node));
 
+    node = PL_get_next(node);
+  }
 
+  tl_digest->info.status = TL_BCT_DIGEST_STATUS_OK;
+  tl_digest->info.time_stamp = TMGR_get_master_clock();
   return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
 }
 
 
 CCP_CmdRet Cmd_TL_BCT_DIGEST_BCT(const CommonCmdPacket* packet)
 {
+  uint8_t i;
   TL_BCT_DIGEST_BctDigest* bct_digest = &tl_bct_digest_.bct;
   bct_digest->info.block = (bct_id_t)CCP_get_param_from_packet(packet, 0, uint16_t);
 
   // 計算結果をクリア
   memset(bct_digest->digests, 0x00, BCT_MAX_CMD_NUM * sizeof(uint16_t));
+  bct_digest->info.digests_num = 0;
 
   if (bct_digest->info.block >= BCT_MAX_BLOCKS)
   {
@@ -103,11 +135,27 @@ CCP_CmdRet Cmd_TL_BCT_DIGEST_BCT(const CommonCmdPacket* packet)
   }
 
   bct_digest->info.digests_num = BCT_get_bc_length(bct_digest->info.block);
+  for (i = 0; i < bct_digest->info.digests_num; i++)
+  {
+    const CommonCmdPacket* ccp;
+    BCT_Pos pos;
+    if (BCT_make_pos(&pos, bct_digest->info.block, i) != BCT_SUCCESS)
+    {
+      // ありえないエラー
+      bct_digest->info.status = TL_BCT_DIGEST_STATUS_UNKNOWN;
+      return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, 2);
+    }
 
+    // BCT cmd 取得
+    // NOTE: const BCT_CmdData → const CommonCmdPacket* への cast
+    ccp = (const CommonCmdPacket*)BCT_get_bc_cmd_data(&pos);
 
-  // TODO
+    // digest 計算
+    bct_digest->digests[i] = TL_BCT_DIGEST_calc_digest_(ccp);
+  }
 
-
+  bct_digest->info.status = TL_BCT_DIGEST_STATUS_OK;
+  bct_digest->info.time_stamp = TMGR_get_master_clock();
   return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
 }
 

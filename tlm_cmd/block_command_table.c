@@ -113,6 +113,7 @@ static void BC_set_bc_length_default_(const bct_id_t block, uint8_t length)
 
 static BCT_CmdData* BCT_get_bc_cmd_data_(const BCT_Pos* pos)
 {
+  // これは内部用なので 非 cosnt で返す
   return block_command_table_.func[pos->block].get_bc_cmd_data_(pos);
 }
 
@@ -128,7 +129,7 @@ static void BCT_set_bc_length_(const bct_id_t block, uint8_t length)
 
 const BCT_CmdData* BCT_get_bc_cmd_data(const BCT_Pos* pos)
 {
-  return block_command_table_.func[pos->block].get_bc_cmd_data_(pos);
+  return BCT_get_bc_cmd_data_(pos);
 }
 
 uint8_t BCT_get_bc_length(const bct_id_t block)
