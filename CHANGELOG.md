@@ -46,7 +46,7 @@
     - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDIS.csv`
     - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CA.csv`
 - [#263](https://github.com/arkedge/c2a-core/pull/263): user 側でのコードレベルでの対応は不要
-  - CcpDump App を追加したため，この App を利用する user は，`applications/ccp_dump.c` をビルド対象に加える．
+  - CcpDump App を追加したため，この App を利用する user は，`applications/ccp_dump.c` をビルド対象に加え，App 登録する．
   - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CCP_DUMP.csv` を user 側の tlm db に追加し，コード生成をする．
   - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CCP_DUMP_*` コマンドを user 側の cmd db に追加し，コード生成をする．
   - `examples/mobc/src/src_user/test/src_core/applications/test_ccp_dump.py` を user 側の test にも加える．
