@@ -14,6 +14,7 @@
 #include <src_core/applications/memory_dump.h>
 #include <src_core/applications/ccp_dump.h>
 #include <src_core/applications/telemetry_manager.h>
+#include <src_core/applications/tl_bct_digest.h>
 #include <src_core/applications/utility_command.h>
 #include <src_core/applications/utility_counter.h>
 #include <src_core/applications/divided_cmd_utility.h>

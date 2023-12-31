@@ -1,7 +1,7 @@
 #pragma section REPRO
 /**
  * @file
- * @brief TL や BCT のコマンド列の digset を計算し， GS と FSW での整合性を確認するための App
+ * @brief TL や BCT のコマンド列の digest を計算し， GS と FSW での整合性を確認するための App
  */
 #include "tl_bct_digest.h"
 #include <stddef.h>

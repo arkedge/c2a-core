@@ -28,6 +28,7 @@ void AR_load_initial_settings(void)
   add_application_(AR_EVENT_UTILITY, EVENT_UTIL_create_app);
   add_application_(AR_MEM_DUMP, MEM_create_app);
   add_application_(AR_CCP_DUMP, CCP_DUMP_create_app);
+  add_application_(AR_TL_BCT_DIGEST, TL_BCT_DIGEST_create_app);
   add_application_(AR_TELEMETRY_MANAGER, TLM_MGR_create_app);
   add_application_(AR_DIVIDED_CMD_UTILITY, DCU_create_app);
   add_application_(AR_UTILITY_CMD, UTIL_CMD_create_app);
