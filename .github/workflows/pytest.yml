@@ -15,7 +15,7 @@ jobs:
         include:
           # mobc pytest matrix(splitted because super-slow)
           - c2a_user: mobc
-            test_dir: src_core/applications/test_tl_bct_digest.py
+            test_dir: src_core/applications
           - c2a_user: mobc
             test_dir: src_core/system/event_manager/test_event_handler.py
           - c2a_user: mobc
