@@ -84,7 +84,6 @@ CCP_CmdRet Cmd_TL_BCT_DIGEST_TL(const CommonCmdPacket* packet)
 
   // 計算開始する node まで linked list をすすめる
   node = PL_get_head(pl);
-
   for (i = 0; i < tl_digest->info.page_no * TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE; ++i)
   {
     node = PL_get_next(node);
@@ -96,6 +95,7 @@ CCP_CmdRet Cmd_TL_BCT_DIGEST_TL(const CommonCmdPacket* packet)
     return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, 2);
   }
 
+  // 計算する CCP 数を計算
   tl_digest->info.digests_num = tl_digest->info.queued % TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE;
   if (tl_digest->info.queued >= TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE * (tl_digest->info.page_no + 1))
   {
