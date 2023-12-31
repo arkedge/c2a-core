@@ -82,7 +82,7 @@ static RESULT CCP_DUMP_cdis_(const CommandDispatcher* cdis)
   const PacketList* pl = cdis->pl;
   const PL_Node* node = PL_get_head(pl);
   const CommonCmdPacket* ccp;
-  uint8_t i;
+  uint16_t i;
 
   for (i = 0; i < cdis_dump->queue_idx; ++i)
   {
