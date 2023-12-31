@@ -206,7 +206,7 @@ def test_bct_digest():
     )
     tlm = get_bct_digest_tlm()
     assert tlm["BCT_DIGEST.INFO.BLOCK"] == c2a_enum.BC_TEST_USE_PYTEST
-    assert tlm["BCT_DIGEST.INFO.STATUS"] == "NO_CCP"
+    assert tlm["BCT_DIGEST.INFO.STATUS"] == "OK"
     assert tlm["BCT_DIGEST.INFO.DIGESTS_NUM"] == 0
     assert tlm["BCT_DIGEST.SH.TI"] - tlm["BCT_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] > 0
     assert tlm["BCT_DIGEST.SH.TI"] - tlm["BCT_DIGEST.INFO.TIME_STAMP.TOTAL_CYCLE"] < 100
@@ -232,7 +232,7 @@ def test_bct_digest():
 
     assert "SUC" == wings.util.send_rt_cmd_and_confirm(
         ope,
-        c2a_enum.Cmd_CODE_TL_BCT_DIGEST_TL,
+        c2a_enum.Cmd_CODE_TL_BCT_DIGEST_BCT,
         (c2a_enum.BC_TEST_USE_PYTEST,),
         c2a_enum.Tlm_CODE_HK,
     )
