@@ -4,6 +4,7 @@
 import os
 import sys
 import binascii
+import pprint
 
 import isslwings as wings
 import pytest
@@ -179,7 +180,7 @@ def test_tl_digest():
     )
     tlm = get_tl_digest_tlm()
     assert tlm["TL_DIGEST.INFO.TL_ID"] == c2a_enum.TLCD_ID_FROM_GS
-    assert tlm["TL_DIGEST.INFO.PAGE_NO"] == 0
+    assert tlm["TL_DIGEST.INFO.PAGE_NO"] == 1
     assert tlm["TL_DIGEST.INFO.STATUS"] == "OK"
     assert tlm["TL_DIGEST.INFO.DIGESTS_NUM"] == digest_num
     assert tlm["TL_DIGEST.INFO.QUEUED"] == digest_num + TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE
@@ -194,6 +195,7 @@ def test_tl_digest():
 def check_tl_digest(tlm, digests):
     for i in range(TL_BCT_DIGEST_TL_DIGEST_PAGE_SIZE):
         if i < len(digests):
+            print("check_tl_digest: " + hex(digests[i]), " : ",  tlm["TL_DIGEST.DIGESTS" + str(i)])
             assert digests[i] == int(tlm["TL_DIGEST.DIGESTS" + str(i)], 16)
         else:
             assert 0 == int(tlm["TL_DIGEST.DIGESTS" + str(i)], 16)
@@ -202,6 +204,7 @@ def check_tl_digest(tlm, digests):
 def check_bct_digest(tlm, digests):
     for i in range(BCT_MAX_CMD_NUM):
         if i < len(digests):
+            print("check_bct_digest: " + hex(digests[i]), " : ",  tlm["BCT_DIGEST.DIGESTS" + str(i)])
             assert digests[i] == int(tlm["BCT_DIGEST.DIGESTS" + str(i)], 16)
         else:
             assert 0 == int(tlm["BCT_DIGEST.DIGESTS" + str(i)], 16)
@@ -256,10 +259,10 @@ def calc_cmd_digest(cmd):
     tmp += 0
     # Packet Type
     tmp += 1
-    tmp << 1
+    tmp <<= 1
     # Sec. HDR Flag
     tmp += 1
-    tmp << 11
+    tmp <<= 11
     # APID
     tmp += c2a_enum.APID_CMD_TO_MOBC
 
@@ -269,7 +272,7 @@ def calc_cmd_digest(cmd):
     tmp = 0
     # Sequence Flags
     tmp += 3
-    tmp << 2
+    tmp <<= 14
     # Sequence Count
     tmp += 0
 
@@ -307,6 +310,7 @@ def calc_cmd_digest(cmd):
         if cmd.param_size[i] >= 1:
             data.append(cmd.params[i] % 256)
 
+    pprint.pprint(data)
     return binascii.crc_hqx(bytes(data), 0xFFFF)
 
 
