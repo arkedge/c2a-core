@@ -61,6 +61,7 @@
     - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える．
 - [#269](https://github.com/arkedge/c2a-core/pull/269):
   - user 側の include path を，`/component_driver_super/` から `/component_driver/` に一斉置換する．
+  - `src_user/settings/CMakeLists.txt` の `/component_driver_super/` が含まれる path を `/component_driver/` に一斉置換する．
 
 
 ## v4.1.0 (2023-12-11)
