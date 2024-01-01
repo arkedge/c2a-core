@@ -56,9 +56,9 @@ int I2C_init(void* my_i2c_v);
 
 /**
  * @brief I2cConfig構造体にて指定されたchからデータを受信します
- * @param[in] my_i2c_v    : 対象とするI2cConfig構造体へのポインタ
- * @param[in] data_v      : 受信データ格納先へのポインタ
- * @param[in] buffer_size : 受信データ格納先のバッファサイズ、I2C通信による受信データ長よりも長い必要がある
+ * @param[in]  my_i2c_v    : 対象とするI2cConfig構造体へのポインタ
+ * @param[out] data_v      : 受信データ格納先へのポインタ
+ * @param[in]  buffer_size : 受信データ格納先のバッファサイズ、I2C通信による受信データ長よりも長い必要がある
  * @retval 0: 受信データなし
  * @retval 正: 受信データバイト数
  * @retval 負: エラー. I2C_ERR_CODE に従う
