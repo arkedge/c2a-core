@@ -8,6 +8,7 @@ import os
 import sys
 import time
 import binascii
+import pprint
 
 import isslwings as wings
 import pytest
@@ -44,9 +45,10 @@ def test_cdrv_util_hal_tx():
 
     # Cmd_CDRV_UTIL_HAL_TX で送信
     sub_obc_gsc_cnt = tlm_SUB_HK[SUB_OBC + "_HK.OBC.GS_CMD.COUNTER"]
-    param = [CDRV_ID_AOBC] + get_subobc_nop_cmd_eb90_frame()
+    raw_param = get_subobc_nop_cmd_eb90_frame()
+    raw_param = '0x' + ''.join(f'{byte:02x}' for byte in raw_param)
     assert "SUC" == wings.util.send_rt_cmd_and_confirm(
-        ope, mobc_c2a_enum.Cmd_CODE_CDRV_UTIL_HAL_TX, tuple(param), mobc_c2a_enum.Tlm_CODE_HK
+        ope, mobc_c2a_enum.Cmd_CODE_CDRV_UTIL_HAL_TX, (CDRV_ID_AOBC, raw_param), mobc_c2a_enum.Tlm_CODE_HK
     )
     tlm_SUB_HK = get_sub_obc_hk_tlm()
     assert tlm_SUB_HK[SUB_OBC + "_HK.OBC.GS_CMD.LAST_EXEC.ID"] == USE_DUMMY_CMD_ID
@@ -124,6 +126,8 @@ def get_subobc_nop_cmd_eb90_frame():
 
     frame.append(0xC5)
     frame.append(0x79)
+
+    pprint.pprint(frame)
 
     return frame
 
