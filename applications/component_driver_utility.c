@@ -18,6 +18,24 @@
 static RESULT CDRV_UTIL_init_(void);
 
 /**
+ * @brief  CDS_hal_rx の wrapper
+ * @param[in]  p_super:     ComponentDriverSuper 構造体へのポインタ
+ * @param[out] buffer:      受信データ格納先へのポインタ
+ * @param[in]  buffer_size: 受信データ格納先のデータサイズ
+ * @return CCP_CmdRet
+ */
+static CCP_CmdRet CDRV_UTIL_hal_rx_(ComponentDriverSuper* cds, uint8_t* buffer, int buffer_size);
+
+/**
+ * @brief  CDS_hal_tx の wrapper
+ * @param[in]  p_super:     ComponentDriverSuper 構造体へのポインタ
+ * @param[in]  buffer:      送信データ格納先へのポインタ
+ * @param[in]  buffer_size: 送信データサイズ
+ * @return CCP_CmdRet
+ */
+static CCP_CmdRet CDRV_UTIL_hal_tx_(ComponentDriverSuper* cds, const uint8_t* data, int data_size);
+
+/**
  * @brief  hal handler の返り値 int を uint32_t に "適当に" 変換する
  * @note   hal handler の返り値は user 依存なので，あくまで適当な変換であることに注意する
  * @param  hal_handler_ret: hal handler の返り値
