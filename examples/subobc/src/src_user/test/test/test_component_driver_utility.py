@@ -55,7 +55,7 @@ def test_cdrv_util_hal_tx():
 
 
 def get_sub_obc_hk_tlm():
-    time.sleep(1)
+    time.sleep(2)
     tlm_SUB_HK = wings.util.forward_and_receive_tlm(
         ope, mobc_c2a_enum.Cmd_CODE_TG_FORWARD_TLM, TLM_APID_SUB_OBC, Tlm_CODE_SUB_OBC_HK
     )
