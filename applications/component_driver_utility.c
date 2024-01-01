@@ -268,7 +268,6 @@ CCP_CmdRet Cmd_CDRV_UTIL_HAL_REOPEN(const CommonCmdPacket* packet)
 }
 
 
-
 CCP_CmdRet Cmd_CDRV_UTIL_HAL_RX_TO_RAM(const CommonCmdPacket* packet)
 {
   ComponentDriverSuper* cds;
