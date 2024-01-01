@@ -34,7 +34,7 @@ static RESULT CDRV_UTIL_init_(void)
 }
 
 
-CCP_CmdRet Cmd_CDRV_UTIL_CDSC_ENABLE_MONITOR_FOR_TLM_DISRUPTION(const CommonCmdPacket* packet)
+CCP_CmdRet Cmd_CDRV_UTIL_CDSC_ENABLE_MONITOR_FOR_RX_DISRUPTION(const CommonCmdPacket* packet)
 {
   ComponentDriverSuper* cds;
   CDRV_ID cdrv_id = (CDRV_ID)CCP_get_param_from_packet(packet, 0, uint8_t);
@@ -50,7 +50,7 @@ CCP_CmdRet Cmd_CDRV_UTIL_CDSC_ENABLE_MONITOR_FOR_TLM_DISRUPTION(const CommonCmdP
 }
 
 
-CCP_CmdRet Cmd_CDRV_UTIL_CDSC_DISABLE_MONITOR_FOR_TLM_DISRUPTION(const CommonCmdPacket* packet)
+CCP_CmdRet Cmd_CDRV_UTIL_CDSC_DISABLE_MONITOR_FOR_RX_DISRUPTION(const CommonCmdPacket* packet)
 {
   ComponentDriverSuper* cds;
   CDRV_ID cdrv_id = (CDRV_ID)CCP_get_param_from_packet(packet, 0, uint8_t);

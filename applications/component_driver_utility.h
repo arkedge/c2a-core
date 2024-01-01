@@ -28,8 +28,8 @@ extern const ComponentDriverUtility* const component_driver_utility;
 AppInfo CDRV_UTIL_create_app(void);
 
 
-CCP_CmdRet Cmd_CDRV_UTIL_CDSC_ENABLE_MONITOR_FOR_TLM_DISRUPTION(const CommonCmdPacket* packet);
-CCP_CmdRet Cmd_CDRV_UTIL_CDSC_DISABLE_MONITOR_FOR_TLM_DISRUPTION(const CommonCmdPacket* packet);
+CCP_CmdRet Cmd_CDRV_UTIL_CDSC_ENABLE_MONITOR_FOR_RX_DISRUPTION(const CommonCmdPacket* packet);
+CCP_CmdRet Cmd_CDRV_UTIL_CDSC_DISABLE_MONITOR_FOR_RX_DISRUPTION(const CommonCmdPacket* packet);
 CCP_CmdRet Cmd_CDRV_UTIL_CDSC_SET_TIME_THRESHOLD_FOR_RX_DISRUPTION(const CommonCmdPacket* packet);
 
 CCP_CmdRet Cmd_CDRV_UTIL_CDSSC_ENABLE(const CommonCmdPacket* packet);

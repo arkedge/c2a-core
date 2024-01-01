@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: 9ca043940fe69f2ae005374c1d34781b
+ *          CSV files MD5: 080c9a327ce9999a29f411605eec903b
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -30,6 +30,7 @@ static TF_TLM_FUNC_ACK Tlm_CDIS_(uint8_t* packet, uint16_t* len, uint16_t max_le
 static TF_TLM_FUNC_ACK Tlm_TF_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_CA_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_DCU_(uint8_t* packet, uint16_t* len, uint16_t max_len);
+static TF_TLM_FUNC_ACK Tlm_CDRV_UTIL_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_MM_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_AM_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_APP_TIME_(uint8_t* packet, uint16_t* len, uint16_t max_len);
@@ -60,6 +61,7 @@ void TF_load_tlm_table(TF_TlmInfo tlm_table[TF_MAX_TLMS])
   tlm_table[Tlm_CODE_TF].tlm_func = Tlm_TF_;
   tlm_table[Tlm_CODE_CA].tlm_func = Tlm_CA_;
   tlm_table[Tlm_CODE_DCU].tlm_func = Tlm_DCU_;
+  tlm_table[Tlm_CODE_CDRV_UTIL].tlm_func = Tlm_CDRV_UTIL_;
   tlm_table[Tlm_CODE_MM].tlm_func = Tlm_MM_;
   tlm_table[Tlm_CODE_AM].tlm_func = Tlm_AM_;
   tlm_table[Tlm_CODE_APP_TIME].tlm_func = Tlm_APP_TIME_;
@@ -1896,6 +1898,75 @@ static TF_TLM_FUNC_ACK Tlm_DCU_(uint8_t* packet, uint16_t* len, uint16_t max_len
 #endif
 
   *len = 202;
+  return TF_TLM_FUNC_ACK_SUCCESS;
+}
+
+static TF_TLM_FUNC_ACK Tlm_CDRV_UTIL_(uint8_t* packet, uint16_t* len, uint16_t max_len)
+{
+  const ComponentDriverSuper* cds = CDRV_get_cds(component_driver_utility->tlm.cdrv_id);
+  const CDS_StreamConfig* cdssc = CDRV_get_cdssc(component_driver_utility->tlm.cdrv_id, component_driver_utility->tlm.cds_stream);
+
+  if (166 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+
+#ifndef BUILD_SETTINGS_FAST_BUILD
+  TF_copy_u8(&packet[26], component_driver_utility->tlm.cdrv_id);
+  TF_copy_u8(&packet[27], component_driver_utility->tlm.cds_stream);
+  TF_copy_u8(&packet[28], (cds == NULL) ? 0 : (uint8_t)cds->hal_handler_id);
+  TF_copy_u16(&packet[29], (cds == NULL) ? 0 : cds->config.settings.hal_rx_buffer_size_);
+  TF_copy_u8(&packet[31], (cds == NULL) ? 0 : cds->config.settings.should_monitor_for_rx_disruption_);
+  TF_copy_u32(&packet[32], (cds == NULL) ? 0 : cds->config.settings.time_threshold_for_rx_disruption_);
+  TF_copy_i32(&packet[36], (cds == NULL) ? 0 : cds->config.info.rec_status_.ret_from_hal_rx);
+  TF_copy_u8(&packet[40], (cds == NULL) ? 0 : (uint8_t)cds->config.info.rec_status_.rx_disruption_status);
+  TF_copy_u32(&packet[41], (cds == NULL) ? 0 : cds->config.info.rx_count_);
+  TF_copy_u32(&packet[45], (cds == NULL) ? 0 : cds->config.info.rx_call_count_);
+  TF_copy_u32(&packet[49], (cds == NULL) ? 0 : cds->config.info.rx_time_.total_cycle);
+  TF_copy_u32(&packet[53], (cds == NULL) ? 0 : cds->config.info.rx_time_.step);
+  TF_copy_u8(&packet[57], (cdssc == NULL) ? 0 : cdssc->settings.is_enabled_);
+  TF_copy_u8(&packet[58], (cdssc == NULL) ? 0 : cdssc->settings.is_strict_frame_search_);
+  TF_copy_u32(&packet[59], (cdssc == NULL) ? 0 : (uint32_t)cdssc->settings.tx_frame_);
+  TF_copy_u16(&packet[63], (cdssc == NULL) ? 0 : cdssc->settings.tx_frame_size_);
+  TF_copy_i16(&packet[65], (cdssc == NULL) ? 0 : cdssc->settings.tx_frame_buffer_size_);
+  TF_copy_u32(&packet[67], (cdssc == NULL) ? 0 : (uint32_t)cdssc->settings.rx_buffer_->buffer);
+  TF_copy_u16(&packet[71], (cdssc == NULL) ? 0 : cdssc->settings.rx_buffer_->capacity);
+  TF_copy_u16(&packet[73], (cdssc == NULL) ? 0 : cdssc->settings.rx_buffer_->size);
+  TF_copy_u16(&packet[75], (cdssc == NULL) ? 0 : cdssc->settings.rx_buffer_->pos_of_frame_head_candidate);
+  TF_copy_u16(&packet[77], (cdssc == NULL) ? 0 : cdssc->settings.rx_buffer_->confirmed_frame_len);
+  TF_copy_u8(&packet[79], (cdssc == NULL) ? 0 : cdssc->settings.rx_buffer_->is_frame_fixed);
+  TF_copy_u16(&packet[80], (cdssc == NULL) ? 0 : cdssc->settings.rx_buffer_->pos_of_last_rec);
+  TF_copy_u32(&packet[82], (cdssc == NULL) ? 0 : (uint32_t)dssc->settings.rx_header_);
+  TF_copy_u16(&packet[86], (cdssc == NULL) ? 0 : cdssc->settings.rx_header_size_);
+  TF_copy_u32(&packet[88], (cdssc == NULL) ? 0 : (uint32_t)cdssc->settings.rx_footer_);
+  TF_copy_u16(&packet[92], (cdssc == NULL) ? 0 : cdssc->settings.rx_footer_size_);
+  TF_copy_i16(&packet[94], (cdssc == NULL) ? 0 : cdssc->settings.rx_frame_size_);
+  TF_copy_u16(&packet[96], (cdssc == NULL) ? 0 : cdssc->settings.max_rx_frame_size_);
+  TF_copy_i16(&packet[98], (cdssc == NULL) ? 0 : cdssc->settings.rx_framelength_pos_);
+  TF_copy_u16(&packet[100], (cdssc == NULL) ? 0 : cdssc->settings.rx_framelength_type_size_);
+  TF_copy_u16(&packet[102], (cdssc == NULL) ? 0 : cdssc->settings.rx_framelength_offset_);
+  TF_copy_u8(&packet[104], (cdssc == NULL) ? 0 : (uint8_t)cdssc->settings.rx_framelength_endian_);
+  TF_copy_u8(&packet[105], (cdssc == NULL) ? 0 : cdssc->settings.should_monitor_for_tlm_disruption_);
+  TF_copy_u32(&packet[106], (cdssc == NULL) ? 0 : cdssc->settings.time_threshold_for_tlm_disruption_);
+  TF_copy_u8(&packet[110], (cdssc == NULL) ? 0 : (uint8_t)cdssc->info.send_status_.status_code);
+  TF_copy_i32(&packet[111], (cdssc == NULL) ? 0 : cdssc->info.send_status_.ret_from_hal_tx);
+  TF_copy_u8(&packet[115], (cdssc == NULL) ? 0 : (uint8_t)cdssc->info.rec_status_.status_code);
+  TF_copy_u16(&packet[116], (cdssc == NULL) ? 0 : cdssc->info.rec_status_.fixed_frame_len);
+  TF_copy_u8(&packet[118], (cdssc == NULL) ? 0 : (uint8_t)cdssc->info.rec_status_.tlm_disruption_status);
+  TF_copy_u32(&packet[119], (cdssc == NULL) ? 0 : cdssc->info.rec_status_.count_of_carry_over_failures);
+  TF_copy_u32(&packet[123], (cdssc == NULL) ? 0 : cdssc->info.general_cmd_tx_count_);
+  TF_copy_u32(&packet[127], (cdssc == NULL) ? 0 : cdssc->info.req_tlm_cmd_tx_count_);
+  TF_copy_u32(&packet[131], (cdssc == NULL) ? 0 : cdssc->info.req_tlm_cmd_tx_count_after_last_tx_);
+  TF_copy_u32(&packet[135], (cdssc == NULL) ? 0 : cdssc->info.rx_frame_fix_count_);
+  TF_copy_u32(&packet[139], (cdssc == NULL) ? 0 : cdssc->info.general_cmd_tx_time_.total_cycle);
+  TF_copy_u32(&packet[143], (cdssc == NULL) ? 0 : cdssc->info.general_cmd_tx_time_.step);
+  TF_copy_u32(&packet[147], (cdssc == NULL) ? 0 : cdssc->info.req_tlm_cmd_tx_time_.total_cycle);
+  TF_copy_u32(&packet[151], (cdssc == NULL) ? 0 : cdssc->info.req_tlm_cmd_tx_time_.step);
+  TF_copy_u32(&packet[155], (cdssc == NULL) ? 0 : cdssc->info.rx_frame_fix_time_.total_cycle);
+  TF_copy_u32(&packet[159], (cdssc == NULL) ? 0 : cdssc->info.rx_frame_fix_time_.step);
+  TF_copy_u8(&packet[163], (cdssc == NULL) ? 0 : (uint8_t)cdssc->info.ret_from_data_analyzer_);
+  TF_copy_u8(&packet[164], (cdssc == NULL) ? 0 : cdssc->internal.is_validation_needed_for_send_);
+  TF_copy_u8(&packet[165], (cdssc == NULL) ? 0 : cdssc->internal.is_validation_needed_for_rec_);
+#endif
+
+  *len = 166;
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 
