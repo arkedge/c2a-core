@@ -11,7 +11,7 @@ import time
 import isslwings as wings
 import pytest
 
-ROOT_PATH = "../../../"
+ROOT_PATH = "../../"
 sys.path.append(os.path.dirname(__file__) + "/" + ROOT_PATH + "utils")
 import c2a_enum_utils
 import wings_utils
