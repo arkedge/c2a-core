@@ -298,7 +298,7 @@ CCP_CmdRet Cmd_CDRV_UTIL_HAL_TX_FROM_RAM(const CommonCmdPacket* packet)
   cds = (ComponentDriverSuper*)CDRV_get_cds(cdrv_id);    // const_cast
   if (cds == NULL) return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_CONTEXT);
 
-  return CDRV_UTIL_hal_tx_(cds,(uint8_t*)data_adr, data_size);
+  return CDRV_UTIL_hal_tx_(cds, (uint8_t*)data_adr, data_size);
 }
 
 
