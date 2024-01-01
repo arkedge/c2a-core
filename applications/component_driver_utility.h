@@ -25,7 +25,7 @@ typedef struct
     uint8_t rx_buffer[CDRV_UTIL_HAX_RX_BUFFER_SIZE];  //!< Cmd_CDRV_UTIL_HAL_RX で受信するデータのバッファ
     struct
     {
-      uint8_t* data;                  //!< データアクセスのポインタ
+      const uint8_t* data;            //!< データアクセスのポインタ
       int32_t  data_size;             //!< data size
       int32_t  ret_from_hal_handler;  //!< hal handler の返り値
     } last;   //!< 最後の hal 操作の情報

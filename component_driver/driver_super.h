@@ -570,7 +570,7 @@ int CDS_hal_rx(ComponentDriverSuper* p_super, void* buffer, int buffer_size);
  * @param[in]  buffer_size: 送信データサイズ
  * @return HAL_tx_handlers の返り値
  */
-int CDS_hal_tx(ComponentDriverSuper* p_super, void* data, int data_size);
+int CDS_hal_tx(ComponentDriverSuper* p_super, const void* data, int data_size);
 
 /**
  * @brief  HAL を直接操作して reopen

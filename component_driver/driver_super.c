@@ -556,9 +556,10 @@ int CDS_hal_rx(ComponentDriverSuper* p_super, void* buffer, int buffer_size)
 }
 
 
-int CDS_hal_tx(ComponentDriverSuper* p_super, void* data, int data_size)
+int CDS_hal_tx(ComponentDriverSuper* p_super, const void* data, int data_size)
 {
-  return (*HAL_tx_handlers[p_super->hal_handler_id])(p_super->hal_config, data, data_size);
+  // FIXME; HAL_tx_handlers の第二引数は const つけるべき
+  return (*HAL_tx_handlers[p_super->hal_handler_id])(p_super->hal_config, (void*)data, data_size);    // FIXME: const_cast
 }
 
 
