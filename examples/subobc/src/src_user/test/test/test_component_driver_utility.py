@@ -62,16 +62,6 @@ def get_sub_obc_hk_tlm():
     return tlm_SUB_HK
 
 
-def check_gsc_ack(exec_cmd, sts):
-    wait_for_sub_obc_hk_tlm()
-    assert g_mobc_gsc_cnt == get_mobc_gsc_counter()
-    tlm_SUB_HK = get_sub_obc_hk_tlm()
-    assert tlm_SUB_HK[SUB_OBC + "_HK.OBC.GS_CMD.COUNTER"] == g_sub_obc_gsc_cnt
-    assert tlm_SUB_HK[SUB_OBC + "_HK.OBC.RT_CMD.COUNTER"] == g_sub_obc_rtc_cnt
-    assert tlm_SUB_HK[SUB_OBC + "_HK.OBC.GS_CMD.LAST_EXEC.ID"] == exec_cmd
-    assert tlm_SUB_HK[SUB_OBC + "_HK.OBC.GS_CMD.LAST_EXEC.EXEC_STS"] == sts
-
-
 def get_subobc_nop_cmd_eb90_frame():
     packet_len = 15
 
