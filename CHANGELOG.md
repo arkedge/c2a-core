@@ -11,6 +11,7 @@
 - [#263](https://github.com/arkedge/c2a-core/pull/263): CDIS や BCT に保存された CCP をダンプする App を追加
 - [#268](https://github.com/arkedge/c2a-core/pull/268): GS と FSW 側での同期のために，BCT, TL のダイジェスト (CRC) を下ろせるようにする App の追加
 - [#237](https://github.com/arkedge/c2a-core/pull/237): 任意の Component Driver に対して，任意バイト列の送受信と HAL init, reopen Cmd を提供する
+- [#274](https://github.com/arkedge/c2a-core/pull/274): `TMGR_get_master_mode_cycle_in_msec` などの in_sec 版を実装
 
 ### Breaking Changes
 
