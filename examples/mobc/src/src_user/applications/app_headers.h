@@ -18,7 +18,7 @@
 #include <src_core/applications/utility_command.h>
 #include <src_core/applications/utility_counter.h>
 #include <src_core/applications/divided_cmd_utility.h>
-#include <src_core/applications/component_driver_util.h>
+#include <src_core/applications/component_driver_utility.h>
 
 // Core TestApp
 #include <src_core/applications/test_app/test_ccp_util.h>
