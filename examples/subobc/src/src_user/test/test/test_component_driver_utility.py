@@ -83,7 +83,7 @@ def get_subobc_nop_cmd_eb90_frame():
     tmp += 1
     tmp <<= 11
     # APID
-    tmp += c2a_enum.APID_CMD_TO_MOBC
+    tmp += c2a_enum.APID_CMD_TO_AOBC
 
     frame.append(tmp // 256)
     frame.append(tmp % 256)
