@@ -69,7 +69,7 @@ def get_subobc_nop_cmd_eb90_frame():
 
     frame = []
     frame.append(0xEB)
-    frame.append(0x09)
+    frame.append(0x90)
     frame.append(packet_len // 256)
     frame.append(packet_len % 256)
 
