@@ -1,7 +1,7 @@
 /**
  * @file
  * @brief 様々な Component Driver に統一的な機能を提供する
- * @note  Cmd としての機能は， ComponentDriverUtil App で提供される
+ * @note  Cmd としての機能は， ComponentDriverUtility App で提供される
  */
 #ifndef COMPONENT_DRIVER_H_
 #define COMPONENT_DRIVER_H_
