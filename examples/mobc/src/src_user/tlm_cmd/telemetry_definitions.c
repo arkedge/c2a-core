@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: 080c9a327ce9999a29f411605eec903b
+ *          CSV files MD5: bd47c02652577a625eef9aa1646ff621
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -1933,7 +1933,7 @@ static TF_TLM_FUNC_ACK Tlm_CDRV_UTIL_(uint8_t* packet, uint16_t* len, uint16_t m
   TF_copy_u16(&packet[77], (cdssc == NULL) ? 0 : cdssc->settings.rx_buffer_->confirmed_frame_len);
   TF_copy_u8(&packet[79], (cdssc == NULL) ? 0 : cdssc->settings.rx_buffer_->is_frame_fixed);
   TF_copy_u16(&packet[80], (cdssc == NULL) ? 0 : cdssc->settings.rx_buffer_->pos_of_last_rec);
-  TF_copy_u32(&packet[82], (cdssc == NULL) ? 0 : (uint32_t)dssc->settings.rx_header_);
+  TF_copy_u32(&packet[82], (cdssc == NULL) ? 0 : (uint32_t)cdssc->settings.rx_header_);
   TF_copy_u16(&packet[86], (cdssc == NULL) ? 0 : cdssc->settings.rx_header_size_);
   TF_copy_u32(&packet[88], (cdssc == NULL) ? 0 : (uint32_t)cdssc->settings.rx_footer_);
   TF_copy_u16(&packet[92], (cdssc == NULL) ? 0 : cdssc->settings.rx_footer_size_);
