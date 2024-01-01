@@ -28,6 +28,7 @@
 - [#267](https://github.com/arkedge/c2a-core/pull/267): core tlm の tlm id の再採番 (CDIS, CA)
 - [#271](https://github.com/arkedge/c2a-core/pull/271): CDS: ComponentDriverSuper の整理（コードに変更なし）
 - [#272](https://github.com/arkedge/c2a-core/pull/272): `sync_with_mobc_example.bat` のメンテ
+- [#275](https://github.com/arkedge/c2a-core/pull/275): AM tlm で不用意にサイズを切り詰めたキャストを緩和し，初期化時間や実行時間の長い App の時間を正確に知れるように
 
 ### Documentation
 
@@ -83,6 +84,11 @@
     - `examples/mobc/src/src_user/settings/applications/component_driver_utility_params.h` を参考に， user 側でもこのコードを配置する．
   - pytest の追加
     - もし， user 側で subobc ありの pytest を扱っている場合， `examples/subobc/src/src_user/test/test/applications/test_component_driver_utility.py` を user 側の test にも加える．
+- [#275](https://github.com/arkedge/c2a-core/pull/275): user 側でのコードレベルでの対応は不要
+  - AM tlm でのキャストを緩和し， 1 tlm でダウンリンクできる個数を現象させた．同様の修正を user にも当てる場合には，いかが必要となる．
+    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_AM.csv` を user 側の AM tlm に上書きし， tlm db を再度読み込み，再出力することで更新する．
+    - `examples/mobc/src/src_user/settings/system/app_manager_params.h` を参考に，特に `AM_TLM_PAGE_SIZE`, `AM_TLM_PAGE_SIZE` に注意して `app_manager_params.h` を更新する（tlm と整合が取れるように）．
+
 
 ## v4.1.0 (2023-12-11)
 
