@@ -32,7 +32,7 @@ jobs:
             test_dir: src_core/tlm_cmd
           # 2nd_obc_user
           - c2a_user: subobc
-            test_dir: test/test_component_driver_utility.py
+            test_dir: .
 
     runs-on: ubuntu-latest
 
