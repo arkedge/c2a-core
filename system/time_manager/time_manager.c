@@ -116,6 +116,16 @@ uint32_t TMGR_get_master_mode_cycle_in_msec(void)
   return OBCT_get_mode_cycle_in_msec(&time_manager_.master_clock_);
 }
 
+double TMGR_get_master_total_cycle_in_sec(void)
+{
+  return OBCT_get_total_cycle_in_sec(&time_manager_.master_clock_);
+}
+
+double TMGR_get_master_mode_cycle_in_sec(void)
+{
+  return OBCT_get_mode_cycle_in_sec(&time_manager_.master_clock_);
+}
+
 static TMGR_ACK TMGR_set_master_total_cycle_(cycle_t total_cycle)
 {
   if (total_cycle >= OBCT_MAX_CYCLE) return TMGR_ACK_PARAM_ERR;
