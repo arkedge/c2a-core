@@ -9,8 +9,8 @@
 #undef AM_TLM_PAGE_MAX
 #undef AM_MAX_APPS
 
-#define AM_TLM_PAGE_SIZE (32)
-#define AM_TLM_PAGE_MAX (4)
+#define AM_TLM_PAGE_SIZE (16)
+#define AM_TLM_PAGE_MAX (8)
 #define AM_MAX_APPS (AM_TLM_PAGE_SIZE * AM_TLM_PAGE_MAX)
 
 #endif

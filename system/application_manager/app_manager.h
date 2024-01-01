@@ -10,8 +10,8 @@
 #include "app_info.h"
 #include "../../tlm_cmd/common_cmd_packet.h"
 
-#define AM_TLM_PAGE_SIZE (32)                               //!< AMのAppInfoテーブルの1テレメトリパケット(=1ページ)に格納されるAppInfo数（ページネーション用）
-#define AM_TLM_PAGE_MAX (4)                                 //!< AMのAppInfoテーブルのページ数（ページネーション用）
+#define AM_TLM_PAGE_SIZE (16)                               //!< AMのAppInfoテーブルの1テレメトリパケット(=1ページ)に格納されるAppInfo数（ページネーション用）
+#define AM_TLM_PAGE_MAX (8)                                 //!< AMのAppInfoテーブルのページ数（ページネーション用）
 #define AM_MAX_APPS (AM_TLM_PAGE_SIZE * AM_TLM_PAGE_MAX)    //!< 登録できる最大AppInfo数，これは登録できる最大アプリ数と等しい
 
 #include <src_user/settings/system/app_manager_params.h>
