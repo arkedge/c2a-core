@@ -49,6 +49,14 @@ void CDIS_MGR_initialize(void);
  */
 RESULT CDIS_MGR_register_cdis(const CommandDispatcher* cdis, uint8_t* idx);
 
+/**
+ * @brief  CommandDispatcherManager から CDIS を取得
+ * @param[in] cdis: 登録した idx
+ * @retval CommandDispatcher: 取得した CIDS
+ * @retval NULL: 取得に失敗
+ */
+const CommandDispatcher* CDIS_MGR_get_cdis(uint8_t idx);
+
 CCP_CmdRet Cmd_CDIS_MGR_SET_IDX_FOR_TLM(const CommonCmdPacket* packet);
 
 #endif

@@ -12,6 +12,7 @@
 #include <src_core/applications/timeline_command_dispatcher.h>
 #include <src_core/applications/event_utility.h>
 #include <src_core/applications/memory_dump.h>
+#include <src_core/applications/ccp_dump.h>
 #include <src_core/applications/telemetry_manager.h>
 #include <src_core/applications/utility_command.h>
 #include <src_core/applications/utility_counter.h>

@@ -70,6 +70,16 @@ static RESULT CDIS_MGR_find_cdis_(const CommandDispatcher* cdis, uint8_t* idx)
 }
 
 
+const CommandDispatcher* CDIS_MGR_get_cdis(uint8_t idx)
+{
+  if (idx >= command_dispatcher_manager_.num_of_cdis)
+  {
+    return NULL;
+  }
+  return command_dispatcher_manager_.cdises[idx];
+}
+
+
 CCP_CmdRet Cmd_CDIS_MGR_SET_IDX_FOR_TLM(const CommonCmdPacket* packet)
 {
   uint8_t idx_for_tlm = CCP_get_param_from_packet(packet, 0, uint8_t);

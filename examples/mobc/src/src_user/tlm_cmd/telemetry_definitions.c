@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: 903952abd04748c0297c0da0e1358f56
+ *          CSV files MD5: 29c51517462dc79a211298f9acebc3f8
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -23,6 +23,7 @@ static TF_TLM_FUNC_ACK Tlm_TLM_MGR1_(uint8_t* packet, uint16_t* len, uint16_t ma
 static TF_TLM_FUNC_ACK Tlm_TLM_MGR2_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_TL_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_BL_(uint8_t* packet, uint16_t* len, uint16_t max_len);
+static TF_TLM_FUNC_ACK Tlm_CCP_DUMP_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_CDIS_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_TF_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_CA_(uint8_t* packet, uint16_t* len, uint16_t max_len);
@@ -50,6 +51,7 @@ void TF_load_tlm_table(TF_TlmInfo tlm_table[TF_MAX_TLMS])
   tlm_table[Tlm_CODE_TLM_MGR2].tlm_func = Tlm_TLM_MGR2_;
   tlm_table[Tlm_CODE_TL].tlm_func = Tlm_TL_;
   tlm_table[Tlm_CODE_BL].tlm_func = Tlm_BL_;
+  tlm_table[Tlm_CODE_CCP_DUMP].tlm_func = Tlm_CCP_DUMP_;
   tlm_table[Tlm_CODE_CDIS].tlm_func = Tlm_CDIS_;
   tlm_table[Tlm_CODE_TF].tlm_func = Tlm_TF_;
   tlm_table[Tlm_CODE_CA].tlm_func = Tlm_CA_;
@@ -1245,6 +1247,146 @@ static TF_TLM_FUNC_ACK Tlm_BL_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 #endif
 
   *len = 426;
+  return TF_TLM_FUNC_ACK_SUCCESS;
+}
+
+static TF_TLM_FUNC_ACK Tlm_CCP_DUMP_(uint8_t* packet, uint16_t* len, uint16_t max_len)
+{
+  if (170 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+
+#ifndef BUILD_SETTINGS_FAST_BUILD
+  TF_copy_u8(&packet[26], ccp_dump->info.cdis.cdis_idx);
+  TF_copy_u16(&packet[27], ccp_dump->info.cdis.queue_idx);
+  TF_copy_u16(&packet[29], ccp_dump->info.bct.pos.block);
+  TF_copy_u8(&packet[31], ccp_dump->info.bct.pos.cmd);
+  TF_copy_u8(&packet[32], ccp_dump->dump.target);
+  TF_copy_u8(&packet[33], ccp_dump->dump.status);
+  TF_copy_u32(&packet[34], ccp_dump->dump.dump_time.total_cycle);
+  TF_copy_u32(&packet[38], ccp_dump->dump.dump_time.step);
+  TF_copy_u16(&packet[42], (uint16_t)(ccp_dump->dump.ccp.packet[0] << 8 | ccp_dump->dump.ccp.packet[1]));
+  TF_copy_u16(&packet[44], (uint16_t)(ccp_dump->dump.ccp.packet[2] << 8 | ccp_dump->dump.ccp.packet[3]));
+  TF_copy_u16(&packet[46], (uint16_t)(ccp_dump->dump.ccp.packet[4] << 8 | ccp_dump->dump.ccp.packet[5]));
+  TF_copy_u8(&packet[48], ccp_dump->dump.ccp.packet[6]);
+  TF_copy_u8(&packet[49], ccp_dump->dump.ccp.packet[7]);
+  TF_copy_u16(&packet[50], (uint16_t)(ccp_dump->dump.ccp.packet[8] << 8 | ccp_dump->dump.ccp.packet[9]));
+  TF_copy_u8(&packet[52], ccp_dump->dump.ccp.packet[10]);
+  TF_copy_u32(&packet[53], (uint32_t)(ccp_dump->dump.ccp.packet[11] << 24 | ccp_dump->dump.ccp.packet[12] << 16 | ccp_dump->dump.ccp.packet[13] << 8 | ccp_dump->dump.ccp.packet[14]));
+  TF_copy_u8(&packet[57], ccp_dump->dump.ccp.packet[15]);
+  TF_copy_u8(&packet[58], ccp_dump->dump.ccp.packet[16]);
+  TF_copy_u8(&packet[59], ccp_dump->dump.ccp.packet[17]);
+  TF_copy_u8(&packet[60], ccp_dump->dump.ccp.packet[18]);
+  TF_copy_u8(&packet[61], ccp_dump->dump.ccp.packet[19]);
+  TF_copy_u8(&packet[62], ccp_dump->dump.ccp.packet[20]);
+  TF_copy_u8(&packet[63], ccp_dump->dump.ccp.packet[21]);
+  TF_copy_u8(&packet[64], ccp_dump->dump.ccp.packet[22]);
+  TF_copy_u8(&packet[65], ccp_dump->dump.ccp.packet[23]);
+  TF_copy_u8(&packet[66], ccp_dump->dump.ccp.packet[24]);
+  TF_copy_u8(&packet[67], ccp_dump->dump.ccp.packet[25]);
+  TF_copy_u8(&packet[68], ccp_dump->dump.ccp.packet[26]);
+  TF_copy_u8(&packet[69], ccp_dump->dump.ccp.packet[27]);
+  TF_copy_u8(&packet[70], ccp_dump->dump.ccp.packet[28]);
+  TF_copy_u8(&packet[71], ccp_dump->dump.ccp.packet[29]);
+  TF_copy_u8(&packet[72], ccp_dump->dump.ccp.packet[30]);
+  TF_copy_u8(&packet[73], ccp_dump->dump.ccp.packet[31]);
+  TF_copy_u8(&packet[74], ccp_dump->dump.ccp.packet[32]);
+  TF_copy_u8(&packet[75], ccp_dump->dump.ccp.packet[33]);
+  TF_copy_u8(&packet[76], ccp_dump->dump.ccp.packet[34]);
+  TF_copy_u8(&packet[77], ccp_dump->dump.ccp.packet[35]);
+  TF_copy_u8(&packet[78], ccp_dump->dump.ccp.packet[36]);
+  TF_copy_u8(&packet[79], ccp_dump->dump.ccp.packet[37]);
+  TF_copy_u8(&packet[80], ccp_dump->dump.ccp.packet[38]);
+  TF_copy_u8(&packet[81], ccp_dump->dump.ccp.packet[39]);
+  TF_copy_u8(&packet[82], ccp_dump->dump.ccp.packet[40]);
+  TF_copy_u8(&packet[83], ccp_dump->dump.ccp.packet[41]);
+  TF_copy_u8(&packet[84], ccp_dump->dump.ccp.packet[42]);
+  TF_copy_u8(&packet[85], ccp_dump->dump.ccp.packet[43]);
+  TF_copy_u8(&packet[86], ccp_dump->dump.ccp.packet[44]);
+  TF_copy_u8(&packet[87], ccp_dump->dump.ccp.packet[45]);
+  TF_copy_u8(&packet[88], ccp_dump->dump.ccp.packet[46]);
+  TF_copy_u8(&packet[89], ccp_dump->dump.ccp.packet[47]);
+  TF_copy_u8(&packet[90], ccp_dump->dump.ccp.packet[48]);
+  TF_copy_u8(&packet[91], ccp_dump->dump.ccp.packet[49]);
+  TF_copy_u8(&packet[92], ccp_dump->dump.ccp.packet[50]);
+  TF_copy_u8(&packet[93], ccp_dump->dump.ccp.packet[51]);
+  TF_copy_u8(&packet[94], ccp_dump->dump.ccp.packet[52]);
+  TF_copy_u8(&packet[95], ccp_dump->dump.ccp.packet[53]);
+  TF_copy_u8(&packet[96], ccp_dump->dump.ccp.packet[54]);
+  TF_copy_u8(&packet[97], ccp_dump->dump.ccp.packet[55]);
+  TF_copy_u8(&packet[98], ccp_dump->dump.ccp.packet[56]);
+  TF_copy_u8(&packet[99], ccp_dump->dump.ccp.packet[57]);
+  TF_copy_u8(&packet[100], ccp_dump->dump.ccp.packet[58]);
+  TF_copy_u8(&packet[101], ccp_dump->dump.ccp.packet[59]);
+  TF_copy_u8(&packet[102], ccp_dump->dump.ccp.packet[60]);
+  TF_copy_u8(&packet[103], ccp_dump->dump.ccp.packet[61]);
+  TF_copy_u8(&packet[104], ccp_dump->dump.ccp.packet[62]);
+  TF_copy_u8(&packet[105], ccp_dump->dump.ccp.packet[63]);
+  TF_copy_u8(&packet[106], ccp_dump->dump.ccp.packet[64]);
+  TF_copy_u8(&packet[107], ccp_dump->dump.ccp.packet[65]);
+  TF_copy_u8(&packet[108], ccp_dump->dump.ccp.packet[66]);
+  TF_copy_u8(&packet[109], ccp_dump->dump.ccp.packet[67]);
+  TF_copy_u8(&packet[110], ccp_dump->dump.ccp.packet[68]);
+  TF_copy_u8(&packet[111], ccp_dump->dump.ccp.packet[69]);
+  TF_copy_u8(&packet[112], ccp_dump->dump.ccp.packet[70]);
+  TF_copy_u8(&packet[113], ccp_dump->dump.ccp.packet[71]);
+  TF_copy_u8(&packet[114], ccp_dump->dump.ccp.packet[72]);
+  TF_copy_u8(&packet[115], ccp_dump->dump.ccp.packet[73]);
+  TF_copy_u8(&packet[116], ccp_dump->dump.ccp.packet[74]);
+  TF_copy_u8(&packet[117], ccp_dump->dump.ccp.packet[75]);
+  TF_copy_u8(&packet[118], ccp_dump->dump.ccp.packet[76]);
+  TF_copy_u8(&packet[119], ccp_dump->dump.ccp.packet[77]);
+  TF_copy_u8(&packet[120], ccp_dump->dump.ccp.packet[78]);
+  TF_copy_u8(&packet[121], ccp_dump->dump.ccp.packet[79]);
+  TF_copy_u8(&packet[122], ccp_dump->dump.ccp.packet[80]);
+  TF_copy_u8(&packet[123], ccp_dump->dump.ccp.packet[81]);
+  TF_copy_u8(&packet[124], ccp_dump->dump.ccp.packet[82]);
+  TF_copy_u8(&packet[125], ccp_dump->dump.ccp.packet[83]);
+  TF_copy_u8(&packet[126], ccp_dump->dump.ccp.packet[84]);
+  TF_copy_u8(&packet[127], ccp_dump->dump.ccp.packet[85]);
+  TF_copy_u8(&packet[128], ccp_dump->dump.ccp.packet[86]);
+  TF_copy_u8(&packet[129], ccp_dump->dump.ccp.packet[87]);
+  TF_copy_u8(&packet[130], ccp_dump->dump.ccp.packet[88]);
+  TF_copy_u8(&packet[131], ccp_dump->dump.ccp.packet[89]);
+  TF_copy_u8(&packet[132], ccp_dump->dump.ccp.packet[90]);
+  TF_copy_u8(&packet[133], ccp_dump->dump.ccp.packet[91]);
+  TF_copy_u8(&packet[134], ccp_dump->dump.ccp.packet[92]);
+  TF_copy_u8(&packet[135], ccp_dump->dump.ccp.packet[93]);
+  TF_copy_u8(&packet[136], ccp_dump->dump.ccp.packet[94]);
+  TF_copy_u8(&packet[137], ccp_dump->dump.ccp.packet[95]);
+  TF_copy_u8(&packet[138], ccp_dump->dump.ccp.packet[96]);
+  TF_copy_u8(&packet[139], ccp_dump->dump.ccp.packet[97]);
+  TF_copy_u8(&packet[140], ccp_dump->dump.ccp.packet[98]);
+  TF_copy_u8(&packet[141], ccp_dump->dump.ccp.packet[99]);
+  TF_copy_u8(&packet[142], ccp_dump->dump.ccp.packet[100]);
+  TF_copy_u8(&packet[143], ccp_dump->dump.ccp.packet[101]);
+  TF_copy_u8(&packet[144], ccp_dump->dump.ccp.packet[102]);
+  TF_copy_u8(&packet[145], ccp_dump->dump.ccp.packet[103]);
+  TF_copy_u8(&packet[146], ccp_dump->dump.ccp.packet[104]);
+  TF_copy_u8(&packet[147], ccp_dump->dump.ccp.packet[105]);
+  TF_copy_u8(&packet[148], ccp_dump->dump.ccp.packet[106]);
+  TF_copy_u8(&packet[149], ccp_dump->dump.ccp.packet[107]);
+  TF_copy_u8(&packet[150], ccp_dump->dump.ccp.packet[108]);
+  TF_copy_u8(&packet[151], ccp_dump->dump.ccp.packet[109]);
+  TF_copy_u8(&packet[152], ccp_dump->dump.ccp.packet[110]);
+  TF_copy_u8(&packet[153], ccp_dump->dump.ccp.packet[111]);
+  TF_copy_u8(&packet[154], ccp_dump->dump.ccp.packet[112]);
+  TF_copy_u8(&packet[155], ccp_dump->dump.ccp.packet[113]);
+  TF_copy_u8(&packet[156], ccp_dump->dump.ccp.packet[114]);
+  TF_copy_u8(&packet[157], ccp_dump->dump.ccp.packet[115]);
+  TF_copy_u8(&packet[158], ccp_dump->dump.ccp.packet[116]);
+  TF_copy_u8(&packet[159], ccp_dump->dump.ccp.packet[117]);
+  TF_copy_u8(&packet[160], ccp_dump->dump.ccp.packet[118]);
+  TF_copy_u8(&packet[161], ccp_dump->dump.ccp.packet[119]);
+  TF_copy_u8(&packet[162], ccp_dump->dump.ccp.packet[120]);
+  TF_copy_u8(&packet[163], ccp_dump->dump.ccp.packet[121]);
+  TF_copy_u8(&packet[164], ccp_dump->dump.ccp.packet[122]);
+  TF_copy_u8(&packet[165], ccp_dump->dump.ccp.packet[123]);
+  TF_copy_u8(&packet[166], ccp_dump->dump.ccp.packet[124]);
+  TF_copy_u8(&packet[167], ccp_dump->dump.ccp.packet[125]);
+  TF_copy_u8(&packet[168], ccp_dump->dump.ccp.packet[126]);
+  TF_copy_u8(&packet[169], ccp_dump->dump.ccp.packet[127]);
+#endif
+
+  *len = 170;
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 

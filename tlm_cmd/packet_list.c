@@ -168,6 +168,12 @@ const PL_Node* PL_get_next(const PL_Node* node)
 }
 
 
+const void* PL_get_packet(const PL_Node* node)
+{
+  return (node != NULL) ? node->packet : NULL;
+}
+
+
 PL_ACK PL_push_front(PacketList* pl, const void* packet)
 {
   PL_Node* new_pl_node = PL_get_free_node_(pl);
