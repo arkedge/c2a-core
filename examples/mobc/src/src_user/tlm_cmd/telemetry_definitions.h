@@ -4,7 +4,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: fab1e97975ab6bc4824720ff3cc8d498
+ *          CSV files MD5: 903952abd04748c0297c0da0e1358f56
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -23,9 +23,9 @@ typedef enum
   Tlm_CODE_TLM_MGR2 = 0x19,
   Tlm_CODE_TL = 0x20,
   Tlm_CODE_BL = 0x21,
-  Tlm_CODE_CDIS = 0x24,
-  Tlm_CODE_CA = 0x25,
+  Tlm_CODE_CDIS = 0x25,
   Tlm_CODE_TF = 0x26,
+  Tlm_CODE_CA = 0x27,
   Tlm_CODE_DCU = 0x2a,
   Tlm_CODE_MM = 0x40,
   Tlm_CODE_AM = 0x45,

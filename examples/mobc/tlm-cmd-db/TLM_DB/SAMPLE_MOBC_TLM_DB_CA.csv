@@ -1,5 +1,5 @@
 ,Target,OBC,Local Var,,,,,,,,,,,,,,
-,PacketID,0x25,int offset = CA_TLM_PAGE_SIZE * (command_analyze->tlm_page_no);##,,,,,,,,,,,,,,
+,PacketID,0x27,int offset = CA_TLM_PAGE_SIZE * (command_analyze->tlm_page_no);##,,,,,,,,,,,,,,
 ,Enable/Disable,ENABLE,,,,,,,,,,,,,,,
 ,IsRestricted,FALSE,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,

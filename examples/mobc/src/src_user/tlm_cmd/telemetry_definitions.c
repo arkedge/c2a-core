@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: fab1e97975ab6bc4824720ff3cc8d498
+ *          CSV files MD5: 903952abd04748c0297c0da0e1358f56
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -24,8 +24,8 @@ static TF_TLM_FUNC_ACK Tlm_TLM_MGR2_(uint8_t* packet, uint16_t* len, uint16_t ma
 static TF_TLM_FUNC_ACK Tlm_TL_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_BL_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_CDIS_(uint8_t* packet, uint16_t* len, uint16_t max_len);
-static TF_TLM_FUNC_ACK Tlm_CA_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_TF_(uint8_t* packet, uint16_t* len, uint16_t max_len);
+static TF_TLM_FUNC_ACK Tlm_CA_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_DCU_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_MM_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_AM_(uint8_t* packet, uint16_t* len, uint16_t max_len);
@@ -51,8 +51,8 @@ void TF_load_tlm_table(TF_TlmInfo tlm_table[TF_MAX_TLMS])
   tlm_table[Tlm_CODE_TL].tlm_func = Tlm_TL_;
   tlm_table[Tlm_CODE_BL].tlm_func = Tlm_BL_;
   tlm_table[Tlm_CODE_CDIS].tlm_func = Tlm_CDIS_;
-  tlm_table[Tlm_CODE_CA].tlm_func = Tlm_CA_;
   tlm_table[Tlm_CODE_TF].tlm_func = Tlm_TF_;
+  tlm_table[Tlm_CODE_CA].tlm_func = Tlm_CA_;
   tlm_table[Tlm_CODE_DCU].tlm_func = Tlm_DCU_;
   tlm_table[Tlm_CODE_MM].tlm_func = Tlm_MM_;
   tlm_table[Tlm_CODE_AM].tlm_func = Tlm_AM_;
@@ -1295,6 +1295,85 @@ static TF_TLM_FUNC_ACK Tlm_CDIS_(uint8_t* packet, uint16_t* len, uint16_t max_le
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 
+static TF_TLM_FUNC_ACK Tlm_TF_(uint8_t* packet, uint16_t* len, uint16_t max_len)
+{
+  uint8_t page = telemetry_frame->tlm_page_no;
+  int offset = TF_TLM_PAGE_SIZE * (telemetry_frame->tlm_page_no);
+
+  if (283 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+
+#ifndef BUILD_SETTINGS_FAST_BUILD
+  TF_copy_u8(&packet[26], page);
+  TF_copy_u32(&packet[27], (uint32_t)(telemetry_frame->tlm_table[offset+0].tlm_func));
+  TF_copy_u32(&packet[31], (uint32_t)(telemetry_frame->tlm_table[offset+1].tlm_func));
+  TF_copy_u32(&packet[35], (uint32_t)(telemetry_frame->tlm_table[offset+2].tlm_func));
+  TF_copy_u32(&packet[39], (uint32_t)(telemetry_frame->tlm_table[offset+3].tlm_func));
+  TF_copy_u32(&packet[43], (uint32_t)(telemetry_frame->tlm_table[offset+4].tlm_func));
+  TF_copy_u32(&packet[47], (uint32_t)(telemetry_frame->tlm_table[offset+5].tlm_func));
+  TF_copy_u32(&packet[51], (uint32_t)(telemetry_frame->tlm_table[offset+6].tlm_func));
+  TF_copy_u32(&packet[55], (uint32_t)(telemetry_frame->tlm_table[offset+7].tlm_func));
+  TF_copy_u32(&packet[59], (uint32_t)(telemetry_frame->tlm_table[offset+8].tlm_func));
+  TF_copy_u32(&packet[63], (uint32_t)(telemetry_frame->tlm_table[offset+9].tlm_func));
+  TF_copy_u32(&packet[67], (uint32_t)(telemetry_frame->tlm_table[offset+10].tlm_func));
+  TF_copy_u32(&packet[71], (uint32_t)(telemetry_frame->tlm_table[offset+11].tlm_func));
+  TF_copy_u32(&packet[75], (uint32_t)(telemetry_frame->tlm_table[offset+12].tlm_func));
+  TF_copy_u32(&packet[79], (uint32_t)(telemetry_frame->tlm_table[offset+13].tlm_func));
+  TF_copy_u32(&packet[83], (uint32_t)(telemetry_frame->tlm_table[offset+14].tlm_func));
+  TF_copy_u32(&packet[87], (uint32_t)(telemetry_frame->tlm_table[offset+15].tlm_func));
+  TF_copy_u32(&packet[91], (uint32_t)(telemetry_frame->tlm_table[offset+16].tlm_func));
+  TF_copy_u32(&packet[95], (uint32_t)(telemetry_frame->tlm_table[offset+17].tlm_func));
+  TF_copy_u32(&packet[99], (uint32_t)(telemetry_frame->tlm_table[offset+18].tlm_func));
+  TF_copy_u32(&packet[103], (uint32_t)(telemetry_frame->tlm_table[offset+19].tlm_func));
+  TF_copy_u32(&packet[107], (uint32_t)(telemetry_frame->tlm_table[offset+20].tlm_func));
+  TF_copy_u32(&packet[111], (uint32_t)(telemetry_frame->tlm_table[offset+21].tlm_func));
+  TF_copy_u32(&packet[115], (uint32_t)(telemetry_frame->tlm_table[offset+22].tlm_func));
+  TF_copy_u32(&packet[119], (uint32_t)(telemetry_frame->tlm_table[offset+23].tlm_func));
+  TF_copy_u32(&packet[123], (uint32_t)(telemetry_frame->tlm_table[offset+24].tlm_func));
+  TF_copy_u32(&packet[127], (uint32_t)(telemetry_frame->tlm_table[offset+25].tlm_func));
+  TF_copy_u32(&packet[131], (uint32_t)(telemetry_frame->tlm_table[offset+26].tlm_func));
+  TF_copy_u32(&packet[135], (uint32_t)(telemetry_frame->tlm_table[offset+27].tlm_func));
+  TF_copy_u32(&packet[139], (uint32_t)(telemetry_frame->tlm_table[offset+28].tlm_func));
+  TF_copy_u32(&packet[143], (uint32_t)(telemetry_frame->tlm_table[offset+29].tlm_func));
+  TF_copy_u32(&packet[147], (uint32_t)(telemetry_frame->tlm_table[offset+30].tlm_func));
+  TF_copy_u32(&packet[151], (uint32_t)(telemetry_frame->tlm_table[offset+31].tlm_func));
+  TF_copy_u32(&packet[155], (uint32_t)(telemetry_frame->tlm_table[offset+32].tlm_func));
+  TF_copy_u32(&packet[159], (uint32_t)(telemetry_frame->tlm_table[offset+33].tlm_func));
+  TF_copy_u32(&packet[163], (uint32_t)(telemetry_frame->tlm_table[offset+34].tlm_func));
+  TF_copy_u32(&packet[167], (uint32_t)(telemetry_frame->tlm_table[offset+35].tlm_func));
+  TF_copy_u32(&packet[171], (uint32_t)(telemetry_frame->tlm_table[offset+36].tlm_func));
+  TF_copy_u32(&packet[175], (uint32_t)(telemetry_frame->tlm_table[offset+37].tlm_func));
+  TF_copy_u32(&packet[179], (uint32_t)(telemetry_frame->tlm_table[offset+38].tlm_func));
+  TF_copy_u32(&packet[183], (uint32_t)(telemetry_frame->tlm_table[offset+39].tlm_func));
+  TF_copy_u32(&packet[187], (uint32_t)(telemetry_frame->tlm_table[offset+40].tlm_func));
+  TF_copy_u32(&packet[191], (uint32_t)(telemetry_frame->tlm_table[offset+41].tlm_func));
+  TF_copy_u32(&packet[195], (uint32_t)(telemetry_frame->tlm_table[offset+42].tlm_func));
+  TF_copy_u32(&packet[199], (uint32_t)(telemetry_frame->tlm_table[offset+43].tlm_func));
+  TF_copy_u32(&packet[203], (uint32_t)(telemetry_frame->tlm_table[offset+44].tlm_func));
+  TF_copy_u32(&packet[207], (uint32_t)(telemetry_frame->tlm_table[offset+45].tlm_func));
+  TF_copy_u32(&packet[211], (uint32_t)(telemetry_frame->tlm_table[offset+46].tlm_func));
+  TF_copy_u32(&packet[215], (uint32_t)(telemetry_frame->tlm_table[offset+47].tlm_func));
+  TF_copy_u32(&packet[219], (uint32_t)(telemetry_frame->tlm_table[offset+48].tlm_func));
+  TF_copy_u32(&packet[223], (uint32_t)(telemetry_frame->tlm_table[offset+49].tlm_func));
+  TF_copy_u32(&packet[227], (uint32_t)(telemetry_frame->tlm_table[offset+50].tlm_func));
+  TF_copy_u32(&packet[231], (uint32_t)(telemetry_frame->tlm_table[offset+51].tlm_func));
+  TF_copy_u32(&packet[235], (uint32_t)(telemetry_frame->tlm_table[offset+52].tlm_func));
+  TF_copy_u32(&packet[239], (uint32_t)(telemetry_frame->tlm_table[offset+53].tlm_func));
+  TF_copy_u32(&packet[243], (uint32_t)(telemetry_frame->tlm_table[offset+54].tlm_func));
+  TF_copy_u32(&packet[247], (uint32_t)(telemetry_frame->tlm_table[offset+55].tlm_func));
+  TF_copy_u32(&packet[251], (uint32_t)(telemetry_frame->tlm_table[offset+56].tlm_func));
+  TF_copy_u32(&packet[255], (uint32_t)(telemetry_frame->tlm_table[offset+57].tlm_func));
+  TF_copy_u32(&packet[259], (uint32_t)(telemetry_frame->tlm_table[offset+58].tlm_func));
+  TF_copy_u32(&packet[263], (uint32_t)(telemetry_frame->tlm_table[offset+59].tlm_func));
+  TF_copy_u32(&packet[267], (uint32_t)(telemetry_frame->tlm_table[offset+60].tlm_func));
+  TF_copy_u32(&packet[271], (uint32_t)(telemetry_frame->tlm_table[offset+61].tlm_func));
+  TF_copy_u32(&packet[275], (uint32_t)(telemetry_frame->tlm_table[offset+62].tlm_func));
+  TF_copy_u32(&packet[279], (uint32_t)(telemetry_frame->tlm_table[offset+63].tlm_func));
+#endif
+
+  *len = 283;
+  return TF_TLM_FUNC_ACK_SUCCESS;
+}
+
 static TF_TLM_FUNC_ACK Tlm_CA_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 {
   int offset = CA_TLM_PAGE_SIZE * (command_analyze->tlm_page_no);
@@ -1434,85 +1513,6 @@ static TF_TLM_FUNC_ACK Tlm_CA_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 #endif
 
   *len = 251;
-  return TF_TLM_FUNC_ACK_SUCCESS;
-}
-
-static TF_TLM_FUNC_ACK Tlm_TF_(uint8_t* packet, uint16_t* len, uint16_t max_len)
-{
-  uint8_t page = telemetry_frame->tlm_page_no;
-  int offset = TF_TLM_PAGE_SIZE * (telemetry_frame->tlm_page_no);
-
-  if (283 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
-
-#ifndef BUILD_SETTINGS_FAST_BUILD
-  TF_copy_u8(&packet[26], page);
-  TF_copy_u32(&packet[27], (uint32_t)(telemetry_frame->tlm_table[offset+0].tlm_func));
-  TF_copy_u32(&packet[31], (uint32_t)(telemetry_frame->tlm_table[offset+1].tlm_func));
-  TF_copy_u32(&packet[35], (uint32_t)(telemetry_frame->tlm_table[offset+2].tlm_func));
-  TF_copy_u32(&packet[39], (uint32_t)(telemetry_frame->tlm_table[offset+3].tlm_func));
-  TF_copy_u32(&packet[43], (uint32_t)(telemetry_frame->tlm_table[offset+4].tlm_func));
-  TF_copy_u32(&packet[47], (uint32_t)(telemetry_frame->tlm_table[offset+5].tlm_func));
-  TF_copy_u32(&packet[51], (uint32_t)(telemetry_frame->tlm_table[offset+6].tlm_func));
-  TF_copy_u32(&packet[55], (uint32_t)(telemetry_frame->tlm_table[offset+7].tlm_func));
-  TF_copy_u32(&packet[59], (uint32_t)(telemetry_frame->tlm_table[offset+8].tlm_func));
-  TF_copy_u32(&packet[63], (uint32_t)(telemetry_frame->tlm_table[offset+9].tlm_func));
-  TF_copy_u32(&packet[67], (uint32_t)(telemetry_frame->tlm_table[offset+10].tlm_func));
-  TF_copy_u32(&packet[71], (uint32_t)(telemetry_frame->tlm_table[offset+11].tlm_func));
-  TF_copy_u32(&packet[75], (uint32_t)(telemetry_frame->tlm_table[offset+12].tlm_func));
-  TF_copy_u32(&packet[79], (uint32_t)(telemetry_frame->tlm_table[offset+13].tlm_func));
-  TF_copy_u32(&packet[83], (uint32_t)(telemetry_frame->tlm_table[offset+14].tlm_func));
-  TF_copy_u32(&packet[87], (uint32_t)(telemetry_frame->tlm_table[offset+15].tlm_func));
-  TF_copy_u32(&packet[91], (uint32_t)(telemetry_frame->tlm_table[offset+16].tlm_func));
-  TF_copy_u32(&packet[95], (uint32_t)(telemetry_frame->tlm_table[offset+17].tlm_func));
-  TF_copy_u32(&packet[99], (uint32_t)(telemetry_frame->tlm_table[offset+18].tlm_func));
-  TF_copy_u32(&packet[103], (uint32_t)(telemetry_frame->tlm_table[offset+19].tlm_func));
-  TF_copy_u32(&packet[107], (uint32_t)(telemetry_frame->tlm_table[offset+20].tlm_func));
-  TF_copy_u32(&packet[111], (uint32_t)(telemetry_frame->tlm_table[offset+21].tlm_func));
-  TF_copy_u32(&packet[115], (uint32_t)(telemetry_frame->tlm_table[offset+22].tlm_func));
-  TF_copy_u32(&packet[119], (uint32_t)(telemetry_frame->tlm_table[offset+23].tlm_func));
-  TF_copy_u32(&packet[123], (uint32_t)(telemetry_frame->tlm_table[offset+24].tlm_func));
-  TF_copy_u32(&packet[127], (uint32_t)(telemetry_frame->tlm_table[offset+25].tlm_func));
-  TF_copy_u32(&packet[131], (uint32_t)(telemetry_frame->tlm_table[offset+26].tlm_func));
-  TF_copy_u32(&packet[135], (uint32_t)(telemetry_frame->tlm_table[offset+27].tlm_func));
-  TF_copy_u32(&packet[139], (uint32_t)(telemetry_frame->tlm_table[offset+28].tlm_func));
-  TF_copy_u32(&packet[143], (uint32_t)(telemetry_frame->tlm_table[offset+29].tlm_func));
-  TF_copy_u32(&packet[147], (uint32_t)(telemetry_frame->tlm_table[offset+30].tlm_func));
-  TF_copy_u32(&packet[151], (uint32_t)(telemetry_frame->tlm_table[offset+31].tlm_func));
-  TF_copy_u32(&packet[155], (uint32_t)(telemetry_frame->tlm_table[offset+32].tlm_func));
-  TF_copy_u32(&packet[159], (uint32_t)(telemetry_frame->tlm_table[offset+33].tlm_func));
-  TF_copy_u32(&packet[163], (uint32_t)(telemetry_frame->tlm_table[offset+34].tlm_func));
-  TF_copy_u32(&packet[167], (uint32_t)(telemetry_frame->tlm_table[offset+35].tlm_func));
-  TF_copy_u32(&packet[171], (uint32_t)(telemetry_frame->tlm_table[offset+36].tlm_func));
-  TF_copy_u32(&packet[175], (uint32_t)(telemetry_frame->tlm_table[offset+37].tlm_func));
-  TF_copy_u32(&packet[179], (uint32_t)(telemetry_frame->tlm_table[offset+38].tlm_func));
-  TF_copy_u32(&packet[183], (uint32_t)(telemetry_frame->tlm_table[offset+39].tlm_func));
-  TF_copy_u32(&packet[187], (uint32_t)(telemetry_frame->tlm_table[offset+40].tlm_func));
-  TF_copy_u32(&packet[191], (uint32_t)(telemetry_frame->tlm_table[offset+41].tlm_func));
-  TF_copy_u32(&packet[195], (uint32_t)(telemetry_frame->tlm_table[offset+42].tlm_func));
-  TF_copy_u32(&packet[199], (uint32_t)(telemetry_frame->tlm_table[offset+43].tlm_func));
-  TF_copy_u32(&packet[203], (uint32_t)(telemetry_frame->tlm_table[offset+44].tlm_func));
-  TF_copy_u32(&packet[207], (uint32_t)(telemetry_frame->tlm_table[offset+45].tlm_func));
-  TF_copy_u32(&packet[211], (uint32_t)(telemetry_frame->tlm_table[offset+46].tlm_func));
-  TF_copy_u32(&packet[215], (uint32_t)(telemetry_frame->tlm_table[offset+47].tlm_func));
-  TF_copy_u32(&packet[219], (uint32_t)(telemetry_frame->tlm_table[offset+48].tlm_func));
-  TF_copy_u32(&packet[223], (uint32_t)(telemetry_frame->tlm_table[offset+49].tlm_func));
-  TF_copy_u32(&packet[227], (uint32_t)(telemetry_frame->tlm_table[offset+50].tlm_func));
-  TF_copy_u32(&packet[231], (uint32_t)(telemetry_frame->tlm_table[offset+51].tlm_func));
-  TF_copy_u32(&packet[235], (uint32_t)(telemetry_frame->tlm_table[offset+52].tlm_func));
-  TF_copy_u32(&packet[239], (uint32_t)(telemetry_frame->tlm_table[offset+53].tlm_func));
-  TF_copy_u32(&packet[243], (uint32_t)(telemetry_frame->tlm_table[offset+54].tlm_func));
-  TF_copy_u32(&packet[247], (uint32_t)(telemetry_frame->tlm_table[offset+55].tlm_func));
-  TF_copy_u32(&packet[251], (uint32_t)(telemetry_frame->tlm_table[offset+56].tlm_func));
-  TF_copy_u32(&packet[255], (uint32_t)(telemetry_frame->tlm_table[offset+57].tlm_func));
-  TF_copy_u32(&packet[259], (uint32_t)(telemetry_frame->tlm_table[offset+58].tlm_func));
-  TF_copy_u32(&packet[263], (uint32_t)(telemetry_frame->tlm_table[offset+59].tlm_func));
-  TF_copy_u32(&packet[267], (uint32_t)(telemetry_frame->tlm_table[offset+60].tlm_func));
-  TF_copy_u32(&packet[271], (uint32_t)(telemetry_frame->tlm_table[offset+61].tlm_func));
-  TF_copy_u32(&packet[275], (uint32_t)(telemetry_frame->tlm_table[offset+62].tlm_func));
-  TF_copy_u32(&packet[279], (uint32_t)(telemetry_frame->tlm_table[offset+63].tlm_func));
-#endif
-
-  *len = 283;
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 
