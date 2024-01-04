@@ -13,7 +13,7 @@ https://github.com/arkedge/c2a-core/blob/413caa121175973fb34a5db7237e147f8fc1073
 
 で規定されており，user の
 
-https://github.com/arkedge/c2a-core/blob/413caa121175973fb34a5db7237e147f8fc10732/examples/mobc/src/src_user/settings/system/obc_time_params.h
+https://github.com/arkedge/c2a-core/blob/413caa121175973fb34a5db7237e147f8fc10732/examples/mobc/src/src_user/settings/system/obc_time_params.h#L13-L16
 
 で設定される．TaskListでは `BCL_tool_register_cmd` などの関数の第一引数の値にstepが到達すると，第二引数で登録しているApplicationやBlock Commandが実行されるようになっている．
 
