@@ -33,6 +33,7 @@ C2A に関する説明の棲み分けは，次のようになっています．
    1. [Coding Acronyms](./general/coding_acronyms.md)
 1. Application Layer
    1. [Overview](./application/overview.md)
+   1. [Mechanism of Scheduled Task Execution](./application/scheduled_task_execution.md)
    1. How to add a application
 1. Core Layer
    1. Overview
