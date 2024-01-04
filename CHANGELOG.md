@@ -18,6 +18,7 @@
 - [#246](https://github.com/arkedge/c2a-core/pull/246): `node_modules` を `.gitignore` に追加
 - [#249](https://github.com/arkedge/c2a-core/pull/249): `.nvmrc` の追加
 - [#261](https://github.com/arkedge/c2a-core/pull/261): TL TLM に TL に登録された cmd 数を追加
+- [#265](https://github.com/arkedge/c2a-core/pull/265): code-generator: subobc の MD5 の計算のバグ修正
 
 ### Documentation
 
@@ -36,6 +37,8 @@
   - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
 - [#261](https://github.com/arkedge/c2a-core/pull/261): user 側でのコードレベルでの対応は不要
   - `examples/mobc` の TL TLM を更新したので， `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_TL.csv` を user 側の TL TLM に上書きし， tlm db を再度読み込み，再出力することで更新し，そのあとコード生成し直すとよい．
+- [#265](https://github.com/arkedge/c2a-core/pull/265): user 側でのコードレベルでの対応は不要
+  - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
 
 
 ## v4.1.0 (2023-12-11)
