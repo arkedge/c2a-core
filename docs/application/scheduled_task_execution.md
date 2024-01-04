@@ -5,11 +5,17 @@
 
 https://github.com/arkedge/c2a-core/blob/413caa121175973fb34a5db7237e147f8fc10732/examples/mobc/src/src_user/settings/modes/task_lists/tl_initial.c#L9-L18
 
-- C2Aでは，以下のとおり，基本的には1ステップ=1msでタイマが進行し，100ステップで1サイクルを構成する．すなわち，100msでTaskListが一周する．
+## C2Aにおける時間の扱い
 
-https://github.com/arkedge/c2a-core/blob/413caa121175973fb34a5db7237e147f8fc10732/system/time_manager/obc_time_config.h#L6-L7
+C2Aでは，1 step刻みでタイマが進行し， `OBCT_STEPS_PER_CYCLE` だけstepが進行するとcycleがインクリメントしてstepが巻き戻る．1 step, 1 cycle が物理的にどのような値になるかはcore の
 
-- TaskListでは `BCL_tool_register_cmd` などの関数の第一引数の値にステップが到達すると，第二引数で登録しているApplicationやBlock Commandが実行されるようになっている．
+https://github.com/arkedge/c2a-core/blob/413caa121175973fb34a5db7237e147f8fc10732/system/time_manager/obc_time_config.h#L6-L9
+
+で規定されており，user の
+
+https://github.com/arkedge/c2a-core/blob/413caa121175973fb34a5db7237e147f8fc10732/examples/mobc/src/src_user/settings/system/obc_time_params.h
+
+で設定される．TaskListでは `BCL_tool_register_cmd` などの関数の第一引数の値にstepが到達すると，第二引数で登録しているApplicationやBlock Commandが実行されるようになっている．
 
 ## TaskListに登録されるBlock Commandユーティリティ関数
 - 基本的にTaskListで使われるBlock Commandユーティリティ関数は3種類である．
