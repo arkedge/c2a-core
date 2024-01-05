@@ -10,7 +10,7 @@
 #include <src_core/library/result.h>
 #include "../../component_driver/com/gs_validate.h"
 #include "../../settings/port_config.h"
-#include "../../settings/component_driver_super/driver_buffer_define.h"
+#include "../../settings/component_driver/driver_buffer_define.h"
 
 static RESULT CSRV_GS_init_(void);
 
