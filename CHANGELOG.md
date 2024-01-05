@@ -85,7 +85,7 @@
   - pytest の追加
     - もし， user 側で subobc ありの pytest を扱っている場合， `examples/subobc/src/src_user/test/test/applications/test_component_driver_utility.py` を user 側の test にも加える．
 - [#275](https://github.com/arkedge/c2a-core/pull/275): user 側でのコードレベルでの対応は不要
-  - AM tlm でのキャストを緩和し， 1 tlm でダウンリンクできる個数を現象させた．同様の修正を user にも当てる場合には，いかが必要となる．
+  - AM tlm でのキャストを緩和し， 1 tlm でダウンリンクできる個数を減少させた．同様の修正を user にも当てる場合には，以下が必要となる．
     - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_AM.csv` を user 側の AM tlm に上書きし， tlm db を再度読み込み，再出力することで更新する．
     - `examples/mobc/src/src_user/settings/system/app_manager_params.h` を参考に，特に `AM_TLM_PAGE_SIZE`, `AM_TLM_PAGE_SIZE` に注意して `app_manager_params.h` を更新する（tlm と整合が取れるように）．
 
