@@ -11,6 +11,7 @@ set(C2A_SRCS
   nop.c
   realtime_command_dispatcher.c
   timeline_command_dispatcher.c
+  tl_bct_digest.c
   utility_command.c
   utility_counter.c
   telemetry_manager.c

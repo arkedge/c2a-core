@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: 29c51517462dc79a211298f9acebc3f8
+ *          CSV files MD5: 9ca043940fe69f2ae005374c1d34781b
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -23,6 +23,8 @@ static TF_TLM_FUNC_ACK Tlm_TLM_MGR1_(uint8_t* packet, uint16_t* len, uint16_t ma
 static TF_TLM_FUNC_ACK Tlm_TLM_MGR2_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_TL_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_BL_(uint8_t* packet, uint16_t* len, uint16_t max_len);
+static TF_TLM_FUNC_ACK Tlm_TL_DIGEST_(uint8_t* packet, uint16_t* len, uint16_t max_len);
+static TF_TLM_FUNC_ACK Tlm_BCT_DIGEST_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_CCP_DUMP_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_CDIS_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_TF_(uint8_t* packet, uint16_t* len, uint16_t max_len);
@@ -51,6 +53,8 @@ void TF_load_tlm_table(TF_TlmInfo tlm_table[TF_MAX_TLMS])
   tlm_table[Tlm_CODE_TLM_MGR2].tlm_func = Tlm_TLM_MGR2_;
   tlm_table[Tlm_CODE_TL].tlm_func = Tlm_TL_;
   tlm_table[Tlm_CODE_BL].tlm_func = Tlm_BL_;
+  tlm_table[Tlm_CODE_TL_DIGEST].tlm_func = Tlm_TL_DIGEST_;
+  tlm_table[Tlm_CODE_BCT_DIGEST].tlm_func = Tlm_BCT_DIGEST_;
   tlm_table[Tlm_CODE_CCP_DUMP].tlm_func = Tlm_CCP_DUMP_;
   tlm_table[Tlm_CODE_CDIS].tlm_func = Tlm_CDIS_;
   tlm_table[Tlm_CODE_TF].tlm_func = Tlm_TF_;
@@ -1247,6 +1251,136 @@ static TF_TLM_FUNC_ACK Tlm_BL_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 #endif
 
   *len = 426;
+  return TF_TLM_FUNC_ACK_SUCCESS;
+}
+
+static TF_TLM_FUNC_ACK Tlm_TL_DIGEST_(uint8_t* packet, uint16_t* len, uint16_t max_len)
+{
+  if (168 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+
+#ifndef BUILD_SETTINGS_FAST_BUILD
+  TF_copy_u8(&packet[26], tl_bct_digest->tl.info.tl_id);
+  TF_copy_u8(&packet[27], tl_bct_digest->tl.info.page_no);
+  TF_copy_u8(&packet[28], tl_bct_digest->tl.info.status);
+  TF_copy_u16(&packet[29], tl_bct_digest->tl.info.queued);
+  TF_copy_u32(&packet[31], tl_bct_digest->tl.info.time_stamp.total_cycle);
+  TF_copy_u32(&packet[35], tl_bct_digest->tl.info.time_stamp.step);
+  TF_copy_u8(&packet[39], tl_bct_digest->tl.info.digests_num);
+  TF_copy_u16(&packet[40], tl_bct_digest->tl.digests[0]);
+  TF_copy_u16(&packet[42], tl_bct_digest->tl.digests[1]);
+  TF_copy_u16(&packet[44], tl_bct_digest->tl.digests[2]);
+  TF_copy_u16(&packet[46], tl_bct_digest->tl.digests[3]);
+  TF_copy_u16(&packet[48], tl_bct_digest->tl.digests[4]);
+  TF_copy_u16(&packet[50], tl_bct_digest->tl.digests[5]);
+  TF_copy_u16(&packet[52], tl_bct_digest->tl.digests[6]);
+  TF_copy_u16(&packet[54], tl_bct_digest->tl.digests[7]);
+  TF_copy_u16(&packet[56], tl_bct_digest->tl.digests[8]);
+  TF_copy_u16(&packet[58], tl_bct_digest->tl.digests[9]);
+  TF_copy_u16(&packet[60], tl_bct_digest->tl.digests[10]);
+  TF_copy_u16(&packet[62], tl_bct_digest->tl.digests[11]);
+  TF_copy_u16(&packet[64], tl_bct_digest->tl.digests[12]);
+  TF_copy_u16(&packet[66], tl_bct_digest->tl.digests[13]);
+  TF_copy_u16(&packet[68], tl_bct_digest->tl.digests[14]);
+  TF_copy_u16(&packet[70], tl_bct_digest->tl.digests[15]);
+  TF_copy_u16(&packet[72], tl_bct_digest->tl.digests[16]);
+  TF_copy_u16(&packet[74], tl_bct_digest->tl.digests[17]);
+  TF_copy_u16(&packet[76], tl_bct_digest->tl.digests[18]);
+  TF_copy_u16(&packet[78], tl_bct_digest->tl.digests[19]);
+  TF_copy_u16(&packet[80], tl_bct_digest->tl.digests[20]);
+  TF_copy_u16(&packet[82], tl_bct_digest->tl.digests[21]);
+  TF_copy_u16(&packet[84], tl_bct_digest->tl.digests[22]);
+  TF_copy_u16(&packet[86], tl_bct_digest->tl.digests[23]);
+  TF_copy_u16(&packet[88], tl_bct_digest->tl.digests[24]);
+  TF_copy_u16(&packet[90], tl_bct_digest->tl.digests[25]);
+  TF_copy_u16(&packet[92], tl_bct_digest->tl.digests[26]);
+  TF_copy_u16(&packet[94], tl_bct_digest->tl.digests[27]);
+  TF_copy_u16(&packet[96], tl_bct_digest->tl.digests[28]);
+  TF_copy_u16(&packet[98], tl_bct_digest->tl.digests[29]);
+  TF_copy_u16(&packet[100], tl_bct_digest->tl.digests[30]);
+  TF_copy_u16(&packet[102], tl_bct_digest->tl.digests[31]);
+  TF_copy_u16(&packet[104], tl_bct_digest->tl.digests[32]);
+  TF_copy_u16(&packet[106], tl_bct_digest->tl.digests[33]);
+  TF_copy_u16(&packet[108], tl_bct_digest->tl.digests[34]);
+  TF_copy_u16(&packet[110], tl_bct_digest->tl.digests[35]);
+  TF_copy_u16(&packet[112], tl_bct_digest->tl.digests[36]);
+  TF_copy_u16(&packet[114], tl_bct_digest->tl.digests[37]);
+  TF_copy_u16(&packet[116], tl_bct_digest->tl.digests[38]);
+  TF_copy_u16(&packet[118], tl_bct_digest->tl.digests[39]);
+  TF_copy_u16(&packet[120], tl_bct_digest->tl.digests[40]);
+  TF_copy_u16(&packet[122], tl_bct_digest->tl.digests[41]);
+  TF_copy_u16(&packet[124], tl_bct_digest->tl.digests[42]);
+  TF_copy_u16(&packet[126], tl_bct_digest->tl.digests[43]);
+  TF_copy_u16(&packet[128], tl_bct_digest->tl.digests[44]);
+  TF_copy_u16(&packet[130], tl_bct_digest->tl.digests[45]);
+  TF_copy_u16(&packet[132], tl_bct_digest->tl.digests[46]);
+  TF_copy_u16(&packet[134], tl_bct_digest->tl.digests[47]);
+  TF_copy_u16(&packet[136], tl_bct_digest->tl.digests[48]);
+  TF_copy_u16(&packet[138], tl_bct_digest->tl.digests[49]);
+  TF_copy_u16(&packet[140], tl_bct_digest->tl.digests[50]);
+  TF_copy_u16(&packet[142], tl_bct_digest->tl.digests[51]);
+  TF_copy_u16(&packet[144], tl_bct_digest->tl.digests[52]);
+  TF_copy_u16(&packet[146], tl_bct_digest->tl.digests[53]);
+  TF_copy_u16(&packet[148], tl_bct_digest->tl.digests[54]);
+  TF_copy_u16(&packet[150], tl_bct_digest->tl.digests[55]);
+  TF_copy_u16(&packet[152], tl_bct_digest->tl.digests[56]);
+  TF_copy_u16(&packet[154], tl_bct_digest->tl.digests[57]);
+  TF_copy_u16(&packet[156], tl_bct_digest->tl.digests[58]);
+  TF_copy_u16(&packet[158], tl_bct_digest->tl.digests[59]);
+  TF_copy_u16(&packet[160], tl_bct_digest->tl.digests[60]);
+  TF_copy_u16(&packet[162], tl_bct_digest->tl.digests[61]);
+  TF_copy_u16(&packet[164], tl_bct_digest->tl.digests[62]);
+  TF_copy_u16(&packet[166], tl_bct_digest->tl.digests[63]);
+#endif
+
+  *len = 168;
+  return TF_TLM_FUNC_ACK_SUCCESS;
+}
+
+static TF_TLM_FUNC_ACK Tlm_BCT_DIGEST_(uint8_t* packet, uint16_t* len, uint16_t max_len)
+{
+  if (102 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+
+#ifndef BUILD_SETTINGS_FAST_BUILD
+  TF_copy_u16(&packet[26], tl_bct_digest->bct.info.block);
+  TF_copy_u8(&packet[28], tl_bct_digest->bct.info.status);
+  TF_copy_u32(&packet[29], tl_bct_digest->bct.info.time_stamp.total_cycle);
+  TF_copy_u32(&packet[33], tl_bct_digest->bct.info.time_stamp.step);
+  TF_copy_u8(&packet[37], tl_bct_digest->bct.info.digests_num);
+  TF_copy_u16(&packet[38], tl_bct_digest->bct.digests[0]);
+  TF_copy_u16(&packet[40], tl_bct_digest->bct.digests[1]);
+  TF_copy_u16(&packet[42], tl_bct_digest->bct.digests[2]);
+  TF_copy_u16(&packet[44], tl_bct_digest->bct.digests[3]);
+  TF_copy_u16(&packet[46], tl_bct_digest->bct.digests[4]);
+  TF_copy_u16(&packet[48], tl_bct_digest->bct.digests[5]);
+  TF_copy_u16(&packet[50], tl_bct_digest->bct.digests[6]);
+  TF_copy_u16(&packet[52], tl_bct_digest->bct.digests[7]);
+  TF_copy_u16(&packet[54], tl_bct_digest->bct.digests[8]);
+  TF_copy_u16(&packet[56], tl_bct_digest->bct.digests[9]);
+  TF_copy_u16(&packet[58], tl_bct_digest->bct.digests[10]);
+  TF_copy_u16(&packet[60], tl_bct_digest->bct.digests[11]);
+  TF_copy_u16(&packet[62], tl_bct_digest->bct.digests[12]);
+  TF_copy_u16(&packet[64], tl_bct_digest->bct.digests[13]);
+  TF_copy_u16(&packet[66], tl_bct_digest->bct.digests[14]);
+  TF_copy_u16(&packet[68], tl_bct_digest->bct.digests[15]);
+  TF_copy_u16(&packet[70], tl_bct_digest->bct.digests[16]);
+  TF_copy_u16(&packet[72], tl_bct_digest->bct.digests[17]);
+  TF_copy_u16(&packet[74], tl_bct_digest->bct.digests[18]);
+  TF_copy_u16(&packet[76], tl_bct_digest->bct.digests[19]);
+  TF_copy_u16(&packet[78], tl_bct_digest->bct.digests[20]);
+  TF_copy_u16(&packet[80], tl_bct_digest->bct.digests[21]);
+  TF_copy_u16(&packet[82], tl_bct_digest->bct.digests[22]);
+  TF_copy_u16(&packet[84], tl_bct_digest->bct.digests[23]);
+  TF_copy_u16(&packet[86], tl_bct_digest->bct.digests[24]);
+  TF_copy_u16(&packet[88], tl_bct_digest->bct.digests[25]);
+  TF_copy_u16(&packet[90], tl_bct_digest->bct.digests[26]);
+  TF_copy_u16(&packet[92], tl_bct_digest->bct.digests[27]);
+  TF_copy_u16(&packet[94], tl_bct_digest->bct.digests[28]);
+  TF_copy_u16(&packet[96], tl_bct_digest->bct.digests[29]);
+  TF_copy_u16(&packet[98], tl_bct_digest->bct.digests[30]);
+  TF_copy_u16(&packet[100], tl_bct_digest->bct.digests[31]);
+#endif
+
+  *len = 102;
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 

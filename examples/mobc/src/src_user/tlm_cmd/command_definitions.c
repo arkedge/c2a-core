@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: 29c51517462dc79a211298f9acebc3f8
+ *          CSV files MD5: 9ca043940fe69f2ae005374c1d34781b
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -159,6 +159,8 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
   cmd_table[Cmd_CODE_DCU_CLEAR_LOG].cmd_func = Cmd_DCU_CLEAR_LOG;
   cmd_table[Cmd_CODE_CCP_DUMP_CDIS].cmd_func = Cmd_CCP_DUMP_CDIS;
   cmd_table[Cmd_CODE_CCP_DUMP_BCT].cmd_func = Cmd_CCP_DUMP_BCT;
+  cmd_table[Cmd_CODE_TL_BCT_DIGEST_TL].cmd_func = Cmd_TL_BCT_DIGEST_TL;
+  cmd_table[Cmd_CODE_TL_BCT_DIGEST_BCT].cmd_func = Cmd_TL_BCT_DIGEST_BCT;
   cmd_table[Cmd_CODE_TEST_CCP_REGISTER_TLC_ASAP].cmd_func = Cmd_TEST_CCP_REGISTER_TLC_ASAP;
   cmd_table[Cmd_CODE_TEST_CCP_GET_RAW_PARAM_INFO].cmd_func = Cmd_TEST_CCP_GET_RAW_PARAM_INFO;
   cmd_table[Cmd_CODE_CSRV_GS_DRIVER_RESET].cmd_func = Cmd_CSRV_GS_DRIVER_RESET;
@@ -361,6 +363,9 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
   cmd_table[Cmd_CODE_CCP_DUMP_CDIS].param_size_infos[0].packed_info.bit.second = CA_PARAM_SIZE_TYPE_2BYTE;
   cmd_table[Cmd_CODE_CCP_DUMP_BCT].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_2BYTE;
   cmd_table[Cmd_CODE_CCP_DUMP_BCT].param_size_infos[0].packed_info.bit.second = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_TL_BCT_DIGEST_TL].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_TL_BCT_DIGEST_TL].param_size_infos[0].packed_info.bit.second = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_TL_BCT_DIGEST_BCT].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_2BYTE;
   cmd_table[Cmd_CODE_TEST_CCP_REGISTER_TLC_ASAP].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;
   cmd_table[Cmd_CODE_TEST_CCP_GET_RAW_PARAM_INFO].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_2BYTE;
   cmd_table[Cmd_CODE_TEST_CCP_GET_RAW_PARAM_INFO].param_size_infos[0].packed_info.bit.second = CA_PARAM_SIZE_TYPE_1BYTE;
