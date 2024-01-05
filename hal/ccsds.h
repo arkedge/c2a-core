@@ -33,9 +33,9 @@ int CCSDS_init(void* my_ccsds_v);
 
 /**
  * @brief CCSDS 受信. API を呼び出し, buffer に受信結果をコピーする
- * @param[in] my_ccsds_v: CCSDS config
+ * @param[in]  my_ccsds_v: CCSDS config
  * @param[out] data_v: buffer
- * @param[in] buffer_size: buffer size
+ * @param[in]  buffer_size: buffer size
  * @return int: 非負の場合は受信データサイズ, 負の場合は CCSDS_ERR_CODE に従う
  */
 int CCSDS_rx(void* my_ccsds_v, void* data_v, int buffer_size);
@@ -43,7 +43,7 @@ int CCSDS_rx(void* my_ccsds_v, void* data_v, int buffer_size);
 /**
  * @brief CCSDS 送信. API を呼び出し, 送信を行う
  * @param[in] my_ccsds_v: CCSDS config
- * @param[out] data_v: 送信 データ
+ * @param[in] data_v: 送信 データ
  * @param[in] data_size: 送信 size
  * @return CCSDS_ERR_CODE
  */

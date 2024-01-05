@@ -50,7 +50,7 @@ static int CDS_tx_(ComponentDriverSuper* p_super, uint8_t stream);
  * @param  p_super: ComponentDriverSuper 構造体へのポインタ
  * @retval 0:    受信データなし
  * @retval 正数: 受信データ長 [Byte]
- * @retval 負数: HAL_rx_handlersのエラー
+ * @retval 負数: HAL_rx_handlers のエラー
  */
 static int CDS_rx_(ComponentDriverSuper* p_super);
 
@@ -280,9 +280,9 @@ CDS_ERR_CODE CDS_init_streams(ComponentDriverSuper* p_super,
 
   if (CDS_validate_config(p_super) != CDS_ERR_CODE_OK) return CDS_ERR_CODE_ERR;
 
-  // IF の初期化
+  // HAL の初期化
   // 一旦シンプルに HAL_init_handlers のエラーコードは無視する（実機でここでエラー出る場合はコードがおかしいので．必要があれば将来実装．）
-  if ( (*HAL_init_handlers[p_super->hal_handler_id])(p_super->hal_config) != 0 ) return CDS_ERR_CODE_ERR;
+  if (CDS_hal_init(p_super) != 0 ) return CDS_ERR_CODE_ERR;
 
   return CDS_ERR_CODE_OK;
 }
@@ -542,6 +542,33 @@ CDS_ERR_CODE CDS_clear_rx_buffer(ComponentDriverSuper* p_super)
 }
 
 
+int CDS_hal_init(ComponentDriverSuper* p_super)
+{
+  // HAL の初期化
+  // 一旦シンプルに HAL_init_handlers のエラーコードは無視する（実機でここでエラー出る場合はコードがおかしいので．必要があれば将来実装．）
+  return (*HAL_init_handlers[p_super->hal_handler_id])(p_super->hal_config);
+}
+
+
+int CDS_hal_rx(ComponentDriverSuper* p_super, void* buffer, int buffer_size)
+{
+  return (*HAL_rx_handlers[p_super->hal_handler_id])(p_super->hal_config, buffer, buffer_size);
+}
+
+
+int CDS_hal_tx(ComponentDriverSuper* p_super, const void* data, int data_size)
+{
+  // FIXME; HAL_tx_handlers の第二引数は const つけるべき
+  return (*HAL_tx_handlers[p_super->hal_handler_id])(p_super->hal_config, (void*)data, data_size);    // FIXME: const_cast
+}
+
+
+int CDS_hal_reopen(ComponentDriverSuper* p_super, int reason)
+{
+  return (*HAL_reopen_handlers[p_super->hal_handler_id])(p_super->hal_config, reason);
+}
+
+
 // ###### 送受信関連 static 関数 ######
 
 static CDS_ERR_CODE CDS_send_cmd_(ComponentDriverSuper* p_super, uint8_t stream)
@@ -585,9 +612,7 @@ static int CDS_tx_(ComponentDriverSuper* p_super, uint8_t stream)
   Printf("DS: tx_\n");
 #endif
 
-  ret = (*HAL_tx_handlers[p_super->hal_handler_id])(p_super->hal_config,
-                                                    p_stream_config->settings.tx_frame_,
-                                                    (int)p_stream_config->settings.tx_frame_size_);
+  ret = CDS_hal_tx(p_super, p_stream_config->settings.tx_frame_, (int)p_stream_config->settings.tx_frame_size_);
 
   if (ret != 0) return ret;
   return CDS_ERR_CODE_OK;
@@ -615,9 +640,7 @@ static int CDS_rx_(ComponentDriverSuper* p_super)
   }
   if (flag == 0) return 0;
 
-  rec_data_len = (*HAL_rx_handlers[p_super->hal_handler_id])(p_super->hal_config,
-                                                             CDS_hal_rx_buffer_,
-                                                             p_super->config.settings.hal_rx_buffer_size_);
+  rec_data_len = CDS_hal_rx(p_super, CDS_hal_rx_buffer_, p_super->config.settings.hal_rx_buffer_size_);
 
 #ifdef CDS_DEBUG
   Printf("DS: rx_\n");

@@ -544,6 +544,43 @@ CDS_ERR_CODE CDS_validate_config(ComponentDriverSuper* p_super);
  */
 CDS_ERR_CODE CDS_clear_rx_buffer(ComponentDriverSuper* p_super);
 
+/**
+ * @brief  HAL を直接操作して初期化
+ * @note   HAL_init_handlers を呼び出す．
+ * @param[in]  p_super: ComponentDriverSuper 構造体へのポインタ
+ * @return HAL_init_handlers の返り値
+ */
+int CDS_hal_init(ComponentDriverSuper* p_super);
+
+/**
+ * @brief  HAL を直接操作して RX
+ * @note   HAL_rx_handlers を呼び出す．
+ * @param[in]  p_super:     ComponentDriverSuper 構造体へのポインタ
+ * @param[out] buffer:      受信データ格納先へのポインタ
+ * @param[in]  buffer_size: 受信データ格納先のデータサイズ
+ * @return HAL_rx_handlers の返り値
+ */
+int CDS_hal_rx(ComponentDriverSuper* p_super, void* buffer, int buffer_size);
+
+/**
+ * @brief  HAL を直接操作して TX
+ * @note   HAL_tx_handlers を呼び出す．
+ * @param[in]  p_super:     ComponentDriverSuper 構造体へのポインタ
+ * @param[in]  buffer:      送信データ格納先へのポインタ
+ * @param[in]  buffer_size: 送信データサイズ
+ * @return HAL_tx_handlers の返り値
+ */
+int CDS_hal_tx(ComponentDriverSuper* p_super, const void* data, int data_size);
+
+/**
+ * @brief  HAL を直接操作して reopen
+ * @note   HAL_reopen_handlers を呼び出す．
+ * @param[in]  p_super: ComponentDriverSuper 構造体へのポインタ
+ * @param[in]  reason:  repoen の理由を示すコードなど
+ * @return HAL_reopen_handlers の返り値
+ */
+int CDS_hal_reopen(ComponentDriverSuper* p_super, int reason);
+
 
 // ###### CDS_Config Getter/Setter of Settings ######
 uint16_t CDSC_get_hal_rx_buffer_size(const ComponentDriverSuper* p_super);
@@ -687,7 +724,7 @@ CCP_CmdRet CDS_conv_cmd_err_to_ccp_cmd_ret(CDS_CMD_ERR_CODE code);
 
 /**
  * @brief  確定したフレームを取得
- * @param  p_stream_config[in]: ComponentDriverSuper 構造体の CDS_StreamConfig
+ * @param[in]  p_stream_config: ComponentDriverSuper 構造体の CDS_StreamConfig
  * @retval フレーム確定時:   受信フレーム先頭ポインタ
  * @retval フレーム未確定時: rx_buffer_.pos_of_frame_head_candidate
  * @note   フレームサイズは CDSSC_get_fixed_rx_frame_size で取得可能
@@ -700,7 +737,7 @@ const uint8_t* CDSSC_get_rx_frame(const CDS_StreamConfig* p_stream_config);
 
 /**
  * @brief  確定したフレームのサイズを取得
- * @param  p_stream_config[in]: ComponentDriverSuper 構造体の CDS_StreamConfig
+ * @param[in]  p_stream_config: ComponentDriverSuper 構造体の CDS_StreamConfig
  * @retval フレーム確定時:   確定したフレームサイズ
  * @retval フレーム未確定時: 0
  */

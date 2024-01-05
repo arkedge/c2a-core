@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: d6e527942b35515e9f81fb3df4eb7f6e
+ *          CSV files MD5: 5c42d49d7eb31d32f3270eeebb4b06cc
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -169,6 +169,13 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
   cmd_table[Cmd_CODE_CDRV_UTIL_CDSSC_ENABLE_MONITOR_FOR_TLM_DISRUPTION].cmd_func = Cmd_CDRV_UTIL_CDSSC_ENABLE_MONITOR_FOR_TLM_DISRUPTION;
   cmd_table[Cmd_CODE_CDRV_UTIL_CDSSC_DISABLE_MONITOR_FOR_TLM_DISRUPTION].cmd_func = Cmd_CDRV_UTIL_CDSSC_DISABLE_MONITOR_FOR_TLM_DISRUPTION;
   cmd_table[Cmd_CODE_CDRV_UTIL_CDSSC_SET_TIME_THRESHOLD_FOR_TLM_DISRUPTION].cmd_func = Cmd_CDRV_UTIL_CDSSC_SET_TIME_THRESHOLD_FOR_TLM_DISRUPTION;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_INIT].cmd_func = Cmd_CDRV_UTIL_HAL_INIT;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_RX].cmd_func = Cmd_CDRV_UTIL_HAL_RX;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_TX].cmd_func = Cmd_CDRV_UTIL_HAL_TX;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_REOPEN].cmd_func = Cmd_CDRV_UTIL_HAL_REOPEN;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_RX_TO_RAM].cmd_func = Cmd_CDRV_UTIL_HAL_RX_TO_RAM;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_TX_FROM_RAM].cmd_func = Cmd_CDRV_UTIL_HAL_TX_FROM_RAM;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_CLEAR_RX_BUFFER].cmd_func = Cmd_CDRV_UTIL_HAL_CLEAR_RX_BUFFER;
   cmd_table[Cmd_CODE_CDRV_UTIL_SET_TLM].cmd_func = Cmd_CDRV_UTIL_SET_TLM;
   cmd_table[Cmd_CODE_TEST_CCP_REGISTER_TLC_ASAP].cmd_func = Cmd_TEST_CCP_REGISTER_TLC_ASAP;
   cmd_table[Cmd_CODE_TEST_CCP_GET_RAW_PARAM_INFO].cmd_func = Cmd_TEST_CCP_GET_RAW_PARAM_INFO;
@@ -390,6 +397,18 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
   cmd_table[Cmd_CODE_CDRV_UTIL_CDSSC_SET_TIME_THRESHOLD_FOR_TLM_DISRUPTION].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
   cmd_table[Cmd_CODE_CDRV_UTIL_CDSSC_SET_TIME_THRESHOLD_FOR_TLM_DISRUPTION].param_size_infos[0].packed_info.bit.second = CA_PARAM_SIZE_TYPE_1BYTE;
   cmd_table[Cmd_CODE_CDRV_UTIL_CDSSC_SET_TIME_THRESHOLD_FOR_TLM_DISRUPTION].param_size_infos[1].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_INIT].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_RX].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_TX].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_TX].param_size_infos[0].packed_info.bit.second = CA_PARAM_SIZE_TYPE_RAW;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_REOPEN].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_REOPEN].param_size_infos[0].packed_info.bit.second = CA_PARAM_SIZE_TYPE_4BYTE;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_RX_TO_RAM].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_RX_TO_RAM].param_size_infos[0].packed_info.bit.second = CA_PARAM_SIZE_TYPE_4BYTE;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_RX_TO_RAM].param_size_infos[1].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_TX_FROM_RAM].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_TX_FROM_RAM].param_size_infos[0].packed_info.bit.second = CA_PARAM_SIZE_TYPE_4BYTE;
+  cmd_table[Cmd_CODE_CDRV_UTIL_HAL_TX_FROM_RAM].param_size_infos[1].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;
   cmd_table[Cmd_CODE_CDRV_UTIL_SET_TLM].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
   cmd_table[Cmd_CODE_CDRV_UTIL_SET_TLM].param_size_infos[0].packed_info.bit.second = CA_PARAM_SIZE_TYPE_1BYTE;
   cmd_table[Cmd_CODE_TEST_CCP_REGISTER_TLC_ASAP].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;

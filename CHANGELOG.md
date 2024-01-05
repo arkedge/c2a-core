@@ -10,6 +10,7 @@
 - [#256](https://github.com/arkedge/c2a-core/pull/256): code-generator: MOBC が定義を持っていない Sub OBC の tlm でも GS に Forward できるようにする
 - [#263](https://github.com/arkedge/c2a-core/pull/263): CDIS や BCT に保存された CCP をダンプする App を追加
 - [#268](https://github.com/arkedge/c2a-core/pull/268): GS と FSW 側での同期のために，BCT, TL のダイジェスト (CRC) を下ろせるようにする App の追加
+- [#237](https://github.com/arkedge/c2a-core/pull/237): 任意の Component Driver に対して，任意バイト列の送受信と HAL init, reopen Cmd を提供する
 
 ### Breaking Changes
 
@@ -73,7 +74,14 @@
     - ComponentDriverUtility App を追加したため，この App を利用する user は，`applications/component_driver_utility.c` をビルド対象に加え，App 登録する．
     - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL.csv` を user 側の tlm db に追加し，コード生成をする．
     - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CDRV_UTIL_*` コマンドを user 側の cmd db に追加し，コード生成をする．
-
+- [#237](https://github.com/arkedge/c2a-core/pull/237): user 側でのコードレベルでの対応は不要
+  - ComponentDriverUtility App の更新
+    - すでに user 側に ComponentDriverUtility App が追加されていなければ，[#270](https://github.com/arkedge/c2a-core/pull/270) での差分を適用する．
+    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL_HAL_RX_DATA.csv` を user 側の tlm db に追加し，コード生成をする．
+    - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CDRV_UTIL_*` コマンドを user 側の cmd db に追加し，コード生成をする．
+    - `examples/mobc/src/src_user/settings/applications/component_driver_utility_params.h` を参考に， user 側でもこのコードを配置する．
+  - pytest の追加
+    - もし， user 側で subobc ありの pytest を扱っている場合， `examples/subobc/src/src_user/test/test/applications/test_component_driver_utility.py` を user 側の test にも加える．
 
 ## v4.1.0 (2023-12-11)
 

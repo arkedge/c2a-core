@@ -98,9 +98,9 @@ int UART_init(void* my_uart_v);
 
 /**
  * @brief UART_CONFIG構造体にて指定されたchからデータを受信します
- * @param[in] my_uart_v   : 対象とするUART_CONFIG構造体へのポインタ
- * @param[in] data_v      : 受信データ格納先へのポインタ
- * @param[in] buffer_size : 受信データ格納先のデータサイズ
+ * @param[in]  my_uart_v   : 対象とするUART_CONFIG構造体へのポインタ
+ * @param[out] data_v      : 受信データ格納先へのポインタ
+ * @param[in]  buffer_size : 受信データ格納先のデータサイズ
  * @retval 0: 受信データなし
  * @retval 正: 受信データバイト数
  * @retval 負: エラー. UART_ERR_CODE に従う
