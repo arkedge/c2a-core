@@ -30,6 +30,7 @@
 - [#271](https://github.com/arkedge/c2a-core/pull/271): CDS: ComponentDriverSuper の整理（コードに変更なし）
 - [#272](https://github.com/arkedge/c2a-core/pull/272): `sync_with_mobc_example.bat` のメンテ
 - [#275](https://github.com/arkedge/c2a-core/pull/275): AM tlm で不用意にサイズを切り詰めたキャストを緩和し，初期化時間や実行時間の長い App の時間を正確に知れるように
+- [#279](https://github.com/arkedge/c2a-core/pull/279): `component_driver_utility.c` でのパラメタ取得のバグ修正
 
 ### Documentation
 
