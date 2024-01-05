@@ -15,6 +15,7 @@
 
 - [#245](https://github.com/arkedge/c2a-core/pull/245): memory dump application のリファクタリング
 - [#269](https://github.com/arkedge/c2a-core/pull/269): Rename `src_user/settings/component_driver_super/` dir to `src_user/settings/component_driver/` dir
+- [#270](https://github.com/arkedge/c2a-core/pull/270): Component Driver を統一的に c2a-core で扱えるようにし，CDS の tlm と，テレメ不通関連 Cmd を追加
 
 ### Fixed
 
@@ -63,6 +64,14 @@
 - [#269](https://github.com/arkedge/c2a-core/pull/269):
   - user 側の include path を，`/component_driver_super/` から `/component_driver/` に一斉置換する．
   - `src_user/settings/CMakeLists.txt` の `/component_driver_super/` が含まれる path を `/component_driver/` に一斉置換する．
+- [#270](https://github.com/arkedge/c2a-core/pull/270):
+  - `CDRV_ID` を user 側で設定する
+    - `examples/mobc/src/src_user/settings/component_driver/component_driver_define.{c,h}` を参考に， user 側でもこのコードを配置する．
+    - `component_driver_define.c` をビルド対象に加える．
+  - ComponentDriverUtility App の追加
+    - ComponentDriverUtility App を追加したため，この App を利用する user は，`applications/component_driver_utility.c` をビルド対象に加え，App 登録する．
+    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL.csv` を user 側の tlm db に追加し，コード生成をする．
+    - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CDRV_UTIL_*` コマンドを user 側の cmd db に追加し，コード生成をする．
 
 
 ## v4.1.0 (2023-12-11)

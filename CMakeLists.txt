@@ -34,6 +34,7 @@ set(C2A_SRCS
   component_driver/cdrv_common_tlm_cmd_packet.c
   component_driver/cdrv_eb90_frame.c
   component_driver/cdrv_eb90_packet.c
+  component_driver/component_driver.c
   component_driver/driver_super.c
   hal/i2c_common.c
   system/application_manager/app_info.c

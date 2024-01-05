@@ -31,6 +31,7 @@ void AR_load_initial_settings(void)
   add_application_(AR_TL_BCT_DIGEST, TL_BCT_DIGEST_create_app);
   add_application_(AR_TELEMETRY_MANAGER, TLM_MGR_create_app);
   add_application_(AR_DIVIDED_CMD_UTILITY, DCU_create_app);
+  add_application_(AR_CDRV_UTIL, CDRV_UTIL_create_app);
   add_application_(AR_UTILITY_CMD, UTIL_CMD_create_app);
   // add_application_(AR_UTILITY_COUNTER, UTIL_COUNTER_create_app);
   add_application_(AR_APP_DBG_FLUSH_SCREEN, APP_DBG_flush_screen);

@@ -4,6 +4,7 @@ project(C2A_CORE_APPS)
 
 set(C2A_SRCS
   ccp_dump.c
+  component_driver_utility.c
   divided_cmd_utility.c
   gs_command_dispatcher.c
   event_utility.c
