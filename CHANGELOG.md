@@ -12,6 +12,7 @@
 - [#268](https://github.com/arkedge/c2a-core/pull/268): GS と FSW 側での同期のために，BCT, TL のダイジェスト (CRC) を下ろせるようにする App の追加
 - [#237](https://github.com/arkedge/c2a-core/pull/237): 任意の Component Driver に対して，任意バイト列の送受信と HAL init, reopen Cmd を提供する
 - [#274](https://github.com/arkedge/c2a-core/pull/274): `TMGR_get_master_mode_cycle_in_msec` などの in_sec 版を実装
+- [#260](https://github.com/arkedge/c2a-core/pull/260): C2A 初期化時に実行環境のエンディアンが設定と正しいかチェックする
 
 ### Breaking Changes
 

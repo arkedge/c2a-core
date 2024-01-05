@@ -37,4 +37,23 @@ void ENDIAN_conv(void* after, const void* before, size_t size)
   return;
 }
 
+ENDIAN_TYPE ENDIAN_detect_system_endian(void)
+{
+  uint32_t test = 0x12345678;
+  uint8_t* p = (uint8_t*)&test;
+
+  if (*p == 0x12)
+  {
+    return ENDIAN_TYPE_BIG;
+  }
+  else if (*p == 0x78)
+  {
+    return ENDIAN_TYPE_LITTLE;
+  }
+  else
+  {
+    return ENDIAN_TYPE_UNKNOWN;
+  }
+}
+
 #pragma section
