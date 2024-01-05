@@ -20,6 +20,9 @@
 
 static uint8_t CDS_hal_rx_buffer_[CDS_HAL_RX_BUFFER_SIZE];    //!< HAL_rx_handlers で受信するときの一次バッファ
 
+
+// ###### 送受信関連 static 関数 ######
+
 /**
  * @brief  コマンド送信処理
  *
@@ -176,7 +179,8 @@ static CDS_ERR_CODE CDS_validate_stream_config_(const ComponentDriverSuper* p_su
 static CDS_ERR_CODE CDS_load_init_setting_dummy_(ComponentDriverSuper* p_super);
 static CDS_ERR_CODE CDS_data_analyzer_dummy_(CDS_StreamConfig* p_stream_config, void* p_driver);
 
-// ###### CDS_StreamRecBuffer 関連関数 ######
+
+// ###### CDS_StreamRecBuffer 関連 static 関数 ######
 
 /**
  * @brief CDS_StreamRecBuffer のクリア
@@ -279,74 +283,6 @@ CDS_ERR_CODE CDS_init_streams(ComponentDriverSuper* p_super,
   // IF の初期化
   // 一旦シンプルに HAL_init_handlers のエラーコードは無視する（実機でここでエラー出る場合はコードがおかしいので．必要があれば将来実装．）
   if ( (*HAL_init_handlers[p_super->hal_handler_id])(p_super->hal_config) != 0 ) return CDS_ERR_CODE_ERR;
-
-  return CDS_ERR_CODE_OK;
-}
-
-
-CDS_ERR_CODE CDS_reset(ComponentDriverSuper* p_super)
-{
-  uint8_t stream;
-
-  p_super->hal_handler_id = HAL_HANDLER_ID_MAX; // FIXME: (*HAL_init_handlers[p_super->hal_handler_id])(p_super->hal_config) の様な使い方をするのでセグフォが起こる可能性があり
-  p_super->hal_config = NULL;        // FIXME: NULL ポインタはこの関数が Reset 単体で使われるとマズい
-
-  p_super->config.settings.hal_rx_buffer_size_               = CDS_HAL_RX_BUFFER_SIZE;
-  p_super->config.settings.should_monitor_for_rx_disruption_ = 0;
-  p_super->config.settings.time_threshold_for_rx_disruption_ = 60 * 1000;      // この値はよく考えること
-
-  p_super->config.info.rec_status_.ret_from_hal_rx       = 0;
-  p_super->config.info.rec_status_.rx_disruption_status = CDS_RX_DISRUPTION_STATUS_OK;
-
-  p_super->config.info.rx_count_      = 0;
-  p_super->config.info.rx_call_count_ = 0;
-  p_super->config.info.rx_time_       = TMGR_get_master_clock();
-
-  p_super->config.internal.load_init_setting = CDS_load_init_setting_dummy_;
-
-  for (stream = 0; stream < CDS_STREAM_MAX; ++stream)
-  {
-    CDS_ERR_CODE ret = CDS_reset_stream_config_(&p_super->stream_config[stream]);
-    if (ret != CDS_ERR_CODE_OK) return ret;
-  }
-
-  CDS_clear_rx_buffer(p_super);
-
-  return CDS_ERR_CODE_OK;
-}
-
-
-CDS_ERR_CODE CDS_validate_config(ComponentDriverSuper* p_super)
-{
-  uint8_t stream;
-
-  if (p_super->hal_handler_id < 0 || p_super->hal_handler_id >= HAL_HANDLER_ID_MAX) return CDS_ERR_CODE_ERR;
-  if (p_super->hal_config == NULL) return CDS_ERR_CODE_ERR;
-
-  if (p_super->config.settings.hal_rx_buffer_size_ > CDS_HAL_RX_BUFFER_SIZE) return CDS_ERR_CODE_ERR;
-
-  for (stream = 0; stream < CDS_STREAM_MAX; ++stream)
-  {
-    CDS_ERR_CODE ret = CDS_validate_stream_config_(p_super, &p_super->stream_config[stream]);
-    if (ret != CDS_ERR_CODE_OK) return ret;
-  }
-
-  return CDS_ERR_CODE_OK;
-}
-
-CDS_ERR_CODE CDS_clear_rx_buffer(ComponentDriverSuper* p_super)
-{
-  uint8_t stream;
-
-  for (stream = 0; stream < CDS_STREAM_MAX; ++stream)
-  {
-    CDS_clear_stream_rec_buffer_(p_super->stream_config[stream].settings.rx_buffer_);
-  }
-
-  // FIXME: すべての ComponentDriver の初期化で呼ばれ，無駄
-  memset(CDS_hal_rx_buffer_,
-         0x00,
-         sizeof(CDS_hal_rx_buffer_));
 
   return CDS_ERR_CODE_OK;
 }
@@ -535,6 +471,78 @@ CDS_ERR_CODE CDS_send_req_tlm_cmd(ComponentDriverSuper* p_super, uint8_t stream)
   return CDS_send_cmd_(p_super, stream);
 }
 
+
+// ###### ComponentDriverSuper 低レベル関数（デバッグ用， ComponentDriverUtility 用など） ######
+
+CDS_ERR_CODE CDS_reset(ComponentDriverSuper* p_super)
+{
+  uint8_t stream;
+
+  p_super->hal_handler_id = HAL_HANDLER_ID_MAX; // FIXME: (*HAL_init_handlers[p_super->hal_handler_id])(p_super->hal_config) の様な使い方をするのでセグフォが起こる可能性があり
+  p_super->hal_config = NULL;        // FIXME: NULL ポインタはこの関数が Reset 単体で使われるとマズい
+
+  p_super->config.settings.hal_rx_buffer_size_               = CDS_HAL_RX_BUFFER_SIZE;
+  p_super->config.settings.should_monitor_for_rx_disruption_ = 0;
+  p_super->config.settings.time_threshold_for_rx_disruption_ = 60 * 1000;      // この値はよく考えること
+
+  p_super->config.info.rec_status_.ret_from_hal_rx       = 0;
+  p_super->config.info.rec_status_.rx_disruption_status = CDS_RX_DISRUPTION_STATUS_OK;
+
+  p_super->config.info.rx_count_      = 0;
+  p_super->config.info.rx_call_count_ = 0;
+  p_super->config.info.rx_time_       = TMGR_get_master_clock();
+
+  p_super->config.internal.load_init_setting = CDS_load_init_setting_dummy_;
+
+  for (stream = 0; stream < CDS_STREAM_MAX; ++stream)
+  {
+    CDS_ERR_CODE ret = CDS_reset_stream_config_(&p_super->stream_config[stream]);
+    if (ret != CDS_ERR_CODE_OK) return ret;
+  }
+
+  CDS_clear_rx_buffer(p_super);
+
+  return CDS_ERR_CODE_OK;
+}
+
+
+CDS_ERR_CODE CDS_validate_config(ComponentDriverSuper* p_super)
+{
+  uint8_t stream;
+
+  if (p_super->hal_handler_id < 0 || p_super->hal_handler_id >= HAL_HANDLER_ID_MAX) return CDS_ERR_CODE_ERR;
+  if (p_super->hal_config == NULL) return CDS_ERR_CODE_ERR;
+
+  if (p_super->config.settings.hal_rx_buffer_size_ > CDS_HAL_RX_BUFFER_SIZE) return CDS_ERR_CODE_ERR;
+
+  for (stream = 0; stream < CDS_STREAM_MAX; ++stream)
+  {
+    CDS_ERR_CODE ret = CDS_validate_stream_config_(p_super, &p_super->stream_config[stream]);
+    if (ret != CDS_ERR_CODE_OK) return ret;
+  }
+
+  return CDS_ERR_CODE_OK;
+}
+
+CDS_ERR_CODE CDS_clear_rx_buffer(ComponentDriverSuper* p_super)
+{
+  uint8_t stream;
+
+  for (stream = 0; stream < CDS_STREAM_MAX; ++stream)
+  {
+    CDS_clear_stream_rec_buffer_(p_super->stream_config[stream].settings.rx_buffer_);
+  }
+
+  // FIXME: すべての ComponentDriver の初期化で呼ばれ，無駄
+  memset(CDS_hal_rx_buffer_,
+         0x00,
+         sizeof(CDS_hal_rx_buffer_));
+
+  return CDS_ERR_CODE_OK;
+}
+
+
+// ###### 送受信関連 static 関数 ######
 
 static CDS_ERR_CODE CDS_send_cmd_(ComponentDriverSuper* p_super, uint8_t stream)
 {
@@ -1315,6 +1323,7 @@ static CDS_ERR_CODE CDS_data_analyzer_dummy_(CDS_StreamConfig* p_stream_config, 
 
 
 // ###### CDS_Config Getter/Setter of Settings ######
+
 uint16_t CDSC_get_hal_rx_buffer_size(const ComponentDriverSuper* p_super)
 {
   return (uint16_t)p_super->config.settings.hal_rx_buffer_size_;
@@ -1357,6 +1366,7 @@ void CDSC_set_time_threshold_for_rx_disruption(ComponentDriverSuper* p_super,
 
 // ###### CDS_Config Getter/Setter of Info ######
 // FIXME: HEW で Warning が出てしまう（gcc ではでない）ので，キャストしている関数がいくつかある
+
 const CDS_RecStatus* CDSC_get_rec_status(const ComponentDriverSuper* p_super)
 {
   return &p_super->config.info.rec_status_;
@@ -1385,6 +1395,7 @@ CDS_RX_DISRUPTION_STATUS_CODE CDSC_get_rx_disruption_status(const ComponentDrive
 
 // ###### CDS_StreamConfig Getter/Setter of Settings ######
 // FIXME: HEW で Warning が出てしまう（gcc ではでない）ので，キャストしている関数がいくつかある
+
 uint8_t CDSSC_get_is_enabled(const CDS_StreamConfig* p_stream_config)
 {
   return (uint8_t)p_stream_config->settings.is_enabled_;
@@ -1584,6 +1595,7 @@ void CDSSC_set_data_analyzer(CDS_StreamConfig* p_stream_config,
 
 
 // ###### CDS_StreamConfig Getter/Setter of Info ######
+
 const CDS_StreamSendStatus* CDSSC_get_send_status(const CDS_StreamConfig* p_stream_config)
 {
   return &p_stream_config->info.send_status_;
@@ -1640,7 +1652,7 @@ CDS_ERR_CODE CDSSC_get_ret_from_data_analyzer(const CDS_StreamConfig* p_stream_c
 }
 
 
-// ###### ComponentDriver 汎用 Util 関数 ######
+// ###### ComponentDriverSuper 汎用 Util 関数 ######
 
 CDS_ERR_CODE CDS_init_stream_rec_buffer(CDS_StreamRecBuffer* stream_rec_buffer,
                                         uint8_t* buffer,
@@ -1709,6 +1721,8 @@ CCP_CmdRet CDS_conv_cmd_err_to_ccp_cmd_ret(CDS_CMD_ERR_CODE code)
 }
 
 
+// ###### ComponentDriverSuper Stream Config 汎用 Util 関数 ######
+
 const uint8_t* CDSSC_get_rx_frame(const CDS_StreamConfig* p_stream_config)
 {
   CDS_StreamRecBuffer* buffer = p_stream_config->settings.rx_buffer_;
@@ -1728,6 +1742,9 @@ uint16_t CDSSC_get_fixed_rx_frame_size(const CDS_StreamConfig* p_stream_config)
     return 0;
   }
 }
+
+
+// ###### CDS_StreamRecBuffer 関連 static 関数 ######
 
 void CDS_clear_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer)
 {

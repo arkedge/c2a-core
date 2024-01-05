@@ -458,36 +458,6 @@ CDS_ERR_CODE CDS_init_streams(ComponentDriverSuper* p_super,
                               CDS_ERR_CODE (*load_init_setting)(ComponentDriverSuper* p_super));
 
 /**
- * @brief  ComponentDriverSuper のリセット
- * @note   CDS_init 内で呼ばれている．
- * @param  p_super: ComponentDriverSuper 構造体へのポインタ
- * @return CDS_ERR_CODE
- */
-CDS_ERR_CODE CDS_reset(ComponentDriverSuper* p_super);
-
-/**
- * @brief  ComponentDriverSuper の設定に不整合が生じていないかチェックする
- *
- *         ComponentDriver の設定を変えた場合は毎回呼び出すことを推奨する
- * @note   CDS_init 内で呼ばれている．
- * @note   内部の管理フラグを変更しているので， p_super に厳密な const 性はない
- * @param  p_super: ComponentDriverSuper 構造体へのポインタ
- * @return CDS_ERR_CODE
- */
-CDS_ERR_CODE CDS_validate_config(ComponentDriverSuper* p_super);
-
-/**
- * @brief  受信バッファをクリアする
- *
- *         例えば，ヘッダなしテレメの場合，途中でゴミデータが入ると以後すべてのフレームがずれてしまう．
- *         そのようなとき（CRC エラーがでるとか，受信データが明らかにおかしい場合）に，buffer を一度クリアし，
- *         次に届くデータからフレーム解析を先頭から行うようにするために用いる．
- * @param  p_super: ComponentDriverSuper 構造体へのポインタ
- * @return CDS_ERR_CODE
- */
-CDS_ERR_CODE CDS_clear_rx_buffer(ComponentDriverSuper* p_super);
-
-/**
  * @brief  継承先の機器からテレメトリを受信する
  *
  *         フレームを確定させて，rx_frame_ にいれるまで．解析 (data_analyzer_) はしないのでドライバで CDS_analyze_rec_data を呼び出すこと
@@ -538,6 +508,41 @@ CDS_ERR_CODE CDS_send_general_cmd(ComponentDriverSuper* p_super, uint8_t stream)
  * @note   受信状況やエラー情報は send_status_ に格納されている
  */
 CDS_ERR_CODE CDS_send_req_tlm_cmd(ComponentDriverSuper* p_super, uint8_t stream);
+
+
+// ###### ComponentDriverSuper 低レベル関数（デバッグ用， ComponentDriverUtility 用など） ######
+// user 側で直接呼ばれることはあまり想定していない．
+
+/**
+ * @brief  ComponentDriverSuper のリセット
+ * @note   CDS_init 内で呼ばれている．
+ * @note   hal_config などもすべてリセットされるので，外部からこの関数が単体で用いられることはないはず
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
+ * @return CDS_ERR_CODE
+ */
+CDS_ERR_CODE CDS_reset(ComponentDriverSuper* p_super);
+
+/**
+ * @brief  ComponentDriverSuper の設定に不整合が生じていないかチェックする
+ *
+ *         ComponentDriver の設定を変えた場合は毎回呼び出すことを推奨する
+ * @note   CDS_init 内で呼ばれている．
+ * @note   内部の管理フラグを変更しているので， p_super に厳密な const 性はない
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
+ * @return CDS_ERR_CODE
+ */
+CDS_ERR_CODE CDS_validate_config(ComponentDriverSuper* p_super);
+
+/**
+ * @brief  受信バッファをクリアする
+ *
+ *         例えば，ヘッダなしテレメの場合，途中でゴミデータが入ると以後すべてのフレームがずれてしまう．
+ *         そのようなとき（CRC エラーがでるとか，受信データが明らかにおかしい場合）に，buffer を一度クリアし，
+ *         次に届くデータからフレーム解析を先頭から行うようにするために用いる．
+ * @param  p_super: ComponentDriverSuper 構造体へのポインタ
+ * @return CDS_ERR_CODE
+ */
+CDS_ERR_CODE CDS_clear_rx_buffer(ComponentDriverSuper* p_super);
 
 
 // ###### CDS_Config Getter/Setter of Settings ######
@@ -636,7 +641,7 @@ CDS_STREAM_TLM_DISRUPTION_STATUS_CODE CDSSC_get_tlm_disruption_status(const CDS_
 CDS_ERR_CODE CDSSC_get_ret_from_data_analyzer(const CDS_StreamConfig* p_stream_config);
 
 
-// ###### ComponentDriver 汎用 Util 関数 ######
+// ###### ComponentDriverSuper 汎用 Util 関数 ######
 
 /**
  * @brief CDS_StreamRecBuffer に確保したメモリを与えて初期化する
@@ -678,7 +683,7 @@ CCP_CmdRet CDS_conv_driver_err_to_ccp_cmd_ret(CDS_DRIVER_ERR_CODE code);
 CCP_CmdRet CDS_conv_cmd_err_to_ccp_cmd_ret(CDS_CMD_ERR_CODE code);
 
 
-// ###### ComponentDriver Stream Config 汎用 Util 関数 ######
+// ###### ComponentDriverSuper Stream Config 汎用 Util 関数 ######
 
 /**
  * @brief  確定したフレームを取得
