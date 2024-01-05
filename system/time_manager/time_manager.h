@@ -139,6 +139,22 @@ uint32_t TMGR_get_master_total_cycle_in_msec(void);
 uint32_t TMGR_get_master_mode_cycle_in_msec(void);
 
 /**
+ * @brief 現在の total_cycle を秒単位で返す
+ * @note 計算上はstepも考慮
+ * @param void
+ * @return 秒単位の total_cycle. 少数点以下も保持
+ */
+double TMGR_get_master_total_cycle_in_sec(void);
+
+/**
+ * @brief 現在の mode_cycle を秒単位で返す
+ * @note 計算上はstepも考慮
+ * @param void
+ * @return 秒単位の mode_cycle. 少数点以下も保持
+ */
+double TMGR_get_master_mode_cycle_in_sec(void);
+
+/**
  * @brief unixtime_info_ を初期化する
  * @param void
  * @return void
