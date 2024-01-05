@@ -9,7 +9,6 @@ echo.
 call :sync_dir ".\src\s2e_mockup\" "..\mobc\src\s2e_mockup\"
 call :sync_dir ".\src\src_user\library\" "..\mobc\src\src_user\library\"
 call :sync_dir ".\src\src_user\script\" "..\mobc\src\src_user\script\"
-call :sync_dir ".\src\src_user\settings\tlm_cmd\ccsds\" "..\mobc\src\src_user\settings\tlm_cmd\ccsds\"
 
 call :sync_file ".\src\src_user\applications\user_defined\debug_apps.h" "..\mobc\src\src_user\applications\user_defined\debug_apps.h"
 call :sync_file ".\src\src_user\hal\sils\uart_sils_sci_if.hpp" "..\mobc\src\src_user\hal\sils\uart_sils_sci_if.hpp"
@@ -21,13 +20,18 @@ call :sync_file ".\src\src_user\settings\git_revision_config.h" "..\mobc\src\src
 call :sync_file ".\src\src_user\settings\component_driver_super\driver_buffer_define.h" "..\mobc\src\src_user\settings\component_driver_super\driver_buffer_define.h"
 call :sync_file ".\src\src_user\settings\tlm_cmd\common_cmd_packet_define.c" "..\mobc\src\src_user\settings\tlm_cmd\common_cmd_packet_define.c"
 call :sync_file ".\src\src_user\settings\tlm_cmd\common_tlm_cmd_packet_define.h" "..\mobc\src\src_user\settings\tlm_cmd\common_tlm_cmd_packet_define.h"
+call :sync_file ".\src\src_user\settings\tlm_cmd\ccsds\apid_define.c" "..\mobc\src\src_user\settings\tlm_cmd\ccsds\apid_define.c"
+call :sync_file ".\src\src_user\settings\tlm_cmd\ccsds\apid_define.h" "..\mobc\src\src_user\settings\tlm_cmd\ccsds\apid_define.h"
+call :sync_file ".\src\src_user\settings\tlm_cmd\ccsds\cmd_space_packet_params.h" "..\mobc\src\src_user\settings\tlm_cmd\ccsds\cmd_space_packet_params.h"
+call :sync_file ".\src\src_user\settings\tlm_cmd\ccsds\space_packet_typedef_params.h" "..\mobc\src\src_user\settings\tlm_cmd\ccsds\space_packet_typedef_params.h"
+call :sync_file ".\src\src_user\settings\tlm_cmd\ccsds\tlm_space_packet_params.h" "..\mobc\src\src_user\settings\tlm_cmd\ccsds\tlm_space_packet_params.h"
 call :sync_file ".\src\src_user\tlm_cmd\block_command_user_settings.c" "..\mobc\src\src_user\tlm_cmd\block_command_user_settings.c"
 call :sync_file ".\src\src_user\tlm_cmd\block_command_user_settings.h" "..\mobc\src\src_user\tlm_cmd\block_command_user_settings.h"
 call :sync_file ".\src\src_user\tlm_cmd\command_source.h" "..\mobc\src\src_user\tlm_cmd\command_source.h"
 call :sync_file ".\src\src_user\tlm_cmd\common_cmd_packet.c" "..\mobc\src\src_user\tlm_cmd\common_cmd_packet.c"
 call :sync_file ".\src\src_user\tlm_cmd\common_tlm_cmd_packet.c" "..\mobc\src\src_user\tlm_cmd\common_tlm_cmd_packet.c"
 
-call :sync_file ".\src\src_user\Test\utils\wings_utils.py" "..\mobc\src\src_user\Test\utils\wings_utils.py"
+rem call :sync_file ".\src\src_user\Test\utils\wings_utils.py" "..\mobc\src\src_user\Test\utils\wings_utils.py"
 call :sync_file ".\src\src_user\Test\pytest.ini" "..\mobc\src\src_user\Test\pytest.ini"
 
 
