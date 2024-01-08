@@ -251,7 +251,7 @@ CCP_CmdRet Cmd_CDRV_UTIL_HAL_REOPEN(const CommonCmdPacket* packet)
 {
   ComponentDriverSuper* cds;
   CDRV_ID cdrv_id = (CDRV_ID)CCP_get_param_from_packet(packet, 0, uint8_t);
-  int32_t reason = CCP_get_param_from_packet(packet, 0, int32_t);
+  int32_t reason = CCP_get_param_from_packet(packet, 1, int32_t);
 
   if (cdrv_id >= CDRV_ID_MAX) return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, 1);
   cds = (ComponentDriverSuper*)CDRV_get_cds(cdrv_id);    // const_cast
@@ -272,8 +272,8 @@ CCP_CmdRet Cmd_CDRV_UTIL_HAL_RX_TO_RAM(const CommonCmdPacket* packet)
 {
   ComponentDriverSuper* cds;
   CDRV_ID cdrv_id = (CDRV_ID)CCP_get_param_from_packet(packet, 0, uint8_t);
-  uint32_t buffer_adr = CCP_get_param_from_packet(packet, 0, uint32_t);
-  int32_t buffer_size = CCP_get_param_from_packet(packet, 0, int32_t);
+  uint32_t buffer_adr = CCP_get_param_from_packet(packet, 1, uint32_t);
+  int32_t buffer_size = CCP_get_param_from_packet(packet, 2, int32_t);
 
   if (cdrv_id >= CDRV_ID_MAX) return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, 1);
   if (buffer_size <= 0) return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, 2);
@@ -289,8 +289,8 @@ CCP_CmdRet Cmd_CDRV_UTIL_HAL_TX_FROM_RAM(const CommonCmdPacket* packet)
 {
   ComponentDriverSuper* cds;
   CDRV_ID cdrv_id = (CDRV_ID)CCP_get_param_from_packet(packet, 0, uint8_t);
-  uint32_t data_adr = CCP_get_param_from_packet(packet, 0, uint32_t);
-  int32_t data_size = CCP_get_param_from_packet(packet, 0, int32_t);
+  uint32_t data_adr = CCP_get_param_from_packet(packet, 1, uint32_t);
+  int32_t data_size = CCP_get_param_from_packet(packet, 2, int32_t);
 
   if (cdrv_id >= CDRV_ID_MAX) return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, 1);
   if (data_size <= 0) return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_PARAMETER, 2);
