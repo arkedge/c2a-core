@@ -50,7 +50,7 @@ clang-runtime = ["clang/runtime"]
 no-c2a-link = []
 
 [build-dependencies]
-semver = "1.0.20"
+semver = "1.0.21"
 clang = "2.0.0"
 c2a-bind-utils = "4.0.0-beta.0"
 
