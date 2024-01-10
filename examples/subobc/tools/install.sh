@@ -2,7 +2,7 @@
 
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
-cargo install --debug --root . tmtc-c2a --git https://github.com/arkedge/gaia.git --tag v0.5.0
+cargo install --debug --root . tmtc-c2a --git https://github.com/arkedge/gaia.git --tag v0.6.1
 
 cargo install --debug --root . tlmcmddb-cli    --version 0.2.0
 cargo install --debug --root . kble            --version 0.2.0
