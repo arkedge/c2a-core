@@ -18,7 +18,7 @@ nvm は Node.js のインストーラー・バージョンマネージャであ�
 インストール: https://github.com/nvm-sh/nvm#installing-and-updating
 
 ### yarn
-C2A 開発そのものには不要であるが，[c2a-devtools](https://github.com/arkedge/c2a-devtools) の実行に必要である．
+[C2A DevTools](https://github.com/arkedge/gaia/tree/v0.6.1/tmtc-c2a/devtools_frontend) が有効な [Gaia](https://github.com/arkedge/gaia)(tmtc-c2a) のビルド(現状では `npm install` 時に内部で行われる)に必要．
 
 インストール: https://classic.yarnpkg.com/lang/en/docs/install/
 

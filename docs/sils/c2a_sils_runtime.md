@@ -30,21 +30,21 @@ cargo run
 ```
 を実行するだけ．
 
-### c2a-devtools の実行
-[c2a-devtools](https://github.com/arkedge/c2a-devtools) によって，c2a-sils-runtime によって実行されている SILS に対して，テレコマ通信が可能である．
+### C2A DevTools の実行
+[C2A DevTools](https://github.com/arkedge/gaia/tree/v0.6.1/tmtc-c2a/devtools_frontend) によって，c2a-sils-runtime によって実行されている SILS に対して，テレコマ通信が可能である．
 使い方の詳細は，上記リンク先を参照のこと．
 
-### C2A そのもの + c2a-devtools の実行
+### C2A そのもの + C2A DevTools の実行
 MOBC 環境 (`/examples/mobc/`) を例にする．
 
 1. 1 つ目のターミナルで `/examples/mobc/` に移動し，次を実行する．
 ```
 npm run devtools:sils
 ```
-2. 2 つ目のターミナルで c2a-devtools を実行し，ブラウザを開くと，テレコマ通信が可能となる．
+2. ブラウザで `http://localhost:8900/devtools/` を開くと，テレコマ通信が可能となる．
 
 
-### C2A そのもの + c2a-devtools の実行 (VS Code を用いたデバッグ)
+### C2A そのもの + C2A DevTools の実行 (VS Code を用いたデバッグ)
 MOBC 環境 (`/examples/mobc/`) を例にする．  
 この手順によって，ブレークポイント等を用いた開発が可能となる．
 
@@ -53,7 +53,7 @@ MOBC 環境 (`/examples/mobc/`) を例にする．
 npm run devtools:debug
 ```
 2. VS Code のデバッガで `Debug executable 'c2a-example-mobc` を実行する．
-3. 2 つ目のターミナルで c2a-devtools を実行し，ブラウザを開くと，テレコマ通信が可能となる．
+3. ブラウザで `http://localhost:8900/devtools/` を開くと，テレコマ通信が可能となる．
 
 
 ### pytest の実行
