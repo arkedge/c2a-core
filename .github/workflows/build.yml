@@ -22,6 +22,8 @@ jobs:
         else
           ./setup.sh
         fi
+      build_msvc: true
+      build_as_cxx: true
 
   subobc:
     name: subobc
@@ -37,3 +39,5 @@ jobs:
         else
           ./setup.sh
         fi
+      build_msvc: true
+      build_as_cxx: true
