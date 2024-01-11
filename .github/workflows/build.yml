@@ -8,28 +8,17 @@ on:
   pull_request:
 
 jobs:
-  mobc:
-    name: mobc
-    uses: arkedge/workflows-c2a/.github/workflows/build.yml@v5.0.0
-    with:
-      c2a_dir: examples/mobc
-      c2a_custom_setup: |
-        cd ../..
-        pwd
-        ls -l
-        if [ $RUNNER_OS = 'Windows' ]; then
-          cmd "/C setup.bat"
-        else
-          ./setup.sh
-        fi
-      build_msvc: true
-      build_as_cxx: true
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        user:
+          - mobc
+          - subobc
 
-  subobc:
-    name: subobc
     uses: arkedge/workflows-c2a/.github/workflows/build.yml@v5.0.0
     with:
-      c2a_dir: examples/subobc
+      c2a_dir: examples/${{ matrix.user }}
       c2a_custom_setup: |
         cd ../..
         pwd
