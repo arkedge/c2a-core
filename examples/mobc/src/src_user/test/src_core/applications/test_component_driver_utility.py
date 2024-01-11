@@ -16,7 +16,7 @@
 # ope = wings_utils.get_wings_operation()
 
 # TBA
-# subobc が必要なテストは examples/subobc/src/src_user/test/test/test_component_driver_utility.py に配置した
+# subobc が必要なテストは examples/subobc/src/src_user/test/test_component_driver_utility.py に配置した
 
 if __name__ == "__main__":
     pass
