@@ -9,19 +9,22 @@
 - [#245](https://github.com/arkedge/c2a-core/pull/245): memory dump application のリファクタリング
 - [#266](https://github.com/arkedge/c2a-core/pull/266): example mobc の tlm の tlm id を再採番する (CDIS, CA)
 - [#269](https://github.com/arkedge/c2a-core/pull/269): Rename `src_user/settings/component_driver_super/` dir to `src_user/settings/component_driver/` dir
-- [#275](https://github.com/arkedge/c2a-core/pull/275): AM tlm のキャスト緩和のためにテレメを再設定
+- [#275](https://github.com/arkedge/c2a-core/pull/275): AM tlm でのキャストを緩和し，1 tlm でダウンリンクできる個数を減少させた
 
 
 ### Enhancements
 
+- C2A Boom
+  - [#249](https://github.com/arkedge/c2a-core/pull/249): Example user に .nvmrc を追加し，Node version を固定
+  - [#281](https://github.com/arkedge/c2a-core/pull/281): Use Gaia 0.6 in C2A Boom for C2A DevTools usage update
+- c2a-core crates
+  - [#133](https://github.com/arkedge/c2a-core/pull/133): sils-runtime: require c2a-core v4
+  - [#134](https://github.com/arkedge/c2a-core/pull/134): c2a-core hal crates: require c2a-core v4
 - code-generator
   - [#240](https://github.com/arkedge/c2a-core/pull/240): 自動生成コードの @note に，生成元DBのコミットハッシュと生成パラメータを出力する
   - [#243](https://github.com/arkedge/c2a-core/pull/243): max_tlm_num のアサーションを追加
   - [#251](https://github.com/arkedge/c2a-core/pull/251): Refactor code-generator
   - [#256](https://github.com/arkedge/c2a-core/pull/256): MOBC が定義を持っていない Sub OBC の tlm id の tlm でも GS に Forward できるように
-- [#133](https://github.com/arkedge/c2a-core/pull/133): sils-runtime: require c2a-core v4
-- [#134](https://github.com/arkedge/c2a-core/pull/134): c2a-core hal crates: require c2a-core v4
-- [#249](https://github.com/arkedge/c2a-core/pull/249): Example user に .nvmrc を追加し，Node version を固定
 - [#261](https://github.com/arkedge/c2a-core/pull/261): TL TLM に TL に登録された cmd 数を追加
 - [#263](https://github.com/arkedge/c2a-core/pull/263): CDIS や BCT に保存された CCP をダンプする App を追加
 - [#268](https://github.com/arkedge/c2a-core/pull/268): GS と FSW 側での同期のために，BCT, TL のダイジェスト (CRC) を下ろせるようにする App の追加
@@ -29,7 +32,6 @@
 - [#273](https://github.com/arkedge/c2a-core/pull/273): 任意の Component Driver に対して，任意バイト列の送受信と HAL init, reopen Cmd を提供する
 - [#274](https://github.com/arkedge/c2a-core/pull/274): `TMGR_get_master_mode_cycle_in_msec` などの in_sec 版を実装
 - [#260](https://github.com/arkedge/c2a-core/pull/260): C2A 初期化時に実行環境のエンディアンが設定と正しいかチェックする
-- [#281](https://github.com/arkedge/c2a-core/pull/281): Use Gaia 0.6 in C2A Boom for C2A DevTools usage update
 
 
 ### Fixed
