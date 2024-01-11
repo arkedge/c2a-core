@@ -2,39 +2,71 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
-## v4.2.0 (Unreleased)
-
-### Enhancements
-- [#240](https://github.com/arkedge/c2a-core/pull/240): code-generator の出力コードに，設定情報を残すようにする
-- [#243](https://github.com/arkedge/c2a-core/pull/243): code-generator に max_tlm_num のアサーションを追加
-- [#256](https://github.com/arkedge/c2a-core/pull/256): code-generator: MOBC が定義を持っていない Sub OBC の tlm でも GS に Forward できるようにする
-- [#263](https://github.com/arkedge/c2a-core/pull/263): CDIS や BCT に保存された CCP をダンプする App を追加
-- [#268](https://github.com/arkedge/c2a-core/pull/268): GS と FSW 側での同期のために，BCT, TL のダイジェスト (CRC) を下ろせるようにする App の追加
-- [#237](https://github.com/arkedge/c2a-core/pull/237): 任意の Component Driver に対して，任意バイト列の送受信と HAL init, reopen Cmd を提供する
-- [#274](https://github.com/arkedge/c2a-core/pull/274): `TMGR_get_master_mode_cycle_in_msec` などの in_sec 版を実装
-- [#260](https://github.com/arkedge/c2a-core/pull/260): C2A 初期化時に実行環境のエンディアンが設定と正しいかチェックする
+## v4.2.0 (2024-01-11)
 
 ### Breaking Changes
 
 - [#245](https://github.com/arkedge/c2a-core/pull/245): memory dump application のリファクタリング
+- [#266](https://github.com/arkedge/c2a-core/pull/266): example mobc の tlm の tlm id を再採番する (CDIS, CA)
 - [#269](https://github.com/arkedge/c2a-core/pull/269): Rename `src_user/settings/component_driver_super/` dir to `src_user/settings/component_driver/` dir
+- [#275](https://github.com/arkedge/c2a-core/pull/275): AM tlm のキャスト緩和のためにテレメを再設定
+
+
+### Enhancements
+
+- code-generator
+  - [#240](https://github.com/arkedge/c2a-core/pull/240): 自動生成コードの @note に，生成元DBのコミットハッシュと生成パラメータを出力する
+  - [#243](https://github.com/arkedge/c2a-core/pull/243): max_tlm_num のアサーションを追加
+  - [#251](https://github.com/arkedge/c2a-core/pull/251): Refactor code-generator
+  - [#256](https://github.com/arkedge/c2a-core/pull/256): MOBC が定義を持っていない Sub OBC の tlm id の tlm でも GS に Forward できるように
+- [#133](https://github.com/arkedge/c2a-core/pull/133): sils-runtime: require c2a-core v4
+- [#134](https://github.com/arkedge/c2a-core/pull/134): c2a-core hal crates: require c2a-core v4
+- [#249](https://github.com/arkedge/c2a-core/pull/249): Example user に .nvmrc を追加し，Node version を固定
+- [#261](https://github.com/arkedge/c2a-core/pull/261): TL TLM に TL に登録された cmd 数を追加
+- [#263](https://github.com/arkedge/c2a-core/pull/263): CDIS や BCT に保存された CCP をダンプする App を追加
+- [#268](https://github.com/arkedge/c2a-core/pull/268): GS と FSW 側での同期のために，BCT, TL のダイジェスト (CRC) を下ろせるようにする App の追加
 - [#270](https://github.com/arkedge/c2a-core/pull/270): Component Driver を統一的に c2a-core で扱えるようにし，CDS の tlm と，テレメ不通関連 Cmd を追加
+- [#273](https://github.com/arkedge/c2a-core/pull/273): 任意の Component Driver に対して，任意バイト列の送受信と HAL init, reopen Cmd を提供する
+- [#274](https://github.com/arkedge/c2a-core/pull/274): `TMGR_get_master_mode_cycle_in_msec` などの in_sec 版を実装
+- [#260](https://github.com/arkedge/c2a-core/pull/260): C2A 初期化時に実行環境のエンディアンが設定と正しいかチェックする
+- [#281](https://github.com/arkedge/c2a-core/pull/281): Use Gaia 0.6 in C2A Boom for C2A DevTools usage update
+
 
 ### Fixed
 
-- [#246](https://github.com/arkedge/c2a-core/pull/246): `node_modules` を `.gitignore` に追加
-- [#249](https://github.com/arkedge/c2a-core/pull/249): `.nvmrc` の追加
-- [#261](https://github.com/arkedge/c2a-core/pull/261): TL TLM に TL に登録された cmd 数を追加
-- [#265](https://github.com/arkedge/c2a-core/pull/265): code-generator: subobc の MD5 の計算のバグ修正
-- [#267](https://github.com/arkedge/c2a-core/pull/267): core tlm の tlm id の再採番 (CDIS, CA)
-- [#271](https://github.com/arkedge/c2a-core/pull/271): CDS: ComponentDriverSuper の整理（コードに変更なし）
-- [#272](https://github.com/arkedge/c2a-core/pull/272): `sync_with_mobc_example.bat` のメンテ
-- [#275](https://github.com/arkedge/c2a-core/pull/275): AM tlm で不用意にサイズを切り詰めたキャストを緩和し，初期化時間や実行時間の長い App の時間を正確に知れるように
+- [#265](https://github.com/arkedge/c2a-core/pull/265): [code-generator] subobc の MD5 の計算のバグ修正
+  - [#251](https://github.com/arkedge/c2a-core/pull/251): の修正であるため，中途半端なバージョンを使用していなければ対応不要
 - [#279](https://github.com/arkedge/c2a-core/pull/279): `component_driver_utility.c` でのパラメタ取得のバグ修正
+
 
 ### Documentation
 
-- [#247](https://github.com/arkedge/c2a-core/pull/247): VS Code 等を使ったデバッグ手順を追加 / README の微修正
+- [#238](https://github.com/arkedge/c2a-core/pull/238): Add missing v4.1.0 compatible tools to changelog
+- [#247](https://github.com/arkedge/c2a-core/pull/247): VS Code を使ったデバッグ手順の追加 / READMEの微修正
+- [#278](https://github.com/arkedge/c2a-core/pull/278): タスク定期実行に関するドキュメントを追加
+
+
+### Internal
+
+- [#246](https://github.com/arkedge/c2a-core/pull/246): node_modules を .gitignore に追加
+- [#231](https://github.com/arkedge/c2a-core/pull/231): Update actions/setup-python action to v5
+- [#248](https://github.com/arkedge/c2a-core/pull/248): Update actions/setup-node action to v4.0.1
+- [#253](https://github.com/arkedge/c2a-core/pull/253): Update actions/deploy-pages action to v4
+- [#254](https://github.com/arkedge/c2a-core/pull/254): Update actions/upload-pages-artifact action to v3
+- [#250](https://github.com/arkedge/c2a-core/pull/250): Update sksat/setup-rye action to v0.10.0
+- [#252](https://github.com/arkedge/c2a-core/pull/252): Update sksat/action-clippy action to v0.4.0
+- [#258](https://github.com/arkedge/c2a-core/pull/258): Update renovate default reviewers
+- [#241](https://github.com/arkedge/c2a-core/pull/241): Update dependency ut-issl/s2e-core to v7.1.1
+- [#271](https://github.com/arkedge/c2a-core/pull/271): CDS: ComponentDriverSuper の整理（コードに変更なし）
+- [#272](https://github.com/arkedge/c2a-core/pull/272): sync_with_mobc_example.bat のメンテ
+- [#264](https://github.com/arkedge/c2a-core/pull/264): Update dependency ut-issl/s2e-core to v7.2.0
+- [#276](https://github.com/arkedge/c2a-core/pull/276): Update Rust crate semver to 1.0.21
+- [#257](https://github.com/arkedge/c2a-core/pull/257): Update arkedge/workflows-c2a action to v5
+- [#282](https://github.com/arkedge/c2a-core/pull/282): Update Swatinem/rust-cache action to v2.7.2
+- [#283](https://github.com/arkedge/c2a-core/pull/283): Fix check-coding-rule v4 workflow in workflows-c2a v5
+- [#284](https://github.com/arkedge/c2a-core/pull/284): Enable example build all again
+- [#285](https://github.com/arkedge/c2a-core/pull/285): Use matrix job to build multiple example users with same config
+
 
 ### Migration Guide
 - [#240](https://github.com/arkedge/c2a-core/pull/240): user 側でのコードレベルでの対応は不要
