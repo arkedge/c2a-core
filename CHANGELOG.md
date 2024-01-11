@@ -39,6 +39,7 @@
 - [#265](https://github.com/arkedge/c2a-core/pull/265): [code-generator] subobc の MD5 の計算のバグ修正
   - [#251](https://github.com/arkedge/c2a-core/pull/251): の修正であるため，中途半端なバージョンを使用していなければ対応不要
 - [#279](https://github.com/arkedge/c2a-core/pull/279): `component_driver_utility.c` でのパラメタ取得のバグ修正
+- [#286](https://github.com/arkedge/c2a-core/pull/286): Fix examples/subobc pytest testcase dir
 
 
 ### Documentation
