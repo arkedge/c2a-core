@@ -71,59 +71,53 @@
 
 
 ### Migration Guide
-- [#240](https://github.com/arkedge/c2a-core/pull/240): user 側でのコードレベルでの対応は不要
-  - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
+
+- C2A Boom
+  - [#281](https://github.com/arkedge/c2a-core/pull/281): `tools/install.sh` の Gaia のバージョン（Git tag）を `v0.6.1` 以降に更新する（RECOMMENDED）
+    - これにより，C2A DevTools が `http://localhost:8900/devtools` から使えるようになる
+    - これまで通り C2A DevTools サーバを別途立ち上げることもできるが，C2A DevTools は Gaia に[統合された](https://github.com/arkedge/gaia/pull/33)ため，非推奨となる
+- code-generator
+  - 以下での各 Tlm DB の更新の際には Excel から読み込んで csv を再出力し `calced_data` を更新すること（MUST）
+  - [#240](https://github.com/arkedge/c2a-core/pull/240), [#256](https://github.com/arkedge/c2a-core/pull/256): code-generator の機能追加・生成コード仕様の変更があるため，コード生成し直すこと（MUST）
+- [#269](https://github.com/arkedge/c2a-core/pull/269): `src/src_user/settings/component_driver_super` の rename（MUST）
+  - `src/src_user/settings/component_driver_super` を `src/src_user/settings/component_driver` に rename する
+  - user 側の include path を，`/component_driver_super/` から `/component_driver/` に一斉置換する
+  - `src_user/settings/CMakeLists.txt` の `/component_driver_super/` が含まれる path を `/component_driver/` に一斉置換する
+- [#261](https://github.com/arkedge/c2a-core/pull/261): `examples/mobc` の TL TLM を更新したので， `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_TL.csv` を user 側の TL TLM に上書きする
+- [#267](https://github.com/arkedge/c2a-core/pull/267): 以下の tlm id を変更したため，これらを user 側の tlm db に上書きする
+  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDIS.csv`
+  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CA.csv`
 - [#245](https://github.com/arkedge/c2a-core/pull/245): 影響範囲は memory dump application を使う OBC のみ
-  - Tlm Cmd DB を，`examples/mobc` のものと同様にする．
+  - Tlm Cmd DB を `examples/mobc` のものと同様にする
     - cmd: `MEM_*`
     - tlm: `MEM`
-  - 設定ファイルを格納する．
-    - `examples/mobc/src/src_user/settings/applications/memory_dump_define.h` を参考に．
-- [#256](https://github.com/arkedge/c2a-core/pull/256): user 側でのコードレベルでの対応は不要
-  - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
-- [#261](https://github.com/arkedge/c2a-core/pull/261): user 側でのコードレベルでの対応は不要
-  - `examples/mobc` の TL TLM を更新したので， `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_TL.csv` を user 側の TL TLM に上書きし， tlm db を再度読み込み，再出力することで更新し，そのあとコード生成し直すとよい．
-- [#265](https://github.com/arkedge/c2a-core/pull/265): user 側でのコードレベルでの対応は不要
-  - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
-- [#267](https://github.com/arkedge/c2a-core/pull/267)
-  - 以下の tlm id を変更したため，これらを user 側の tlm db に上書きし，tlm db を再度読み込み，再出力することで更新する．
-    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDIS.csv`
-    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CA.csv`
-- [#263](https://github.com/arkedge/c2a-core/pull/263): user 側でのコードレベルでの対応は不要
-  - CcpDump App を追加したため，この App を利用する user は，`applications/ccp_dump.c` をビルド対象に加え，App 登録する．
-  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CCP_DUMP.csv` を user 側の tlm db に追加し，コード生成をする．
-  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CCP_DUMP_*` コマンドを user 側の cmd db に追加し，コード生成をする．
-  - `examples/mobc/src/src_user/test/src_core/applications/test_ccp_dump.py` を user 側の test にも加える．
-    - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える．
-- [#268](https://github.com/arkedge/c2a-core/pull/268): user 側でのコードレベルでの対応は不要
-  - TL BCT Digest App を追加したため，この App を利用する user は，`applications/tl_bct_digest.c` をビルド対象に加え，App 登録する．
-  - `examples/mobc/tlm-cmd-db/TLM_DB/{SAMPLE_MOBC_TLM_DB_TL_DIGEST.csv,SAMPLE_MOBC_TLM_DB_BCT_DIGEST.csv}` を user 側の tlm db に追加し，コード生成をする．
-  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `TL_BCT_DIGEST_*` コマンドを user 側の cmd db に追加し，コード生成をする．
-  - `examples/mobc/src/src_user/test/src_core/applications/test_tl_bct_digest.py` を user 側の test にも加える．
-    - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える．
-- [#269](https://github.com/arkedge/c2a-core/pull/269):
-  - user 側の include path を，`/component_driver_super/` から `/component_driver/` に一斉置換する．
-  - `src_user/settings/CMakeLists.txt` の `/component_driver_super/` が含まれる path を `/component_driver/` に一斉置換する．
-- [#270](https://github.com/arkedge/c2a-core/pull/270):
+  - `examples/mobc` の `src/src_user/settings/applications/memory_dump_define.h` を参考に設定する
+- [#263](https://github.com/arkedge/c2a-core/pull/263): CcpDump App の追加
+  - この App を利用する user は `src/src_core/applications/ccp_dump.c` をビルド対象に加え，App 登録する
+  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CCP_DUMP.csv` を user 側の tlm db に追加する
+  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CCP_DUMP_*` コマンドを user 側の cmd db に追加する
+  - `examples/mobc` から `src/src_user/test/src_core/applications/test_ccp_dump.py` をコピーする
+    - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える
+- [#268](https://github.com/arkedge/c2a-core/pull/268): TL BCT Digest App の追加
+  - この App を利用する user は `applications/tl_bct_digest.c` をビルド対象に加え，App 登録する
+  - `examples/mobc/tlm-cmd-db/TLM_DB/{SAMPLE_MOBC_TLM_DB_TL_DIGEST.csv,SAMPLE_MOBC_TLM_DB_BCT_DIGEST.csv}` を user 側の tlm db に追加する
+  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `TL_BCT_DIGEST_*` コマンドを user 側の cmd db に追加する
+  - `examples/mobc` から `src/src_user/test/src_core/applications/test_tl_bct_digest.py` をコピーする
+    - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える
+- [#270](https://github.com/arkedge/c2a-core/pull/270), [#237](https://github.com/arkedge/c2a-core/pull/237): ComponentDriverUtility App の追加
   - `CDRV_ID` を user 側で設定する
-    - `examples/mobc/src/src_user/settings/component_driver/component_driver_define.{c,h}` を参考に， user 側でもこのコードを配置する．
-    - `component_driver_define.c` をビルド対象に加える．
-  - ComponentDriverUtility App の追加
-    - ComponentDriverUtility App を追加したため，この App を利用する user は，`applications/component_driver_utility.c` をビルド対象に加え，App 登録する．
-    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL.csv` を user 側の tlm db に追加し，コード生成をする．
-    - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CDRV_UTIL_*` コマンドを user 側の cmd db に追加し，コード生成をする．
-- [#237](https://github.com/arkedge/c2a-core/pull/237): user 側でのコードレベルでの対応は不要
-  - ComponentDriverUtility App の更新
-    - すでに user 側に ComponentDriverUtility App が追加されていなければ，[#270](https://github.com/arkedge/c2a-core/pull/270) での差分を適用する．
-    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL_HAL_RX_DATA.csv` を user 側の tlm db に追加し，コード生成をする．
-    - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CDRV_UTIL_*` コマンドを user 側の cmd db に追加し，コード生成をする．
-    - `examples/mobc/src/src_user/settings/applications/component_driver_utility_params.h` を参考に， user 側でもこのコードを配置する．
-  - pytest の追加
-    - もし， user 側で subobc ありの pytest を扱っている場合， `examples/subobc/src/src_user/test/test_component_driver_utility.py` を user 側の test にも加える．
-- [#275](https://github.com/arkedge/c2a-core/pull/275): user 側でのコードレベルでの対応は不要
-  - AM tlm でのキャストを緩和し， 1 tlm でダウンリンクできる個数を減少させた．同様の修正を user にも当てる場合には，以下が必要となる．
-    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_AM.csv` を user 側の AM tlm に上書きし， tlm db を再度読み込み，再出力することで更新する．
-    - `examples/mobc/src/src_user/settings/system/app_manager_params.h` を参考に，特に `AM_TLM_PAGE_SIZE`, `AM_TLM_PAGE_SIZE` に注意して `app_manager_params.h` を更新する（tlm と整合が取れるように）．
+    - `examples/mobc` を参考に，`src/src_user/settings/component_driver/component_driver_define.{c,h}` を配置し，ビルド対象に加える
+  - この App を利用する user は `src/src_core/applications/component_driver_utility.c` をビルド対象に加え，App 登録する
+  - `examples/mobc` を参考に，`src/src_user/settings/applications/component_driver_utility_params.h` を配置する
+  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CDRV_UTIL_*` コマンドを user 側の cmd db に追加する
+  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CDRV_UTIL_*` コマンドを user 側の cmd db に追加する
+  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL.csv` を user 側の tlm db に追加する
+  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL_HAL_RX_DATA.csv` を user 側の tlm db に追加する
+  - もし， user 側で subobc ありの pytest を扱っている場合，`examples/subobc` から `src/src_user/test/test_component_driver_utility.py` をコピーする
+- [#275](https://github.com/arkedge/c2a-core/pull/275): ATM tlm のキャスト緩和に伴う tlm 再設定
+  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_AM.csv` を user 側の AM tlm に上書きする
+  - `examples/mobc` を参考に `src/src_user/settings/system/app_manager_params.h` を更新する
+  - tlm と整合が取れるように，特に `AM_TLM_PAGE_SIZE`, `AM_TLM_PAGE_SIZE` に注意して更新すること
 
 
 ## v4.1.0 (2023-12-11)
