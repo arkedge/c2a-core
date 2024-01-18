@@ -2,7 +2,7 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
-## v4.2.0 (2024-01-11)
+## v4.2.0 (2024-01-18)
 
 ### Breaking Changes
 
@@ -77,7 +77,7 @@
   - [#281](https://github.com/arkedge/c2a-core/pull/281): `tools/install.sh` の Gaia のバージョン（Git tag）を `v0.6.1` 以降に更新する（RECOMMENDED）
     - これにより，C2A DevTools が `http://localhost:8900/devtools` から使えるようになる
     - これまで通り C2A DevTools サーバを別途立ち上げることもできるが，C2A DevTools は Gaia に[統合された](https://github.com/arkedge/gaia/pull/33)ため，非推奨となる
-- code-generator
+- コード生成
   - 以下での各 Tlm DB の更新の際には Excel から読み込んで csv を再出力し `calced_data` を更新すること（MUST）
   - [#240](https://github.com/arkedge/c2a-core/pull/240), [#256](https://github.com/arkedge/c2a-core/pull/256): code-generator の機能追加・生成コード仕様の変更があるため，コード生成し直すこと（MUST）
 - [#269](https://github.com/arkedge/c2a-core/pull/269): `src/src_user/settings/component_driver_super` の rename（MUST）
@@ -92,7 +92,7 @@
   - Tlm Cmd DB を `examples/mobc` のものと同様にする
     - cmd: `MEM_*`
     - tlm: `MEM`
-  - `examples/mobc` の `src/src_user/settings/applications/memory_dump_define.h` を参考に設定する
+  - `examples/mobc` の `src/src_user/settings/applications/memory_dump_define.h` を参考に作成して設定する
 - [#263](https://github.com/arkedge/c2a-core/pull/263): CcpDump App の追加
   - この App を利用する user は `src/src_core/applications/ccp_dump.c` をビルド対象に加え，App 登録する
   - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CCP_DUMP.csv` を user 側の tlm db に追加する
@@ -115,10 +115,12 @@
   - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL.csv` を user 側の tlm db に追加する
   - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL_HAL_RX_DATA.csv` を user 側の tlm db に追加する
   - もし， user 側で subobc ありの pytest を扱っている場合，`examples/subobc` から `src/src_user/test/test_component_driver_utility.py` をコピーする
-- [#275](https://github.com/arkedge/c2a-core/pull/275): ATM tlm のキャスト緩和に伴う tlm 再設定
-  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_AM.csv` を user 側の AM tlm に上書きする
+- [#275](https://github.com/arkedge/c2a-core/pull/275): AM tlm のキャスト緩和（u8 -> u16）に伴う tlm 再設定
+  - App manager のテレメサイズのデフォルト設定が変わったため，再設定すること
+  - App の初期化時間がそこまで長くならないような状況であったり，テレメサイズを切り詰めたい場合は引き続き u8 としてよい
+  - `examples/mobc` と同様にする場合は，`examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_AM.csv` を user 側の AM tlm に上書きする
   - `examples/mobc` を参考に `src/src_user/settings/system/app_manager_params.h` を更新する
-  - tlm と整合が取れるように，特に `AM_TLM_PAGE_SIZE`, `AM_TLM_PAGE_SIZE` に注意して更新すること
+    - tlm と整合が取れるように，特に `AM_TLM_PAGE_SIZE`, `AM_TLM_PAGE_SIZE` に注意して更新する
 
 
 ## v4.1.0 (2023-12-11)
