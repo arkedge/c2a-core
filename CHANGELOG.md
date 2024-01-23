@@ -85,7 +85,7 @@
   - user 側の include path を，`/component_driver_super/` から `/component_driver/` に一斉置換する
   - `src_user/settings/CMakeLists.txt` の `/component_driver_super/` が含まれる path を `/component_driver/` に一斉置換する
 - [#261](https://github.com/arkedge/c2a-core/pull/261): `examples/mobc` の TL TLM を更新したので， `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_TL.csv` を user 側の TL TLM に上書きする
-- [#267](https://github.com/arkedge/c2a-core/pull/267): 以下の tlm id を変更したため，これらを user 側の tlm db に上書きする
+- [#266](https://github.com/arkedge/c2a-core/pull/266): 以下の tlm id を変更したため，これらを user 側の tlm db に上書きする
   - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDIS.csv`
   - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CA.csv`
 - [#245](https://github.com/arkedge/c2a-core/pull/245): 影響範囲は memory dump application を使う OBC のみ
@@ -105,7 +105,7 @@
   - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `TL_BCT_DIGEST_*` コマンドを user 側の cmd db に追加する
   - `examples/mobc` から `src/src_user/test/src_core/applications/test_tl_bct_digest.py` をコピーする
     - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える
-- [#270](https://github.com/arkedge/c2a-core/pull/270), [#237](https://github.com/arkedge/c2a-core/pull/237): ComponentDriverUtility App の追加
+- [#270](https://github.com/arkedge/c2a-core/pull/270), [#273](https://github.com/arkedge/c2a-core/pull/273): ComponentDriverUtility App の追加
   - `CDRV_ID` を user 側で設定する
     - `examples/mobc` を参考に，`src/src_user/settings/component_driver/component_driver_define.{c,h}` を配置し，ビルド対象に加える
   - この App を利用する user は `src/src_core/applications/component_driver_utility.c` をビルド対象に加え，App 登録する
