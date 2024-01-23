@@ -137,7 +137,7 @@ def LoadOtherObcTlm(settings):
             continue
 
         # max_tlm_num のアサーション
-        if other_obc_settings["max_tlm_num"] <= int(other_obc_settings["tlm_id_range"][1], 0):
+        if other_obc_settings["max_tlm_num"] < int(other_obc_settings["tlm_id_range"][1], 0):
             print(
                 "Error: max_tlm_num is invalid at " + other_obc_settings["name"] + " DB.",
                 file=sys.stderr,
