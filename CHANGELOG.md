@@ -80,8 +80,8 @@
     - これにより，C2A DevTools が `http://localhost:8900/devtools` から使えるようになる
     - これまで通り C2A DevTools サーバを別途立ち上げることもできるが，C2A DevTools は Gaia に[統合された](https://github.com/arkedge/gaia/pull/33)ため，非推奨となる
 - コード生成
-  - 以下での各 Tlm DB の更新の際には Excel から読み込んで csv を再出力し `calced_data` を更新すること（MUST）
   - [#240](https://github.com/arkedge/c2a-core/pull/240), [#256](https://github.com/arkedge/c2a-core/pull/256): code-generator の機能追加・生成コード仕様の変更があるため，コード生成し直すこと（MUST）
+  - 以下の各更新のうち，Tlm DB の更新を含むものは，Excel から読み込んで csv を再出力し `calced_data` を更新すること（MUST）
 - [#269](https://github.com/arkedge/c2a-core/pull/269): `src/src_user/settings/component_driver_super` の rename（MUST）
   - `src/src_user/settings/component_driver_super` を `src/src_user/settings/component_driver` に rename する
   - user 側の include path を，`/component_driver_super/` から `/component_driver/` に一斉置換する
