@@ -34,7 +34,7 @@ C2A に関する説明の棲み分けは，次のようになっています．
 1. Application Layer
    1. [Overview](./application/overview.md)
    1. [Mechanism of Scheduled Task Execution](./application/scheduled_task_execution.md)
-   1. How to add a application
+   1. [How to Add a Application and Command](./application/how_to_add_app_cmd.md)
 1. Core Layer
    1. Overview
    1. [Communication](./core/communication.md)

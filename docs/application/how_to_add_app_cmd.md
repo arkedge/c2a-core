@@ -1,4 +1,4 @@
-#  How To Add Application / Command
+#  How to Add a Application and Command
 
 ##  アプリ追加手順
 以下手順を踏む
