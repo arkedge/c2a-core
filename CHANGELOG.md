@@ -40,6 +40,8 @@
   - [#251](https://github.com/arkedge/c2a-core/pull/251): の修正であるため，中途半端なバージョンを使用していなければ対応不要
 - [#279](https://github.com/arkedge/c2a-core/pull/279): `component_driver_utility.c` でのパラメタ取得のバグ修正
 - [#286](https://github.com/arkedge/c2a-core/pull/286): Fix examples/subobc pytest testcase dir
+- [#298](https://github.com/arkedge/c2a-core/pull/298): max_tlm_num のアサーションの off-by-one error の修正
+  - [#243](https://github.com/arkedge/c2a-core/pull/243): の修正であるため，中途半端なバージョンを使用していなければ対応不要
 
 
 ### Documentation
