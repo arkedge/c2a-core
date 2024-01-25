@@ -67,14 +67,14 @@
 以下手順を踏む
 
 - Cmd DB の追加
-    - Cmd DB のファイルに追加したいコマンドを記載する
+    - Cmd DB のファイルに追加したいコマンド(コマンド名、引数等)を追加する
     - Cmd DB の Path：`tlm-cmd-db/CMD_DB`
      - Cmd DB の manual は https://github.com/arkedge/c2a-tlmcmddb/tree/main/tlm-cmd-db を参照
 - 対象ファイルにコマンドを追加する
 対象のファイルにコマンド実行関数を追加する。対象ファイルが無ければアプリ追加手順を参考にファイルを作成する
   - 関数は以下形式にて定義する
      ```c
-    CCP_CmdRet Cmd_関数名(const CommonCmdPacket* packet)
+    CCP_CmdRet Cmd_コマンド名(const CommonCmdPacket* packet)
     ```
 - コマンド関数の返り値は以下関数を用いる
      ```c
