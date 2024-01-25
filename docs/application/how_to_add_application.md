@@ -1,4 +1,4 @@
-#  How to Add a Application
+#  How to Add an Application
 
 ## アプリ追加手順
 以下手順を踏む
