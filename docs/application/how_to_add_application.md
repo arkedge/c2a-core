@@ -51,27 +51,27 @@
 ## テレメトリ追加手順
 以下手順を踏む
 
-- Tlm DB の追加
+- Tlm DB にテレメトリを追加する
     - Tlm DB のファイルに追加したいテレメトリを追加する
+    - Tlm DB 内の Excel ファイルにある`Variable or Function Name`の欄に取得したいテレメトリの変数を追加する
     - Tlm DB の Path：`tlm-cmd-db/TLM_DB`
-     - Tlm DB の manual は https://github.com/arkedge/c2a-tlmcmddb/tree/main/tlm-cmd-db を参照
-- TLM_DB内の Excel ファイルにある`Variable or Function Name`の欄に取得したいテレメトリの変数を追加する
-- c2a-code-generator の実施
+     - Tlm DB については https://github.com/arkedge/c2a-tlmcmddb/tree/main/tlm-cmd-db を参照
+- c2a-code-generator を実行する
     - c2a-code-generator の config ファイルを設定する
     - c2a-code-generator を実行する
       - c2a-code-generator によりTlmCmd DBに登録されたコマンド定義ファイルが自動生成される
-    - c2a-tlm-cmd-code-generator の manual は https://github.com/arkedge/c2a-core/blob/main/code-generator/README.md を参照
+    - c2a-tlm-cmd-code-generator については https://github.com/arkedge/c2a-core/blob/main/code-generator/README.md を参照
 
 
 ## コマンド追加手順
 以下手順を踏む
 
-- Cmd DB の追加
+- Cmd DB にコマンドを追加する
     - Cmd DB のファイルに追加したいコマンド(コマンド名、引数等)を追加する
     - Cmd DB の Path：`tlm-cmd-db/CMD_DB`
-     - Cmd DB の manual は https://github.com/arkedge/c2a-tlmcmddb/tree/main/tlm-cmd-db を参照
+     - Cmd DB については https://github.com/arkedge/c2a-tlmcmddb/tree/main/tlm-cmd-db を参照
 - 対象ファイルにコマンドを追加する
-対象のファイルにコマンド実行関数を追加する。対象ファイルが無ければアプリ追加手順を参考にファイルを作成する
+  - 対象のファイルにコマンド実行関数を追加する。対象ファイルが無ければアプリ追加手順を参考にファイルを作成する
   - 関数は以下形式にて定義する
      ```c
     CCP_CmdRet Cmd_コマンド名(const CommonCmdPacket* packet)
@@ -82,9 +82,8 @@
   return CCP_make_cmd_ret_without_err_code(コマンド実行結果コード)
     ```
   - 別で定義されているコマンド定義ファイルより参照する形になるため、headerファイルにも定義を加える
-- c2a-code-generator の実施
-    - 概要：
+- c2a-code-generator を実行する
     - c2a-code-generator の config ファイルを設定する
     - c2a-code-generator を実行する
       - c2a-code-generator によりTlmCmd DBに登録されたコマンド定義ファイルが自動生成される
-    - c2a-tlm-cmd-code-generator の manual は https://github.com/arkedge/c2a-core/blob/main/code-generator/README.md を参照
+    - c2a-tlm-cmd-code-generator については https://github.com/arkedge/c2a-core/blob/main/code-generator/README.md を参照
