@@ -2,94 +2,127 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
-## v4.2.0 (Unreleased)
-
-### Enhancements
-- [#240](https://github.com/arkedge/c2a-core/pull/240): code-generator の出力コードに，設定情報を残すようにする
-- [#243](https://github.com/arkedge/c2a-core/pull/243): code-generator に max_tlm_num のアサーションを追加
-- [#256](https://github.com/arkedge/c2a-core/pull/256): code-generator: MOBC が定義を持っていない Sub OBC の tlm でも GS に Forward できるようにする
-- [#263](https://github.com/arkedge/c2a-core/pull/263): CDIS や BCT に保存された CCP をダンプする App を追加
-- [#268](https://github.com/arkedge/c2a-core/pull/268): GS と FSW 側での同期のために，BCT, TL のダイジェスト (CRC) を下ろせるようにする App の追加
-- [#237](https://github.com/arkedge/c2a-core/pull/237): 任意の Component Driver に対して，任意バイト列の送受信と HAL init, reopen Cmd を提供する
-- [#274](https://github.com/arkedge/c2a-core/pull/274): `TMGR_get_master_mode_cycle_in_msec` などの in_sec 版を実装
-- [#260](https://github.com/arkedge/c2a-core/pull/260): C2A 初期化時に実行環境のエンディアンが設定と正しいかチェックする
+## v4.2.0 (2024-01-26)
 
 ### Breaking Changes
 
 - [#245](https://github.com/arkedge/c2a-core/pull/245): memory dump application のリファクタリング
+- [#266](https://github.com/arkedge/c2a-core/pull/266): example mobc の tlm の tlm id を再採番する (CDIS, CA)
 - [#269](https://github.com/arkedge/c2a-core/pull/269): Rename `src_user/settings/component_driver_super/` dir to `src_user/settings/component_driver/` dir
+- [#275](https://github.com/arkedge/c2a-core/pull/275): AM tlm でのキャストを緩和し，1 tlm でダウンリンクできる個数を減少させた
+
+
+### Enhancements
+
+- C2A Boom
+  - [#249](https://github.com/arkedge/c2a-core/pull/249): Example user に .nvmrc を追加し，Node version を固定
+  - [#281](https://github.com/arkedge/c2a-core/pull/281): Use Gaia 0.6 in C2A Boom for C2A DevTools usage update
+- c2a-core crates
+  - [#133](https://github.com/arkedge/c2a-core/pull/133): sils-runtime: require c2a-core v4
+  - [#134](https://github.com/arkedge/c2a-core/pull/134): c2a-core hal crates: require c2a-core v4
+- code-generator
+  - [#240](https://github.com/arkedge/c2a-core/pull/240): 自動生成コードの @note に，生成元DBのコミットハッシュと生成パラメータを出力する
+  - [#243](https://github.com/arkedge/c2a-core/pull/243): max_tlm_num のアサーションを追加
+  - [#251](https://github.com/arkedge/c2a-core/pull/251): Refactor code-generator
+  - [#256](https://github.com/arkedge/c2a-core/pull/256): MOBC が定義を持っていない Sub OBC の tlm id の tlm でも GS に Forward できるように
+- [#261](https://github.com/arkedge/c2a-core/pull/261): TL TLM に TL に登録された cmd 数を追加
+- [#263](https://github.com/arkedge/c2a-core/pull/263): CDIS や BCT に保存された CCP をダンプする App を追加
+- [#268](https://github.com/arkedge/c2a-core/pull/268): GS と FSW 側での同期のために，BCT, TL のダイジェスト (CRC) を下ろせるようにする App の追加
 - [#270](https://github.com/arkedge/c2a-core/pull/270): Component Driver を統一的に c2a-core で扱えるようにし，CDS の tlm と，テレメ不通関連 Cmd を追加
+- [#273](https://github.com/arkedge/c2a-core/pull/273): 任意の Component Driver に対して，任意バイト列の送受信と HAL init, reopen Cmd を提供する
+- [#274](https://github.com/arkedge/c2a-core/pull/274): `TMGR_get_master_mode_cycle_in_msec` などの in_sec 版を実装
+- [#260](https://github.com/arkedge/c2a-core/pull/260): C2A 初期化時に実行環境のエンディアンが設定と正しいかチェックする
+
 
 ### Fixed
 
-- [#246](https://github.com/arkedge/c2a-core/pull/246): `node_modules` を `.gitignore` に追加
-- [#249](https://github.com/arkedge/c2a-core/pull/249): `.nvmrc` の追加
-- [#261](https://github.com/arkedge/c2a-core/pull/261): TL TLM に TL に登録された cmd 数を追加
-- [#265](https://github.com/arkedge/c2a-core/pull/265): code-generator: subobc の MD5 の計算のバグ修正
-- [#267](https://github.com/arkedge/c2a-core/pull/267): core tlm の tlm id の再採番 (CDIS, CA)
-- [#271](https://github.com/arkedge/c2a-core/pull/271): CDS: ComponentDriverSuper の整理（コードに変更なし）
-- [#272](https://github.com/arkedge/c2a-core/pull/272): `sync_with_mobc_example.bat` のメンテ
-- [#275](https://github.com/arkedge/c2a-core/pull/275): AM tlm で不用意にサイズを切り詰めたキャストを緩和し，初期化時間や実行時間の長い App の時間を正確に知れるように
+- [#265](https://github.com/arkedge/c2a-core/pull/265): [code-generator] subobc の MD5 の計算のバグ修正
+  - [#251](https://github.com/arkedge/c2a-core/pull/251): の修正であるため，中途半端なバージョンを使用していなければ対応不要
 - [#279](https://github.com/arkedge/c2a-core/pull/279): `component_driver_utility.c` でのパラメタ取得のバグ修正
+- [#286](https://github.com/arkedge/c2a-core/pull/286): Fix examples/subobc pytest testcase dir
+- [#298](https://github.com/arkedge/c2a-core/pull/298): max_tlm_num のアサーションの off-by-one error の修正
+  - [#243](https://github.com/arkedge/c2a-core/pull/243): の修正であるため，中途半端なバージョンを使用していなければ対応不要
+
 
 ### Documentation
 
-- [#247](https://github.com/arkedge/c2a-core/pull/247): VS Code 等を使ったデバッグ手順を追加 / README の微修正
+- [#238](https://github.com/arkedge/c2a-core/pull/238): Add missing v4.1.0 compatible tools to changelog
+- [#247](https://github.com/arkedge/c2a-core/pull/247): VS Code を使ったデバッグ手順の追加 / READMEの微修正
+- [#278](https://github.com/arkedge/c2a-core/pull/278): タスク定期実行に関するドキュメントを追加
+
+
+### Internal
+
+- [#246](https://github.com/arkedge/c2a-core/pull/246): node_modules を .gitignore に追加
+- [#231](https://github.com/arkedge/c2a-core/pull/231): Update actions/setup-python action to v5
+- [#248](https://github.com/arkedge/c2a-core/pull/248): Update actions/setup-node action to v4.0.1
+- [#253](https://github.com/arkedge/c2a-core/pull/253): Update actions/deploy-pages action to v4
+- [#254](https://github.com/arkedge/c2a-core/pull/254): Update actions/upload-pages-artifact action to v3
+- [#250](https://github.com/arkedge/c2a-core/pull/250): Update sksat/setup-rye action to v0.10.0
+- [#252](https://github.com/arkedge/c2a-core/pull/252): Update sksat/action-clippy action to v0.4.0
+- [#258](https://github.com/arkedge/c2a-core/pull/258): Update renovate default reviewers
+- [#241](https://github.com/arkedge/c2a-core/pull/241): Update dependency ut-issl/s2e-core to v7.1.1
+- [#271](https://github.com/arkedge/c2a-core/pull/271): CDS: ComponentDriverSuper の整理（コードに変更なし）
+- [#272](https://github.com/arkedge/c2a-core/pull/272): sync_with_mobc_example.bat のメンテ
+- [#264](https://github.com/arkedge/c2a-core/pull/264): Update dependency ut-issl/s2e-core to v7.2.0
+- [#276](https://github.com/arkedge/c2a-core/pull/276): Update Rust crate semver to 1.0.21
+- [#257](https://github.com/arkedge/c2a-core/pull/257): Update arkedge/workflows-c2a action to v5
+- [#282](https://github.com/arkedge/c2a-core/pull/282): Update Swatinem/rust-cache action to v2.7.2
+- [#283](https://github.com/arkedge/c2a-core/pull/283): Fix check-coding-rule v4 workflow in workflows-c2a v5
+- [#284](https://github.com/arkedge/c2a-core/pull/284): Enable example build all again
+- [#285](https://github.com/arkedge/c2a-core/pull/285): Use matrix job to build multiple example users with same config
+
 
 ### Migration Guide
-- [#240](https://github.com/arkedge/c2a-core/pull/240): user 側でのコードレベルでの対応は不要
-  - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
+
+- C2A Boom
+  - [#281](https://github.com/arkedge/c2a-core/pull/281): `tools/install.sh` の Gaia のバージョン（Git tag）を `v0.6.1` 以降に更新する（RECOMMENDED）
+    - これにより，C2A DevTools が `http://localhost:8900/devtools` から使えるようになる
+    - これまで通り C2A DevTools サーバを別途立ち上げることもできるが，C2A DevTools は Gaia に[統合された](https://github.com/arkedge/gaia/pull/33)ため，非推奨となる
+- コード生成
+  - [#240](https://github.com/arkedge/c2a-core/pull/240), [#256](https://github.com/arkedge/c2a-core/pull/256): code-generator の機能追加・生成コード仕様の変更があるため，コード生成し直すこと（MUST）
+  - 以下の各更新のうち，Tlm DB の更新を含むものは，Excel から読み込んで csv を再出力し `calced_data` を更新すること（MUST）
+- [#269](https://github.com/arkedge/c2a-core/pull/269): `src/src_user/settings/component_driver_super` の rename（MUST）
+  - `src/src_user/settings/component_driver_super` を `src/src_user/settings/component_driver` に rename する
+  - user 側の include path を，`/component_driver_super/` から `/component_driver/` に一斉置換する
+  - `src_user/settings/CMakeLists.txt` の `/component_driver_super/` が含まれる path を `/component_driver/` に一斉置換する
+- [#261](https://github.com/arkedge/c2a-core/pull/261): `examples/mobc` の TL TLM を更新したので， `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_TL.csv` を user 側の TL TLM に上書きする
+- [#266](https://github.com/arkedge/c2a-core/pull/266): 以下の tlm id を変更したため，これらを user 側の tlm db に上書きする
+  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDIS.csv`
+  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CA.csv`
 - [#245](https://github.com/arkedge/c2a-core/pull/245): 影響範囲は memory dump application を使う OBC のみ
-  - Tlm Cmd DB を，`examples/mobc` のものと同様にする．
+  - Tlm Cmd DB を `examples/mobc` のものと同様にする
     - cmd: `MEM_*`
     - tlm: `MEM`
-  - 設定ファイルを格納する．
-    - `examples/mobc/src/src_user/settings/applications/memory_dump_define.h` を参考に．
-- [#256](https://github.com/arkedge/c2a-core/pull/256): user 側でのコードレベルでの対応は不要
-  - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
-- [#261](https://github.com/arkedge/c2a-core/pull/261): user 側でのコードレベルでの対応は不要
-  - `examples/mobc` の TL TLM を更新したので， `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_TL.csv` を user 側の TL TLM に上書きし， tlm db を再度読み込み，再出力することで更新し，そのあとコード生成し直すとよい．
-- [#265](https://github.com/arkedge/c2a-core/pull/265): user 側でのコードレベルでの対応は不要
-  - 新しい code-generator で生成したコードは，既存のものと diff が発生するため，改めてコード生成し直すとよい．
-- [#267](https://github.com/arkedge/c2a-core/pull/267)
-  - 以下の tlm id を変更したため，これらを user 側の tlm db に上書きし，tlm db を再度読み込み，再出力することで更新する．
-    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDIS.csv`
-    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CA.csv`
-- [#263](https://github.com/arkedge/c2a-core/pull/263): user 側でのコードレベルでの対応は不要
-  - CcpDump App を追加したため，この App を利用する user は，`applications/ccp_dump.c` をビルド対象に加え，App 登録する．
-  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CCP_DUMP.csv` を user 側の tlm db に追加し，コード生成をする．
-  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CCP_DUMP_*` コマンドを user 側の cmd db に追加し，コード生成をする．
-  - `examples/mobc/src/src_user/test/src_core/applications/test_ccp_dump.py` を user 側の test にも加える．
-    - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える．
-- [#268](https://github.com/arkedge/c2a-core/pull/268): user 側でのコードレベルでの対応は不要
-  - TL BCT Digest App を追加したため，この App を利用する user は，`applications/tl_bct_digest.c` をビルド対象に加え，App 登録する．
-  - `examples/mobc/tlm-cmd-db/TLM_DB/{SAMPLE_MOBC_TLM_DB_TL_DIGEST.csv,SAMPLE_MOBC_TLM_DB_BCT_DIGEST.csv}` を user 側の tlm db に追加し，コード生成をする．
-  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `TL_BCT_DIGEST_*` コマンドを user 側の cmd db に追加し，コード生成をする．
-  - `examples/mobc/src/src_user/test/src_core/applications/test_tl_bct_digest.py` を user 側の test にも加える．
-    - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える．
-- [#269](https://github.com/arkedge/c2a-core/pull/269):
-  - user 側の include path を，`/component_driver_super/` から `/component_driver/` に一斉置換する．
-  - `src_user/settings/CMakeLists.txt` の `/component_driver_super/` が含まれる path を `/component_driver/` に一斉置換する．
-- [#270](https://github.com/arkedge/c2a-core/pull/270):
+  - `examples/mobc` の `src/src_user/settings/applications/memory_dump_define.h` を参考に作成して設定する
+- [#263](https://github.com/arkedge/c2a-core/pull/263): CcpDump App の追加
+  - この App を利用する user は `src/src_core/applications/ccp_dump.c` をビルド対象に加え，App 登録する
+  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CCP_DUMP.csv` を user 側の tlm db に追加する
+  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CCP_DUMP_*` コマンドを user 側の cmd db に追加する
+  - `examples/mobc` から `src/src_user/test/src_core/applications/test_ccp_dump.py` をコピーする
+    - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える
+- [#268](https://github.com/arkedge/c2a-core/pull/268): TL BCT Digest App の追加
+  - この App を利用する user は `applications/tl_bct_digest.c` をビルド対象に加え，App 登録する
+  - `examples/mobc/tlm-cmd-db/TLM_DB/{SAMPLE_MOBC_TLM_DB_TL_DIGEST.csv,SAMPLE_MOBC_TLM_DB_BCT_DIGEST.csv}` を user 側の tlm db に追加する
+  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `TL_BCT_DIGEST_*` コマンドを user 側の cmd db に追加する
+  - `examples/mobc` から `src/src_user/test/src_core/applications/test_tl_bct_digest.py` をコピーする
+    - もし，汎用テスト用 BCT `BC_TEST_USE_PYTEST` が user 側に存在しない場合， user 側の BCT ID にも加える
+- [#270](https://github.com/arkedge/c2a-core/pull/270), [#273](https://github.com/arkedge/c2a-core/pull/273): ComponentDriverUtility App の追加
   - `CDRV_ID` を user 側で設定する
-    - `examples/mobc/src/src_user/settings/component_driver/component_driver_define.{c,h}` を参考に， user 側でもこのコードを配置する．
-    - `component_driver_define.c` をビルド対象に加える．
-  - ComponentDriverUtility App の追加
-    - ComponentDriverUtility App を追加したため，この App を利用する user は，`applications/component_driver_utility.c` をビルド対象に加え，App 登録する．
-    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL.csv` を user 側の tlm db に追加し，コード生成をする．
-    - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CDRV_UTIL_*` コマンドを user 側の cmd db に追加し，コード生成をする．
-- [#237](https://github.com/arkedge/c2a-core/pull/237): user 側でのコードレベルでの対応は不要
-  - ComponentDriverUtility App の更新
-    - すでに user 側に ComponentDriverUtility App が追加されていなければ，[#270](https://github.com/arkedge/c2a-core/pull/270) での差分を適用する．
-    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL_HAL_RX_DATA.csv` を user 側の tlm db に追加し，コード生成をする．
-    - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CDRV_UTIL_*` コマンドを user 側の cmd db に追加し，コード生成をする．
-    - `examples/mobc/src/src_user/settings/applications/component_driver_utility_params.h` を参考に， user 側でもこのコードを配置する．
-  - pytest の追加
-    - もし， user 側で subobc ありの pytest を扱っている場合， `examples/subobc/src/src_user/test/test_component_driver_utility.py` を user 側の test にも加える．
-- [#275](https://github.com/arkedge/c2a-core/pull/275): user 側でのコードレベルでの対応は不要
-  - AM tlm でのキャストを緩和し， 1 tlm でダウンリンクできる個数を減少させた．同様の修正を user にも当てる場合には，以下が必要となる．
-    - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_AM.csv` を user 側の AM tlm に上書きし， tlm db を再度読み込み，再出力することで更新する．
-    - `examples/mobc/src/src_user/settings/system/app_manager_params.h` を参考に，特に `AM_TLM_PAGE_SIZE`, `AM_TLM_PAGE_SIZE` に注意して `app_manager_params.h` を更新する（tlm と整合が取れるように）．
+    - `examples/mobc` を参考に，`src/src_user/settings/component_driver/component_driver_define.{c,h}` を配置し，ビルド対象に加える
+  - この App を利用する user は `src/src_core/applications/component_driver_utility.c` をビルド対象に加え，App 登録する
+  - `examples/mobc` を参考に，`src/src_user/settings/applications/component_driver_utility_params.h` を配置する
+  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CDRV_UTIL_*` コマンドを user 側の cmd db に追加する
+  - `examples/mobc/tlm-cmd-db/CMD_DB/SAMPLE_MOBC_CMD_DB_CMD_DB.csv` の `CDRV_UTIL_*` コマンドを user 側の cmd db に追加する
+  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL.csv` を user 側の tlm db に追加する
+  - `examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_CDRV_UTIL_HAL_RX_DATA.csv` を user 側の tlm db に追加する
+  - もし， user 側で subobc ありの pytest を扱っている場合，`examples/subobc` から `src/src_user/test/test_component_driver_utility.py` をコピーする
+- [#275](https://github.com/arkedge/c2a-core/pull/275): AM tlm のキャスト緩和（u8 -> u16）に伴う tlm 再設定
+  - App manager のテレメサイズのデフォルト設定が変わったため，再設定すること
+  - App の初期化時間がそこまで長くならないような状況であったり，テレメサイズを切り詰めたい場合は引き続き u8 としてよい
+  - `examples/mobc` と同様にする場合は，`examples/mobc/tlm-cmd-db/TLM_DB/SAMPLE_MOBC_TLM_DB_AM.csv` を user 側の AM tlm に上書きする
+  - `examples/mobc` を参考に `src/src_user/settings/system/app_manager_params.h` を更新する
+    - tlm と整合が取れるように，特に `AM_TLM_PAGE_SIZE`, `AM_TLM_PAGE_SIZE` に注意して更新する
 
 
 ## v4.1.0 (2023-12-11)
