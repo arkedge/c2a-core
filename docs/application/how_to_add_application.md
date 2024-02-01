@@ -64,16 +64,16 @@
 
 ### Tlm ID の採番について
 Tlm ID の採番ルールについては，user 任意である．
-一方で，様々な衛星でテレメをできる限り共通化したい（Tlm DB の csv を使いまわしたい）， core update を容易にしたい（core テレメをそのまま user に取り込みたい）などの理由から， [`/examples/mobc/tlm-cmd-db`](/examples/mobc/tlm-cmd-db) では次のようなゆるいルールを採用している．
+一方で，様々な衛星でテレメトリをできる限り共通化したい（Tlm DB の csv を使いまわしたい）， core update を容易にしたい（core テレメトリをそのまま user に取り込みたい）などの理由から， [`/examples/mobc/tlm-cmd-db`](/examples/mobc/tlm-cmd-db) では次のようなゆるいルールを採用している．
 
 採番の意図としては，次のようなものがある．
 - 現状コマンドファイル等で Tlm ID がベタ書きされているので， Tlm ID の変更は最小限におさえる
-- core のテレメと user のテレメや，似てる機能のテレメをまとめる
+- core のテレメトリと user のテレメトリや，似てる機能のテレメトリをまとめる
 - Tlm の追加があり得るので，ID はゆとりをもって採番する
 
-| Tlm ID | どのようなテレメを採番するか |
+| Tlm ID | どのようなテレメトリを採番するか |
 | -- | -- |
-| `0x0*`  |  衛星基本テレメ（MOBC，PCDU，DRなど） |
+| `0x0*`  |  衛星基本テレメトリ（MOBC，PCDU，DRなど） |
 | `0x1*`  |  メモリ系．MEM, FLASH, NvRAM など |
 | `0x2*`  |  C2A基本機能．TL, BCT, TF, CA, CDIS など |
 | `0x3*`  |  C2A基本機能のための reserved |
