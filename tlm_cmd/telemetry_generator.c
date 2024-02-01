@@ -51,8 +51,6 @@ static CCP_CmdRet TG_forward_tlm_(APID apid,
  */
 static uint16_t TG_get_next_seq_count_(void);
 
-static CommonTlmPacket TG_ctp_;
-
 
 // FIXME: 現在のコードは，MOBC と sub OBC の Tlm id がユニークであることを想定している
 //        本来被っても良いはず
@@ -68,6 +66,7 @@ CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
   uint8_t dest_flags_mask = 0xe0; // 11100000b        // FIXME: 一時的な対応
   uint8_t dr_partition;
   ctp_dest_flags_t dest_flags;
+  CommonTlmPacket ctp;
 
   if (num_dumps >= 8)
   {
@@ -79,13 +78,13 @@ CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
 
   // ctp の ヘッダ部分の APID をクリア
   // この後で， 配送元 OBC が自身か sub obc かを割り出せるように
-  CTP_set_apid(&TG_ctp_, (APID)(APID_UNKNOWN & 0x7ff));    // FIXME: APID_UNKNOWN = APID_FILL_PKT + 1 だと 11 bit から溢れてる...
+  CTP_set_apid(&ctp, (APID)(APID_UNKNOWN & 0x7ff));    // FIXME: APID_UNKNOWN = APID_FILL_PKT + 1 だと 11 bit から溢れてる...
 
   // ADU生成
   // ADU分割が発生しない場合に限定したコードになっている。
   // TLM定義シート上で定義するADUはADU長をADU分割が発生しない長さに制限する。
   ack = TF_generate_contents(id,
-                             TG_ctp_.packet,
+                             ctp.packet,
                              &len,
                              TSP_MAX_LEN);
 
@@ -94,7 +93,7 @@ CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
   if (ack != TF_TLM_FUNC_ACK_SUCCESS) return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_CONTEXT);
 
   // Header
-  if ((APID)(CTP_get_apid(&TG_ctp_) & 0x7ff) != (APID)(APID_UNKNOWN & 0x7ff))    // FIXME: APID_UNKNOWN = APID_FILL_PKT + 1 だと 11 bit から溢れてる...
+  if ((APID)(CTP_get_apid(&ctp) & 0x7ff) != (APID)(APID_UNKNOWN & 0x7ff))    // FIXME: APID_UNKNOWN = APID_FILL_PKT + 1 だと 11 bit から溢れてる...
   {
     // sub OBC で生成された TLM の primary header, secondary header の board time はそのまま維持
   }
@@ -102,15 +101,15 @@ CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
   {
     // Primary Header
     // FIXME: Space Packet 依存を直す
-    TSP_setup_primary_hdr(&TG_ctp_, CTP_APID_TLM_FROM_ME, TG_get_next_seq_count_(), len);
+    TSP_setup_primary_hdr(&ctp, CTP_APID_TLM_FROM_ME, TG_get_next_seq_count_(), len);
 
     // Secondary Header
-    TSP_set_board_time(&TG_ctp_, (uint32_t)(TMGR_get_master_total_cycle()));
+    TSP_set_board_time(&ctp, (uint32_t)(TMGR_get_master_total_cycle()));
   }
 
   // FIXME: 他の時刻も入れる
-  CTP_set_global_time(&TG_ctp_);
-  TSP_set_on_board_subnet_time(&TG_ctp_, (uint32_t)(TMGR_get_master_total_cycle()));   // FIXME: 暫定
+  CTP_set_global_time(&ctp);
+  TSP_set_on_board_subnet_time(&ctp, (uint32_t)(TMGR_get_master_total_cycle()));   // FIXME: 暫定
 
   // FIXME: 他 OBC からのパケットは別処理する
   // FIXME: 一旦雑に category を処理してるが後でちゃんと直す
@@ -120,15 +119,15 @@ CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet)
   {
     dest_flags = CTP_DEST_FLAG_RP_TLM;
   }
-  TSP_set_dest_flags(&TG_ctp_, dest_flags);
-  TSP_set_dest_info(&TG_ctp_, dr_partition);   // FIXME: もはや dr partition ですらない
-  TSP_set_tlm_id(&TG_ctp_, id);
-  TSP_set_2nd_hdr_ver(&TG_ctp_, TSP_2ND_HDR_VER_1);
+  TSP_set_dest_flags(&ctp, dest_flags);
+  TSP_set_dest_info(&ctp, dr_partition);   // FIXME: もはや dr partition ですらない
+  TSP_set_tlm_id(&ctp, id);
+  TSP_set_2nd_hdr_ver(&ctp, TSP_2ND_HDR_VER_1);
 
   // 生成したパケットを指定された回数配送処理へ渡す
   while (num_dumps != 0)
   {
-    PH_analyze_tlm_packet(&TG_ctp_);
+    PH_analyze_tlm_packet(&ctp);
     --num_dumps;
   }
 
@@ -219,6 +218,7 @@ static CCP_CmdRet TG_generate_tlm_(TLM_CODE tlm_id,
 {
   TF_TLM_FUNC_ACK ack;
   uint16_t packet_len;
+  CommonTlmPacket ctp;
 
   if (dump_num >= 8)
   {
@@ -235,7 +235,7 @@ static CCP_CmdRet TG_generate_tlm_(TLM_CODE tlm_id,
   // FIXME: ↑ ADU，今の TSP では存在しない？ 文面見直してなおす
   //          https://github.com/ut-issl/c2a-core/issues/222
   ack = TF_generate_contents(tlm_id,
-                             TG_ctp_.packet,
+                             ctp.packet,
                              &packet_len,
                              TSP_MAX_LEN);
 
@@ -246,22 +246,22 @@ static CCP_CmdRet TG_generate_tlm_(TLM_CODE tlm_id,
   // 自身の OBC のテレメ生成を前提としているので， Cmd_GENERATE_TLM のように sub OBC 判定はいれない
 
   // Primary Header
-  TSP_setup_primary_hdr(&TG_ctp_, CTP_APID_TLM_FROM_ME, TG_get_next_seq_count_(), packet_len);
+  TSP_setup_primary_hdr(&ctp, CTP_APID_TLM_FROM_ME, TG_get_next_seq_count_(), packet_len);
 
   // Secondary Header
-  TSP_set_2nd_hdr_ver(&TG_ctp_, TSP_2ND_HDR_VER_1);
-  TSP_set_board_time(&TG_ctp_, (uint32_t)(TMGR_get_master_total_cycle()));
-  TSP_set_tlm_id(&TG_ctp_, tlm_id);
+  TSP_set_2nd_hdr_ver(&ctp, TSP_2ND_HDR_VER_1);
+  TSP_set_board_time(&ctp, (uint32_t)(TMGR_get_master_total_cycle()));
+  TSP_set_tlm_id(&ctp, tlm_id);
   // FIXME: 他の時刻も入れる
-  CTP_set_global_time(&TG_ctp_);
-  CTP_set_on_board_subnet_time(&TG_ctp_);
-  TSP_set_dest_flags(&TG_ctp_, dest_flags);
-  TSP_set_dest_info(&TG_ctp_, dest_info);
+  CTP_set_global_time(&ctp);
+  CTP_set_on_board_subnet_time(&ctp);
+  TSP_set_dest_flags(&ctp, dest_flags);
+  TSP_set_dest_info(&ctp, dest_info);
 
   // 生成したパケットを指定された回数配送処理へ渡す
   while (dump_num != 0)
   {
-    PH_analyze_tlm_packet(&TG_ctp_);
+    PH_analyze_tlm_packet(&ctp);
     --dump_num;
   }
 
@@ -277,6 +277,7 @@ static CCP_CmdRet TG_forward_tlm_(APID apid,
 {
   TF_TLM_FUNC_ACK ack;
   uint16_t packet_len;
+  CommonTlmPacket ctp;
 
   if (dump_num >= 8)
   {
@@ -286,7 +287,7 @@ static CCP_CmdRet TG_forward_tlm_(APID apid,
 
   ack = PH_user_telemetry_router(apid,
                                  tlm_id,
-                                 TG_ctp_.packet,
+                                 ctp.packet,
                                  &packet_len,
                                  TSP_MAX_LEN);
 
@@ -298,24 +299,24 @@ static CCP_CmdRet TG_forward_tlm_(APID apid,
 
   // Secondary Header
   // FIXME: 方針を決めて直す（また， `(uint64_t)` へのキャストは不適切そう）
-  // if ((uint64_t)TSP_get_global_time(&TG_ctp_) == 0xffffffffffffffffULL)
+  // if ((uint64_t)TSP_get_global_time(&ctp) == 0xffffffffffffffffULL)
   // {
-  //   CTP_set_global_time(&TG_ctp_);
+  //   CTP_set_global_time(&ctp);
   // }
-  if (CTP_get_on_board_subnet_time(&TG_ctp_) == 0xffffffff)
+  if (CTP_get_on_board_subnet_time(&ctp) == 0xffffffff)
   {
     // FIXME: 本当は ComponentDriver で受信時に上書きするべき？ 一応 CTP_get_ctp_from_cdssc でも対応
     // MOBC - sub OBC (2nd OBC) - 3rd OBC というとき， sub OBC でも 0xffffffff ができるようにしている
-    CTP_set_on_board_subnet_time(&TG_ctp_);
+    CTP_set_on_board_subnet_time(&ctp);
   }
 
-  TSP_set_dest_flags(&TG_ctp_, dest_flags);
-  TSP_set_dest_info(&TG_ctp_, dest_info);
+  TSP_set_dest_flags(&ctp, dest_flags);
+  TSP_set_dest_info(&ctp, dest_info);
 
   // 生成したパケットを指定された回数配送処理へ渡す
   while (dump_num != 0)
   {
-    PH_analyze_tlm_packet(&TG_ctp_);
+    PH_analyze_tlm_packet(&ctp);
     --dump_num;
   }
 

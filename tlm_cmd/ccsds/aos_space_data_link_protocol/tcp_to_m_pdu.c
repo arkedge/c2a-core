@@ -61,10 +61,10 @@ T2M_ACK T2M_form_m_pdu(TcpToMPdu* tcp_to_m_pdu, PacketList* pl, MultiplexingProt
         // この場合、生成されたFill Packetは次M_PDUにまたがる。
         // この状態で追加のテレメトリが生成されない場合は、Fill
         // Packetのみで構成されたM_PDUが一度送出されることになる。
-        static TlmSpacePacket fill_; // サイズが大きいため静的確保(スタック保護)
+        TlmSpacePacket fill;
         size_t fill_size = M_PDU_DATA_SIZE - tcp_to_m_pdu->m_pdu_wp;
-        TSP_setup_fill_packet(&fill_, (uint16_t)fill_size);
-        PL_push_back(pl, &fill_);
+        TSP_setup_fill_packet(&fill, (uint16_t)fill_size);
+        PL_push_back(pl, &fill);
       }
     }
 
