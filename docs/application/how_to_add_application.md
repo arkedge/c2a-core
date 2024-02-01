@@ -73,9 +73,9 @@ Tlm ID の採番ルールについては，user 任意である．
 
 | Tlm ID | どのようなテレメトリを採番するか |
 | -- | -- |
-| `0x0*`  |  衛星基本テレメトリ（MOBC，PCDU，DRなど） |
-| `0x1*`  |  メモリ系．MEM, FLASH, NvRAM など |
-| `0x2*`  |  C2A基本機能．TL, BCT, TF, CA, CDIS など |
+| `0x0*`  |  衛星基本テレメトリ（MOBC, PCDU, DR など） |
+| `0x1*`  |  メモリ系（MEM, FLASH, NvRAM など） |
+| `0x2*`  |  C2A基本機能（TL, BCT, TF, CA, CDIS など） |
 | `0x3*`  |  C2A基本機能のための reserved |
 | `0x4*`  |  C2A core の応用機能系（App 関連，Mode 関連など） |
 | `0x5*`  |  C2A Event 系（EL, EHなど） |
