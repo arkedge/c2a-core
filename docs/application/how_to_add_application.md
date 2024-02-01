@@ -62,6 +62,30 @@
     - c2a-tlm-cmd-code-generator については https://github.com/arkedge/c2a-core/blob/main/code-generator/README.md を参照
 
 
+### Tlm ID の採番について
+Tlm ID の採番ルールについては，user 任意である．
+一方で，様々な衛星でテレメトリをできる限り共通化したい（Tlm DB の csv を使いまわしたい）， core update を容易にしたい（core テレメトリをそのまま user に取り込みたい）などの理由から， [`/examples/mobc/tlm-cmd-db`](/examples/mobc/tlm-cmd-db) では次のようなゆるいルールを採用している．
+
+採番の意図としては，次のようなものがある．
+- 現状コマンドファイル等で Tlm ID がベタ書きされているので， Tlm ID の変更は最小限におさえる
+- core のテレメトリと user のテレメトリや，似てる機能のテレメトリをまとめる
+- Tlm の追加があり得るので，ID はゆとりをもって採番する
+
+| Tlm ID | どのようなテレメトリを採番するか |
+| -- | -- |
+| `0x0*`  |  衛星基本テレメトリ（MOBC, PCDU, DR など） |
+| `0x1*`  |  メモリ系（MEM, FLASH, NvRAM など） |
+| `0x2*`  |  C2A基本機能（TL, BCT, TF, CA, CDIS など） |
+| `0x3*`  |  C2A基本機能のための reserved |
+| `0x4*`  |  C2A core の応用機能系（App 関連，Mode 関連など） |
+| `0x5*`  |  C2A Event 系（EL, EHなど） |
+| `0x6*`  |  ドライバ，コンポ関連（基本コンポなど） |
+| `0x7*`  |  ドライバ，コンポ関連（通信系コンポなど） |
+| `0x8*`  |  ドライバ，コンポ関連（デバッグ用，リプロなど，特殊なもの） |
+| `0x9*` - `0xe*` | 特に規定せず（user で自由に利用） |
+| `0xf*`  |  HK tlm 類（衛星によっては HK が複数あることも）， git rev，他 |
+
+
 ## コマンド追加手順
 以下手順を踏む
 
