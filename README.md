@@ -18,6 +18,25 @@
 - [CHANGELOG](./CHANGELOG.md)
 
 
+## 必要環境
+### CPU 速度
+TBW
+
+### メモリ
+#### 静的領域
+TBW
+
+#### スタック
+C2A core 内部で，`CommonTlmCmdPacket`，`CommonTlmPacket`，`CommonCmdPacket` （[`communication.md`](/docs/core/communication.md) 参照）などのサイズの大きい変数が確保されることがあるため，これらの構造体を複数個確保できるスタックメモリが必要となる．
+なお，コマンド内部で別のコマンドを実行する際に用いる `CCP_form_and_exec_*` 関数は，実行した別のコマンドで更に他のコマンドを実行するなどすると再帰的に呼ばれるため，再帰回数だけ `CommonCmdPacket` をスタックメモリに確保することになるので，実行時のスタックメモリ枯渇に注意すること．
+
+#### ヒープ
+動的メモリ確保は行わない．
+
+### その他
+TBW
+
+
 ## 開発
 ### セットアップ
 1. clone 後， [`setup.bat`](./setup.bat) or [`setup.sh`](./setup.sh) を実行
