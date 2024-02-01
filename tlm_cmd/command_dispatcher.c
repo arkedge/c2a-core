@@ -112,7 +112,7 @@ static void CDIS_clear_exec_info_(CDIS_ExecInfo* exec_info)
 
 void CDIS_dispatch_command(CommandDispatcher* cdis)
 {
-  static CommonCmdPacket packet_; // パケットコピー用．サイズが大きいため静的変数として宣言
+  CommonCmdPacket packet; // パケットコピー用
 
   // 実行有効フラグが無効化されている場合は処理打ち切り
   if (cdis->lockout) return;
@@ -130,7 +130,7 @@ void CDIS_dispatch_command(CommandDispatcher* cdis)
   }
 
   // 実行すべきコマンドパケットを取得
-  packet_ = *(const CommonCmdPacket*)(PL_get_head(cdis->pl)->packet);
+  packet = *(const CommonCmdPacket*)(PL_get_head(cdis->pl)->packet);
 
   // ここで実行種別を変更するのをやめた．
   // - MOBCから配送される第二OBCにも，GS cmdやTL cmdを送信したいため
@@ -141,13 +141,13 @@ void CDIS_dispatch_command(CommandDispatcher* cdis)
   // タイムラインはここでリアルタイムに変換される。
   // この処理は特に複数機器でパケットルーティングを行う場合重要。
   // 普通はルーティング先はルーティング元のタイムラインを受け付けないはず。
-  CCP_set_exec_type(&packet_, CCP_EXEC_TYPE_RT);
+  CCP_set_exec_type(&packet, CCP_EXEC_TYPE_RT);
   */
 
   // 実行時情報を記録しつつコマンドを実行
   cdis->prev.time    = TMGR_get_master_clock();
-  cdis->prev.code    = CCP_get_id(&packet_);
-  cdis->prev.cmd_ret = PH_dispatch_command(&packet_);
+  cdis->prev.code    = CCP_get_id(&packet);
+  cdis->prev.cmd_ret = PH_dispatch_command(&packet);
 
   // 実行したコマンドをリストから破棄
   PL_drop_executed(cdis->pl);

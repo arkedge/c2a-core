@@ -297,7 +297,7 @@ static PH_ACK PH_add_tl_cmd_(TLCD_ID id,
 
 static PH_ACK PH_add_utl_cmd_(TLCD_ID id, const CommonCmdPacket* packet)
 {
-  static CommonCmdPacket temp_; // サイズが大きいため静的領域に確保
+  CommonCmdPacket temp;
 
   // utl_unixtime : time_manager.h の utl_unixtime_epoch_ を参照
   // UTL_cmd ではパケットヘッダーの ti の部分に utl_unixtime が格納されている
@@ -305,11 +305,11 @@ static PH_ACK PH_add_utl_cmd_(TLCD_ID id, const CommonCmdPacket* packet)
   cycle_t ti = TMGR_get_ti_from_utl_unixtime(utl_unixtime);
 
   // TL_cmd に変換して tl_cmd_list に追加する
-  CCP_copy_packet(&temp_, packet);
-  CCP_set_ti(&temp_, ti);
-  CCP_set_exec_type(&temp_, CCP_EXEC_TYPE_TL_FROM_GS); // UTL -> TL
+  CCP_copy_packet(&temp, packet);
+  CCP_set_ti(&temp, ti);
+  CCP_set_exec_type(&temp, CCP_EXEC_TYPE_TL_FROM_GS); // UTL -> TL
 
-  return PH_add_tl_cmd_(id, &temp_, TMGR_get_master_total_cycle());
+  return PH_add_tl_cmd_(id, &temp, TMGR_get_master_total_cycle());
 }
 
 

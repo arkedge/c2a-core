@@ -102,8 +102,6 @@ static void MEM_send_packet_(const CommonTlmPacket* ctp, uint8_t dump_num);
 static MemoryDump memory_dump_;
 const MemoryDump* const memory_dump = &memory_dump_;
 
-static CommonTlmPacket MEM_ctp_;    // データサイズが大きいのでstatic確保
-
 
 AppInfo MEM_create_app(void)
 {
@@ -123,6 +121,7 @@ static CCP_CmdRet MEM_dump_as_blob_tlm_(ctp_dest_flags_t dest_flags,
                                         uint8_t dump_num)
 {
   MEM_ACK ack;
+  CommonTlmPacket ctp;
 
   if (dump_num >= 8)
   {
@@ -132,13 +131,13 @@ static CCP_CmdRet MEM_dump_as_blob_tlm_(ctp_dest_flags_t dest_flags,
   }
 
   // 設定値にもとづき送出すべきパケットを構築
-  ack = MEM_form_packet_(&MEM_ctp_, dest_flags, dest_info);
+  ack = MEM_form_packet_(&ctp, dest_flags, dest_info);
 
   switch (ack)
   {
   case MEM_ACK_SUCCESS:
     // 生成したパケットを送出し、Counter を更新
-    MEM_send_packet_(&MEM_ctp_, dump_num);
+    MEM_send_packet_(&ctp, dump_num);
     ++memory_dump_.internal.data_seq;
     return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
 
@@ -298,6 +297,7 @@ CCP_CmdRet Cmd_MEM_DUMP_REGION(const CommonCmdPacket* packet)
 
 CCP_CmdRet Cmd_MEM_DUMP_SINGLE(const CommonCmdPacket* packet)
 {
+  CommonTlmPacket ctp;
   ctp_dest_flags_t dest_flags = (ctp_dest_flags_t)CCP_get_param_from_packet(packet, 0, uint8_t);
   uint8_t dest_info = CCP_get_param_from_packet(packet, 1, uint8_t);
   uint8_t dump_num = CCP_get_param_from_packet(packet, 2, uint8_t);
@@ -311,11 +311,11 @@ CCP_CmdRet Cmd_MEM_DUMP_SINGLE(const CommonCmdPacket* packet)
   }
 
   // ヘッダ設定
-  MEM_set_ctp_header_(&MEM_ctp_, dest_flags, dest_info, SP_SEQ_FLAG_SINGLE, MEM_MAX_CTP_DATA_SIZE);
+  MEM_set_ctp_header_(&ctp, dest_flags, dest_info, SP_SEQ_FLAG_SINGLE, MEM_MAX_CTP_DATA_SIZE);
   // ダンプデータをコピー
-  memcpy(CTP_get_user_data_head(&MEM_ctp_), (const void*)begin, MEM_MAX_CTP_DATA_SIZE);
+  memcpy(CTP_get_user_data_head(&ctp), (const void*)begin, MEM_MAX_CTP_DATA_SIZE);
   // テレメ送出
-  MEM_send_packet_(&MEM_ctp_, dump_num);
+  MEM_send_packet_(&ctp, dump_num);
 
   return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
 }

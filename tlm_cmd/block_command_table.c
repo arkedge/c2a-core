@@ -522,7 +522,7 @@ CCP_CmdRet Cmd_BCT_OVERWRITE_CMD(const CommonCmdPacket* packet)
 // パス運用時に使用するので, 一応厳密にしておいたほうがいい気もする.
 CCP_CmdRet Cmd_BCT_FILL_NOP(const CommonCmdPacket* packet)
 {
-  static CommonCmdPacket temp_packet_;
+  CommonCmdPacket temp_packet;
   cycle_t ti;
   uint8_t num_nop = CCP_get_param_from_packet(packet, 0, uint8_t);
 
@@ -531,8 +531,8 @@ CCP_CmdRet Cmd_BCT_FILL_NOP(const CommonCmdPacket* packet)
 
   for (ti = 11 - (cycle_t)num_nop; ti < 11; ++ti)
   {
-    CCP_form_tlc(&temp_packet_, ti, Cmd_CODE_NOP, NULL, 0);
-    BCT_register_cmd(&temp_packet_);
+    CCP_form_tlc(&temp_packet, ti, Cmd_CODE_NOP, NULL, 0);
+    BCT_register_cmd(&temp_packet);
   }
 
   return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
