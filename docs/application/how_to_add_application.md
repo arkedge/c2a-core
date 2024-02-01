@@ -52,7 +52,7 @@
 
 - Tlm DB にテレメトリを追加する
     - Tlm DB のファイルに追加したいテレメトリを追加する
-    - Tlm DB 内の Excel ファイルにある`Variable or Function Name`の欄に取得したいテレメトリの変数を追加する
+    - Tlm DB 内の Excel ファイルにある `Variable or Function Name` の欄に取得したいテレメトリの変数を追加する
     - Tlm DB の Path：`tlm-cmd-db/TLM_DB`
      - Tlm DB については https://github.com/arkedge/c2a-tlmcmddb/tree/main/tlm-cmd-db を参照
 - c2a-code-generator を実行する
