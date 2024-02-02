@@ -1,12 +1,13 @@
 # Requirements
 
 ## CPU 速度
-TBW  
-メモリ使用量に大きく関わるパラメタについては [`parameter_settings.md`](docs/tips/parameter_settings.md) を参照のこと．
+TBW
+
 
 ## メモリ
 ### 静的領域
-TBW．
+TBW  
+メモリ使用量に大きく関わるパラメタについては [`parameter_settings.md`](../tips/parameter_settings.md) を参照のこと．
 
 ### スタック
 C2A core 内部で，`CommonTlmCmdPacket`，`CommonTlmPacket`，`CommonCmdPacket` （[`communication.md`](/docs/core/communication.md) 参照）などのサイズの大きい変数が確保されることがあるため，これらの構造体を複数個確保できるスタックメモリが必要となる．  
@@ -16,6 +17,7 @@ C2A core 内部で，`CommonTlmCmdPacket`，`CommonTlmPacket`，`CommonCmdPacket
 
 ### ヒープ
 動的メモリ確保は行わない．
+
 
 ## その他
 TBW
