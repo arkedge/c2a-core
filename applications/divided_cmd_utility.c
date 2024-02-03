@@ -71,8 +71,6 @@ static void DCU_create_log_on_front_(CMD_CODE cmd_code);
 static DividedCmdUtility divided_cmd_utility_;
 const DividedCmdUtility* const divided_cmd_utility = &divided_cmd_utility_;
 
-static CommonCmdPacket DCU_packet_;
-
 
 AppInfo DCU_create_app(void)
 {
@@ -208,14 +206,15 @@ DCU_ACK DCU_register_next(CMD_CODE cmd_code, const uint8_t* param, uint16_t len)
 {
   uint8_t idx;
   CCP_UTIL_ACK ret;
+  CommonCmdPacket ccp;
 
   DCU_move_to_front_in_log_(cmd_code);
   idx = divided_cmd_utility_.exec_log_order[0];
   divided_cmd_utility_.exec_logs[idx].status = DCU_STATUS_PROGRESS;
 
-  ret = CCP_form_rtc(&DCU_packet_, cmd_code, param, len);
+  ret = CCP_form_rtc(&ccp, cmd_code, param, len);
   if (ret != CCP_UTIL_ACK_OK) return DCU_ACK_ERR;
-  if (PH_analyze_cmd_packet(&DCU_packet_) != PH_ACK_SUCCESS)
+  if (PH_analyze_cmd_packet(&ccp) != PH_ACK_SUCCESS)
   {
     return DCU_ACK_ERR;
   }

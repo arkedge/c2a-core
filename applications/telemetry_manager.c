@@ -346,8 +346,6 @@ static CCP_CmdRet TLM_MGR_conv_err_code_to_ccp_cmd_ret_(TLM_MGR_ERR_CODE code);
 static TelemetryManager telemetry_manager_;
 const TelemetryManager* const telemetry_manager = &telemetry_manager_;
 
-static CommonCmdPacket TLM_MGR_packet_;
-
 AppInfo TLM_MGR_create_app(void)
 {
   return AI_create_app_info("telemetry_manager", TLM_MGR_init_by_am_, NULL);
@@ -499,6 +497,7 @@ static TLM_MGR_ERR_CODE TLM_MGR_register_(TLM_MGR_BC_ROLE role,
                                           TLM_CODE tlm_id,
                                           uint8_t dr_partition)
 {
+  CommonCmdPacket ccp;
   TLM_MGR_ERR_CODE ret;
   TLM_MGR_RegisterInfo* register_info = NULL;
   BCT_Pos register_pos;
@@ -511,7 +510,7 @@ static TLM_MGR_ERR_CODE TLM_MGR_register_(TLM_MGR_BC_ROLE role,
   ret = TLM_MGR_get_next_register_cmd_pos_(&register_pos, &register_cmd_elem, register_info);
   if (ret != TLM_MGR_ERR_CODE_OK) return ret;
 
-  ret = TLM_MGR_form_register_tlc_(&TLM_MGR_packet_,
+  ret = TLM_MGR_form_register_tlc_(&ccp,
                                    (cycle_t)register_pos.cmd,
                                    cmd_type,
                                    apid,
@@ -520,7 +519,7 @@ static TLM_MGR_ERR_CODE TLM_MGR_register_(TLM_MGR_BC_ROLE role,
   if (ret != TLM_MGR_ERR_CODE_OK) return ret;
 
   // すでに NOP で埋められており，かつ activate 済なので，直接 BCT にコマンドを挿入できる．
-  bct_ack = BCT_overwrite_cmd(&register_pos, &TLM_MGR_packet_);
+  bct_ack = BCT_overwrite_cmd(&register_pos, &ccp);
   if (bct_ack != BCT_SUCCESS) return TLM_MGR_ERR_CODE_OTHER_ERR;
 
   // cmd_table の更新
@@ -680,6 +679,7 @@ static TLM_MGR_ERR_CODE TLM_MGR_delete_(TLM_MGR_BC_ROLE role,
                                         TLM_CODE tlm_id,
                                         uint8_t dr_partition)
 {
+  CommonCmdPacket ccp;
   TLM_MGR_ERR_CODE ret;
   TLM_MGR_RegisterInfo* register_info = NULL;
   BCT_Pos delete_pos;
@@ -713,9 +713,9 @@ static TLM_MGR_ERR_CODE TLM_MGR_delete_(TLM_MGR_BC_ROLE role,
   {
     // 消す対象が末端ではない
     // 末尾で消す対象を上書き
-    bct_ack = BCT_load_cmd(&last_pos, &TLM_MGR_packet_);
+    bct_ack = BCT_load_cmd(&last_pos, &ccp);
     if (bct_ack != BCT_SUCCESS) return TLM_MGR_ERR_CODE_OTHER_ERR;
-    bct_ack = BCT_overwrite_cmd(&delete_pos, &TLM_MGR_packet_);
+    bct_ack = BCT_overwrite_cmd(&delete_pos, &ccp);
     if (bct_ack != BCT_SUCCESS) return TLM_MGR_ERR_CODE_OTHER_ERR;
 
     TLM_MGR_update_cmd_elem_of_cmd_table_(delete_cmd_elem,
@@ -727,11 +727,11 @@ static TLM_MGR_ERR_CODE TLM_MGR_delete_(TLM_MGR_BC_ROLE role,
 
   // 末尾の削除
   // TODO: TI が正しいかテストでチェック
-  ret = TLM_MGR_form_nop_tlc_(&TLM_MGR_packet_, (cycle_t)last_pos.cmd);
+  ret = TLM_MGR_form_nop_tlc_(&ccp, (cycle_t)last_pos.cmd);
   if (ret != TLM_MGR_ERR_CODE_OK) return ret;
 
   // すでに NOP で埋められており，かつ activate 済なので，直接 BCT にコマンドを挿入できる．
-  bct_ack = BCT_overwrite_cmd(&last_pos, &TLM_MGR_packet_);
+  bct_ack = BCT_overwrite_cmd(&last_pos, &ccp);
   if (bct_ack != BCT_SUCCESS) return TLM_MGR_ERR_CODE_OTHER_ERR;
 
   TLM_MGR_clear_cmd_elem_of_cmd_table_(last_cmd_elem);

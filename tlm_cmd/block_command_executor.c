@@ -16,8 +16,6 @@
 #include "../system/time_manager/time_manager.h"
 #include "common_cmd_packet_util.h"
 
-static CommonCmdPacket BCE_packet_;
-
 static BlockCommandExecutor block_command_executor_;
 const BlockCommandExecutor* const block_command_executor = &block_command_executor_;
 
@@ -227,6 +225,7 @@ static CCP_CmdRet BCE_rotate_block_cmd_(bct_id_t block)
 {
   BCE_Params* bc_exe_params;
   BCT_Pos pos;
+  CommonCmdPacket ccp;
 
   if (block >= BCT_MAX_BLOCKS) return BCT_convert_bct_ack_to_ccp_cmd_ret(BCT_INVALID_BLOCK_NO);
 
@@ -249,8 +248,8 @@ static CCP_CmdRet BCE_rotate_block_cmd_(bct_id_t block)
   BCE_set_bc_exe_params_(block, bc_exe_params);
 
   BCT_make_pos(&pos, block, bc_exe_params->rotate.next_cmd);
-  BCT_load_cmd(&pos, &BCE_packet_);
-  return PH_dispatch_command(&BCE_packet_);
+  BCT_load_cmd(&pos, &ccp);
+  return PH_dispatch_command(&ccp);
 }
 
 CCP_CmdRet Cmd_BCE_COMBINE_BLOCK(const CommonCmdPacket* packet)
@@ -273,6 +272,7 @@ static CCP_CmdRet BCE_combine_block_cmd_(bct_id_t block)
 {
   uint8_t cmd;
   uint8_t length;
+  CommonCmdPacket ccp;
 
   if (block >= BCT_MAX_BLOCKS) return BCT_convert_bct_ack_to_ccp_cmd_ret(BCT_INVALID_BLOCK_NO);
 
@@ -287,8 +287,8 @@ static CCP_CmdRet BCE_combine_block_cmd_(bct_id_t block)
 
     pos.block = block;
     pos.cmd = cmd;
-    BCT_load_cmd(&pos, &BCE_packet_);
-    cmd_ret = PH_dispatch_command(&BCE_packet_);
+    BCT_load_cmd(&pos, &ccp);
+    cmd_ret = PH_dispatch_command(&ccp);
 
     if (cmd_ret.exec_sts != CCP_EXEC_SUCCESS) return cmd_ret;
   }
@@ -323,6 +323,7 @@ static CCP_CmdRet BCE_timelimit_combine_block_cmd_(bct_id_t block, step_t limit_
   uint8_t cmd;
   uint8_t length;
   BCE_Params* bc_exe_params;
+  CommonCmdPacket ccp;
 
   ObcTime start = TMGR_get_master_clock();
   ObcTime finish;
@@ -352,8 +353,8 @@ static CCP_CmdRet BCE_timelimit_combine_block_cmd_(bct_id_t block, step_t limit_
 
     pos.block = block;
     pos.cmd = cmd;
-    BCT_load_cmd(&pos, &BCE_packet_);
-    cmd_ret = PH_dispatch_command(&BCE_packet_);
+    BCT_load_cmd(&pos, &ccp);
+    cmd_ret = PH_dispatch_command(&ccp);
 
     if (cmd_ret.exec_sts != CCP_EXEC_SUCCESS)
     {

@@ -32,9 +32,6 @@ static PL_Node* PL_get_free_node_(PacketList* pl);
 static PL_ACK PL_drop_head_(PacketList* pl);
 
 
-static CommonCmdPacket PL_ccp_; // サイズが大きいため静的領域に確保
-
-
 PL_ACK PL_initialize(PL_Node* pl_node_stock,
                      void* packet_stock,
                      uint16_t node_num,
@@ -291,6 +288,7 @@ PL_ACK PL_drop_node(PacketList* pl, PL_Node* prev, PL_Node* current)
 // FIXME: PL にあるのがおかしくて， TL 周りのどこかで検索して， insert を実行すべき
 PL_ACK PL_insert_tl_cmd(PacketList* pl, const CommonCmdPacket* packet, cycle_t now)
 {
+  CommonCmdPacket ccp;
   cycle_t head, tail;
   cycle_t planed = CCP_get_ti(packet);
 
@@ -298,12 +296,12 @@ PL_ACK PL_insert_tl_cmd(PacketList* pl, const CommonCmdPacket* packet, cycle_t n
 
   // TL に保存される Cmd の Sequence Count は 0 とする ( Digset のため)
   // FIXME: CSP 依存を CCP 依存にする
-  CCP_copy_packet(&PL_ccp_, packet);
-  CSP_set_seq_count((CmdSpacePacket*)&PL_ccp_, 0);
+  CCP_copy_packet(&ccp, packet);
+  CSP_set_seq_count((CmdSpacePacket*)&ccp, 0);
 
   if (now > planed) return PL_TLC_PAST_TIME;
   if (PL_is_full(pl)) return PL_LIST_FULL;
-  if (PL_is_empty(pl)) return PL_push_front(pl, &PL_ccp_);
+  if (PL_is_empty(pl)) return PL_push_front(pl, &ccp);
 
   // 以下，他コマンドが登録されているとき
   head = CCP_get_ti( (const CommonCmdPacket*)(PL_get_head(pl)->packet) );
@@ -311,11 +309,11 @@ PL_ACK PL_insert_tl_cmd(PacketList* pl, const CommonCmdPacket* packet, cycle_t n
 
   if (tail < planed) // 他のどれより遅い
   {
-    return PL_push_back(pl, &PL_ccp_);
+    return PL_push_back(pl, &ccp);
   }
   else if (head > planed) // 他のどれより早い
   {
-    return PL_push_front(pl, &PL_ccp_);
+    return PL_push_front(pl, &ccp);
   }
   else if (head == planed || tail == planed) // 時刻指定が等しい
   {
@@ -339,7 +337,7 @@ PL_ACK PL_insert_tl_cmd(PacketList* pl, const CommonCmdPacket* packet, cycle_t n
       }
       else if (curr_ti > planed) // 挿入場所発見
       {
-        PL_insert_after(pl, prev, &PL_ccp_);
+        PL_insert_after(pl, prev, &ccp);
         return PL_SUCCESS;
       }
       else // 既登録コマンドと時刻指定が等しい
@@ -380,23 +378,24 @@ PL_ACK PL_deploy_block_cmd(PacketList* pl, const bct_id_t block, cycle_t start_a
 
   for (i = 0; i < bc_length; ++i)
   {
+    CommonCmdPacket ccp;
     BCT_Pos pos;
     PL_ACK ack = PL_SUCCESS;
 
     // コマンドを読みだし、TLCとして実行時刻を設定
     BCT_make_pos(&pos, block, i);
-    BCT_load_cmd(&pos, &PL_ccp_);
-    CCP_set_ti(&PL_ccp_, (cycle_t)(start_at + adj + CCP_get_ti(&PL_ccp_)));
-    CCP_set_exec_type(&PL_ccp_, CCP_EXEC_TYPE_TL_FROM_GS); // BLC -> TLC   // FIXME: TaskListやBC用TLM用もすべて CCP_EXEC_TYPE_TL_FROM_GS になってしまうので, わかりにくい
+    BCT_load_cmd(&pos, &ccp);
+    CCP_set_ti(&ccp, (cycle_t)(start_at + adj + CCP_get_ti(&ccp)));
+    CCP_set_exec_type(&ccp, CCP_EXEC_TYPE_TL_FROM_GS); // BLC -> TLC   // FIXME: TaskListやBC用TLM用もすべて CCP_EXEC_TYPE_TL_FROM_GS になってしまうので, わかりにくい
 
     for (j = 0; j <= pl->active_nodes_; ++j)
     {
       // コマンドをTLCに登録を試みる
-      ack = PL_insert_tl_cmd(pl, &PL_ccp_, start_at);
+      ack = PL_insert_tl_cmd(pl, &ccp, start_at);
       if (ack != PL_TLC_ALREADY_EXISTS) break;    // PL_SUCCESS なはず． TODO: 一応 event 発行しておく？
 
       // 同一時刻で既に登録されていた場合は時刻をずらして再登録
-      CCP_set_ti(&PL_ccp_, CCP_get_ti(&PL_ccp_) + 1);
+      CCP_set_ti(&ccp, CCP_get_ti(&ccp) + 1);
       ++adj; // 累積調整時間を更新する
     }
     if (ack != PL_SUCCESS) return ack;
