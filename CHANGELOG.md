@@ -8,9 +8,6 @@
 
 ### Breaking Changes
 - [#301](https://github.com/arkedge/c2a-core/pull/301): `CCP_form_and_exec_*` の再帰実行時のメモリエラーバグの修正
-
-
-### Enhancements
 - [#302](https://github.com/arkedge/c2a-core/pull/302): static に確保している packet 系の変数のローカル変数化
 
 
