@@ -20,6 +20,10 @@ option(C2A_USE_ALL_CORE_APPS        "Use C2A-core all Applications" ON)
 option(C2A_USE_ALL_CORE_TEST_APPS   "Use C2A-core all Test Applications" ON)
 option(C2A_USE_ALL_CORE_LIB         "Use C2A-core all library" ON)
 
+## C2A build target board option （標準実装などがこのオプションによってスイッチされる）
+option(C2A_ADD_SRC_FOR_MOBC         "Add src intended for MOBC to build target" OFF)
+option(C2A_ADD_SRC_FOR_SUBOBC       "Add src intended for sub OBC to build target" OFF)
+
 ## C2A CCSDS select
 # See alse; /docs/core/ccsds.md
 option(C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL  "Use C2A-core CCSDS AOS SPACE DATA LINK PROTOCOL implementation" OFF)
