@@ -18,9 +18,11 @@
 
 
 ### Migration Guide
-- [#301](https://github.com/arkedge/c2a-core/pull/301): 要求されるスタックメモリの容量が増加しており，[Requirements](./docs/general/requirements.md) を参考に，スタックメモリの容量を確認する（MUST）
-  - [#302](https://github.com/arkedge/c2a-core/pull/302) があるため，基本的には user 側での対応は不要
-  - 経緯は [#303](https://github.com/arkedge/c2a-core/issues/303) を参照
+- [Requirements](./docs/general/requirements.md) を参考に，マイコンのスタックメモリの容量に余裕があるかどうか確認すること（MUST）
+  - 今後ハードウェアに対する要求事項は [docs/general/requirements.md](docs/general/requirements.md) に書かれることになるので，今後のアップデートでも適宜確認すること
+  - 今回の経緯は [#303](https://github.com/arkedge/c2a-core/issues/303) を参照
+  - [#301](https://github.com/arkedge/c2a-core/pull/301) で要求されるスタック容量が増加している
+  - [#302](https://github.com/arkedge/c2a-core/pull/302) で結果的に同程度以上のメモリ使用量削減を行っているため，実用上は今回のアップデートに伴って C2A user 側でメモリ使用量削減をする必要は無い
 
 
 ## v4.2.0 (2024-01-26)
