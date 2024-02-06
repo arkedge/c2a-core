@@ -4,7 +4,7 @@
 
 
 
-## v4.3.0 (2024-02-05)
+## v4.3.0 (2024-02-06)
 
 ### Breaking Changes
 - [#301](https://github.com/arkedge/c2a-core/pull/301): `CCP_form_and_exec_*` の再帰実行時のメモリエラーバグの修正
