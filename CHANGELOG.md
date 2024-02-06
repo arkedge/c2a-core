@@ -2,6 +2,29 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
+
+
+## v4.3.0 (2024-02-06)
+
+### Breaking Changes
+- [#301](https://github.com/arkedge/c2a-core/pull/301): `CCP_form_and_exec_*` の再帰実行時のメモリエラーバグの修正
+- [#302](https://github.com/arkedge/c2a-core/pull/302): static に確保している packet 系の変数のローカル変数化
+
+
+### Documentation
+
+- [#299](https://github.com/arkedge/c2a-core/pull/299): アプリケーション追加時に必要な手順のドキュメント追加
+- [#300](https://github.com/arkedge/c2a-core/pull/300): Tlm ID の採番についてのルールのドキュメント追加
+
+
+### Migration Guide
+- [Requirements](./docs/general/requirements.md) を参考に，マイコンのスタックメモリの容量に余裕があるかどうか確認すること（MUST）
+  - 今後ハードウェアに対する要求事項は [docs/general/requirements.md](docs/general/requirements.md) に書かれることになるので，今後のアップデートでも適宜確認すること
+  - 今回の経緯は [#303](https://github.com/arkedge/c2a-core/issues/303) を参照
+  - [#301](https://github.com/arkedge/c2a-core/pull/301) で要求されるスタック容量が増加している
+  - [#302](https://github.com/arkedge/c2a-core/pull/302) で結果的に同程度以上のメモリ使用量削減を行っているため，実用上は今回のアップデートに伴って C2A user 側でメモリ使用量削減をする必要は無い
+
+
 ## v4.2.0 (2024-01-26)
 
 ### Breaking Changes
