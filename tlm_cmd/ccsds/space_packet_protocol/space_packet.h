@@ -38,7 +38,7 @@
 
 #include <stdint.h>
 #include "space_packet_typedef.h"
-#include "../../common_tlm_cmd_packet.h"
+#include "../../common_packet/common_tlm_cmd_packet.h"
 
 #define SP_PRM_HDR_LEN   (6)   //!< Packet Primary Header 長
 
