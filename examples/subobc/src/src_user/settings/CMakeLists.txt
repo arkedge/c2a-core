@@ -14,7 +14,7 @@ set(C2A_SRCS
   modes/transitions/sl_nop.c
   system/event_logger_settings.c
   system/event_handler_rules/event_handler_rules.c
-  tlm_cmd/common_packet/common_cmd_packet_define.c
+  tlm_cmd/common_cmd_packet_define.c
   tlm_cmd/ccsds/apid_define.c
 )
 
