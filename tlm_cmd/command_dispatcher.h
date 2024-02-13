@@ -5,8 +5,8 @@
 #ifndef COMMAND_DISPATCHER_H_
 #define COMMAND_DISPATCHER_H_
 
-#include "common_cmd_packet_util.h"
-#include "common_cmd_packet.h"
+#include "./common_packet/common_cmd_packet_util.h"
+#include "./common_packet/common_cmd_packet.h"
 #include "packet_list.h"
 #include "../system/time_manager/obc_time.h"
 #include "../library/result.h"

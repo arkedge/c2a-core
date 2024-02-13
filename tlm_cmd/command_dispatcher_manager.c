@@ -8,7 +8,7 @@
 #include "command_dispatcher_manager.h"
 #include <stddef.h>
 #include <string.h>
-#include "./common_cmd_packet_util.h"
+#include "./common_packet/common_cmd_packet_util.h"
 
 /**
  * @brief  cdis を cdis mgr に登録されているか探し，見つかった場合は idx を返す

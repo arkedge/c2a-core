@@ -5,7 +5,7 @@
 #ifndef PACKET_HANDLER_H_
 #define PACKET_HANDLER_H_
 
-#include "common_tlm_cmd_packet.h"
+#include "./common_packet/common_tlm_cmd_packet.h"
 #include "packet_list.h"
 #include "../applications/timeline_command_dispatcher_id_define.h"
 
