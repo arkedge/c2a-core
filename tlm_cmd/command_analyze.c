@@ -4,7 +4,7 @@
  * @brief  コマンドの実行・登録，コマンド関連処理
  */
 #include "command_analyze.h"
-#include "common_cmd_packet_util.h"
+#include "./common_packet/common_cmd_packet_util.h"
 #include <src_user/tlm_cmd/command_definitions.h>
 #include "../library/print.h"
  #include "../system/event_manager/event_logger.h"
