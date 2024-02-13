@@ -21,4 +21,4 @@ AOS Space Data Link Protocol や TC Space Data Link Protocol は，様々な設�
 （今後，適切にリファクタリングする予定．）
 
 また，本コードをコンパイル対象に加えると，少なくない RAM を static に確保してしまうため，デフォルトではコンパイル対象には含まれない．
-コンパイル対象に含める場合は， FIXME: で設定すること．
+コンパイル対象に含める場合は， `C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL`, `C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL` オプションで設定すること（[General Information/Build Options](../general/build_options.md) を参照）．
