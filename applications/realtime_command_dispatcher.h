@@ -3,7 +3,7 @@
 
 #include "../tlm_cmd/command_dispatcher.h"
 #include "../system/application_manager/app_info.h"
-#include "../tlm_cmd/common_cmd_packet.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet.h"
 
 extern const CommandDispatcher* const realtime_command_dispatcher;
 

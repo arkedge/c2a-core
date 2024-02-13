@@ -15,7 +15,7 @@
 #include "../library/print.h"
 #include "../library/endian.h"
 #include "../library/result.h"
-#include "../tlm_cmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet_util.h"
 #include <src_user/tlm_cmd/block_command_definitions.h>
 #include <src_user/tlm_cmd/command_definitions.h>
 #include <src_user/tlm_cmd/telemetry_definitions.h>

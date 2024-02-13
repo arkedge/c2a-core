@@ -6,7 +6,7 @@
 #define COMPONENT_DRIVER_UTILITY_H_
 
 #include "../system/application_manager/app_info.h"
-#include "../tlm_cmd/common_cmd_packet.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet.h"
 #include "../component_driver/component_driver.h"
 
 #define CDRV_UTIL_HAX_RX_BUFFER_SIZE  (256)   //!< Cmd_CDRV_UTIL_HAL_RX で受信するデータのバッファサイズ

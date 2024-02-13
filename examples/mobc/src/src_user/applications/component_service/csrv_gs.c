@@ -5,7 +5,7 @@
  */
 #include "csrv_gs.h"
 #include <src_core/tlm_cmd/packet_handler.h>
-#include <src_core/tlm_cmd/common_cmd_packet_util.h>
+#include <src_core/tlm_cmd/common_packet/common_cmd_packet_util.h>
 #include <src_core/library/print.h>
 #include <src_core/library/result.h>
 #include "../../component_driver/com/gs_validate.h"

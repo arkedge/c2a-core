@@ -4,7 +4,7 @@
  * @brief  CTP 関連基本関数の定義
  * @note   CCP:  CommonCmdPacket
  */
-#include <src_core/tlm_cmd/common_cmd_packet.h>
+#include <src_core/tlm_cmd/common_packet/common_cmd_packet.h>
 #include <src_core/tlm_cmd/ccsds/space_packet_protocol/cmd_space_packet.h>
 #include <string.h>
 

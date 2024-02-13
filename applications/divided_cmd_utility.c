@@ -13,7 +13,7 @@
  */
 #include "divided_cmd_utility.h"
 #include "../tlm_cmd/packet_handler.h"
-#include "../tlm_cmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet_util.h"
 #include "../system/time_manager/time_manager.h"
 #include "../system/event_manager/event_logger.h"
 #include "../library/result.h"

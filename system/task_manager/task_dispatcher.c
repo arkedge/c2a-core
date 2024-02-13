@@ -12,7 +12,7 @@
 
 #include "../../tlm_cmd/packet_list_util.h"
 #include "../../tlm_cmd/block_command_executor.h"
-#include "../../tlm_cmd/common_cmd_packet_util.h"
+#include "../../tlm_cmd/common_packet/common_cmd_packet_util.h"
 #include "../mode_manager/mode_manager.h"
 #include "../time_manager/time_manager.h"
 #include "../time_manager/obc_time_config.h"

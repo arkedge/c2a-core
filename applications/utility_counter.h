@@ -10,7 +10,7 @@
 
 #include "../system/application_manager/app_info.h"
 #include "../system/AnomalyLogger/anomaly_logger.h"
-#include "../tlm_cmd/common_cmd_packet.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet.h"
 
 // 汎用カウンタ用構造体
 typedef enum

@@ -469,7 +469,7 @@ def OutputTlmBufferH_(file_path, name, body, settings, obc_idx):
 
 #include "./{_obc_name_lower}_telemetry_definitions.h"
 #include <src_core/component_driver/driver_super.h>
-#include <src_core/tlm_cmd/common_tlm_packet.h>
+#include <src_core/tlm_cmd/common_packet/common_tlm_packet.h>
 #include <src_core/tlm_cmd/telemetry_frame.h>
 
 """[

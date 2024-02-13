@@ -11,7 +11,7 @@
 
 // ここで CCP_DEST_TYPE を定義する
 // 詳細は
-// - /examples/mobc/src/src_user/settings/tlm_cmd/common_cmd_packet_define.h
+// - /examples/mobc/src/src_user/settings/tlm_cmd/common_packet/common_cmd_packet_define.h
 // - https://github.com/arkedge/c2a-core/blob/develop/docs/core/communication.md
 // を参照
 /* 例
@@ -26,7 +26,7 @@ typedef enum
 } CCP_DEST_TYPE;
 */
 // さらに， CCP_APID_CMD_TO_ME, CCP_MAX_LEN, CommonCmdPacket として使うパケット型を指定する
-#include <src_user/settings/tlm_cmd/common_cmd_packet_define.h>
+#include <src_user/settings/tlm_cmd/common_packet/common_cmd_packet_define.h>
 
 // ここで APID を定義する
 // 詳細は common_tlm_cmd_packet.h を参照

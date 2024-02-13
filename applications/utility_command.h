@@ -3,7 +3,7 @@
 // FIXME: このAppは現在管理されていない！
 //        使用する前に確認すること
 
-#include "../tlm_cmd/common_cmd_packet.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet.h"
 #include "../hal/uart.h"
 #include "../system/application_manager/app_info.h"
 

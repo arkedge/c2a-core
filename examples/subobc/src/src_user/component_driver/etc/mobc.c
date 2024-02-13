@@ -7,7 +7,7 @@
 // FIXME: DS 側の TCP が整理されたら， TCP 関連を撲滅し， CTCP に統一する
 
 #include "./mobc.h"
-#include <src_core/tlm_cmd/common_tlm_cmd_packet.h>
+#include <src_core/tlm_cmd/common_packet/common_tlm_cmd_packet.h>
 #include <src_core/component_driver/cdrv_eb90_frame.h>
 #include <src_core/component_driver/cdrv_common_tlm_cmd_packet.h>
 #include <string.h>
