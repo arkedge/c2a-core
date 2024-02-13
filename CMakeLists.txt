@@ -20,9 +20,8 @@ option(C2A_USE_ALL_CORE_APPS        "Use C2A-core all Applications" ON)
 option(C2A_USE_ALL_CORE_TEST_APPS   "Use C2A-core all Test Applications" ON)
 option(C2A_USE_ALL_CORE_LIB         "Use C2A-core all library" ON)
 
-## C2A build target board option （標準実装などがこのオプションによってスイッチされる）
-option(C2A_ADD_SRC_FOR_MOBC         "Add src intended for MOBC to build target" OFF)
-option(C2A_ADD_SRC_FOR_SUB_OBC      "Add src intended for sub OBC to build target" OFF)
+## C2A build target board option （標準実装などがこのオプションによってスイッチされる．デフォルトでは sub OBC を想定）
+option(C2A_ENABLE_MOBC_FEATURES     "Enable some features for MOBC" OFF)
 
 ## C2A CCSDS select
 # See alse; /docs/core/ccsds.md
