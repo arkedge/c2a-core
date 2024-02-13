@@ -7,7 +7,7 @@
  */
 #include "nop.h"
 #include <stddef.h>
-#include "../tlm_cmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet_util.h"
 #include "../library/result.h"
 
 static RESULT NOP_nop_(void);

@@ -6,8 +6,8 @@
 #define USER_PACKET_HANDLER_H_
 
 #include <src_core/tlm_cmd/packet_list.h>
-#include <src_core/tlm_cmd/common_tlm_cmd_packet.h>
-#include <src_core/tlm_cmd/common_cmd_packet_util.h>
+#include <src_core/tlm_cmd/common_packet/common_tlm_cmd_packet.h>
+#include <src_core/tlm_cmd/common_packet/common_cmd_packet_util.h>
 #include <src_core/tlm_cmd/packet_handler.h>
 #include <src_core/tlm_cmd/telemetry_frame.h>
 #include "telemetry_definitions.h"

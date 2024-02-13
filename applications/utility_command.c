@@ -4,7 +4,7 @@
 #include "../hal/uart.h"
 #include <src_user/settings/port_config.h>
 #include <string.h>                     // for memcpy
-#include "../tlm_cmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet_util.h"
 #include "../library/result.h"
 
 
