@@ -11,10 +11,19 @@ TBA
 
 ### C2A Core 機能
 #### `C2A_USE_ALL_CORE_APPS`
-`ON` にすることで，全ての Core Application をビルドする．  
+`ON` にすることで，全ての [Core Application](/applications/) をビルドする．  
 その場合， `/src_user/applications/CMakeLists.txt` にビルドしたい Core Application を適宜追加すること．
 
 https://github.com/arkedge/c2a-core/blob/459dbbf84d9587730f248ccbadb5a5745b28903d/examples/subobc/src/src_user/applications/CMakeLists.txt#L9-L13
+
+
+#### `C2A_USE_ALL_CORE_TEST_APPS`
+`ON` にすることで，全ての [Core Test Application](/applications/test_app/) をビルドする．
+
+
+#### `C2A_USE_ALL_CORE_LIB`
+`ON` にすることで，全ての [Core Library](/library/) をビルドする．
+
 
 
 ### その他
