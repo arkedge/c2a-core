@@ -25,6 +25,14 @@ https://github.com/arkedge/c2a-core/blob/459dbbf84d9587730f248ccbadb5a5745b28903
 `ON` にすることで，全ての [Core Library](/library/) をビルドする．
 
 
+#### `C2A_ENABLE_MOBC_FEATURES`
+`ON` にすることで，MOBC 向けの機能を有効化する．デフォルトは `OFF` であり， sub OBC 向けの実装となる．
+
+
+#### `C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL`, `C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL`
+`ON` にすることで，CCSDS の AOS Space Data Link Protocol / TC Space Data Link Protocol の実装をビルドする．  
+[Core Layer/CCSDS](../core/ccsds.md) も参考のこと．
+
 
 ### その他
 #### `C2A_USE_STDINT_WRAPPER`
