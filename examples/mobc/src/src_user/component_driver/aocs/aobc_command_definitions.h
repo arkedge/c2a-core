@@ -5,7 +5,7 @@
  * @note  コード生成元 tlm-cmd-db:
  *          repository:     github.com/arkedge/c2a-core.git
  *          CSV files MD5:  7bd311e714ca9b903ba0bfe4bb4538ea
- *          db commit hash: 812f8f19d6afb61f5dbe8ff4412e074926afc3ac
+ *          db commit hash: 01fe51979e3731de3d0a191d9f5a7d965f7dca5b
  * @note  コード生成パラメータ:
  *          name:                    AOBC
  *          db_prefix:               SAMPLE_AOBC
@@ -43,7 +43,7 @@ typedef enum
   AOBC_Cmd_CODE_TDSP_SET_TASK_LIST                                = 0x0011,  //!< タスクリスト設定コマンド
   AOBC_Cmd_CODE_TLCD_CLEAR_ALL_TIMELINE                           = 0x0012,  //!< 全TLC登録解除
   AOBC_Cmd_CODE_TLCD_CLEAR_TIMELINE_AT                            = 0x0013,  //!< TI指定TLC登録解除
-  AOBC_Cmd_CODE_TLCD_DEPLOY_BLOCK                                 = 0x0014,  //!< BLC展開 
+  AOBC_Cmd_CODE_TLCD_DEPLOY_BLOCK                                 = 0x0014,  //!< BLC展開
   AOBC_Cmd_CODE_TLCD_CLEAR_ERR_LOG                                = 0x0015,  //!< 最新のコマンド実行異常記録をクリア
   AOBC_Cmd_CODE_TLCD_SET_SOE_FLAG                                 = 0x0016,  //!< 異常時実行停止機能設定(ライン番号@@ フラグ)
   AOBC_Cmd_CODE_TLCD_SET_LOUT_FLAG                                = 0x0017,  //!< 実行停止機能設定(ライン番号@@ フラグ)

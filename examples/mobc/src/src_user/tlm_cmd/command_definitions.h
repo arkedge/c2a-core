@@ -37,7 +37,7 @@ typedef enum
   Cmd_CODE_TDSP_SET_TASK_LIST                                    = 0x0011,  //!< タスクリスト設定コマンド
   Cmd_CODE_TLCD_CLEAR_ALL_TIMELINE                               = 0x0012,  //!< 全TLC登録解除
   Cmd_CODE_TLCD_CLEAR_TIMELINE_AT                                = 0x0013,  //!< TI指定TLC登録解除
-  Cmd_CODE_TLCD_DEPLOY_BLOCK                                     = 0x0014,  //!< BLC展開 
+  Cmd_CODE_TLCD_DEPLOY_BLOCK                                     = 0x0014,  //!< BLC展開
   Cmd_CODE_TLCD_CLEAR_ERR_LOG                                    = 0x0015,  //!< 最新のコマンド実行異常記録をクリア
   Cmd_CODE_TLCD_SET_SOE_FLAG                                     = 0x0016,  //!< 異常時実行停止機能設定(ライン番号@@ フラグ)
   Cmd_CODE_TLCD_SET_LOUT_FLAG                                    = 0x0017,  //!< 実行停止機能設定(ライン番号@@ フラグ)
