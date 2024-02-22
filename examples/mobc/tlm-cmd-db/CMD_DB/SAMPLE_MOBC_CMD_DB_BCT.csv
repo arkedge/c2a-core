@@ -3,7 +3,7 @@ Comment,Name,ShortName,BCID,エイリアス,,,,,Danger Flag,Description,Note
 **,Block Cmds for Mode Transition (シーケンスリスト),,,,,,,,,,
 *,./src_user/settings/modes/transitions/ で定義,,,,,,,,,,
 ,BC_SL_START_UP_TO_INITIAL,,0,,,,,,danger,,
-,BC_SL_NOP ,,17,,,,,,danger,,
+,BC_SL_NOP,,17,,,,,,danger,,
 **,Block Cmds for TaskList (タスクリスト) : 286-300,,,,,,,,,,
 *,./src_user/settings/modes/task_lists/ で定義,,,,,,,,,,
 ,BC_TL_START_UP,,20,,,,,,danger,,
