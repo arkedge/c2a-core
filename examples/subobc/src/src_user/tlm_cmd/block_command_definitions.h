@@ -4,7 +4,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: 7bd311e714ca9b903ba0bfe4bb4538ea
+ *          CSV files MD5: 0e38aad788fca6fba1d44684152ac1a2
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_AOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -22,7 +22,7 @@ typedef enum
   // Block Cmds for Mode Transition (シーケンスリスト)
   // ./src_user/settings/modes/transitions/ で定義
   BC_SL_START_UP_TO_INITIAL = 0,
-  BC_SL_NOP  = 17,
+  BC_SL_NOP = 17,
 
   // Block Cmds for TaskList (タスクリスト) : 286-300
   // ./src_user/settings/modes/task_lists/ で定義

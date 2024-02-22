@@ -33,8 +33,8 @@ def GenerateCmdDef(settings, sgc_db):
         comment = sgc_db[i][0]
         name = sgc_db[i][1]
         cmd_id = sgc_db[i][3]
-        description = sgc_db[i][19].strip()
-        note = sgc_db[i][20].strip()
+        description = sgc_db[i][19]
+        note = sgc_db[i][20]
         if comment == "" and name == "":  # CommentもNameも空白なら打ち切り
             break
         if comment != "":  # Comment
@@ -132,7 +132,7 @@ def GenerateBctDef(settings, bct_db):
 
         # エスケープ解除
         name = name.replace("@@", ",")
-        description = description.replace("@@", ",").strip()
+        description = description.replace("@@", ",")
 
         if comment == "" and name == "":  # CommentもNameも空白なら打ち切り
             break
@@ -183,8 +183,8 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
             comment = sgc_db[j][0]
             name = sgc_db[j][1]
             cmd_id = sgc_db[j][3]
-            description = sgc_db[j][19].strip()
-            note = sgc_db[j][20].strip()
+            description = sgc_db[j][19]
+            note = sgc_db[j][20]
             if comment == "" and name == "":  # CommentもNameも空白なら打ち切り
                 break
             if comment != "":  # Comment
