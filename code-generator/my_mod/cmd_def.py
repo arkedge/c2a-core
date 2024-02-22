@@ -15,6 +15,16 @@ def GenerateCmdDef(settings, sgc_db):
 
     DATA_SART_ROW = 3
 
+    # コマンド名の最大長を取得
+    max_cmd_name_len = 0
+    for i in range(DATA_SART_ROW, len(sgc_db)):
+        comment = sgc_db[i][0]
+        if comment != "":
+            continue
+        name = sgc_db[i][1]
+        if len(name) > max_cmd_name_len:
+            max_cmd_name_len = len(name)
+
     body_c = ""
     body_h = ""
     # "  cmd_table[Cmd_CODE_NOP].cmd_func = Cmd_NOP;"
@@ -23,6 +33,8 @@ def GenerateCmdDef(settings, sgc_db):
         comment = sgc_db[i][0]
         name = sgc_db[i][1]
         cmd_id = sgc_db[i][3]
+        description = sgc_db[i][19].strip()
+        note = sgc_db[i][20].strip()
         if comment == "" and name == "":  # CommentもNameも空白なら打ち切り
             break
         if comment != "":  # Comment
@@ -32,7 +44,15 @@ def GenerateCmdDef(settings, sgc_db):
         # print(cmd_name)
         # print(cmd_code)
         body_c += "  cmd_table[" + cmd_code + "].cmd_func = " + cmd_name + ";\n"
-        body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
+        body_h += "  " + cmd_code + " " * (max_cmd_name_len - len(name)) + " = " + cmd_id + ","
+        if description == "" and note == "":
+            body_h += "\n"
+        elif description != "" and note == "":
+            body_h += "  //!< " + description + "\n"
+        elif description != "" and note != "":
+            body_h += "  //!< " + description + " (" + note + ")\n"
+        else:
+            body_h += "  //!< (" + note + ")\n"
 
     body_c += "\n"
     for i in range(DATA_SART_ROW, len(sgc_db)):
@@ -112,7 +132,7 @@ def GenerateBctDef(settings, bct_db):
 
         # エスケープ解除
         name = name.replace("@@", ",")
-        description = description.replace("@@", ",")
+        description = description.replace("@@", ",").strip()
 
         if comment == "" and name == "":  # CommentもNameも空白なら打ち切り
             break
@@ -147,12 +167,24 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
         sgc_db = other_obc_dbs[obc_name]
         # pprint.pprint(sgc_db)
 
+        # コマンド名の最大長を取得
+        max_cmd_name_len = 0
+        for j in range(DATA_SART_ROW, len(sgc_db)):
+            comment = sgc_db[j][0]
+            if comment != "":
+                continue
+            name = sgc_db[j][1]
+            if len(name) > max_cmd_name_len:
+                max_cmd_name_len = len(name)
+
         body_h = ""
         # "  TOBC_Cmd_CODE_NOP = 0x0000,"
         for j in range(DATA_SART_ROW, len(sgc_db)):
             comment = sgc_db[j][0]
             name = sgc_db[j][1]
             cmd_id = sgc_db[j][3]
+            description = sgc_db[j][19].strip()
+            note = sgc_db[j][20].strip()
             if comment == "" and name == "":  # CommentもNameも空白なら打ち切り
                 break
             if comment != "":  # Comment
@@ -162,7 +194,15 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
                 name, settings["other_obc_data"][i]["is_cmd_prefixed_in_db"]
             )
             cmd_code = name_upper + "_" + cmd_code
-            body_h += "  " + cmd_code + " = " + cmd_id + ",\n"
+            body_h += "  " + cmd_code + " " * (max_cmd_name_len - len(name)) + " = " + cmd_id + ","
+            if description == "" and note == "":
+                body_h += "\n"
+            elif description != "" and note == "":
+                body_h += "  //!< " + description + "\n"
+            elif description != "" and note != "":
+                body_h += "  //!< " + description + " (" + note + ")\n"
+            else:
+                body_h += "  //!< (" + note + ")\n"
         # print(body_h)
         output_file_path = (
             settings["path_to_src"]
