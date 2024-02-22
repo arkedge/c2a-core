@@ -35,10 +35,10 @@ def LoadCmdCSV_(cmd_db_path, db_prefix, encoding):
 
     with open(sgc_db_path, mode="r", encoding=encoding) as fh:
         reader = csv.reader(fh)
-        sgc_db = [row for row in reader]
+        sgc_db = [[s.strip() for s in row] for row in reader]
     with open(bct_db_path, mode="r", encoding=encoding) as fh:
         reader = csv.reader(fh)
-        bct_db = [row for row in reader]
+        bct_db = [[s.strip() for s in row] for row in reader]
 
     return sgc_db, bct_db
 
@@ -76,7 +76,7 @@ def LoadTlmCSV_(tlm_db_path, db_prefix, tlm_id_range, encoding):
         tlm_sheet_path = tlm_db_path + db_prefix + "_TLM_DB_" + tlm_name + ".csv"
         with open(tlm_sheet_path, mode="r", encoding=encoding) as fh:
             reader = csv.reader(fh)
-            sheet = [row for row in reader]
+            sheet = [[s.strip() for s in row] for row in reader]
             # pprint.pprint(sheet)
             # print(sheet)
             enable_flag = sheet[2][2]  # FIXME: Enable/Disable を取得．マジックナンバーで指定してしまってる．

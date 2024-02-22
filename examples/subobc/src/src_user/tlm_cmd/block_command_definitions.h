@@ -22,7 +22,7 @@ typedef enum
   // Block Cmds for Mode Transition (シーケンスリスト)
   // ./src_user/settings/modes/transitions/ で定義
   BC_SL_START_UP_TO_INITIAL = 0,
-  BC_SL_NOP  = 17,
+  BC_SL_NOP = 17,
 
   // Block Cmds for TaskList (タスクリスト) : 286-300
   // ./src_user/settings/modes/task_lists/ で定義
