@@ -18,6 +18,9 @@ def GenerateCmdDef(settings, sgc_db):
     # コマンド名の最大長を取得
     max_cmd_name_len = 0
     for i in range(DATA_SART_ROW, len(sgc_db)):
+        comment = sgc_db[i][0]
+        if comment != "":
+            continue
         name = sgc_db[i][1]
         if len(name) > max_cmd_name_len:
             max_cmd_name_len = len(name)
@@ -129,7 +132,7 @@ def GenerateBctDef(settings, bct_db):
 
         # エスケープ解除
         name = name.replace("@@", ",")
-        description = description.replace("@@", ",")
+        description = description.replace("@@", ",").strip()
 
         if comment == "" and name == "":  # CommentもNameも空白なら打ち切り
             break
@@ -167,6 +170,9 @@ def GenerateOtherObcCmdDef(settings, other_obc_dbs):
         # コマンド名の最大長を取得
         max_cmd_name_len = 0
         for j in range(DATA_SART_ROW, len(sgc_db)):
+            comment = sgc_db[j][0]
+            if comment != "":
+                continue
             name = sgc_db[j][1]
             if len(name) > max_cmd_name_len:
                 max_cmd_name_len = len(name)
