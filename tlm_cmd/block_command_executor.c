@@ -242,12 +242,12 @@ static CCP_CmdRet BCE_rotate_block_cmd_(bct_id_t block)
 
   bc_exe_params->rotate.counter = 0;
 
+  BCE_set_bc_exe_params_(block, bc_exe_params);
+  BCT_make_pos(&pos, block, bc_exe_params->rotate.next_cmd);
+
   ++bc_exe_params->rotate.next_cmd;
   bc_exe_params->rotate.next_cmd %= BCT_get_bc_length(block);
 
-  BCE_set_bc_exe_params_(block, bc_exe_params);
-
-  BCT_make_pos(&pos, block, bc_exe_params->rotate.next_cmd);
   BCT_load_cmd(&pos, &ccp);
   return PH_dispatch_command(&ccp);
 }
