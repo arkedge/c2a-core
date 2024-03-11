@@ -3,6 +3,13 @@
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
 
+## v4.4.0 (2024-xx-xx)
+
+### Migration Guide
+- [#319](https://github.com/arkedge/c2a-core/pull/319): `rotator` で TI＝0 のコマンドから実行されるように修正 
+  - デバッグ出力を使用している user は，起動時の表示タイミングが変わるため，この PR の Example user の変更を取り込むこと
+  - rotator で実行順に依存するような処理がある場合は，適宜 Task list の並び替えを行うこと
+
 
 ## v4.3.0 (2024-02-06)
 
