@@ -6,7 +6,7 @@
 #define TL_BCT_DIGEST_H_
 
 #include "../system/application_manager/app_info.h"
-#include "../tlm_cmd/common_cmd_packet.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet.h"
 #include "../tlm_cmd/block_command_table.h"
 #include "../tlm_cmd/packet_handler.h"
 #include "../system/time_manager/obc_time.h"

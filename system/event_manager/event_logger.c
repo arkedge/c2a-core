@@ -13,7 +13,7 @@
 #include "../time_manager/time_manager.h"
 #include "../watchdog_timer/watchdog_timer.h"
 #include <src_user/settings/system/event_logger_settings.h>
-#include "../../tlm_cmd/common_cmd_packet_util.h"
+#include "../../tlm_cmd/common_packet/common_cmd_packet_util.h"
 
 
 #ifdef EL_IS_ENABLE_CLOG

@@ -1,7 +1,7 @@
 #ifndef TELEMETRY_GENERATOR_H_
 #define TELEMETRY_GENERATOR_H_
 
-#include "common_cmd_packet.h"
+#include "./common_packet/common_cmd_packet.h"
 
 // deprecated
 CCP_CmdRet Cmd_GENERATE_TLM(const CommonCmdPacket* packet);

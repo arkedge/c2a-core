@@ -6,8 +6,8 @@
 #include "telemetry_frame.h"
 #include "packet_handler.h"
 #include "../system/time_manager/time_manager.h"
-#include "common_cmd_packet.h"
-#include "common_cmd_packet_util.h"
+#include "./common_packet/common_cmd_packet.h"
+#include "./common_packet/common_cmd_packet_util.h"
 #include <src_user/tlm_cmd/telemetry_definitions.h>
 #include <src_user/tlm_cmd/user_packet_handler.h>
 #include <src_user/settings/tlm_cmd/common_tlm_packet_define.h>

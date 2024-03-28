@@ -13,7 +13,7 @@ int UTIL_COUNTER_dummy(void)
 #include "../tlm_cmd/packet_handler.h"
 #include "../system/AnomalyLogger/anomaly_logger.h"
 #include <string.h>   // for memcpy
-#include "../tlm_cmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet_util.h"
 #include "../library/result.h"
 
 static UtilityCounter utility_counter_;

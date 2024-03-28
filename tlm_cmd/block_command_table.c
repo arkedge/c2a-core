@@ -18,7 +18,7 @@
 #include "../system/time_manager/time_manager.h"
 #include "../library/endian.h"
 #include "../system/watchdog_timer/watchdog_timer.h"
-#include "common_cmd_packet_util.h"
+#include "./common_packet/common_cmd_packet_util.h"
 
 // FIXME: この include は依存的にダメなので， TCP → Space Packet 大工事が終わったら直す
 #include "./ccsds/space_packet_protocol/space_packet.h"

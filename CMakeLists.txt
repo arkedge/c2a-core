@@ -56,7 +56,7 @@ set(C2A_SRCS
   tlm_cmd/command_analyze.c
   tlm_cmd/command_dispatcher.c
   tlm_cmd/command_dispatcher_manager.c
-  tlm_cmd/common_cmd_packet_util.c
+  tlm_cmd/common_packet/common_cmd_packet_util.c
   tlm_cmd/packet_handler.c
   tlm_cmd/packet_list_util.c
   tlm_cmd/packet_list.c

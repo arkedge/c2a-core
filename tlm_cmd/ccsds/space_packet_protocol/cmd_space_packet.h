@@ -62,7 +62,7 @@ typedef enum
 #include <stdint.h>
 #include "space_packet_typedef.h"
 #include "space_packet.h"
-#include "../../common_cmd_packet.h"
+#include "../../common_packet/common_cmd_packet.h"
 
 #if CSP_MAX_LEN <= SP_PRM_HDR_LEN
 #error CSP_MAX_LEN is too small

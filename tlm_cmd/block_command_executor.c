@@ -14,7 +14,7 @@
 #include "packet_handler.h"
 #include "../library/endian.h"
 #include "../system/time_manager/time_manager.h"
-#include "common_cmd_packet_util.h"
+#include "./common_packet/common_cmd_packet_util.h"
 
 static BlockCommandExecutor block_command_executor_;
 const BlockCommandExecutor* const block_command_executor = &block_command_executor_;

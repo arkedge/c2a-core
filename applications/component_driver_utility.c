@@ -4,7 +4,7 @@
  * @brief 様々な Component Driver に統一的な Cmd を提供する
  */
 #include "component_driver_utility.h"
-#include "../tlm_cmd/common_cmd_packet_util.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet_util.h"
 #include "../component_driver/component_driver.h"
 #include "../component_driver/driver_super.h"
 #include <stddef.h>

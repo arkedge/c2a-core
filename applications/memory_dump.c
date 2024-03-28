@@ -5,8 +5,8 @@
 
 #include "../system/time_manager/time_manager.h"
 #include "../tlm_cmd/packet_handler.h"
-#include "../tlm_cmd/common_cmd_packet_util.h"
-#include "../tlm_cmd/common_tlm_packet.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet_util.h"
+#include "../tlm_cmd/common_packet/common_tlm_packet.h"
 // TODO: いずれは Space Packet への依存をなくしたい (CTP の依存だけにしたい)
 #include "../tlm_cmd/ccsds/space_packet_protocol/space_packet.h"
 #include "../tlm_cmd/ccsds/space_packet_protocol/tlm_space_packet.h"

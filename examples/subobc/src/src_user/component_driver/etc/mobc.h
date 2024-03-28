@@ -8,7 +8,7 @@
 #include <src_core/hal/uart.h>
 #include <src_core/component_driver/driver_super.h>
 #include <src_core/system/time_manager/obc_time.h>
-#include <src_core/tlm_cmd/common_tlm_packet.h>
+#include <src_core/tlm_cmd/common_packet/common_tlm_packet.h>
 #include <src_core/tlm_cmd/packet_handler.h>
 
 /**

@@ -42,7 +42,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "../../tlm_cmd/common_cmd_packet.h"
+#include "../../tlm_cmd/common_packet/common_cmd_packet.h"
 #include "../time_manager/obc_time.h"
 
 // EL_GROUP (uint32_t を想定) をここで定義する
