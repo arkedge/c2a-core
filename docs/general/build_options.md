@@ -25,7 +25,7 @@ https://github.com/arkedge/c2a-core/blob/459dbbf84d9587730f248ccbadb5a5745b28903
 `ON` にすることで，全ての [Core Library](/library/) をビルドする．
 
 
-#### `C2A_ENABLE_MOBC_FEATURES`
+#### `C2A_MOBC_FEATURES`
 `ON` にすることで，MOBC 向けの機能を有効化する．デフォルトは `OFF` であり， sub OBC 向けの実装となる．
 
 
