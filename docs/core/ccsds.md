@@ -24,4 +24,5 @@ AOS Space Data Link Protocol や TC Space Data Link Protocol は，様々な設�
 
 
 ## ビルドオプション
-コンパイル対象に含める場合は， `C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL`, `C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL` オプションをそれぞれ `ON` に設定すること（[General Information/Build Options](../general/build_options.md) を参照）．
+この実装をコンパイル対象に含める場合は，以下の `C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL`, `C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL` オプションをそれぞれ `ON` に設定すること．  
+https://github.com/arkedge/c2a-core/blob/4472ef1a5670c2674f10b6b72b088d616367bd86/CMakeLists.txt#L26-L29
