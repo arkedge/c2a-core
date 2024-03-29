@@ -1,8 +1,14 @@
-# Build Options
+# Build
 
 ## 概要
-主なビルドオプション (Cmake Option) について説明する．  
-なお，ここに含まれているオプションは利用可能なオプションのうち，ごく一部であることに注意すること．
+ビルドに関連することをまとめる (TBW)．
+
+
+
+## Build Options
+C2A User から利用するビルドオプションは， [`/CMakeLists.txt`](/CMakeLists.txt) で定義される．  
+https://github.com/arkedge/c2a-core/blob/4472ef1a5670c2674f10b6b72b088d616367bd86/CMakeLists.txt
+
 
 
 ## [`/CMakeLists.txt`](/CMakeLists.txt)
@@ -29,9 +35,6 @@ https://github.com/arkedge/c2a-core/blob/459dbbf84d9587730f248ccbadb5a5745b28903
 `ON` にすることで，MOBC 向けの機能を有効化する．デフォルトは `OFF` であり， sub OBC 向けの実装となる．
 
 
-#### `C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL`, `C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL`
-`ON` にすることで，CCSDS の AOS Space Data Link Protocol / TC Space Data Link Protocol の実装をビルドする．  
-[Core Layer/CCSDS](../core/ccsds.md) も参考のこと．
 
 
 ### その他
