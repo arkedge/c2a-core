@@ -42,7 +42,7 @@ https://github.com/arkedge/c2a-core/blob/4472ef1a5670c2674f10b6b72b088d616367bd8
 
 #### `C2A_USE_ALL_CORE_APPS`
 `ON` にすることで，全ての [c2a-core Application](/applications/) をビルドする．  
-その場合， `/src_user/applications/CMakeLists.txt` にビルドしたい c2a-core Application を適宜追加すること．  
+`OFF` の場合， `/src_user/applications/CMakeLists.txt` にビルドしたい c2a-core Application を適宜追加すること．  
 https://github.com/arkedge/c2a-core/blob/459dbbf84d9587730f248ccbadb5a5745b28903d/examples/subobc/src/src_user/applications/CMakeLists.txt#L9-L13
 
 #### `C2A_USE_ALL_CORE_TEST_APPS`
