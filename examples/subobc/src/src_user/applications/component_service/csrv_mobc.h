@@ -7,7 +7,7 @@
 
 #include "../../component_driver/etc/mobc.h"
 #include <src_core/system/application_manager/app_info.h>
-#include <src_core/tlm_cmd/common_cmd_packet.h>
+#include <src_core/tlm_cmd/common_packet/common_cmd_packet.h>
 
 extern const MOBC_Driver* const mobc_driver;           //!< MOBC driver
 

@@ -8,7 +8,7 @@
 
 #include <stddef.h>
 #include "app_info.h"
-#include "../../tlm_cmd/common_cmd_packet.h"
+#include "../../tlm_cmd/common_packet/common_cmd_packet.h"
 
 #define AM_TLM_PAGE_SIZE (16)                               //!< AMのAppInfoテーブルの1テレメトリパケット(=1ページ)に格納されるAppInfo数（ページネーション用）
 #define AM_TLM_PAGE_MAX (8)                                 //!< AMのAppInfoテーブルのページ数（ページネーション用）

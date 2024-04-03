@@ -5,8 +5,8 @@
 #ifndef COMMAND_ANALYZE_H_
 #define COMMAND_ANALYZE_H_
 
-#include "common_cmd_packet.h"
-#include "common_cmd_packet_util.h"
+#include "./common_packet/common_cmd_packet.h"
+#include "./common_packet/common_cmd_packet_util.h"
 #include <src_user/tlm_cmd/command_definitions.h>
 
 #define CA_TLM_PAGE_SIZE      (32)                                  //!< コマンドテーブルの1テレメトリパケット(=1ページ)に格納されるコマンド数（ページネーション用）

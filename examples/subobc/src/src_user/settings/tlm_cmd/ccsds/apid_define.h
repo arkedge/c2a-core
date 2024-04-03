@@ -12,7 +12,7 @@
  * @enum   APID
  * @brief  Application Process ID
  * @note   11bit
- * @note   命名規則は tlm_cmd/common_tlm_cmd_packet.h を参照
+ * @note   命名規則は tlm_cmd/common_packet/common_tlm_cmd_packet.h を参照
  */
 typedef enum
 {

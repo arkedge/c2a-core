@@ -7,8 +7,8 @@
 #include "./aobc_command_definitions.h"
 #include "./aobc_telemetry_definitions.h"
 #include "./aobc_telemetry_buffer.h"
-#include <src_core/tlm_cmd/common_tlm_cmd_packet.h>
-#include <src_core/tlm_cmd/common_cmd_packet.h>
+#include <src_core/tlm_cmd/common_packet/common_tlm_cmd_packet.h>
+#include <src_core/tlm_cmd/common_packet/common_cmd_packet.h>
 #include <src_core/component_driver/cdrv_eb90_frame.h>
 #include <src_core/component_driver/cdrv_common_tlm_cmd_packet.h>
 #include <string.h>

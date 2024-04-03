@@ -7,7 +7,7 @@
 #ifndef COMMAND_DISPATCHER_MANAGER_H_
 #define COMMAND_DISPATCHER_MANAGER_H_
 
-#include "./common_cmd_packet.h"
+#include "./common_packet/common_cmd_packet.h"
 #include "./command_dispatcher.h"
 #include "../library/result.h"
 

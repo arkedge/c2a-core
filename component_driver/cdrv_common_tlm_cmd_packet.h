@@ -3,14 +3,14 @@
  * @brief コンポ間通信などで標準的に使う ネットワーク層 の Common Tlm Cmd Packet (概ね Space Packet)
  * @note  ここでは，データリンク層は CCSDS ではなく EB90 Frame を使うことを想定 (TODO: 今後拡張予定)
  * @note  データリンク層は CDS_StreamConfig.data_link_layer_ で規定する
- * @note  packet 構造 などは tlm_cmd/common_tlm_cmd_packet.h を参照のこと
+ * @note  packet 構造 などは tlm_cmd/common_packet/common_tlm_cmd_packet.h を参照のこと
  */
 #ifndef CDRV_COMMON_TLM_CMD_PACKET_H_
 #define CDRV_COMMON_TLM_CMD_PACKET_H_
 
 #include <stdint.h>
 #include "driver_super.h"
-#include "../tlm_cmd/common_tlm_cmd_packet.h"
+#include "../tlm_cmd/common_packet/common_tlm_cmd_packet.h"
 
 /**
  * @brief  CommonTlmCmdPacket を受信データからコピーして取得する

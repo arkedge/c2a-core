@@ -3,7 +3,7 @@
 
 #include "timeline_command_dispatcher_id_define.h"
 #include "../tlm_cmd/command_dispatcher.h"
-#include "../tlm_cmd/common_cmd_packet.h"
+#include "../tlm_cmd/common_packet/common_cmd_packet.h"
 #include "../tlm_cmd/packet_handler.h"
 #include "../system/application_manager/app_info.h"
 
