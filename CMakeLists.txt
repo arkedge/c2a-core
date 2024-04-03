@@ -65,6 +65,9 @@ set(C2A_SRCS
   tlm_cmd/ccsds/space_packet_protocol/cmd_space_packet.c
   tlm_cmd/ccsds/space_packet_protocol/space_packet.c
   tlm_cmd/ccsds/space_packet_protocol/tlm_space_packet.c
+  tlm_cmd/common_packet/space_packet/common_cmd_packet.c
+  tlm_cmd/common_packet/space_packet/common_tlm_cmd_packet.c
+  tlm_cmd/common_packet/space_packet/common_tlm_packet.c
 )
 
 if(C2A_USE_STDINT_WRAPPER)
