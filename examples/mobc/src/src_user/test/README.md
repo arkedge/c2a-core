@@ -33,7 +33,7 @@
 - HKが0.5Hzで降りてくるのは前提として良い．
 
 ## 実行
-C2A は c2a-sils-runtime に載せたものを使う．
+C2A は `c2a-dev-runtime` に載せたものを使う．
 ```
 cd examples/mobc
 npm run devtools:sils   # C2A 本体と必要なもの（tmtc-c2a など）がすべて走る

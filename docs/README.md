@@ -48,7 +48,7 @@ C2A に関する説明の棲み分けは，次のようになっています．
    1. [Development Environment](./development/development_environment.md)
    1. [Tools](./development/tools.md)
 1. SILS
-   1. [c2a-sils-runtime](./sils/c2a_sils_runtime.md)
+   1. [c2a-dev-runtime](./sils/c2a_dev_runtime.md)
    1. [S2E Integration](./sils/s2e_integration.md)
 1. Tips
    1. [Parameter Settings](./tips/parameter_settings.md)
