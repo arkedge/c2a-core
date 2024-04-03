@@ -20,6 +20,7 @@ option(C2A_USE_ALL_CORE_APPS        "Use C2A-core all Applications" ON)
 option(C2A_USE_ALL_CORE_TEST_APPS   "Use C2A-core all Test Applications" ON)
 option(C2A_USE_ALL_CORE_LIB         "Use C2A-core all library" ON)
 option(C2A_USE_SPACE_PACKET_AS_COMMON_PACKET  "Use C2A-core Space Packet as Common Packet implementation" ON)
+option(C2A_USE_DEFAULT_GLOBAL_TIME_IN_CTP     "Use C2A-core default global time in Common Tlm Packet" ON)
 
 ## C2A build target board option （標準実装などがこのオプションによってスイッチされる．デフォルトでは sub OBC を想定）
 option(C2A_MOBC_FEATURES            "Enable some features for MOBC" OFF)
