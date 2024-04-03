@@ -7,7 +7,7 @@ edition = "2021"
 c2a-core.workspace = true
 
 # runtime
-c2a-sils-runtime.workspace = true
+c2a-dev-runtime.workspace = true
 
 # ifimpl
 c2a-uart-kble.workspace = true
