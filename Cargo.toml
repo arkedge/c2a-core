@@ -5,7 +5,7 @@ version = "4.3.0"
 resolver = "2"
 
 members = [
-  "./sils-runtime",
+  "./dev-runtime",
   "./library/bind-utils",
 
   "./hal/i2c-noop",
@@ -23,7 +23,7 @@ members = [
 c2a-core = { path = "." }
 c2a-bind-utils = { path = "./library/bind-utils" }
 
-c2a-sils-runtime = { path = "./sils-runtime" }
+c2a-dev-runtime = { path = "./dev-runtime" }
 c2a-wdt-noop = { path = "./hal/wdt-noop" }
 c2a-uart-kble = { path = "./hal/uart-kble" }
 
