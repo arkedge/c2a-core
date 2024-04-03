@@ -109,7 +109,7 @@ if(C2A_USE_ALL_CORE_LIB)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_LIB>)
 endif()
 
-if(XXXXXXXXXXXXXXXXXXXXXXXXXXX)
+if(C2A_USE_SPACE_PACKET_AS_COMMON_PACKET)
   add_subdirectory(tlm_cmd/common_packet/space_packet)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_SPACE_PACKET_AS_COMMON_PACKET>)
 endif()
