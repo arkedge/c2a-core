@@ -74,6 +74,11 @@ if(C2A_USE_STDINT_WRAPPER)
   include_directories(library/stdint_wrapper)
 endif()
 
+if(C2A_MOBC_FEATURES)
+  message("Enable some features for MOBC")
+  target_compile_definitions(${PROJECT_NAME} PUBLIC C2A_MOBC_FEATURES)
+endif()
+
 execute_process(
   COMMAND git log -1 --format=%H
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
