@@ -4,6 +4,7 @@
  * @brief  CTP 型の user 定義
  */
 #include <src_core/tlm_cmd/common_packet/common_tlm_packet.h>
+#include <src_core/tlm_cmd/ccsds/space_packet_protocol/tlm_space_packet.h>
 
 void CTP_set_global_time(CommonTlmPacket* packet)
 {
