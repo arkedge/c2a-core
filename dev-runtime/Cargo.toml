@@ -1,6 +1,6 @@
 [package]
-name = "c2a-sils-runtime"
-description = "common C2A runtime for SILS"
+name = "c2a-dev-runtime"
+description = "Common C2A runtime for development"
 version.workspace = true
 edition = "2021"
 

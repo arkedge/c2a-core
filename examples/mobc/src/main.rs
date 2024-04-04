@@ -1,4 +1,4 @@
-use c2a_sils_runtime as c2a_runtime;
+use c2a_dev_runtime as c2a_runtime;
 
 extern crate c2a_example_mobc_ccsds_kble;
 extern crate c2a_uart_kble;
