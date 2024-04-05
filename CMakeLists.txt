@@ -73,11 +73,6 @@ if(C2A_USE_STDINT_WRAPPER)
   include_directories(library/stdint_wrapper)
 endif()
 
-if(C2A_MOBC_FEATURES)
-  message("Enable some features for MOBC")
-  target_compile_definitions(${PROJECT_NAME} PUBLIC C2A_MOBC_FEATURES)
-endif()
-
 execute_process(
   COMMAND git log -1 --format=%H
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
@@ -112,6 +107,11 @@ endif()
 if(C2A_USE_ALL_CORE_LIB)
   add_subdirectory(library)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_LIB>)
+endif()
+
+if(C2A_MOBC_FEATURES)
+  message("Enable some features for MOBC")
+  target_compile_definitions(${PROJECT_NAME} PUBLIC C2A_MOBC_FEATURES)
 endif()
 
 if(C2A_USE_SPACE_PACKET_AS_COMMON_PACKET)
