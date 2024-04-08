@@ -4,8 +4,9 @@
  * @brief  CTP 関連基本関数の定義
  * @note   CTP:  CommonTlmPacket
  */
-#include <src_core/tlm_cmd/common_packet/common_tlm_packet.h>
-#include <src_core/tlm_cmd/ccsds/space_packet_protocol/tlm_space_packet.h>
+#include "../common_tlm_packet.h"
+#include "../../ccsds/space_packet_protocol/tlm_space_packet.h"
+#include "../../../system/time_manager/time_manager.h"
 #include <string.h>
 
 
@@ -32,13 +33,6 @@ double CTP_get_global_time(const CommonTlmPacket* packet)
   return TSP_get_global_time(packet);
 }
 
-void CTP_set_global_time(CommonTlmPacket* packet)
-{
-  // 何を設定するかはユーザー定義
-  // TMGR_get_curret_unixtime() で現在の unixtime を入れたり, gps 時刻 を入れたり, など
-  TSP_set_global_time(packet, 0.0);
-}
-
 uint32_t CTP_get_on_board_subnet_time(const CommonTlmPacket* packet)
 {
   return TSP_get_on_board_subnet_time(packet);
@@ -48,7 +42,11 @@ void CTP_set_on_board_subnet_time(CommonTlmPacket* packet)
 {
   // 何を設定するかはユーザー定義
   // MOBC では主に TI を，sub OBC では主に 0xffffffff を
-  TSP_set_on_board_subnet_time(packet, 0xffffffff);
+  uint32_t time = 0xffffffff;
+#ifdef C2A_MOBC_FEATURES
+  time = (uint32_t)TMGR_get_master_total_cycle();
+#endif
+  TSP_set_on_board_subnet_time(packet, time);
 }
 
 ctp_dest_flags_t CTP_get_dest_flags(const CommonTlmPacket* packet)

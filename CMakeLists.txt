@@ -19,6 +19,7 @@ option(C2A_BUILD_FOR_SILS           "Build C2A for SILS target" ON)
 option(C2A_USE_ALL_CORE_APPS        "Use C2A-core all Applications" ON)
 option(C2A_USE_ALL_CORE_TEST_APPS   "Use C2A-core all Test Applications" ON)
 option(C2A_USE_ALL_CORE_LIB         "Use C2A-core all library" ON)
+option(C2A_USE_SPACE_PACKET_AS_COMMON_PACKET  "Use C2A-core Space Packet as Common Packet implementation" ON)
 
 ## C2A build target board option （標準実装などがこのオプションによってスイッチされる．デフォルトでは sub OBC を想定）
 option(C2A_MOBC_FEATURES            "Enable some features for MOBC" OFF)
@@ -106,6 +107,16 @@ endif()
 if(C2A_USE_ALL_CORE_LIB)
   add_subdirectory(library)
   target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_LIB>)
+endif()
+
+if(C2A_MOBC_FEATURES)
+  message("Enable some features for MOBC")
+  target_compile_definitions(${PROJECT_NAME} PUBLIC C2A_MOBC_FEATURES)
+endif()
+
+if(C2A_USE_SPACE_PACKET_AS_COMMON_PACKET)
+  add_subdirectory(tlm_cmd/common_packet/space_packet)
+  target_sources(${PROJECT_NAME} PUBLIC $<TARGET_OBJECTS:C2A_CORE_SPACE_PACKET_AS_COMMON_PACKET>)
 endif()
 
 if(C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL)

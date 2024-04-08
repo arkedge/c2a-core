@@ -19,6 +19,7 @@ call :sync_file ".\src\src_user\hal\sils_mockup\wdt_sils.c" "..\mobc\src\src_use
 call :sync_file ".\src\src_user\settings\git_revision_config.h" "..\mobc\src\src_user\settings\git_revision_config.h"
 call :sync_file ".\src\src_user\settings\component_driver_super\driver_buffer_define.h" "..\mobc\src\src_user\settings\component_driver_super\driver_buffer_define.h"
 call :sync_file ".\src\src_user\settings\tlm_cmd\common_cmd_packet_define.c" "..\mobc\src\src_user\settings\tlm_cmd\common_cmd_packet_define.c"
+call :sync_file ".\src\src_user\settings\tlm_cmd\common_tlm_packet_define.c" "..\mobc\src\src_user\settings\tlm_cmd\common_tlm_packet_define.c"
 call :sync_file ".\src\src_user\settings\tlm_cmd\common_tlm_cmd_packet_define.h" "..\mobc\src\src_user\settings\tlm_cmd\common_tlm_cmd_packet_define.h"
 call :sync_file ".\src\src_user\settings\tlm_cmd\ccsds\apid_define.c" "..\mobc\src\src_user\settings\tlm_cmd\ccsds\apid_define.c"
 call :sync_file ".\src\src_user\settings\tlm_cmd\ccsds\apid_define.h" "..\mobc\src\src_user\settings\tlm_cmd\ccsds\apid_define.h"
