@@ -10,7 +10,6 @@ void CTP_set_global_time(CommonTlmPacket* packet)
 {
   // 何を設定するかはユーザー定義
   // TMGR_get_curret_unixtime() で現在の unixtime を入れたり, gps 時刻 を入れたり, など
-  // User 独自の値を設定する場合は， C2A_USE_DEFAULT_GLOBAL_TIME_IN_CTP を OFF にすること
   TSP_set_global_time(packet, 0.0);
 }
 
