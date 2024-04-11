@@ -5,6 +5,66 @@
 
 ## v4.4.0 (2024-xx-xx)
 
+[#328](https://github.com/arkedge/c2a-core/pull/328):<Ryo Suzumoto>
+[#331](https://github.com/arkedge/c2a-core/pull/331):<sksat>
+[#329](https://github.com/arkedge/c2a-core/pull/329):<Ryo Suzumoto>
+[#330](https://github.com/arkedge/c2a-core/pull/330):<sksat>
+[#310](https://github.com/arkedge/c2a-core/pull/310):<Ryo Suzumoto>
+[#306](https://github.com/arkedge/c2a-core/pull/306):<Ryo Suzumoto>
+[#309](https://github.com/arkedge/c2a-core/pull/309):<sksat>
+[#314](https://github.com/arkedge/c2a-core/pull/314):<sksat>
+[#324](https://github.com/arkedge/c2a-core/pull/324):<sksat>
+[#325](https://github.com/arkedge/c2a-core/pull/325):<sksat>
+[#323](https://github.com/arkedge/c2a-core/pull/323):<sksat>
+[#322](https://github.com/arkedge/c2a-core/pull/322):<sksat>
+[#327](https://github.com/arkedge/c2a-core/pull/327):<sksat>
+[#319](https://github.com/arkedge/c2a-core/pull/319):<Toshifumi Akima>
+[#311](https://github.com/arkedge/c2a-core/pull/311):<sksat>
+[#315](https://github.com/arkedge/c2a-core/pull/315):<sksat>
+[#316](https://github.com/arkedge/c2a-core/pull/316):<sksat>
+[#307](https://github.com/arkedge/c2a-core/pull/307):<sksat>
+[#290](https://github.com/arkedge/c2a-core/pull/290):<sksat>
+[#294](https://github.com/arkedge/c2a-core/pull/294):<sksat>
+[#313](https://github.com/arkedge/c2a-core/pull/313):<Ryo Suzumoto>
+[#312](https://github.com/arkedge/c2a-core/pull/312):<Ryo Suzumoto>
+[#293](https://github.com/arkedge/c2a-core/pull/293):<sksat>
+[#295](https://github.com/arkedge/c2a-core/pull/295):<sksat>
+[#308](https://github.com/arkedge/c2a-core/pull/308):<sksat>
+[#288](https://github.com/arkedge/c2a-core/pull/288):<sksat>
+[#296](https://github.com/arkedge/c2a-core/pull/296):<sksat>
+[#289](https://github.com/arkedge/c2a-core/pull/289):<sksat>
+
+
+328 arkedge/feature/build_option_docs <Ryo Suzumoto>
+331 arkedge/feature/example-cmake-is-not-only-for-s2e <sksat>
+329 arkedge/feature/add_sp_defalt_impl <Ryo Suzumoto>
+330 arkedge/feature/rename-sils-runtime <sksat>
+310 arkedge/feature/add_defalt_impl_for_ctcp <Ryo Suzumoto>
+306 arkedge/feature/add_mobc_subobc_build_option <Ryo Suzumoto>
+309 arkedge/renovate/arkedge-workflows-c2a-5.x <sksat>
+314 arkedge/renovate/sksat-setup-rye-0.x <sksat>
+324 arkedge/renovate/ut-issl-s2e-core-7.x <sksat>
+325 arkedge/renovate/actions-setup-python-5.x <sksat>
+323 arkedge/renovate/actions-cache-4.x <sksat>
+322 arkedge/renovate/actions-deploy-pages-4.x <sksat>
+327 arkedge/add-rust-toolchain <sksat>
+319 arkedge/feature/fix_rotator <Toshifumi Akima>
+311 arkedge/renovate/semver-1.x <sksat>
+315 arkedge/renovate/kble-socket-0.x <sksat>
+316 arkedge/renovate/actions-cache-4.x <sksat>
+307 arkedge/renovate/actions-setup-node-4.x <sksat>
+290 arkedge/renovate/swatinem-rust-cache-2.x <sksat>
+294 arkedge/renovate/ut-issl-s2e-core-7.x <sksat>
+313 arkedge/feature/add_strip_in_load_db <Ryo Suzumoto>
+312 arkedge/feature/add_comment_in_cmd_def <Ryo Suzumoto>
+293 arkedge/renovate/sksat-action-clippy-0.x <sksat>
+295 arkedge/renovate/sksat-setup-rye-0.x <sksat>
+308 arkedge/renovate/actions-upload-pages-artifact-3.x <sksat>
+288 arkedge/renovate/actions-deploy-pages-4.x <sksat>
+296 arkedge/renovate/actions-cache-4.x <sksat>
+289 arkedge/renovate/bindgen-0.x <sksat>
+
+
 ### Migration Guide
 - [#319](https://github.com/arkedge/c2a-core/pull/319): `rotator` で TI＝0 のコマンドから実行されるように修正 
   - デバッグ出力を使用している user は，起動時の表示タイミングが変わるため，この PR の Example user の変更を取り込むこと
