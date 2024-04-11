@@ -25,7 +25,7 @@ option(C2A_USE_SPACE_PACKET_AS_COMMON_PACKET  "Use C2A-core Space Packet as Comm
 option(C2A_MOBC_FEATURES            "Enable some features for MOBC" OFF)
 
 ## C2A CCSDS select
-# See alse; /docs/core/ccsds.md
+# See also; /docs/core/ccsds.md
 option(C2A_USE_CORE_CCSDS_AOS_SPACE_DATA_LINK_PROTOCOL  "Use C2A-core CCSDS AOS SPACE DATA LINK PROTOCOL implementation" OFF)
 option(C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL   "Use C2A-core CCSDS TC SPACE DATA LINK PROTOCOL implementation" OFF)
 

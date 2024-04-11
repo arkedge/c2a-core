@@ -30,6 +30,8 @@ C2A に関する説明の棲み分けは，次のようになっています．
    1. [Overview](./general/overview.md)
    1. [Requirements](./general/requirements.md)
    1. [Release](./general/release.md)
+   1. [Architecture](./general/architecture.md)
+   1. [CMake](./general/cmake.md)
    1. [Coding Rule](./general/coding_rule.md)
    1. [Coding Acronyms](./general/coding_acronyms.md)
 1. Application Layer

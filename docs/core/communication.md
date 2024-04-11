@@ -22,6 +22,9 @@ C2A 内部を流れるパケットは以下の 3 つである．
 C2A 標準として， Space Packet が Core 内で定義されており，基本的にはこれを用いることを想定している．
 ただし，C2A 標準 Space Packet は後述する通り，Secondary Header が独自定義されている．
 
+Common Packet の実装として，c2a-core が提供する Space Packet のデフォルト実装を用いる場合は，以下の `C2A_USE_SPACE_PACKET_AS_COMMON_PACKET` オプションを `ON` に設定すること．  
+https://github.com/arkedge/c2a-core/blob/12c6b614e15e3e5a24f416d640b8b024abca5965/CMakeLists.txt#L22
+
 
 ## C2A 標準 Space Packet 定義
 C2A 標準 Space Packet は，CCSDS (Consultative Committee for Space Data Systems．宇宙データシステムの標準化を進めている機関) の Space Packet に準拠したものである（参考: [CCSDS SPACE PACKET PROTOCOL](https://public.ccsds.org/Pubs/133x0b2e1.pdf)）．
