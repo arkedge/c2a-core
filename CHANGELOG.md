@@ -5,64 +5,51 @@
 
 ## v4.4.0 (2024-xx-xx)
 
-[#328](https://github.com/arkedge/c2a-core/pull/328):<Ryo Suzumoto>
-[#331](https://github.com/arkedge/c2a-core/pull/331):<sksat>
-[#329](https://github.com/arkedge/c2a-core/pull/329):<Ryo Suzumoto>
-[#330](https://github.com/arkedge/c2a-core/pull/330):<sksat>
-[#310](https://github.com/arkedge/c2a-core/pull/310):<Ryo Suzumoto>
-[#306](https://github.com/arkedge/c2a-core/pull/306):<Ryo Suzumoto>
-[#309](https://github.com/arkedge/c2a-core/pull/309):<sksat>
-[#314](https://github.com/arkedge/c2a-core/pull/314):<sksat>
-[#324](https://github.com/arkedge/c2a-core/pull/324):<sksat>
-[#325](https://github.com/arkedge/c2a-core/pull/325):<sksat>
-[#323](https://github.com/arkedge/c2a-core/pull/323):<sksat>
-[#322](https://github.com/arkedge/c2a-core/pull/322):<sksat>
-[#327](https://github.com/arkedge/c2a-core/pull/327):<sksat>
-[#319](https://github.com/arkedge/c2a-core/pull/319):<Toshifumi Akima>
-[#311](https://github.com/arkedge/c2a-core/pull/311):<sksat>
-[#315](https://github.com/arkedge/c2a-core/pull/315):<sksat>
-[#316](https://github.com/arkedge/c2a-core/pull/316):<sksat>
-[#307](https://github.com/arkedge/c2a-core/pull/307):<sksat>
-[#290](https://github.com/arkedge/c2a-core/pull/290):<sksat>
-[#294](https://github.com/arkedge/c2a-core/pull/294):<sksat>
-[#313](https://github.com/arkedge/c2a-core/pull/313):<Ryo Suzumoto>
-[#312](https://github.com/arkedge/c2a-core/pull/312):<Ryo Suzumoto>
-[#293](https://github.com/arkedge/c2a-core/pull/293):<sksat>
-[#295](https://github.com/arkedge/c2a-core/pull/295):<sksat>
-[#308](https://github.com/arkedge/c2a-core/pull/308):<sksat>
-[#288](https://github.com/arkedge/c2a-core/pull/288):<sksat>
-[#296](https://github.com/arkedge/c2a-core/pull/296):<sksat>
-[#289](https://github.com/arkedge/c2a-core/pull/289):<sksat>
+### 未分類
+- [#327](https://github.com/arkedge/c2a-core/pull/327): Add rust-toolchain override config
+- [#330](https://github.com/arkedge/c2a-core/pull/330): Rename c2a-sils-runtime to c2a-dev-runtime
+- [#331](https://github.com/arkedge/c2a-core/pull/331): Example user CMake config is not only for SILS-S2E
 
 
-328 arkedge/feature/build_option_docs <Ryo Suzumoto>
-331 arkedge/feature/example-cmake-is-not-only-for-s2e <sksat>
-329 arkedge/feature/add_sp_defalt_impl <Ryo Suzumoto>
-330 arkedge/feature/rename-sils-runtime <sksat>
-310 arkedge/feature/add_defalt_impl_for_ctcp <Ryo Suzumoto>
-306 arkedge/feature/add_mobc_subobc_build_option <Ryo Suzumoto>
-309 arkedge/renovate/arkedge-workflows-c2a-5.x <sksat>
-314 arkedge/renovate/sksat-setup-rye-0.x <sksat>
-324 arkedge/renovate/ut-issl-s2e-core-7.x <sksat>
-325 arkedge/renovate/actions-setup-python-5.x <sksat>
-323 arkedge/renovate/actions-cache-4.x <sksat>
-322 arkedge/renovate/actions-deploy-pages-4.x <sksat>
-327 arkedge/add-rust-toolchain <sksat>
-319 arkedge/feature/fix_rotator <Toshifumi Akima>
-311 arkedge/renovate/semver-1.x <sksat>
-315 arkedge/renovate/kble-socket-0.x <sksat>
-316 arkedge/renovate/actions-cache-4.x <sksat>
-307 arkedge/renovate/actions-setup-node-4.x <sksat>
-290 arkedge/renovate/swatinem-rust-cache-2.x <sksat>
-294 arkedge/renovate/ut-issl-s2e-core-7.x <sksat>
-313 arkedge/feature/add_strip_in_load_db <Ryo Suzumoto>
-312 arkedge/feature/add_comment_in_cmd_def <Ryo Suzumoto>
-293 arkedge/renovate/sksat-action-clippy-0.x <sksat>
-295 arkedge/renovate/sksat-setup-rye-0.x <sksat>
-308 arkedge/renovate/actions-upload-pages-artifact-3.x <sksat>
-288 arkedge/renovate/actions-deploy-pages-4.x <sksat>
-296 arkedge/renovate/actions-cache-4.x <sksat>
-289 arkedge/renovate/bindgen-0.x <sksat>
+### Breaking Changes
+- [#312](https://github.com/arkedge/c2a-core/pull/312): [code_generator] コマンドの説明を cmd definition の doxygens コメントに出力
+- [#313](https://github.com/arkedge/c2a-core/pull/313): [code_generator] コード生成時に不要な空白を除去
+- [#319](https://github.com/arkedge/c2a-core/pull/319): Rotator の修正
+- [#306](https://github.com/arkedge/c2a-core/pull/306): MOBC やsub OBC を想定したコードをビルド対象に加えるためのビルドオプションを追加
+- [#310](https://github.com/arkedge/c2a-core/pull/310): Common Packet のディレクトリ変更
+- [#329](https://github.com/arkedge/c2a-core/pull/329): Common Packet のデフォルト実装を core から提供する（Space Packet のみ）
+
+
+### Enhancements
+
+
+### Fixed
+
+
+### Documentation
+- [#328](https://github.com/arkedge/c2a-core/pull/328): C2A User 開発者のための簡易なドキュメントを追加
+
+
+### Internal
+- [#289](https://github.com/arkedge/c2a-core/pull/289): Update Rust crate bindgen to 0.69.4
+- [#296](https://github.com/arkedge/c2a-core/pull/296): Update actions/cache action to v4
+- [#288](https://github.com/arkedge/c2a-core/pull/288): Update actions/deploy-pages action to v4.0.4
+- [#308](https://github.com/arkedge/c2a-core/pull/308): Update actions/upload-pages-artifact action to v3.0.1
+- [#295](https://github.com/arkedge/c2a-core/pull/295): Update sksat/setup-rye action to v0.15.0
+- [#293](https://github.com/arkedge/c2a-core/pull/293): Update sksat/action-clippy action to v0.7.1
+- [#294](https://github.com/arkedge/c2a-core/pull/294): Update dependency ut-issl/s2e-core to v7.2.5
+- [#290](https://github.com/arkedge/c2a-core/pull/290): Update Swatinem/rust-cache action to v2.7.3
+- [#307](https://github.com/arkedge/c2a-core/pull/307): Update actions/setup-node action to v4.0.2
+- [#316](https://github.com/arkedge/c2a-core/pull/316): Update actions/cache action to v4.0.1
+- [#315](https://github.com/arkedge/c2a-core/pull/315): Update Rust crate kble-socket to 0.3.0
+- [#311](https://github.com/arkedge/c2a-core/pull/311): Update Rust crate semver to 1.0.22
+- [#322](https://github.com/arkedge/c2a-core/pull/322): Update actions/deploy-pages action to v4.0.5
+- [#323](https://github.com/arkedge/c2a-core/pull/323): Update actions/cache action to v4.0.2
+- [#325](https://github.com/arkedge/c2a-core/pull/325): Update actions/setup-python action to v5.1.0
+- [#324](https://github.com/arkedge/c2a-core/pull/324): Update dependency ut-issl/s2e-core to v7.2.6
+- [#314](https://github.com/arkedge/c2a-core/pull/314): Update sksat/setup-rye action to v0.20.0
+- [#309](https://github.com/arkedge/c2a-core/pull/309): Update arkedge/workflows-c2a action to v5.2.0
+- [#333](https://github.com/arkedge/c2a-core/pull/333): Update CHANGELOG for v4.4.0 release
 
 
 ### Migration Guide
