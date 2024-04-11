@@ -57,7 +57,7 @@
   - [#312](https://github.com/arkedge/c2a-core/pull/312), [#313](https://github.com/arkedge/c2a-core/pull/313): code-generator の機能追加・生成コード仕様の変更があるため，コード生成し直すこと（MUST）
 - [#319](https://github.com/arkedge/c2a-core/pull/319): `rotator` で TI＝0 のコマンドから実行されるように修正（MUST）
   - デバッグ出力を使用している user は，起動時の表示タイミングが変わるため，この PR の Example user の変更を取り込むこと
-  - rotator で実行順に依存するような処理がある場合は，適宜 Task list の並び替えを行うこと
+  - rotator で実行順に依存するような処理がある場合は，適宜 TaskList の並び替えを行うこと
 - [#306](https://github.com/arkedge/c2a-core/pull/306): MOBC やsub OBC を想定したコードをビルド対象に加えるためのビルドオプションを追加
   - MOBC を意図した User では，[Architecture](./docs/general/architecture.md) を参考にビルドオプション `C2A_MOBC_FEATURES` を `ON` にすること．
 - [#310](https://github.com/arkedge/c2a-core/pull/310), [#329](https://github.com/arkedge/c2a-core/pull/329): Common Packet のデフォルト実装を core から提供（RECOMMENDED）
