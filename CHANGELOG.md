@@ -65,9 +65,9 @@
   - ビルドオプション `C2A_USE_SPACE_PACKET_AS_COMMON_PACKET` を `ON` にする
     - 参考資料: [Communication](/docs/core/communication.md#c2a-%E5%86%85%E9%83%A8%E3%82%92%E6%B5%81%E3%82%8C%E3%82%8B%E3%83%91%E3%82%B1%E3%83%83%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6-common-packet)
   - User に含まれる以下のファイルが不要になるため，削除する
-    - `common_cmd_packet.c`
-    - `common_tlm_cmd_packet.c`
-    - `common_tlm_packet.c`
+    - `src/src_user/tlm_cmd/common_cmd_packet.c`
+    - `src/src_user/tlm_cmd/common_tlm_cmd_packet.c`
+    - `src/src_user/tlm_cmd/common_tlm_packet.c`
   - `settings/tlm_cmd/common_tlm_packet_define.c` を新規に作成し， `CTP_set_global_time` を定義する
     - 実装例は `examples/subobc/src/src_user/settings/tlm_cmd/common_tlm_packet_define.c` を参考にできる
   - コンパイルが通るように，以下の include の修正を行う
