@@ -3,31 +3,34 @@
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
 
-## v4.4.0 (2024-xx-xx)
-
-### 未分類
-- [#327](https://github.com/arkedge/c2a-core/pull/327): Add rust-toolchain override config
-- [#330](https://github.com/arkedge/c2a-core/pull/330): Rename c2a-sils-runtime to c2a-dev-runtime
-- [#331](https://github.com/arkedge/c2a-core/pull/331): Example user CMake config is not only for SILS-S2E
-
+## v4.4.0 (2024-04-xx)
 
 ### Breaking Changes
-- [#312](https://github.com/arkedge/c2a-core/pull/312): [code_generator] コマンドの説明を cmd definition の doxygens コメントに出力
-- [#313](https://github.com/arkedge/c2a-core/pull/313): [code_generator] コード生成時に不要な空白を除去
-- [#319](https://github.com/arkedge/c2a-core/pull/319): Rotator の修正
-- [#306](https://github.com/arkedge/c2a-core/pull/306): MOBC やsub OBC を想定したコードをビルド対象に加えるためのビルドオプションを追加
+
+- code-generator
+
+  - [#312](https://github.com/arkedge/c2a-core/pull/312): コマンドの説明を cmd definition の doxygens コメントに出力
+
+  - [#313](https://github.com/arkedge/c2a-core/pull/313): コード生成時に不要な空白を除去
+
+
+- [#306](https://github.com/arkedge/c2a-core/pull/306): MOBC を想定した機能を有効化するためのビルドオプションを追加
 - [#310](https://github.com/arkedge/c2a-core/pull/310): Common Packet のディレクトリ変更
 - [#329](https://github.com/arkedge/c2a-core/pull/329): Common Packet のデフォルト実装を core から提供する（Space Packet のみ）
-
+- [#330](https://github.com/arkedge/c2a-core/pull/330): Rename c2a-sils-runtime to c2a-dev-runtime
 
 ### Enhancements
 
+- [#327](https://github.com/arkedge/c2a-core/pull/327): Add rust-toolchain override config
 
 ### Fixed
+
+- [#319](https://github.com/arkedge/c2a-core/pull/319): Rotator の修正
 
 
 ### Documentation
 - [#328](https://github.com/arkedge/c2a-core/pull/328): C2A User 開発者のための簡易なドキュメントを追加
+- [#331](https://github.com/arkedge/c2a-core/pull/331): Example user CMake config is not only for SILS-S2E
 
 
 ### Internal
@@ -55,26 +58,26 @@
 ### Migration Guide
 - コード生成
   - [#312](https://github.com/arkedge/c2a-core/pull/312), [#313](https://github.com/arkedge/c2a-core/pull/313): code-generator の機能追加・生成コード仕様の変更があるため，コード生成し直すこと（MUST）
-- [#319](https://github.com/arkedge/c2a-core/pull/319): `rotator` で TI＝0 のコマンドから実行されるように修正（MUST）
-  - デバッグ出力を使用している user は，起動時の表示タイミングが変わるため，この PR の Example user の変更を取り込むこと
+- [#319](https://github.com/arkedge/c2a-core/pull/319): デバッグ出力を使用している user は，起動時の表示タイミングが変わるため，この PR の Example user の変更を取り込むこと（MUST）
   - rotator で実行順に依存するような処理がある場合は，適宜 TaskList の並び替えを行うこと
-- [#306](https://github.com/arkedge/c2a-core/pull/306): MOBC やsub OBC を想定したコードをビルド対象に加えるためのビルドオプションを追加
-  - MOBC を意図した User では，[Architecture](./docs/general/architecture.md) を参考にビルドオプション `C2A_MOBC_FEATURES` を `ON` にすること．
-- [#310](https://github.com/arkedge/c2a-core/pull/310), [#329](https://github.com/arkedge/c2a-core/pull/329): Common Packet のデフォルト実装を core から提供（RECOMMENDED）
-  - Common Packet として Space Packet を利用している User であり，デフォルト実装を利用する場合を想定する
-  - ビルドオプション `C2A_USE_SPACE_PACKET_AS_COMMON_PACKET` を `ON` にする
-    - 参考資料: [Communication](/docs/core/communication.md#c2a-%E5%86%85%E9%83%A8%E3%82%92%E6%B5%81%E3%82%8C%E3%82%8B%E3%83%91%E3%82%B1%E3%83%83%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6-common-packet)
+- [#306](https://github.com/arkedge/c2a-core/pull/306), [#329](https://github.com/arkedge/c2a-core/pull/329): MOBC を意図した User では，c2a-core をビルドする際`C2A_MOBC_FEATURES` を define すること（MUST）
+  - ビルドシステムに CMake を用いている場合は，同名の CMake option の`C2A_MOBC_FEATURES` を `ON` にする
+
+- [#310](https://github.com/arkedge/c2a-core/pull/310), [#329](https://github.com/arkedge/c2a-core/pull/329): Common Packet として Space Packet を利用している User では，c2a-core が提供するデフォルト実装を利用する（RECOMMENDED）
+  - デフォルト実装が [src/src_core/tlm_cmd/common_packet/space_packet](./tlm_cmd/common_packet/space_packet) にあるので，ビルド対象に加える
+    - ビルドシステムに CMake を用いている場合は，[C2A_USE_SPACE_PACKET_AS_COMMON_PACKET](https://github.com/arkedge/c2a-core/blob/80e6c96acbbd8551c174a586710a1d573de8206c/CMakeLists.txt#L22) を `ON` にする
   - User に含まれる以下のファイルが不要になるため，削除する
     - `src/src_user/tlm_cmd/common_cmd_packet.c`
     - `src/src_user/tlm_cmd/common_tlm_cmd_packet.c`
     - `src/src_user/tlm_cmd/common_tlm_packet.c`
-  - `settings/tlm_cmd/common_tlm_packet_define.c` を新規に作成し， `CTP_set_global_time` を定義する
-    - 実装例は `examples/subobc/src/src_user/settings/tlm_cmd/common_tlm_packet_define.c` を参考にできる
+  - `src/src_user/settings/tlm_cmd/common_tlm_packet_define.c`を新規に作成し， `CTP_set_global_time()` を定義する
+    - 実装例: [examples/subobc/src/src_user/settings/tlm_cmd/common_tlm_packet_define.c](https://github.com/arkedge/c2a-core/blob/80e6c96acbbd8551c174a586710a1d573de8206c/examples/subobc/src/src_user/settings/tlm_cmd/common_tlm_packet_define.c)
   - コンパイルが通るように，以下の include の修正を行う
     - `#include <src_core/tlm_cmd/common_cmd_packet.h>` -> `#include <src_core/tlm_cmd/common_packet/common_cmd_packet.h>`
     - `#include <src_core/tlm_cmd/common_cmd_packet_util.h>` -> `#include <src_core/tlm_cmd/common_packet/common_cmd_packet_util.h>`
     - `#include <src_core/tlm_cmd/common_tlm_cmd_packet.h>` -> `#include <src_core/tlm_cmd/common_packet/common_tlm_cmd_packet.h>`
     - `#include <src_core/tlm_cmd/common_tlm_cmd_packet.h>` -> `#include <src_core/tlm_cmd/common_packet/common_tlm_cmd_packet.h>`
+- [#330](https://github.com/arkedge/c2a-core/pull/330): `c2a-sils-runtime`を用いていた C2A user の `Cargo.toml` や `src/main.rs` などで crate 名を `c2a-dev-runtime` に変更する
 
 
 ## v4.3.0 (2024-02-06)
