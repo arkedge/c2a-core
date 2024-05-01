@@ -9,7 +9,7 @@ c2a-core = "4"
 once_cell = "1"
 futures = "0.3"
 kble-socket = { version = "0.3.0", features = ["axum"] }
-tokio = { version = "1", features = ["sync", "rt"] }
+tokio = { version = "1.37.0", features = ["sync", "rt"] }
 axum = { version = "0.6", default-features = false, features = ["tokio", "http1", "ws"] }
 anyhow = "1"
 
