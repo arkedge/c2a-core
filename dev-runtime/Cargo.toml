@@ -9,4 +9,4 @@ test = false   # 呼んでいる C2A の関数をリンクできないので，u
 # TODO: 適切な c2a-core とマッチした example user をリンクしたテスト
 
 [dependencies]
-c2a-core = "4"
+c2a-core = "4.3.0"
