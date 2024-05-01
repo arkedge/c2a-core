@@ -11,7 +11,7 @@ futures = "0.3"
 kble-socket = { version = "0.3.0", features = ["axum"] }
 tokio = { version = "1", features = ["sync", "rt"] }
 axum = { version = "0.6", default-features = false, features = ["tokio", "http1", "ws"] }
-anyhow = "1"
+anyhow = "1.0.82"
 
 [dev-dependencies]
 c2a-core = { version = "4", features = ["no-c2a-link"] }
