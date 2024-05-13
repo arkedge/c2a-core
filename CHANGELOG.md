@@ -3,17 +3,13 @@
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
 
-## v4.4.0 (2024-04-xx)
+## v4.4.0 (2024-05-13)
 
 ### Breaking Changes
 
 - code-generator
-
   - [#312](https://github.com/arkedge/c2a-core/pull/312): コマンドの説明を cmd definition の doxygens コメントに出力
-
   - [#313](https://github.com/arkedge/c2a-core/pull/313): コード生成時に不要な空白を除去
-
-
 - [#306](https://github.com/arkedge/c2a-core/pull/306): MOBC を想定した機能を有効化するためのビルドオプションを追加
 - [#310](https://github.com/arkedge/c2a-core/pull/310): Common Packet のディレクトリ変更
 - [#329](https://github.com/arkedge/c2a-core/pull/329): Common Packet のデフォルト実装を core から提供する（Space Packet のみ）
@@ -25,7 +21,9 @@
 
 ### Fixed
 
-- [#319](https://github.com/arkedge/c2a-core/pull/319): Rotator の修正
+- [#319](https://github.com/arkedge/c2a-core/pull/319): Block Command Executor の Rotator の実行開始コマンド位置の修正
+  - BCE Rotator において，Rotate する BC の 0 番目のコマンドから実行されることを本来意図していた．
+  - 実際は 1 番目のコマンドから実行されていたため，意図通りの挙動になるように修正された．
 
 
 ### Documentation
@@ -58,11 +56,12 @@
 ### Migration Guide
 - コード生成
   - [#312](https://github.com/arkedge/c2a-core/pull/312), [#313](https://github.com/arkedge/c2a-core/pull/313): code-generator の機能追加・生成コード仕様の変更があるため，コード生成し直すこと（MUST）
-- [#319](https://github.com/arkedge/c2a-core/pull/319): デバッグ出力を使用している user は，起動時の表示タイミングが変わるため，この PR の Example user の変更を取り込むこと（MUST）
-  - rotator で実行順に依存するような処理がある場合は，適宜 TaskList の並び替えを行うこと
-- [#306](https://github.com/arkedge/c2a-core/pull/306), [#329](https://github.com/arkedge/c2a-core/pull/329): MOBC を意図した User では，c2a-core をビルドする際`C2A_MOBC_FEATURES` を define すること（MUST）
-  - ビルドシステムに CMake を用いている場合は，同名の CMake option の`C2A_MOBC_FEATURES` を `ON` にする
-
+- [#319](https://github.com/arkedge/c2a-core/pull/319): BCE Rotator の挙動を意図通りに修正したので，各 User で影響範囲を確認し，必要に応じて修正すること（MUST）
+  - BCE Rotator で実行順に依存するような処理がある場合は，適宜 TaskList 等の並び替えを行うこと
+  - Example User のデバッグ出力 App は，本 PR 適用前の BCE Rotator の誤った挙動に依存した BC 登録となっていた
+  - 同様なデバッグ出力 App を使用している user は，起動時の表示タイミングが変わるため，この PR の Example user の変更を取り込むこと
+- [#306](https://github.com/arkedge/c2a-core/pull/306), [#329](https://github.com/arkedge/c2a-core/pull/329): MOBC を意図した User では，c2a-core をビルドする際 `C2A_MOBC_FEATURES` を define すること（MUST）
+  - ビルドシステムに CMake を用いている場合は，同名の CMake option の `C2A_MOBC_FEATURES` を `ON` にする
 - [#310](https://github.com/arkedge/c2a-core/pull/310), [#329](https://github.com/arkedge/c2a-core/pull/329): Common Packet として Space Packet を利用している User では，c2a-core が提供するデフォルト実装を利用する（RECOMMENDED）
   - デフォルト実装が [src/src_core/tlm_cmd/common_packet/space_packet](./tlm_cmd/common_packet/space_packet) にあるので，ビルド対象に加える
     - ビルドシステムに CMake を用いている場合は，[C2A_USE_SPACE_PACKET_AS_COMMON_PACKET](https://github.com/arkedge/c2a-core/blob/80e6c96acbbd8551c174a586710a1d573de8206c/CMakeLists.txt#L22) を `ON` にする
@@ -70,7 +69,7 @@
     - `src/src_user/tlm_cmd/common_cmd_packet.c`
     - `src/src_user/tlm_cmd/common_tlm_cmd_packet.c`
     - `src/src_user/tlm_cmd/common_tlm_packet.c`
-  - `src/src_user/settings/tlm_cmd/common_tlm_packet_define.c`を新規に作成し， `CTP_set_global_time()` を定義する
+  - `src/src_user/settings/tlm_cmd/common_tlm_packet_define.c` を新規に作成し， `CTP_set_global_time()` を定義する
     - 実装例: [examples/subobc/src/src_user/settings/tlm_cmd/common_tlm_packet_define.c](https://github.com/arkedge/c2a-core/blob/80e6c96acbbd8551c174a586710a1d573de8206c/examples/subobc/src/src_user/settings/tlm_cmd/common_tlm_packet_define.c)
   - コンパイルが通るように，以下の include の修正を行う
     - `#include <src_core/tlm_cmd/common_cmd_packet.h>` -> `#include <src_core/tlm_cmd/common_packet/common_cmd_packet.h>`
