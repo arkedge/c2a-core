@@ -8,7 +8,7 @@ void C2A_core_main(void);
 // これらの番号は，リリース時に手動で合わせる
 // 詳細: docs/general/release.md
 #define C2A_CORE_VER_MAJOR (4)
-#define C2A_CORE_VER_MINOR (3)
+#define C2A_CORE_VER_MINOR (4)
 #define C2A_CORE_VER_PATCH (0)
 #define C2A_CORE_VER_PRE   ("")
 
