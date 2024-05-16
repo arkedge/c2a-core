@@ -1,5 +1,5 @@
 {
-  "name": "tools",
+  "name": "c2a-boom-tools",
   "scripts": {
     "preinstall": "./install.sh"
   },
