@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.13)
 project(C2A)
 
 # options
+# C2A 全体を C99 としてビルドするかどうか
+option(C2A_BUILD_AS_C99 "Build C2A as C99" OFF)
+
 # SCI COM for connection to WINGS TMTC IF
 # ！！！注意！！！
 # これをONにした状態で，SCIの受け口がない場合（TMTC IFが動いてない状態）
