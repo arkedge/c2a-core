@@ -6,7 +6,7 @@
 [examples/mobc](../../../../mobc) 側で必要なものをまとめて実行する．
 ```
 cd examples/mobc
-npm run devtools:sils-subobc    # examples/mobc, examples/subobc, tmtc-c2a などがすべて走る
+pnpm run devtools:sils-subobc    # examples/mobc, examples/subobc, tmtc-c2a などがすべて走る
 ```
 
 pytest は subobc 側（このディレクトリ）で実行する．
