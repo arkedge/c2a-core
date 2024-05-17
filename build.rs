@@ -26,6 +26,8 @@ fn main() {
     bind("hal".into(), "spi.h");
     bind("hal".into(), "uart.h");
     bind("hal".into(), "wdt.h");
+
+    bind("library".into(), "result.h");
 }
 
 fn bind(module: PathBuf, header: &str) {
