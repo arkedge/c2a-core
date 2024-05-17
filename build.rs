@@ -7,6 +7,22 @@ use semver::Version;
 use clang::{token::TokenKind::Punctuation, Clang, Index};
 
 fn main() {
+    println!("cargo:return-if-changed=setup.bat");
+    println!("cargo:return-if-changed=setup.sh");
+
+    println!("cargo:return-if-changed=CMakeLists.txt");
+    println!("cargo:return-if-changed=common.cmake");
+
+    println!("cargo:return-if-changed=c2a_core_main.h");
+    println!("cargo:return-if-changed=c2a_core_main.c");
+
+    println!("cargo:return-if-changed=applications/");
+    println!("cargo:return-if-changed=component_driver/");
+    println!("cargo:return-if-changed=hal/");
+    println!("cargo:return-if-changed=library/");
+    println!("cargo:return-if-changed=system/");
+    println!("cargo:return-if-changed=tlm_cmd/");
+
     let ver = env!("CARGO_PKG_VERSION");
     let ver = Version::parse(ver).unwrap();
     dbg!(&ver);
