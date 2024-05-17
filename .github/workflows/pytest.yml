@@ -51,8 +51,8 @@ jobs:
 
     - uses: actions/setup-node@v4.0.3
       with:
-        cache: npm
-        cache-dependency-path: examples/${{ matrix.c2a_user }}/package-lock.json
+        cache: pnpm
+        cache-dependency-path: examples/${{ matrix.c2a_user }}/pnpm-lock.yaml
 
     - name: Cache C2A devtools
       id: cache-c2a-devtools
@@ -88,7 +88,7 @@ jobs:
     - name: the heaviest objects in universe
       working-directory: ./examples/mobc
       run: |
-        npm ci
+        pnpm ci
 
     - name: build mobc C2A
       if: matrix.c2a_user == 'subobc'
@@ -105,7 +105,7 @@ jobs:
       if: matrix.c2a_user == 'mobc'
       working-directory: ./examples/mobc
       run: |
-        npm run devtools:sils &
+        pnpm run devtools:sils &
         sleep 3
     - name: run C2A (mobc & subobc)
       if: matrix.c2a_user == 'subobc'

@@ -16,7 +16,7 @@ jobs:
 
       - name: install
         run: |
-          npm install -g renovate
+          pnpm install -g renovate
       - name: validate
         run: |
           renovate-config-validator
