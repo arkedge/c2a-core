@@ -16,27 +16,9 @@
 // バッファサイズよりでかい文字列が来ると死ぬ
 static char PRINT_buffer_[512];
 
-#ifndef SILS_FW
+#ifdef SILS_FW
 
-#include <src_core/system/watchdog_timer/watchdog_timer.h>
-
-void Printf(const char* format, ...)
-{
-  va_list argptr;
-
-  WDT_clear_wdt();         // 2019/03/10 追加
-
-  va_start(argptr, format);
-  vsprintf(PRINT_buffer_, format, argptr);
-
-  tt_printf("%s", PRINT_buffer_);
-  // Printf_org("%s", PRINT_buffer_);  // LVTTL UART ch1での出力．邪魔なので初期化とともに無効化 (2019-04-09)
-  va_end(argptr);
-
-  WDT_clear_wdt();         // 2019/03/10 追加
-}
-
-#else
+// SILS 用 Printf() 実装
 
 void Printf(const char* format, ...)
 {
@@ -52,6 +34,26 @@ void Printf(const char* format, ...)
 #else
   // なにも表示しない
 #endif
+}
+
+#else
+
+#include <src_core/system/watchdog_timer/watchdog_timer.h>
+
+// 実機用 Printf() 実装のテンプレート
+void Printf(const char* format, ...)
+{
+  va_list argptr;
+
+  WDT_clear_wdt();
+
+  va_start(argptr, format);
+
+  // ここに出力の本体を書く
+
+  va_end(argptr);
+
+  WDT_clear_wdt();
 }
 
 #endif
