@@ -16,6 +16,7 @@ sudo apt install gcc-multilib protobuf-compiler libclang-dev cmake g++ g++-multi
 3. `/examples/mobc/` や `/examples/subobc/` で次を実行する．
 ```
 nvm install
+corepack enable
 pnpm install
 ```
 
