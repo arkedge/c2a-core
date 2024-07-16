@@ -11,8 +11,8 @@ import hashlib
 
 
 def ValidateTlmField(name):
-    pattern = re.compile(r'[A-Z_][0-9A-Z_]*')
-    parts = name.split('.')
+    pattern = re.compile(r"[A-Z_][0-9A-Z_]*")
+    parts = name.split(".")
     return all(pattern.fullmatch(part) for part in parts)
 
 
