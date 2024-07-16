@@ -83,7 +83,7 @@ def GenerateCmdDef(settings, sgc_db):
             if j >= param_num and type_list[j] != "":
                 err_flag = 1
             if err_flag:
-                print("Error: Cmd DB Err at " + name, file=sys.stderr)
+                print("Error: Cmd DB Err at " + name + ".", file=sys.stderr)
                 sys.exit(1)
 
         # パラメタ長のカウント

@@ -6,7 +6,14 @@ util
 import subprocess
 import sys
 import os
+import re
 import hashlib
+
+
+def ValidateTlmField(name):
+    pattern = re.compile(r'[A-Z_][0-9A-Z_]*')
+    parts = name.split('.')
+    return all(pattern.fullmatch(part) for part in parts)
 
 
 def GenerateSettingNote(settings):
@@ -74,7 +81,7 @@ def GetCommitHash_(path):
         )
         return result.stdout.strip()
     except subprocess.CalledProcessError:
-        print("Warn: failed to get commit hash(" + path + ")", file=sys.stderr)
+        print("Warn: failed to get commit hash (" + path + ").", file=sys.stderr)
         return "unknown"
 
 
@@ -92,7 +99,7 @@ def GetRepo_(path):
     try:
         subprocess.run(["git", "--version"], capture_output=True, check=True)
     except subprocess.CalledProcessError:
-        print("Warn: failed to execute git command", file=sys.stderr)
+        print("Warn: failed to execute git command.", file=sys.stderr)
         return "unknown/unknown/unknown"
 
     try:
@@ -102,7 +109,7 @@ def GetRepo_(path):
         remote = result.stdout.split("\n")[0]  # 最初の remote を取得
 
         if not remote:
-            print("Warn: failed to get git remote", file=sys.stderr)
+            print("Warn: failed to get git remote.", file=sys.stderr)
             return "unknown/unknown/unknown"
 
         remote_url = subprocess.run(
@@ -124,7 +131,7 @@ def GetRepo_(path):
 
         return remote_url
     except subprocess.CalledProcessError:
-        print("Warn: failed to execute: git remote", file=sys.stderr)
+        print("Warn: failed to execute: git remote.", file=sys.stderr)
         return "unknown/unknown/unknown"
 
 

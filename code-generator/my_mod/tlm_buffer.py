@@ -97,7 +97,7 @@ def GenerateTlmBuffer(settings, other_obc_dbs):
                 name_tree = name.lower().split(".")
                 name_path = "/".join(name_tree)
                 if SetStructTree_(tlm_struct_tree, name_path, var_type):
-                    print("Error: Tlm DB Struct Parse Err at " + name, file=sys.stderr)
+                    print("Error: Tlm DB Struct Parse Err at " + name + ".", file=sys.stderr)
                     sys.exit(1)
 
             # pprint.pprint(tlm_struct_tree)
