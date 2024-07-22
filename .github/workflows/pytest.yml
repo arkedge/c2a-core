@@ -92,7 +92,7 @@ jobs:
     - name: the heaviest objects in universe
       working-directory: ./examples/mobc
       run: |
-        pnpm ci
+        pnpm install --frozen-lockfile
 
     - name: build mobc C2A
       if: matrix.c2a_user == 'subobc'
