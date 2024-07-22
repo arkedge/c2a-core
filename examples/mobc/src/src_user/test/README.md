@@ -36,7 +36,7 @@
 C2A は `c2a-dev-runtime` に載せたものを使う．
 ```
 cd examples/mobc
-npm run devtools:sils   # C2A 本体と必要なもの（tmtc-c2a など）がすべて走る
+pnpm run devtools:sils   # C2A 本体と必要なもの（tmtc-c2a など）がすべて走る
 ```
 
 ```

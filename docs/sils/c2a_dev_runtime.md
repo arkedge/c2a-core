@@ -16,7 +16,8 @@ sudo apt install gcc-multilib protobuf-compiler libclang-dev cmake g++ g++-multi
 3. `/examples/mobc/` や `/examples/subobc/` で次を実行する．
 ```
 nvm install
-npm install
+corepack enable
+pnpm install
 ```
 
 
@@ -39,7 +40,7 @@ MOBC 環境 (`/examples/mobc/`) を例にする．
 
 1. 1 つ目のターミナルで `/examples/mobc/` に移動し，次を実行する．
 ```
-npm run devtools:sils
+pnpm run devtools:sils
 ```
 2. ブラウザで `http://localhost:8900/devtools/` を開くと，テレコマ通信が可能となる．
 
@@ -50,7 +51,7 @@ MOBC 環境 (`/examples/mobc/`) を例にする．
 
 1. 1 つ目のターミナルで `/examples/mobc/` に移動し，次を実行する．
 ```
-npm run devtools:debug
+pnpm run devtools:debug
 ```
 2. VS Code のデバッガで `Debug executable 'c2a-example-mobc` を実行する．
 3. ブラウザで `http://localhost:8900/devtools/` を開くと，テレコマ通信が可能となる．
@@ -64,5 +65,5 @@ npm run devtools:debug
 
 
 ## その他
-`npm run *` コマンドについては，以下のファイルなどを参照すること．  
+`pnpm run *` コマンドについては，以下のファイルなどを参照すること．  
 https://github.com/arkedge/c2a-core/blob/63af0662d09ecf427e035602935891abc09d09dd/examples/mobc/package.json#L1-L25

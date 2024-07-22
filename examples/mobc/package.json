@@ -1,5 +1,6 @@
 {
   "name": "c2a-example-mobc",
+  "packageManager": "pnpm@9.1.1",
   "scripts": {
     "build:tlmcmddb": "tlmcmddb-cli bundle --pretty tlm-cmd-db/TLM_DB/calced_data tlm-cmd-db/CMD_DB tlmcmddb.json",
     "run:c2a": "cargo run",
