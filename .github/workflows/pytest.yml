@@ -50,6 +50,8 @@ jobs:
       run: ./setup.sh
 
     - uses: pnpm/action-setup@v4.0.0
+      with:
+        package_json_file: examples/${{ matrix.c2a_user }}/package.json
 
     - uses: actions/setup-node@v4.0.3
       with:
