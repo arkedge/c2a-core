@@ -7,5 +7,5 @@ edition = "2021"
 license = "MIT"
 
 [dependencies]
-bindgen = "0.69.4"
+bindgen = "0.70.0"
 doxygen-rs = "0.4.2"
