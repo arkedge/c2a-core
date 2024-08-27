@@ -286,6 +286,7 @@ typedef struct
     {
       uint8_t is_enable;
       uint8_t is_clear_enable;
+      uint32_t timer;
     } wdt;
     uint8_t dummy_data0;
     struct
