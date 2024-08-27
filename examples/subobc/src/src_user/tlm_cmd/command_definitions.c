@@ -126,6 +126,7 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
   cmd_table[Cmd_CODE_WDT_DISABLE].cmd_func = Cmd_WDT_DISABLE;
   cmd_table[Cmd_CODE_WDT_STOP_CLEAR].cmd_func = Cmd_WDT_STOP_CLEAR;
   cmd_table[Cmd_CODE_WDT_START_CLEAR].cmd_func = Cmd_WDT_START_CLEAR;
+  cmd_table[Cmd_CODE_WDT_SET_TIMER].cmd_func = Cmd_WDT_SET_TIMER;
 
   cmd_table[Cmd_CODE_TMGR_SET_TIME].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;
   cmd_table[Cmd_CODE_TMGR_UPDATE_UNIXTIME].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_8BYTE;
@@ -259,6 +260,7 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
   cmd_table[Cmd_CODE_CA_REGISTER_CMD].param_size_infos[1].packed_info.bit.first = CA_PARAM_SIZE_TYPE_RAW;
   cmd_table[Cmd_CODE_TF_SET_PAGE_FOR_TLM].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
   cmd_table[Cmd_CODE_CA_SET_PAGE_FOR_TLM].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_WDT_SET_TIMER].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;
 }
 
 #pragma section
