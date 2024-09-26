@@ -1,18 +1,18 @@
 [package]
-name = "c2a-example-mobc"
-version.workspace = true
+name = "{{ project-name }}"
+version = "4.4.0"
 edition = "2021"
 
 [dependencies]
-c2a-core.workspace = true
+c2a-core = "4.4.0"
 
 # runtime
-c2a-dev-runtime.workspace = true
+c2a-dev-runtime = { git = "https://github.com/arkedge/c2a-core", tag = "v4.4.0" }
 
-# c2a-hal impl
+# ifimpl
 c2a-example-mobc-ccsds-kble = { path = "./src/src_user/hal/ccsds-kble" }
-c2a-uart-kble.workspace = true
-c2a-wdt-noop.workspace = true
+c2a-uart-kble = { git = "https://github.com/arkedge/c2a-core", tag = "v4.4.0" }
+c2a-wdt-noop = { git = "https://github.com/arkedge/c2a-core", tag = "v4.4.0" }
 
 [build-dependencies]
 cmake = "0.1"
