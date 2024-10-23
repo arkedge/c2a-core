@@ -18,7 +18,7 @@ jobs:
           - subobc
 
     steps:
-      - uses: actions/checkout@v4.1.7
+      - uses: actions/checkout@v4.2.2
 
       - name: setup
         shell: cmd
