@@ -19,7 +19,7 @@ jobs:
           sudo apt-get update -y
           sudo apt install -y doxygen graphviz
 
-      - uses: actions/checkout@v4.1.7
+      - uses: actions/checkout@v4.2.2
 
       - name: C2A setup
         run: ./setup.sh
