@@ -60,7 +60,7 @@ jobs:
 
     - name: Cache C2A devtools
       id: cache-c2a-devtools
-      uses: actions/cache@v4.0.2
+      uses: actions/cache@v4.1.2
       with:
         path: |
           ./examples/mobc/tools/bin
