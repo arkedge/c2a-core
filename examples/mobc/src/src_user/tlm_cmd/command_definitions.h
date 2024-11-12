@@ -4,7 +4,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: a6ac3f58e1422615904c43d389e64877
+ *          CSV files MD5: 03076efb966c0f746783e116ba4fe38a
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -191,9 +191,10 @@ typedef enum
   Cmd_CODE_WDT_DISABLE                                           = 0x010B,  //!< WDT無効化
   Cmd_CODE_WDT_STOP_CLEAR                                        = 0x010C,  //!< WDTのカウンタクリアを止める＝リセット実行
   Cmd_CODE_WDT_START_CLEAR                                       = 0x010D,  //!< WDTのカウンタクリアを開始する
-  Cmd_CODE_UART_TEST_INIT_CSRV                                   = 0x010E,  //!< CSRV 初期化
-  Cmd_CODE_UART_TEST_UPDATE                                      = 0x010F,  //!< Driver update
-  Cmd_CODE_UART_TEST_SEND_TEST                                   = 0x0110,  //!< Driver send test
+  Cmd_CODE_WDT_SET_TIMER                                         = 0x010E,  //!< WDTの監視周期を変更 (監視周期[ms])
+  Cmd_CODE_UART_TEST_INIT_CSRV                                   = 0x010F,  //!< CSRV 初期化
+  Cmd_CODE_UART_TEST_UPDATE                                      = 0x0110,  //!< Driver update
+  Cmd_CODE_UART_TEST_SEND_TEST                                   = 0x0111,  //!< Driver send test
   Cmd_CODE_UTIL_CMD_ADD                                          = 0x03E0,  //!< 汎用コマンドのバッファに指定サイズのデータを入れる
   Cmd_CODE_UTIL_CMD_SEND                                         = 0x03E1,  //!< 引数のCHに汎用コマンドのバッファにあるデータを送信する
   Cmd_CODE_UTIL_CMD_RESET                                        = 0x03E2,  //!< 汎用コマンドのバッファをクリアする

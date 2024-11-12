@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: a6ac3f58e1422615904c43d389e64877
+ *          CSV files MD5: 03076efb966c0f746783e116ba4fe38a
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -4136,7 +4136,7 @@ static TF_TLM_FUNC_ACK Tlm_GS_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 
 static TF_TLM_FUNC_ACK Tlm_HK_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 {
-  if (428 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+  if (432 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
 
 #ifndef BUILD_SETTINGS_FAST_BUILD
   TF_copy_u32(&packet[26], TMGR_get_master_clock().mode_cycle);
@@ -4189,41 +4189,41 @@ static TF_TLM_FUNC_ACK Tlm_HK_(uint8_t* packet, uint16_t* len, uint16_t max_len)
   TF_copy_u16(&packet[154], (uint16_t)(PL_is_empty(&(PH_tl_cmd_list[TLCD_ID_FROM_GS_FOR_MISSION])) ? 0 : CCP_get_id((const CommonCmdPacket*)(PL_get_head(&(PH_tl_cmd_list[TLCD_ID_FROM_GS_FOR_MISSION]))->packet))));
   TF_copy_u8(&packet[156], (uint8_t)(((uint8_t)timeline_command_dispatcher->dispatcher[TLCD_ID_FROM_GS].stop_on_error << 7 & 0x80) | ((uint8_t)timeline_command_dispatcher->dispatcher[TLCD_ID_FROM_GS].lockout << 6 & 0x40) | ((uint8_t)timeline_command_dispatcher->dispatcher[TLCD_ID_DEPLOY_BC].stop_on_error << 5 & 0x20) | ((uint8_t)timeline_command_dispatcher->dispatcher[TLCD_ID_DEPLOY_BC].lockout << 4 & 0x10) | ((uint8_t)timeline_command_dispatcher->dispatcher[TLCD_ID_DEPLOY_TLM].stop_on_error << 3 & 0x08) | ((uint8_t)timeline_command_dispatcher->dispatcher[TLCD_ID_DEPLOY_TLM].lockout << 2 & 0x04) | ((uint8_t)timeline_command_dispatcher->dispatcher[TLCD_ID_FROM_GS_FOR_MISSION].stop_on_error << 1 & 0x02) | ((uint8_t)timeline_command_dispatcher->dispatcher[TLCD_ID_FROM_GS_FOR_MISSION].lockout & 0x01) ));
   TF_copy_u8(&packet[157], (uint8_t)((wdt_config->is_wdt_enable << 7 & 0x80) | (wdt_config->is_clear_enable << 6 & 0x40) | 0x00));
-  TF_copy_u16(&packet[158], block_command_table->pos.block);
-  TF_copy_u8(&packet[160], (uint8_t)(block_command_table->pos.cmd));
-  TF_copy_u32(&packet[161], ((block_command_table->pos.cmd == 0) ? 0 : (uint32_t)BCT_get_ti(block_command_table->pos.block, (uint8_t)(block_command_table->pos.cmd-1))));
-  TF_copy_u16(&packet[165], (uint16_t)((block_command_table->pos.cmd == 0) ? 0 : BCT_get_id(block_command_table->pos.block, (uint8_t)(block_command_table->pos.cmd-1))));
-  TF_copy_u32(&packet[167], event_logger->statistics.record_counter_total);
-  TF_copy_u16(&packet[171], (uint16_t)event_logger->statistics.record_counters[EL_ERROR_LEVEL_HIGH]);
-  TF_copy_u16(&packet[173], (uint16_t)event_logger->statistics.record_counters[EL_ERROR_LEVEL_MIDDLE]);
-  TF_copy_u16(&packet[175], (uint16_t)event_logger->statistics.record_counters[EL_ERROR_LEVEL_LOW]);
-  TF_copy_u16(&packet[177], (uint16_t)event_logger->statistics.record_counters[EL_ERROR_LEVEL_EL]);
-  TF_copy_u16(&packet[179], (uint16_t)event_logger->statistics.record_counters[EL_ERROR_LEVEL_EH]);
-  TF_copy_u8(&packet[181], (uint8_t)event_logger->latest_event.group);
-  TF_copy_u32(&packet[182], event_logger->latest_event.local);
-  TF_copy_u8(&packet[186], (uint8_t)event_logger->latest_event.err_level);
-  TF_copy_u32(&packet[187], event_logger->latest_event.time.total_cycle);
-  TF_copy_u8(&packet[191], (uint8_t)event_logger->latest_event.time.step);
-  TF_copy_u32(&packet[192], event_logger->latest_event.note);
-  TF_copy_u8(&packet[196], (uint8_t)EL_get_the_nth_tlog_from_the_latest(EL_ERROR_LEVEL_HIGH, 0)->group);
-  TF_copy_u32(&packet[197], EL_get_the_nth_tlog_from_the_latest(EL_ERROR_LEVEL_HIGH, 0)->local);
-  TF_copy_u32(&packet[201], EL_get_the_nth_tlog_from_the_latest(EL_ERROR_LEVEL_HIGH, 0)->time.total_cycle);
-  TF_copy_u8(&packet[205], (uint8_t)EL_get_the_nth_tlog_from_the_latest(EL_ERROR_LEVEL_HIGH, 0)->time.step);
-  TF_copy_u16(&packet[206], (uint16_t)EL_get_the_nth_tlog_from_the_latest(EL_ERROR_LEVEL_HIGH, 0)->note);
-  TF_copy_u32(&packet[208], event_handler->log_table.respond_counter);
-  TF_copy_u16(&packet[212], (uint16_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[0]].cmd_code));
-  TF_copy_u8(&packet[214], (uint8_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[0]].status));
-  TF_copy_u16(&packet[215], (uint16_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[0]].exec_counter));
-  TF_copy_i8(&packet[217], (int8_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[0]].last_exec_sts));
-  TF_copy_u32(&packet[218], divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[0]].last_exec_time.total_cycle);
-  TF_copy_u16(&packet[222], (uint16_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[1]].cmd_code));
-  TF_copy_u8(&packet[224], (uint8_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[1]].status));
-  TF_copy_u16(&packet[225], (uint16_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[1]].exec_counter));
-  TF_copy_i8(&packet[227], (int8_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[1]].last_exec_sts));
-  TF_copy_u32(&packet[228], divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[1]].last_exec_time.total_cycle);
-  TF_copy_u32(&packet[232], GIT_REV_CORE_SHORT);
-  TF_copy_u32(&packet[236], GIT_REV_USER_SHORT);
-  TF_copy_u32(&packet[240], 0);
+  TF_copy_u32(&packet[158], (uint32_t)wdt_config->timer_setting);
+  TF_copy_u16(&packet[162], block_command_table->pos.block);
+  TF_copy_u8(&packet[164], (uint8_t)(block_command_table->pos.cmd));
+  TF_copy_u32(&packet[165], ((block_command_table->pos.cmd == 0) ? 0 : (uint32_t)BCT_get_ti(block_command_table->pos.block, (uint8_t)(block_command_table->pos.cmd-1))));
+  TF_copy_u16(&packet[169], (uint16_t)((block_command_table->pos.cmd == 0) ? 0 : BCT_get_id(block_command_table->pos.block, (uint8_t)(block_command_table->pos.cmd-1))));
+  TF_copy_u32(&packet[171], event_logger->statistics.record_counter_total);
+  TF_copy_u16(&packet[175], (uint16_t)event_logger->statistics.record_counters[EL_ERROR_LEVEL_HIGH]);
+  TF_copy_u16(&packet[177], (uint16_t)event_logger->statistics.record_counters[EL_ERROR_LEVEL_MIDDLE]);
+  TF_copy_u16(&packet[179], (uint16_t)event_logger->statistics.record_counters[EL_ERROR_LEVEL_LOW]);
+  TF_copy_u16(&packet[181], (uint16_t)event_logger->statistics.record_counters[EL_ERROR_LEVEL_EL]);
+  TF_copy_u16(&packet[183], (uint16_t)event_logger->statistics.record_counters[EL_ERROR_LEVEL_EH]);
+  TF_copy_u8(&packet[185], (uint8_t)event_logger->latest_event.group);
+  TF_copy_u32(&packet[186], event_logger->latest_event.local);
+  TF_copy_u8(&packet[190], (uint8_t)event_logger->latest_event.err_level);
+  TF_copy_u32(&packet[191], event_logger->latest_event.time.total_cycle);
+  TF_copy_u8(&packet[195], (uint8_t)event_logger->latest_event.time.step);
+  TF_copy_u32(&packet[196], event_logger->latest_event.note);
+  TF_copy_u8(&packet[200], (uint8_t)EL_get_the_nth_tlog_from_the_latest(EL_ERROR_LEVEL_HIGH, 0)->group);
+  TF_copy_u32(&packet[201], EL_get_the_nth_tlog_from_the_latest(EL_ERROR_LEVEL_HIGH, 0)->local);
+  TF_copy_u32(&packet[205], EL_get_the_nth_tlog_from_the_latest(EL_ERROR_LEVEL_HIGH, 0)->time.total_cycle);
+  TF_copy_u8(&packet[209], (uint8_t)EL_get_the_nth_tlog_from_the_latest(EL_ERROR_LEVEL_HIGH, 0)->time.step);
+  TF_copy_u16(&packet[210], (uint16_t)EL_get_the_nth_tlog_from_the_latest(EL_ERROR_LEVEL_HIGH, 0)->note);
+  TF_copy_u32(&packet[212], event_handler->log_table.respond_counter);
+  TF_copy_u16(&packet[216], (uint16_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[0]].cmd_code));
+  TF_copy_u8(&packet[218], (uint8_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[0]].status));
+  TF_copy_u16(&packet[219], (uint16_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[0]].exec_counter));
+  TF_copy_i8(&packet[221], (int8_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[0]].last_exec_sts));
+  TF_copy_u32(&packet[222], divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[0]].last_exec_time.total_cycle);
+  TF_copy_u16(&packet[226], (uint16_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[1]].cmd_code));
+  TF_copy_u8(&packet[228], (uint8_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[1]].status));
+  TF_copy_u16(&packet[229], (uint16_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[1]].exec_counter));
+  TF_copy_i8(&packet[231], (int8_t)(divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[1]].last_exec_sts));
+  TF_copy_u32(&packet[232], divided_cmd_utility->exec_logs[divided_cmd_utility->exec_log_order[1]].last_exec_time.total_cycle);
+  TF_copy_u32(&packet[236], GIT_REV_CORE_SHORT);
+  TF_copy_u32(&packet[240], GIT_REV_USER_SHORT);
   TF_copy_u32(&packet[244], 0);
   TF_copy_u32(&packet[248], 0);
   TF_copy_u32(&packet[252], 0);
@@ -4270,9 +4270,10 @@ static TF_TLM_FUNC_ACK Tlm_HK_(uint8_t* packet, uint16_t* len, uint16_t max_len)
   TF_copy_u32(&packet[416], 0);
   TF_copy_u32(&packet[420], 0);
   TF_copy_u32(&packet[424], 0);
+  TF_copy_u32(&packet[428], 0);
 #endif
 
-  *len = 428;
+  *len = 432;
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 

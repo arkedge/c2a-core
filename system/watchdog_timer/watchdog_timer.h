@@ -36,5 +36,6 @@ CCP_CmdRet Cmd_WDT_ENABLE(const CommonCmdPacket* packet);
 CCP_CmdRet Cmd_WDT_DISABLE(const CommonCmdPacket* packet);
 CCP_CmdRet Cmd_WDT_STOP_CLEAR(const CommonCmdPacket* packet);
 CCP_CmdRet Cmd_WDT_START_CLEAR(const CommonCmdPacket* packet);
+CCP_CmdRet Cmd_WDT_SET_TIMER(const CommonCmdPacket* packet);
 
 #endif
