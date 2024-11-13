@@ -63,6 +63,7 @@ def test_wdt_at_sils():
     )
     assert tlm_HK["HK.WDT.TIMER"] == 1000
 
+
 @pytest.mark.real
 def test_wdt_at_real():
     pass
