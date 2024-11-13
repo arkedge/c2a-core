@@ -37,7 +37,7 @@ jobs:
         run: ./setup.sh
 
       - name: reviewdog / clippy
-        uses: sksat/action-clippy@v1.0.0
+        uses: sksat/action-clippy@v1.1.0
         with:
           reporter: ${{ github.event_name == 'pull_request' && 'github-pr-review' || 'github-check' }}
           clippy_flags: --workspace --all-features
