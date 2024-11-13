@@ -56,7 +56,7 @@ def test_wdt_at_sils():
     assert tlm_HK["HK.WDT.IS_CLEAR_ENABLE"] == "ENA"
 
     wings.util.send_cmd_and_confirm(
-        ope, c2a_enum.Cmd_CODE_WDT_SET_TIMER, (1000, ), c2a_enum.Tlm_CODE_HK
+        ope, c2a_enum.Cmd_CODE_WDT_SET_TIMER, (1000,), c2a_enum.Tlm_CODE_HK
     )
     tlm_HK = wings.util.generate_and_receive_tlm(
         ope, c2a_enum.Cmd_CODE_TG_GENERATE_RT_TLM, c2a_enum.Tlm_CODE_HK
