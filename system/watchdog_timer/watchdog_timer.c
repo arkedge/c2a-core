@@ -112,7 +112,7 @@ CCP_CmdRet Cmd_WDT_SET_TIMER(const CommonCmdPacket* packet)
   Printf("WDT timer set to %d\n", (uint32_t)wdt_config->timer_setting);
   if (ret != 0)
   {
-    return CCP_make_cmd_ret_without_err_code(CCP_EXEC_ILLEGAL_CONTEXT);
+    return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_CONTEXT, (uint32_t)ret);
   }
   return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
 }
