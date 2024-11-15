@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: c3bd02684f15db9b881c871cd79547d3
+ *          CSV files MD5: 6fb2d9b01a6f9efc3034e56bce3bf2fd
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_AOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -122,7 +122,7 @@ static TF_TLM_FUNC_ACK Tlm_AOBC_AOBC_(uint8_t* packet, uint16_t* len, uint16_t m
 
 static TF_TLM_FUNC_ACK Tlm_AOBC_HK_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 {
-  if (426 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+  if (422 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
 
 #ifndef BUILD_SETTINGS_FAST_BUILD
   TF_copy_u32(&packet[26], TMGR_get_master_clock().mode_cycle);
@@ -248,10 +248,9 @@ static TF_TLM_FUNC_ACK Tlm_AOBC_HK_(uint8_t* packet, uint16_t* len, uint16_t max
   TF_copy_u32(&packet[410], 0);
   TF_copy_u32(&packet[414], 0);
   TF_copy_u32(&packet[418], 0);
-  TF_copy_u32(&packet[422], 0);
 #endif
 
-  *len = 426;
+  *len = 422;
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 

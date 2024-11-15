@@ -5,8 +5,8 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:     github.com/arkedge/c2a-core.git
- *          CSV files MD5:  c3bd02684f15db9b881c871cd79547d3
- *          db commit hash: caa8d4ca59a37460e7ef348bd58ee8a95bfd092c
+ *          CSV files MD5:  6fb2d9b01a6f9efc3034e56bce3bf2fd
+ *          db commit hash: 2ee4ca01ac9e153ad5671146ac9f5f72919b471d
  * @note  コード生成パラメータ:
  *          name:                    AOBC
  *          db_prefix:               SAMPLE_AOBC
@@ -440,7 +440,6 @@ static CDS_ERR_CODE AOBC_analyze_tlm_aobc_hk_(const CommonTlmPacket* packet, AOB
   ENDIAN_memcpy(&(aobc_driver->tlm_data.aobc_hk.dummy_data48), &(f[410]), 4);
   ENDIAN_memcpy(&(aobc_driver->tlm_data.aobc_hk.dummy_data49), &(f[414]), 4);
   ENDIAN_memcpy(&(aobc_driver->tlm_data.aobc_hk.dummy_data50), &(f[418]), 4);
-  ENDIAN_memcpy(&(aobc_driver->tlm_data.aobc_hk.dummy_data51), &(f[422]), 4);
   // TODO: ビットフィールドをつかっている系は，様々なパターンがあり得るので，今後，バグが出ないか注視する
 
   // ワーニング回避
