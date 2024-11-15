@@ -104,8 +104,6 @@ CCP_CmdRet Cmd_WDT_START_CLEAR(const CommonCmdPacket* packet)
 
 CCP_CmdRet Cmd_WDT_SET_TIMER(const CommonCmdPacket* packet)
 {
-  (void)packet;
-
   uint32_t timer = CCP_get_param_from_packet(packet, 0, uint32_t );
   int ret = WDT_set_timer((void*)&wdt_config_, timer);
 
