@@ -85,7 +85,7 @@ def LoadTlmCSV_(tlm_db_path, db_prefix, tlm_id_range, encoding):
             tlm_id = sheet[1][2]  # FIXME: テレメIDを取得．マジックナンバーで指定してしまってる．
             if not int(tlm_id_range[0], 0) <= int(tlm_id, 0) < int(tlm_id_range[1], 0):
                 print(
-                    "Error: TLM ID is invalid at " + db_prefix + "_TLM_DB_" + tlm_name + ".csv",
+                    "Error: TLM ID is invalid at " + db_prefix + "_TLM_DB_" + tlm_name + ".csv.",
                     file=sys.stderr,
                 )
                 sys.exit(1)
