@@ -2,21 +2,34 @@
   "extends": [
     "github>arkedge/renovate-config"
   ],
-  "labels": ["priority::medium", "tools"],
-  "additionalReviewers": ["sksat"],
-  "assignees": ["sksat"],
-  "regexManagers": [
+  "labels": [
+    "priority::medium",
+    "tools"
+  ],
+  "additionalReviewers": [
+    "sksat"
+  ],
+  "assignees": [
+    "sksat"
+  ],
+  "customManagers": [
     {
-      "fileMatch": [".github/workflows/*"],
+      "customType": "regex",
+      "fileMatch": [
+        ".github/workflows/*"
+      ],
       "matchStrings": [
-        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?_VERSION:\\s(?<currentValue>.*)\\s",
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?_VERSION:\\s(?<currentValue>.*)\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
     },
     {
-      "fileMatch": [".*\.sh"],
+      "customType": "regex",
+      "fileMatch": [
+        ".*.sh"
+      ],
       "matchStrings": [
-        "cargo install\\s*(--\\S*\\s*)*(\\s*--root\\s\\S*\\s*)?(?<depName>\\S*?)\\s*(--\\S*\\s*)*(--version\\s*(?<currentValue>\\S*))\\s",
+        "cargo install\\s*(--\\S*\\s*)*(\\s*--root\\s\\S*\\s*)?(?<depName>\\S*?)\\s*(--\\S*\\s*)*(--version\\s*(?<currentValue>\\S*))\\s"
       ],
       "datasourceTemplate": "crate",
       "versioningTemplate": "cargo"
