@@ -12,6 +12,14 @@
         "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?_VERSION:\\s(?<currentValue>.*)\\s",
       ],
       "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
+    },
+    {
+      "fileMatch": [".*\.sh"],
+      "matchStrings": [
+        "cargo install\\s*(--\\S*\\s*)*(\\s*--root\\s\\S*\\s*)?(?<depName>\\S*?)\\s*(--\\S*\\s*)*(--version\\s*(?<currentValue>\\S*))\\s",
+      ],
+      "datasourceTemplate": "crate",
+      "versioningTemplate": "cargo"
     }
   ]
 }
