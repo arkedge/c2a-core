@@ -1,6 +1,6 @@
 {
   "extends": [
-    "config:base"
+    "github>arkedge/renovate-config"
   ],
   "labels": ["priority::medium", "tools"],
   "additionalReviewers": ["sksat"],
