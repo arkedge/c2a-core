@@ -8,7 +8,7 @@ curl -L --proto '=https' --tlsv1.2 -sSf "https://raw.githubusercontent.com/cargo
 cargo install --debug --root . tmtc-c2a --git https://github.com/arkedge/gaia.git --tag v0.6.1
 
 cargo install --debug --root . tlmcmddb-cli    --version 0.2.0
-cargo install --debug --root . kble            --version 0.2.0
-cargo install --debug --root . kble-c2a        --version 0.2.0
-cargo install --debug --root . kble-eb90       --version 0.2.0
+./bin/cargo-binstall --root . kble                   --version 0.3.0 --no-confirm
+./bin/cargo-binstall --root . kble-c2a               --version 0.3.0 --no-confirm
+./bin/cargo-binstall --root . kble-eb90              --version 0.3.0 --no-confirm
 cargo install --debug --root . jrsonnet        --version 0.5.0-pre9 --locked
