@@ -1,6 +1,9 @@
 #!/bin/bash -Cue
 
+export BINSTALL_VERSION="v1.10.14"
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
+
+curl -L --proto '=https' --tlsv1.2 -sSf "https://raw.githubusercontent.com/cargo-bins/cargo-binstall/${BINSTALL_VERSION}/install-from-binstall-release.sh" | env BINSTALL_VERSION=${BINSTALL_VERSION} CARGO_HOME=$(pwd) bash
 
 cargo install --debug --root . tmtc-c2a --git https://github.com/arkedge/gaia.git --tag v0.6.1
 
