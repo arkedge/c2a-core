@@ -5,7 +5,7 @@ export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 curl -L --proto '=https' --tlsv1.2 -sSf "https://raw.githubusercontent.com/cargo-bins/cargo-binstall/${BINSTALL_VERSION}/install-from-binstall-release.sh" | env BINSTALL_VERSION=${BINSTALL_VERSION} CARGO_HOME=$(pwd) bash
 
-cargo install --debug --root . tmtc-c2a --git https://github.com/arkedge/gaia.git --tag v0.6.1
+./bin/cargo-binstall --root . tmtc-c2a               --version 1.0.0 --no-confirm
 
 cargo install --debug --root . tlmcmddb-cli    --version 0.2.0
 ./bin/cargo-binstall --root . kble                   --version 0.3.0 --no-confirm
