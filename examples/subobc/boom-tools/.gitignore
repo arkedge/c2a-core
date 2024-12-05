@@ -1,4 +1,5 @@
 /bin/*
 /bin/.keep
+/binstall/*
 /.crates.toml
 /.crates2.json
