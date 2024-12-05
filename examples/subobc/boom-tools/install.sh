@@ -1,7 +1,7 @@
 #!/bin/bash -Cue
 
 export BINSTALL_VERSION="v1.10.14"
-export CARGO_NET_GIT_FETCH_WITH_CLI=true
+export JRSONNET_VERSION="v0.5.0-pre96-test"
 
 curl -L --proto '=https' --tlsv1.2 -sSf "https://raw.githubusercontent.com/cargo-bins/cargo-binstall/${BINSTALL_VERSION}/install-from-binstall-release.sh" | env BINSTALL_VERSION=${BINSTALL_VERSION} CARGO_HOME=$(pwd) bash
 
@@ -11,4 +11,12 @@ curl -L --proto '=https' --tlsv1.2 -sSf "https://raw.githubusercontent.com/cargo
 ./bin/cargo-binstall --root . kble                   --version 0.3.0 --no-confirm
 ./bin/cargo-binstall --root . kble-c2a               --version 0.3.0 --no-confirm
 ./bin/cargo-binstall --root . kble-eb90              --version 0.3.0 --no-confirm
-cargo install --debug --root . jrsonnet        --version 0.5.0-pre9 --locked
+
+## install jrsonnet
+arch=$(uname -m)
+if [ "$arch" = "x86_64" ]; then
+  arch="amd64"
+fi
+os=$(uname -s | tr -s '[:upper:]' '[:lower:]')
+curl -L "https://github.com/CertainLach/jrsonnet/releases/download/${JRSONNET_VERSION}/jrsonnet-linux-${arch}" -o ./bin/jrsonnet
+chmod +x ./bin/jrsonnet
