@@ -64,13 +64,14 @@ C2A Core の採用実績のある衛星 OBC や動作実績のあるボードの
 | MOBC | ONGLAISAT | ISSL at the University of Tokyo | 2024/12/09 | Renesas Electronics SH-2A | 200 MHz | 2.5 MiB internal ROM | 128 KiB internal RAM, 8 MiB external SRAM | 2 MiB MRAM | 2 GiB NAND flash memory | UART (RS422, LVTTL), CCSDS (LVTTL), GPIO (LVTTL), ADC | [^1] |
 | AOBC | ONGLAISAT | ISSL at the University of Tokyo | 2024/12/09 | Microchip Technology PIC32MX7 | 80 MHz | 512 KiB internal ROM | 128 KiB internal RAM | 512 KiB FRAM | None | UART (RS422, RS485, LVTTL), SPI, I2C, GPIO (LVTTL), ADC | [^1] |
 | TOBC | ONGLAISAT | ISSL at the University of Tokyo | 2024/12/09 | Microchip Technology PIC32MX7 | 30 MHz | 512 KiB internal ROM | 128 KiB internal RAM | None | None | UART (LVTTL), I2C, GPIO (LVTTL), ADC | [^1] |
-| MOBC | YODAKA (AE1b) | ArkEdge Space Inc. | 2024/12/09 | Renesas Electronics SH-2A | 200 MHz | 2.5 MiB internal ROM | 128 KiB internal RAM, 8 MiB external SRAM | 2 MiB MRAM | 2 GiB NAND flash memory | UART (RS422, LVTTL), CCSDS (LVTTL), GPIO (LVTTL), ADC | [^1] |
-| AOBC | YODAKA (AE1b) | ArkEdge Space Inc. | 2024/12/09 | Microchip Technology PIC32MX7 | 80 MHz | 512 KiB internal ROM | 128 KiB internal RAM | 512 KiB FRAM | None | UART (RS422, RS485, LVTTL), SPI, I2C, GPIO (LVTTL), ADC | [^1] |
-| TOBC | YODAKA (AE1b) | ArkEdge Space Inc. | 2024/12/09 | Microchip Technology PIC32MX7 | 30 MHz | 512 KiB internal ROM | 128 KiB internal RAM | None | None | UART (LVTTL), I2C, GPIO (LVTTL), ADC | [^1] |
-| LOBC | YODAKA (AE1b) | ArkEdge Space Inc. | 2024/12/09 | Microchip Technology PIC32MX7 | 30 MHz | 512 KiB internal ROM | 128 KiB internal RAM | FeRAM | NOR Flash | UART (LVTTL), I2C, SPI, GPIO (LVTTL) | [^1] |
+| MOBC | YODAKA (AE1b) | ArkEdge Space Inc. | 2024/12/09 | Renesas Electronics SH-2A | 200 MHz | 2.5 MiB internal ROM | 128 KiB internal RAM, 8 MiB external SRAM | 2 MiB MRAM | 2 GiB NAND flash memory | UART (RS422, LVTTL), CCSDS (LVTTL), GPIO (LVTTL), ADC | [^2] |
+| AOBC | YODAKA (AE1b) | ArkEdge Space Inc. | 2024/12/09 | Microchip Technology PIC32MX7 | 80 MHz | 512 KiB internal ROM | 128 KiB internal RAM | 512 KiB FRAM | None | UART (RS422, RS485, LVTTL), SPI, I2C, GPIO (LVTTL), ADC | [^2] |
+| TOBC | YODAKA (AE1b) | ArkEdge Space Inc. | 2024/12/09 | Microchip Technology PIC32MX7 | 30 MHz | 512 KiB internal ROM | 128 KiB internal RAM | None | None | UART (LVTTL), I2C, GPIO (LVTTL), ADC | [^2] |
+| LOBC | YODAKA (AE1b) | ArkEdge Space Inc. | 2024/12/09 | Microchip Technology PIC32MX7 | 30 MHz | 512 KiB internal ROM | 128 KiB internal RAM | FeRAM | NOR Flash | UART (LVTTL), I2C, SPI, GPIO (LVTTL) | [^2] |
 
 
 [^1]: Ryo Suzumoto, et al. Improvement of C2A (Command-Centric Architecture) Reusability for Multiple Types of OBCs and Development of Continuous Integration Environment for Reliability of Flight Software. _33rd International Symposium on Space Technology and Science_, 2022-f-58, 2022.
+[^2]: 株式会社アークエッジ・スペース. 新開発の６U衛星汎用バスを採用した小型衛星：AE1ｂおよびONGLAISATの運用開始. Retrieved December 27, 2024, from https://arkedgespace.com/news/2024-12-10_ae1b_yodaka_onglaisat
 
 
 ## 関連リンク
