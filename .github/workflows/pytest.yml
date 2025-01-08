@@ -98,12 +98,12 @@ jobs:
       if: matrix.c2a_user == 'subobc'
       working-directory: ./examples/mobc
       run: |
-        cargo build
+        cargo build --locked
 
     - name: build C2A
       working-directory: ./examples/${{ matrix.c2a_user }}
       run: |
-        cargo build
+        cargo build --locked
 
     - name: run mobc C2A
       if: matrix.c2a_user == 'mobc'
