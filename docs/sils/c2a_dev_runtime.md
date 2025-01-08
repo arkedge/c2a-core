@@ -60,8 +60,8 @@ pnpm run devtools:debug
 ### pytest の実行
 以下を参照のこと．
 
-- [mobc pytest](../../examples/mobc/src/src_user/Test/README.md)
-- [subobc pytest](../../examples/subobc/src/src_user/Test/README.md)
+- [mobc pytest](../../examples/mobc/src/src_user/test/README.md)
+- [subobc pytest](../../examples/subobc/src/src_user/test/README.md)
 
 
 ## その他
