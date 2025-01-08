@@ -11,4 +11,4 @@ bindgen = "0.69.4"
 doxygen-rs = "0.4.2"
 
 # force set version to *NOT* to update MSRV by PATCH VERSION to build with Rust 1.76
-home = "=0.5.9"
+home = "=0.5.11"
