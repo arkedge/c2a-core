@@ -1,5 +1,6 @@
 [workspace.package]
 version = "4.4.0"
+repository = "https://github.com/arkedge/c2a-core"
 
 [workspace]
 resolver = "2"
@@ -36,7 +37,7 @@ description = "Core of Command Centric Architecture"
 readme = "README.md"
 license = "MIT"
 
-repository = "https://github.com/arkedge/c2a-core"
+repository.workspace = true
 documentation = "https://ut-issl.github.io/c2a-reference/c2a-core"
 
 [lib]
