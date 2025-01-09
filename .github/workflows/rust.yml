@@ -36,7 +36,7 @@ jobs:
           components: clippy, rustfmt
 
       - name: cache dependencies
-        uses: Swatinem/rust-cache@v2.7.5
+        uses: Swatinem/rust-cache@v2.7.7
 
       - name: setup c2a-core
         run: ./setup.sh
