@@ -68,8 +68,14 @@ jobs:
           ./examples/mobc/tools/.crates2.json
         key: ${{ matrix.c2a_user }}-${{ runner.os }}-tools-${{ hashFiles('${{ matrix.c2a_user }}/tools/install.sh', '${{ matrix.c2a_user }}/tools/package.json') }}
 
+    - name: Get Rust toolchain
+      id: toolchain
+      run: |
+        awk -F'[ ="]+' '$1 == "channel" { print "toolchain=" $2 }' rust-toolchain.toml >> "$GITHUB_OUTPUT"
+
     - uses: dtolnay/rust-toolchain@stable
       with:
+        toolchain: ${{ steps.toolchain.outputs.toolchain }}
         targets: i686-unknown-linux-gnu
         components: clippy, rustfmt
 
