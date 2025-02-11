@@ -29,6 +29,7 @@
 #include "component_service/csrv_gs.h"
 
 // UserDefined
+#include "user_defined/etc/demo_calculator.h"
 #include "user_defined/debug_apps.h"
 
 #endif
