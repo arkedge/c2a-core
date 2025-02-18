@@ -62,6 +62,18 @@ def GenerateTlmDef(settings, tlm_db):
             if pos == "":
                 continue
 
+            # tlm field のバリデーション
+            if not my_mod.util.ValidateTlmField(name):
+                print(
+                    "Error: Tlm Field must match `[A-Z_][0-9A-Z_]*` at "
+                    + name
+                    + " in "
+                    + tlm["tlm_name"].upper()
+                    + ".",
+                    file=sys.stderr,
+                )
+                sys.exit(1)
+
             pos = int(pos)
             code = code.replace("@@", ",")
             func_code += "  "
@@ -89,8 +101,21 @@ def GenerateTlmDef(settings, tlm_db):
             elif var_type == "double":
                 func_code += "TF_copy_double"
                 max_pos = pos + 8
+            elif var_type == "raw":
+                print(
+                    "Error: Var. Type `raw` of "
+                    + name
+                    + " is forbidden in Telemetry Generator at "
+                    + tlm["tlm_name"].upper()
+                    + ".",
+                    file=sys.stderr,
+                )
+                sys.exit(1)
             else:
-                print("Error: Tlm DB Err at " + tlm["tlm_name"].upper(), file=sys.stderr)
+                print(
+                    "Error: Tlm DB Err at " + name + " in " + tlm["tlm_name"].upper() + ".",
+                    file=sys.stderr,
+                )
                 sys.exit(1)
             func_code += "(&packet[" + str(pos) + "], " + code + ");\n"
 
