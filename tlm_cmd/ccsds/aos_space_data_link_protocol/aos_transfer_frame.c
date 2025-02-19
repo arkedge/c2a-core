@@ -55,7 +55,7 @@ static void AOSTF_set_common_hdr_(AosTransferFrame* aostf)
 static void AOSTF_clear_spare_(AosTransferFrame* aostf)
 {
   unsigned int pos = 5;
-  uint8_t mask = 0x7f; // 01111111b
+  uint8_t mask = 0x4f; // 01001111b
 
   aostf->header[pos] &= (uint8_t)(~mask);
 }
@@ -86,17 +86,19 @@ void AOSTF_set_ver(AosTransferFrame* aostf, AOSTF_VER ver)
   aostf->header[pos] |= val;
 }
 
-AOSTF_SCID AOSTF_get_scdi(const AosTransferFrame* aostf)
+AOSTF_SCID AOSTF_get_scid(const AosTransferFrame* aostf)
 {
   unsigned int pos = 0;
   uint8_t mask1 = 0x3f; // 00111111b
   uint8_t mask2 = 0xc0; // 11000000b
+  uint8_t mask3 = 0x30; // 00110000b
 
   int scid = (aostf->header[pos] & mask1);
   scid <<= 2;
   scid |= ((aostf->header[pos + 1] & mask2) >> 6);
+  scid |= ((int)(aostf->header[pos + 5] & mask3) << 4);
 
-  return AOSTF_get_scid_from_uint8((uint8_t)scid);
+  return AOSTF_get_scid_from_uint16((uint16_t)scid);
 }
 
 void AOSTF_set_scid(AosTransferFrame* aostf, AOSTF_SCID scid)
@@ -104,11 +106,16 @@ void AOSTF_set_scid(AosTransferFrame* aostf, AOSTF_SCID scid)
   unsigned int pos = 0;
   uint8_t mask1 = 0x3f; // 00111111b
   uint8_t mask2 = 0xc0; // 11000000b
+  uint8_t mask3 = 0x30; // 00110000b
+  uint8_t scid_h = (uint8_t)((scid & 0xff00) >> 8);
+  uint8_t scid_l = (uint8_t)(scid & 0x00ff);
 
   aostf->header[pos] &= (uint8_t)(~mask1);
-  aostf->header[pos] |= (uint8_t)((scid >> 2) & mask1);
+  aostf->header[pos] |= (uint8_t)((scid_l >> 2) & mask1);
   aostf->header[pos + 1] &= (uint8_t)(~mask2);
-  aostf->header[pos + 1] |= (uint8_t)((scid << 6) & mask2);
+  aostf->header[pos + 1] |= (uint8_t)((scid_l << 6) & mask2);
+  aostf->header[pos + 5] &= (uint8_t)(~mask3);
+  aostf->header[pos + 5] |= (uint8_t)((scid_h << 4) & mask3);
 }
 
 AOSTF_VCID AOSTF_get_vcid(const AosTransferFrame* aostf)

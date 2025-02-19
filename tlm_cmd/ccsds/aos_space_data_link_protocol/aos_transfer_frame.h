@@ -16,7 +16,7 @@
  *        |       5 |     0 |     1 | Replay Flag              |
  *        |       5 |     1 |     1 | VC Frame Count           |
  *        |         |       |       |           Usage Flag     |
- *        |       5 |     2 |     2 | Reserved Spare           |
+ *        |       5 |     2 |     2 | SCID Extension           |
  *        |       5 |     4 |     4 | VC Frame Count Cycle     |
  *        |---------+-------+-------+--------------------------|
  *        | === User Data Field ===============================|
@@ -97,7 +97,7 @@ AOSTF_VER AOSTF_get_ver(const AosTransferFrame* aostf);
 
 void AOSTF_set_ver(AosTransferFrame* aostf, AOSTF_VER ver);
 
-AOSTF_SCID AOSTF_get_scdi(const AosTransferFrame* aostf);
+AOSTF_SCID AOSTF_get_scid(const AosTransferFrame* aostf);
 
 void AOSTF_set_scid(AosTransferFrame* aostf, AOSTF_SCID scid);
 
