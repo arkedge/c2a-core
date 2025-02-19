@@ -9,14 +9,14 @@
  *        | === Primary Header ================================|
  *        |---------+-------+-------+--------------------------|
  *        |       0 |     0 |     2 | Version Number           |
- *        |       0 |     2 |     8 | Spacecraft ID            |
+ *        |       0 |     2 |     8 | Spacecraft ID (SCID)     |
  *        |       1 |     2 |     6 | Virtual Channel ID       |
  *        |       2 |     0 |    24 | Virtual Channel          |
  *        |         |       |       |           Frame Count    |
  *        |       5 |     0 |     1 | Replay Flag              |
  *        |       5 |     1 |     1 | VC Frame Count           |
  *        |         |       |       |           Usage Flag     |
- *        |       5 |     2 |     2 | Reserved Spare           |
+ *        |       5 |     2 |     2 | SCID Extension           |
  *        |       5 |     4 |     4 | VC Frame Count Cycle     |
  *        |---------+-------+-------+--------------------------|
  *        | === User Data Field ===============================|
@@ -97,7 +97,7 @@ AOSTF_VER AOSTF_get_ver(const AosTransferFrame* aostf);
 
 void AOSTF_set_ver(AosTransferFrame* aostf, AOSTF_VER ver);
 
-AOSTF_SCID AOSTF_get_scdi(const AosTransferFrame* aostf);
+AOSTF_SCID AOSTF_get_scid(const AosTransferFrame* aostf);
 
 void AOSTF_set_scid(AosTransferFrame* aostf, AOSTF_SCID scid);
 

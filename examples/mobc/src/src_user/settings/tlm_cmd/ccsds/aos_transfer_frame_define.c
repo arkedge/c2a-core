@@ -5,7 +5,7 @@
  */
 #include "aos_transfer_frame_define.h"
 
-AOSTF_SCID AOSTF_get_scid_from_uint8(uint8_t scid)
+AOSTF_SCID AOSTF_get_scid_from_uint16(uint16_t scid)
 {
   switch ((AOSTF_SCID)scid)
   {

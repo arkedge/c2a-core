@@ -11,11 +11,11 @@
 /**
  * @enum  AOSTF_SCID
  * @brief Spacecraft ID
- * @note  8 bit
+ * @note  10 bit
  */
 typedef enum
 {
-  AOSTF_SCID_SAMPLE_SATELLITE = 0x00,
+  AOSTF_SCID_SAMPLE_SATELLITE = 0x000,
   AOSTF_SCID_UNKNOWN
 } AOSTF_SCID;
 
@@ -23,10 +23,10 @@ typedef enum
 
 /**
  * @brief  バイト列から AOSTF_SCID を取得
- * @param  scid: AOSTF_SCID 候補の uint8_t
+ * @param  scid: AOSTF_SCID 候補の uint16_t
  * @note   不正な入力のときは AOSTF_SCID_UNKNOWN を返す
  * @return AOSTF_SCID
  */
-AOSTF_SCID AOSTF_get_scid_from_uint8(uint8_t scid);
+AOSTF_SCID AOSTF_get_scid_from_uint16(uint16_t scid);
 
 #endif
