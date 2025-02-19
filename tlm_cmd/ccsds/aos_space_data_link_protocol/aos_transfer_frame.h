@@ -9,7 +9,7 @@
  *        | === Primary Header ================================|
  *        |---------+-------+-------+--------------------------|
  *        |       0 |     0 |     2 | Version Number           |
- *        |       0 |     2 |     8 | Spacecraft ID            |
+ *        |       0 |     2 |     8 | Spacecraft ID (SCID)     |
  *        |       1 |     2 |     6 | Virtual Channel ID       |
  *        |       2 |     0 |    24 | Virtual Channel          |
  *        |         |       |       |           Frame Count    |

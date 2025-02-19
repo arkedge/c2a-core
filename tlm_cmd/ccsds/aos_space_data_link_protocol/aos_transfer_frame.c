@@ -54,6 +54,8 @@ static void AOSTF_set_common_hdr_(AosTransferFrame* aostf)
 
 static void AOSTF_clear_spare_(AosTransferFrame* aostf)
 {
+  // FIXME: SCID extentions の誕生にともない，もはやここは spare ではなくなったので，
+  //        本来は AOSTF_set_aostf_counter の方で 0 埋めするのが正しい
   unsigned int pos = 5;
   uint8_t mask = 0x4f; // 01001111b
 
