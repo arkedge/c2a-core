@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "../system/time_manager/time_manager.h"
+#include "../system/event_manager/event_logger.h"
 #include "command_analyze.h"
 #include "block_command_table.h"
 #include <src_user/tlm_cmd/user_packet_handler.h>
@@ -119,6 +120,8 @@ PH_ACK PH_analyze_packet(const CommonTlmCmdPacket* packet)
 PH_ACK PH_analyze_cmd_packet(const CommonCmdPacket* packet)
 {
   PH_ACK ack;
+  uint32_t el_local;
+
   if (!CCP_is_valid_packet(packet)) return PH_ACK_INVALID_PACKET;
 
   // ユーザー定義部
@@ -127,6 +130,20 @@ PH_ACK PH_analyze_cmd_packet(const CommonCmdPacket* packet)
   ack = PH_user_analyze_cmd(packet);
   if (ack != PH_ACK_UNKNOWN)
   {
+    if (ack == PH_ACK_FORWARDED)
+    {
+      // sub OBC キューへ無事に転送
+      return ack;
+    }
+
+    // 転送失敗
+    el_local = ( ((0X000000ff & (uint32_t)CCP_get_dest_type(packet)) << 24)
+               | ((0x000000ff & (uint32_t)CCP_get_exec_type(packet)) << 16)
+               | ( 0x0000ffff & (uint32_t)ack) );
+    EL_record_event((EL_GROUP)EL_CORE_GROUP_PH_USER_ANALYZE_CCP,
+                    el_local,
+                    EL_ERROR_LEVEL_HIGH,
+                    CCP_get_id(packet));
     return ack;
   }
 
@@ -141,37 +158,78 @@ PH_ACK PH_analyze_cmd_packet(const CommonCmdPacket* packet)
   switch (CCP_get_exec_type(packet))
   {
   case CCP_EXEC_TYPE_GS:
-    return PH_add_gs_cmd_(packet);
+    ack = PH_add_gs_cmd_(packet);
+    break;
 
   case CCP_EXEC_TYPE_TL_FROM_GS:
-    return PH_add_tl_cmd_(TLCD_ID_FROM_GS, packet, TMGR_get_master_total_cycle());
+    ack = PH_add_tl_cmd_(TLCD_ID_FROM_GS, packet, TMGR_get_master_total_cycle());
+    break;
 
   case CCP_EXEC_TYPE_BC:
-    return PH_add_block_cmd_(packet);
+    ack = PH_add_block_cmd_(packet);
+    break;
 
   case CCP_EXEC_TYPE_RT:
-    return PH_add_rt_cmd_(packet);
+    ack = PH_add_rt_cmd_(packet);
+    break;
 
   case CCP_EXEC_TYPE_UTL:
-    return PH_add_utl_cmd_(TLCD_ID_FROM_GS, packet);
+    ack = PH_add_utl_cmd_(TLCD_ID_FROM_GS, packet);
+    break;
 
   case CCP_EXEC_TYPE_TL_DEPLOY_BC:
-    return PH_add_tl_cmd_(TLCD_ID_DEPLOY_BC, packet, TMGR_get_master_total_cycle());
+    ack = PH_add_tl_cmd_(TLCD_ID_DEPLOY_BC, packet, TMGR_get_master_total_cycle());
+    break;
 
   case CCP_EXEC_TYPE_TL_DEPLOY_TLM:
-    return PH_add_tl_cmd_(TLCD_ID_DEPLOY_TLM, packet, TMGR_get_master_total_cycle());
+    ack = PH_add_tl_cmd_(TLCD_ID_DEPLOY_TLM, packet, TMGR_get_master_total_cycle());
+    break;
 
 #ifdef TLCD_ENABLE_MISSION_TL
   case CCP_EXEC_TYPE_TL_FOR_MISSION:
-    return PH_add_tl_cmd_(TLCD_ID_FROM_GS_FOR_MISSION, packet, TMGR_get_master_total_cycle());
+    ack = PH_add_tl_cmd_(TLCD_ID_FROM_GS_FOR_MISSION, packet, TMGR_get_master_total_cycle());
+    break;
 
   case CCP_EXEC_TYPE_UTL_FOR_MISSION:
-    return PH_add_utl_cmd_(TLCD_ID_FROM_GS_FOR_MISSION, packet);
+    ack = PH_add_utl_cmd_(TLCD_ID_FROM_GS_FOR_MISSION, packet);
+    break;
 #endif
 
   default:
-    return PH_ACK_UNKNOWN;
+    ack = PH_ACK_UNKNOWN;
+    break;
   }
+
+  switch (ack)
+  {
+  case PH_ACK_SUCCESS:
+  case PH_ACK_FORWARDED:
+  case PH_ACK_TLC_SUCCESS:
+  case PH_ACK_BC_SUCCESS:
+    // 成功ケース
+    return ack;
+  }
+
+  // ここまで来たら以下のどれか
+  // 全てにおいてパケットが失われているので， EL_ERROR_LEVEL_HIGH として対応
+  // PH_ACK_PL_LIST_FULL          // キューに空きがなく，パケットが失われるので HIGH
+  // PH_ACK_PACKET_NOT_FOUND      // これがくることはないはず
+  // PH_ACK_INVALID_PACKET        // これがくることはないはず
+  // PH_ACK_TLC_PAST_TIME         // 設定時刻が不正でパケットが失われるので HIGH
+  // PH_ACK_TLC_ALREADY_EXISTS    // 設定時刻が不正でパケットが失われるので HIGH
+  // PH_ACK_BC_INVALID_BLOCK_NO   // BC ID が不正でパケットが失われるので HIGH
+  // PH_ACK_BC_ISORATED_CMD       // BC Cmd pos が不正でパケットが失われるので HIGH
+  // PH_ACK_BC_CMD_TOO_LONG       // BC Cmd param 長 が不正でパケットが失われるので HIGH
+  // PH_ACK_UNKNOWN               // これがくることはないはず
+  el_local = ( ((0X000000ff & (uint32_t)CCP_get_dest_type(packet)) << 24)     // ここでの CCP_DEST_TYPE は CCP_DEST_TYPE_TO_ME のはず
+             | ((0x000000ff & (uint32_t)CCP_get_exec_type(packet)) << 16)
+             | ( 0x0000ffff & (uint32_t)ack) );
+  EL_record_event((EL_GROUP)EL_CORE_GROUP_PH_ANALYZE_CCP,
+                  el_local,
+                  EL_ERROR_LEVEL_HIGH,
+                  CCP_get_id(packet));
+
+  return ack;
 }
 
 

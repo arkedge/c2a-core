@@ -218,6 +218,8 @@ typedef enum
   EL_CORE_GROUP_CDIS_INTERNAL_ERR,
   EL_CORE_GROUP_CDIS_EXEC_ERR_STS,
   EL_CORE_GROUP_CDIS_EXEC_ERR_CODE,
+  EL_CORE_GROUP_PH_ANALYZE_CCP,       //!< PH_analyze_cmd_packet での CCP 配送エラー
+  EL_CORE_GROUP_PH_USER_ANALYZE_CCP,  //!< PH_user_analyze_cmd での CCP 配送エラー
   // TODO: ComponentDriverSuper
 #ifdef EL_IS_ENABLE_EL_ERROR_LEVEL
   EL_CORE_GROUP_EL_DROP_CLOG1,        //!< EL CLogs で古いエラーを上書きするとき (group, err_level を保存)
