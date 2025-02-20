@@ -208,6 +208,8 @@ PH_ACK PH_analyze_cmd_packet(const CommonCmdPacket* packet)
   case PH_ACK_BC_SUCCESS:
     // 成功ケース
     return ack;
+  default:
+    break;
   }
 
   // ここまで来たら以下のどれか
