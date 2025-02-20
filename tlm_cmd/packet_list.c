@@ -337,8 +337,7 @@ PL_ACK PL_insert_tl_cmd(PacketList* pl, const CommonCmdPacket* packet, cycle_t n
       }
       else if (curr_ti > planed) // 挿入場所発見
       {
-        PL_insert_after(pl, prev, &ccp);
-        return PL_SUCCESS;
+        return PL_insert_after(pl, prev, &ccp);
       }
       else // 既登録コマンドと時刻指定が等しい
       {
