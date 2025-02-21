@@ -409,10 +409,10 @@ static PH_ACK PH_add_tlm_to_pl(const CommonTlmPacket* packet, PacketList* pl, CT
   if (ack != PL_SUCCESS)
   {
     EL_record_event((EL_GROUP)EL_CORE_GROUP_PH_ANALYZE_CTP,
-                    (uint32_t)( ((0X000000ff & (uint32_t)dest_flag) << 16) | ( 0x0000ffff & (uint32_t)ack) ),
+                    (uint32_t)( ((0X000000ff & (uint32_t)dest_flag) << 16) | ( 0x0000ffff & (uint32_t)PH_ACK_PL_LIST_FULL) ),
                     EL_ERROR_LEVEL_HIGH,      // packet が失われるので HIGH
                     CTP_get_id(packet));
-    return ack;    // PH_ACK_PL_LIST_FULL のはず
+    return PH_ACK_PL_LIST_FULL;
   }
 
   // 複数の配送先に配送されるパケットの分岐は終わっているため， dest flag を配送先のもののみにする．
