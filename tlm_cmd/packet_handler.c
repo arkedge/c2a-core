@@ -275,7 +275,7 @@ PH_ACK PH_analyze_tlm_packet(const CommonTlmPacket* packet)
   // High Priority Realtime Telemetry
   if (flags & CTP_DEST_FLAG_HP_TLM)
   {
-    ack = PH_add_rt_tlm_(packet);  // hp_tlm のフラグが立っていても，RT_TLMとして処理する方針にした
+    ack = PH_add_rt_tlm_(packet);  // hp_tlm のフラグが立っていても，RT_TLM として処理する方針にした
     if (ack != PH_ACK_SUCCESS) last_err_ack = ack;
   }
 
