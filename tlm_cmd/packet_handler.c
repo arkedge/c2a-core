@@ -263,6 +263,9 @@ static PH_ACK PH_add_block_cmd_(const CommonCmdPacket* packet)
 PH_ACK PH_analyze_tlm_packet(const CommonTlmPacket* packet)
 {
   ctp_dest_flags_t flags;
+  PH_ACK ack = PH_ACK_UNKNOWN;
+  PH_ACK last_err_ack = PH_ACK_SUCCESS;
+
   if (!CTP_is_valid_packet(packet)) return PH_ACK_INVALID_PACKET;
 
   flags = CTP_get_dest_flags(packet);
@@ -270,21 +273,46 @@ PH_ACK PH_analyze_tlm_packet(const CommonTlmPacket* packet)
   // FIXME: flag の match は関数化したい
 
   // High Priority Realtime Telemetry
-  if (flags & CTP_DEST_FLAG_HP_TLM) PH_add_rt_tlm_(packet);  // hp_tlm のフラグが立っていても，RT_TLMとして処理する方針にした
+  if (flags & CTP_DEST_FLAG_HP_TLM)
+  {
+    ack = PH_add_rt_tlm_(packet);  // hp_tlm のフラグが立っていても，RT_TLMとして処理する方針にした
+    if (ack != PH_ACK_SUCCESS) last_err_ack = ack;
+  }
 
   // Realtime Telemetry
-  if (flags & CTP_DEST_FLAG_RT_TLM) PH_add_rt_tlm_(packet);
+  if (flags & CTP_DEST_FLAG_RT_TLM)
+  {
+    ack = PH_add_rt_tlm_(packet);
+    if (ack != PH_ACK_SUCCESS) last_err_ack = ack;
+  }
 
 #ifdef DR_ENABLE
   // Stored Telemetry
-  if (flags & CTP_DEST_FLAG_ST_TLM) PH_add_st_tlm_(packet);
+  if (flags & CTP_DEST_FLAG_ST_TLM)
+  {
+    ack = PH_add_st_tlm_(packet);
+    if (ack != PH_ACK_SUCCESS) last_err_ack = ack;
+  }
 
   // Replay Telemetry
-  if (flags & CTP_DEST_FLAG_RP_TLM) PH_add_rp_tlm_(packet);
+  if (flags & CTP_DEST_FLAG_RP_TLM)
+  {
+    ack = PH_add_rp_tlm_(packet);
+    if (ack != PH_ACK_SUCCESS) last_err_ack = ack;
+  }
 #endif
 
-  // [TODO] 要検討:各Queue毎の登録エラー判定は未実装
-  return PH_ACK_SUCCESS;
+  if (ack == PH_ACK_UNKNOWN)
+  {
+    // どの CTP_DEST_FLAG にもヒットしなかった場合
+    last_err_ack = PH_ACK_UNKNOWN;
+    EL_record_event((EL_GROUP)EL_CORE_GROUP_PH_ANALYZE_CTP,
+                    (uint32_t)( ((0X000000ff & (uint32_t)flags) << 16) | ( 0x0000ffff & (uint32_t)last_err_ack) ),
+                    EL_ERROR_LEVEL_LOW,
+                    CTP_get_id(packet));
+  }
+
+  return last_err_ack;
 }
 
 
@@ -378,7 +406,14 @@ static PH_ACK PH_add_tlm_to_pl(const CommonTlmPacket* packet, PacketList* pl, CT
   PL_Node* tail;
   PL_ACK ack = PL_push_back(pl, packet);
 
-  if (ack != PL_SUCCESS) return PH_ACK_PL_LIST_FULL;
+  if (ack != PL_SUCCESS)
+  {
+    EL_record_event((EL_GROUP)EL_CORE_GROUP_PH_ANALYZE_CTP,
+                    (uint32_t)( ((0X000000ff & (uint32_t)dest_flag) << 16) | ( 0x0000ffff & (uint32_t)ack) ),
+                    EL_ERROR_LEVEL_HIGH,      // packet が失われるので HIGH
+                    CTP_get_id(packet));
+    return ack;    // PH_ACK_PL_LIST_FULL のはず
+  }
 
   // 複数の配送先に配送されるパケットの分岐は終わっているため， dest flag を配送先のもののみにする．
   // こうすることで， GS SW 側でのデータベース格納の処理がシンプルになる．
