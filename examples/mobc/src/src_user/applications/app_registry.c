@@ -34,6 +34,7 @@ void AR_load_initial_settings(void)
   add_application_(AR_CDRV_UTIL, CDRV_UTIL_create_app);
   add_application_(AR_UTILITY_CMD, UTIL_CMD_create_app);
   // add_application_(AR_UTILITY_COUNTER, UTIL_COUNTER_create_app);
+  add_application_(AR_APP_DEMO_CALCULATOR, APP_CALC_create_app);
   add_application_(AR_APP_DBG_FLUSH_SCREEN, APP_DBG_flush_screen);
   add_application_(AR_APP_DBG_PRINT_TIMESTAMP, APP_DBG_print_time_stamp);
   add_application_(AR_APP_DBG_PRINT_CMD_STATUS, APP_DBG_print_cmd_status);

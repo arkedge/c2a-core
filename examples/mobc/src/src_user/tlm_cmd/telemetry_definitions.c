@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: a6ac3f58e1422615904c43d389e64877
+ *          CSV files MD5: cdfb84318ccef71e1e893aa4e68d0efa
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -43,6 +43,7 @@ static TF_TLM_FUNC_ACK Tlm_EH_RULE_(uint8_t* packet, uint16_t* len, uint16_t max
 static TF_TLM_FUNC_ACK Tlm_EH_LOG_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_EH_INDEX_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_GS_(uint8_t* packet, uint16_t* len, uint16_t max_len);
+static TF_TLM_FUNC_ACK Tlm_DEMO_CALC_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_HK_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_GIT_REV_(uint8_t* packet, uint16_t* len, uint16_t max_len);
 static TF_TLM_FUNC_ACK Tlm_UART_TEST_(uint8_t* packet, uint16_t* len, uint16_t max_len);
@@ -75,6 +76,7 @@ void TF_load_tlm_table(TF_TlmInfo tlm_table[TF_MAX_TLMS])
   tlm_table[Tlm_CODE_EH_LOG].tlm_func = Tlm_EH_LOG_;
   tlm_table[Tlm_CODE_EH_INDEX].tlm_func = Tlm_EH_INDEX_;
   tlm_table[Tlm_CODE_GS].tlm_func = Tlm_GS_;
+  tlm_table[Tlm_CODE_DEMO_CALC].tlm_func = Tlm_DEMO_CALC_;
   tlm_table[Tlm_CODE_HK].tlm_func = Tlm_HK_;
   tlm_table[Tlm_CODE_GIT_REV].tlm_func = Tlm_GIT_REV_;
   tlm_table[Tlm_CODE_UART_TEST].tlm_func = Tlm_UART_TEST_;
@@ -4131,6 +4133,26 @@ static TF_TLM_FUNC_ACK Tlm_GS_(uint8_t* packet, uint16_t* len, uint16_t max_len)
 #endif
 
   *len = 113;
+  return TF_TLM_FUNC_ACK_SUCCESS;
+}
+
+static TF_TLM_FUNC_ACK Tlm_DEMO_CALC_(uint8_t* packet, uint16_t* len, uint16_t max_len)
+{
+  if (53 > max_len) return TF_TLM_FUNC_ACK_TOO_SHORT_LEN;
+
+#ifndef BUILD_SETTINGS_FAST_BUILD
+  TF_copy_u32(&packet[26], demo_calculator->info.exec_count);
+  TF_copy_u32(&packet[30], demo_calculator->info.err_count);
+  TF_copy_u32(&packet[34], demo_calculator->info.last_exec_time.total_cycle);
+  TF_copy_u32(&packet[38], demo_calculator->info.last_exec_time.step);
+  TF_copy_u8(&packet[42], demo_calculator->info.status);
+  TF_copy_i32(&packet[43], demo_calculator->calc.a);
+  TF_copy_i32(&packet[47], demo_calculator->calc.b);
+  TF_copy_u8(&packet[51], demo_calculator->calc.result);
+  TF_copy_u8(&packet[52], demo_calculator->calc.operator);
+#endif
+
+  *len = 53;
   return TF_TLM_FUNC_ACK_SUCCESS;
 }
 

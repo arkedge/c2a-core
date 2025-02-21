@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: a6ac3f58e1422615904c43d389e64877
+ *          CSV files MD5: cdfb84318ccef71e1e893aa4e68d0efa
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -196,6 +196,11 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
   cmd_table[Cmd_CODE_UART_TEST_INIT_CSRV].cmd_func = Cmd_UART_TEST_INIT_CSRV;
   cmd_table[Cmd_CODE_UART_TEST_UPDATE].cmd_func = Cmd_UART_TEST_UPDATE;
   cmd_table[Cmd_CODE_UART_TEST_SEND_TEST].cmd_func = Cmd_UART_TEST_SEND_TEST;
+  cmd_table[Cmd_CODE_APP_CALC_EXEC].cmd_func = Cmd_APP_CALC_EXEC;
+  cmd_table[Cmd_CODE_APP_CALC_SET_A].cmd_func = Cmd_APP_CALC_SET_A;
+  cmd_table[Cmd_CODE_APP_CALC_SET_B].cmd_func = Cmd_APP_CALC_SET_B;
+  cmd_table[Cmd_CODE_APP_CALC_SET_OP].cmd_func = Cmd_APP_CALC_SET_OP;
+  cmd_table[Cmd_CODE_APP_CALC_RESET].cmd_func = Cmd_APP_CALC_RESET;
   cmd_table[Cmd_CODE_UTIL_CMD_ADD].cmd_func = Cmd_UTIL_CMD_ADD;
   cmd_table[Cmd_CODE_UTIL_CMD_SEND].cmd_func = Cmd_UTIL_CMD_SEND;
   cmd_table[Cmd_CODE_UTIL_CMD_RESET].cmd_func = Cmd_UTIL_CMD_RESET;
@@ -421,6 +426,9 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
   cmd_table[Cmd_CODE_CSRV_GS_SET_INFO].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
   cmd_table[Cmd_CODE_CSRV_GS_CCSDS_SET_RATE].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
   cmd_table[Cmd_CODE_UART_TEST_SEND_TEST].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_APP_CALC_SET_A].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;
+  cmd_table[Cmd_CODE_APP_CALC_SET_B].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;
+  cmd_table[Cmd_CODE_APP_CALC_SET_OP].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
   cmd_table[Cmd_CODE_UTIL_CMD_ADD].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
   cmd_table[Cmd_CODE_UTIL_CMD_ADD].param_size_infos[0].packed_info.bit.second = CA_PARAM_SIZE_TYPE_4BYTE;
   cmd_table[Cmd_CODE_UTIL_CMD_ADD].param_size_infos[1].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;
