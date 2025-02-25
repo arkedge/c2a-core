@@ -263,7 +263,7 @@ static PH_ACK PH_add_block_cmd_(const CommonCmdPacket* packet)
 PH_ACK PH_analyze_tlm_packet(const CommonTlmPacket* packet)
 {
   ctp_dest_flags_t flags;
-  if (!CTP_is_valid_packet(packet)) return PH_ACK_UNKNOWN;    // FIXME: 返り値変えたい
+  if (!CTP_is_valid_packet(packet)) return PH_ACK_INVALID_PACKET;
 
   flags = CTP_get_dest_flags(packet);
 
