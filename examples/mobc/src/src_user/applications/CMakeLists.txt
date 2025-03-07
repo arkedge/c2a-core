@@ -7,6 +7,7 @@ set(C2A_SRCS
   component_service/csrv_aobc.c
   component_service/csrv_gs.c
   component_service/csrv_uart_test.c
+  user_defined/etc/demo_calculator.c
   user_defined/debug_apps.c
 )
 

@@ -4,7 +4,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: a6ac3f58e1422615904c43d389e64877
+ *          CSV files MD5: cdfb84318ccef71e1e893aa4e68d0efa
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_MOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -194,6 +194,11 @@ typedef enum
   Cmd_CODE_UART_TEST_INIT_CSRV                                   = 0x010E,  //!< CSRV 初期化
   Cmd_CODE_UART_TEST_UPDATE                                      = 0x010F,  //!< Driver update
   Cmd_CODE_UART_TEST_SEND_TEST                                   = 0x0110,  //!< Driver send test
+  Cmd_CODE_APP_CALC_EXEC                                         = 0x0111,  //!< 計算を実行
+  Cmd_CODE_APP_CALC_SET_A                                        = 0x0112,  //!< 被演算子 a をセット
+  Cmd_CODE_APP_CALC_SET_B                                        = 0x0113,  //!< 被演算子 b をセット
+  Cmd_CODE_APP_CALC_SET_OP                                       = 0x0114,  //!< 演算子をセット
+  Cmd_CODE_APP_CALC_RESET                                        = 0x0115,  //!< クリア
   Cmd_CODE_UTIL_CMD_ADD                                          = 0x03E0,  //!< 汎用コマンドのバッファに指定サイズのデータを入れる
   Cmd_CODE_UTIL_CMD_SEND                                         = 0x03E1,  //!< 引数のCHに汎用コマンドのバッファにあるデータを送信する
   Cmd_CODE_UTIL_CMD_RESET                                        = 0x03E2,  //!< 汎用コマンドのバッファをクリアする
