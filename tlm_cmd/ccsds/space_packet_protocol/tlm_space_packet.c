@@ -19,7 +19,7 @@ static const SP_ParamExtractionInfo TSP_pei_tlm_id_      = {11, 0xff, 0, 1};  //
 static const SP_ParamExtractionInfo TSP_pei_global_time_ = {12, 0xff, 0, 8};  // 11111111b
 static const SP_ParamExtractionInfo TSP_pei_ob_sn_time_  = {20, 0xff, 0, 4};  // 11111111b
 static const SP_ParamExtractionInfo TSP_pei_dest_flags_  = {24, 0xff, 0, 1};  // 11111111b
-static const SP_ParamExtractionInfo TSP_pei_dest_info_   = {25, 0x0f, 0, 1};  // 11111111b
+static const SP_ParamExtractionInfo TSP_pei_dest_info_   = {25, 0xff, 0, 1};  // 11111111b
 
 
 // ******************************
