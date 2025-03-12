@@ -9,6 +9,7 @@ curl -L --proto '=https' --tlsv1.2 -sSf "https://raw.githubusercontent.com/cargo
 
 ./bin/cargo-binstall --root . tlmcmddb-cli           --version 2.6.1 --no-confirm
 ./bin/cargo-binstall --root . kble                   --version 0.3.0 --no-confirm
+./bin/cargo-binstall --root . kble-serialport        --version 0.3.0 --no-confirm
 ./bin/cargo-binstall --root . kble-c2a               --version 0.3.0 --no-confirm
 ./bin/cargo-binstall --root . kble-eb90              --version 0.3.0 --no-confirm
 
