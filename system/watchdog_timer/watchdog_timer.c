@@ -102,6 +102,19 @@ CCP_CmdRet Cmd_WDT_START_CLEAR(const CommonCmdPacket* packet)
   return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
 }
 
+CCP_CmdRet Cmd_WDT_SET_TIMER(const CommonCmdPacket* packet)
+{
+  uint32_t timer = CCP_get_param_from_packet(packet, 0, uint32_t );
+  int ret = WDT_set_timer((void*)&wdt_config_, timer);
+
+  if (ret != 0)
+  {
+    return CCP_make_cmd_ret(CCP_EXEC_ILLEGAL_CONTEXT, (uint32_t)ret);
+  }
+
+  return CCP_make_cmd_ret_without_err_code(CCP_EXEC_SUCCESS);
+}
+
 #pragma section
 // ###
 // !!!!! this line should not delete!!!

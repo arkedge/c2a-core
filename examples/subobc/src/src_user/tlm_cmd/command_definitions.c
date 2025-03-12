@@ -5,7 +5,7 @@
  * @note  このコードは自動生成されています！
  * @note  コード生成元 tlm-cmd-db:
  *          repository:    github.com/arkedge/c2a-core.git
- *          CSV files MD5: 0e38aad788fca6fba1d44684152ac1a2
+ *          CSV files MD5: 6fb2d9b01a6f9efc3034e56bce3bf2fd
  * @note  コード生成パラメータ:
  *          db_prefix:             SAMPLE_AOBC
  *          tlm_id_range:          [0x00, 0x100]
@@ -135,6 +135,7 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
   cmd_table[Cmd_CODE_WDT_DISABLE].cmd_func = Cmd_WDT_DISABLE;
   cmd_table[Cmd_CODE_WDT_STOP_CLEAR].cmd_func = Cmd_WDT_STOP_CLEAR;
   cmd_table[Cmd_CODE_WDT_START_CLEAR].cmd_func = Cmd_WDT_START_CLEAR;
+  cmd_table[Cmd_CODE_WDT_SET_TIMER].cmd_func = Cmd_WDT_SET_TIMER;
 
   cmd_table[Cmd_CODE_TMGR_SET_TIME].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;
   cmd_table[Cmd_CODE_TMGR_UPDATE_UNIXTIME].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_8BYTE;
@@ -268,6 +269,7 @@ void CA_load_cmd_table(CA_CmdInfo cmd_table[CA_MAX_CMDS])
   cmd_table[Cmd_CODE_CA_REGISTER_CMD].param_size_infos[1].packed_info.bit.first = CA_PARAM_SIZE_TYPE_RAW;
   cmd_table[Cmd_CODE_TF_SET_PAGE_FOR_TLM].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
   cmd_table[Cmd_CODE_CA_SET_PAGE_FOR_TLM].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_1BYTE;
+  cmd_table[Cmd_CODE_WDT_SET_TIMER].param_size_infos[0].packed_info.bit.first = CA_PARAM_SIZE_TYPE_4BYTE;
 }
 
 #pragma section
