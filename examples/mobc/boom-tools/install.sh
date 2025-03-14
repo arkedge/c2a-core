@@ -5,7 +5,7 @@ export JRSONNET_VERSION="v0.5.0-pre96-test"
 
 curl -L --proto '=https' --tlsv1.2 -sSf "https://raw.githubusercontent.com/cargo-bins/cargo-binstall/${BINSTALL_VERSION}/install-from-binstall-release.sh" | env BINSTALL_VERSION=${BINSTALL_VERSION} CARGO_HOME=$(pwd) bash
 
-./bin/cargo-binstall --root . tmtc-c2a               --version 1.0.0 --no-confirm
+./bin/cargo-binstall --root . tmtc-c2a               --version 1.1.1 --no-confirm
 
 ./bin/cargo-binstall --root . tlmcmddb-cli           --version 2.6.1 --no-confirm
 ./bin/cargo-binstall --root . kble                   --version 0.4.2 --no-confirm
