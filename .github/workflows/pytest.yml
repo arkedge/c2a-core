@@ -53,7 +53,7 @@ jobs:
       with:
         package_json_file: examples/${{ matrix.c2a_user }}/package.json
 
-    - uses: actions/setup-node@v4.2.0
+    - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
       with:
         cache: pnpm
         cache-dependency-path: examples/${{ matrix.c2a_user }}/pnpm-lock.yaml
