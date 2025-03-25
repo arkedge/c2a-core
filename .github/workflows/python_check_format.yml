@@ -11,7 +11,7 @@ jobs:
   black_format:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: install black formatter
         run: pip install black==23.1.0
@@ -19,7 +19,7 @@ jobs:
       # - name: check python format with black
       #   uses: psf/black@stable
 
-      - uses: reviewdog/action-black@v3
+      - uses: reviewdog/action-black@644053a260402bc4278a865906107bd8aef7fae8 # v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # reporter: github-pr-review    # TODO: いい感じになったら直す
