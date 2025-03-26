@@ -19,7 +19,7 @@ jobs:
       # - name: check python format with black
       #   uses: psf/black@stable
 
-      - uses: reviewdog/action-black@644053a260402bc4278a865906107bd8aef7fae8 # v3
+      - uses: reviewdog/action-black@644053a260402bc4278a865906107bd8aef7fae8 # v3.22.4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # reporter: github-pr-review    # TODO: いい感じになったら直す
