@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: install dependencies
         run: |
@@ -29,20 +29,20 @@ jobs:
         run: |
           awk -F'[ ="]+' '$1 == "channel" { print "toolchain=" $2 }' rust-toolchain.toml >> "$GITHUB_OUTPUT"
 
-      - uses: dtolnay/rust-toolchain@v1
+      - uses: dtolnay/rust-toolchain@888c2e1ea69ab0d4330cbf0af1ecc7b68f368cc1 # v1
         with:
           toolchain: ${{ steps.toolchain.outputs.toolchain }}
           targets: i686-unknown-linux-gnu
           components: clippy, rustfmt
 
       - name: cache dependencies
-        uses: Swatinem/rust-cache@v2.7.7
+        uses: Swatinem/rust-cache@f0deed1e0edfc6a9be95417288c0e1099b1eeec3 # v2.7.7
 
       - name: setup c2a-core
         run: ./setup.sh
 
       - name: reviewdog / clippy
-        uses: sksat/action-clippy@v1.1.1
+        uses: sksat/action-clippy@87e08e0c289f2654fe702b0aaf88c2f1027a3e57 # v1.1.1
         with:
           reporter: ${{ github.event_name == 'pull_request' && 'github-pr-review' || 'github-check' }}
           clippy_flags: --workspace --all-features --locked
