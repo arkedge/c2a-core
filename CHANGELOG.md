@@ -2,6 +2,110 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
+## v4.5.0 (2025-04-09)
+
+### Breaking Changes
+
+- [#332](https://github.com/arkedge/c2a-core/pull/332): Rename tools dir to Boom tools
+- [#353](https://github.com/arkedge/c2a-core/pull/353): Move NodeJS package manager to pnpm
+- [#414](https://github.com/arkedge/c2a-core/pull/414): AOS 用 SCID を 10 bit に拡張
+- [#425](https://github.com/arkedge/c2a-core/pull/425): Configure c2a-core crate MSRV & set to 1.78
+
+### Enhancements
+
+- [#344](https://github.com/arkedge/c2a-core/pull/344): bindgen C2A RESULT type
+- [#348](https://github.com/arkedge/c2a-core/pull/348): Add C99 build option to example users
+- [#355](https://github.com/arkedge/c2a-core/pull/355): Make example user Printf() impl understandable
+- [#342](https://github.com/arkedge/c2a-core/pull/342): Update dependency ut-issl/s2e-core to v7.2.7
+- [#365](https://github.com/arkedge/c2a-core/pull/365): chore(deps): update arkedge/workflows-c2a action to v5.4.0
+- [#370](https://github.com/arkedge/c2a-core/pull/370): chore(deps): update dependency ut-issl/s2e-core to v7.2.9
+- [#392](https://github.com/arkedge/c2a-core/pull/392): C2A Boom: Install pre-compiled binaries
+- [#406](https://github.com/arkedge/c2a-core/pull/406): Add c2a-core Cargo lockfile
+- [#415](https://github.com/arkedge/c2a-core/pull/415): コマンドのパケット配送での EL 発行の追加
+- [#417](https://github.com/arkedge/c2a-core/pull/417): テレメのパケット配送での EL 発行の追加
+- [#380](https://github.com/arkedge/c2a-core/pull/380): WDTの監視周期設定コマンドの追加
+- [#424](https://github.com/arkedge/c2a-core/pull/424): Update Rust to 1.78.0
+- [#432](https://github.com/arkedge/c2a-core/pull/432): examples: Update Boom kble version to 0.4.2
+- [#433](https://github.com/arkedge/c2a-core/pull/433): examples: Update Boom Gaia version to v1.1.1
+
+### Fixed
+
+- [#404](https://github.com/arkedge/c2a-core/pull/404): Force set home crate to 0.5.9
+- [#416](https://github.com/arkedge/c2a-core/pull/416): PH_analyze_tlm_packet の返り値を修正
+- [#420](https://github.com/arkedge/c2a-core/pull/420): `TSP_pei_dest_info_` の設定ミスの修正
+- [#429](https://github.com/arkedge/c2a-core/pull/429): example: Install missing kble-serialport
+
+### Documentation
+
+- [#395](https://github.com/arkedge/c2a-core/pull/395): Update C2A heritage (ONGLAISAT / YODAKA)
+- [#400](https://github.com/arkedge/c2a-core/pull/400): Fix link in c2a_dev_runtime.md
+
+### Internal
+
+- [#345](https://github.com/arkedge/c2a-core/pull/345): Tell c2a-core crate re-build condition to cargo
+- [#334](https://github.com/arkedge/c2a-core/pull/334): Update sksat/setup-rye action to v0.23.1
+- [#335](https://github.com/arkedge/c2a-core/pull/335): Update actions/checkout action to v4.1.6
+- [#356](https://github.com/arkedge/c2a-core/pull/356): Update actions/checkout action to v4.1.7
+- [#357](https://github.com/arkedge/c2a-core/pull/357): Update sksat/action-clippy action to v1
+- [#358](https://github.com/arkedge/c2a-core/pull/358): Update sksat/setup-rye action to v0.24.0
+- [#361](https://github.com/arkedge/c2a-core/pull/361): Update actions/setup-node action to v4.0.3
+- [#360](https://github.com/arkedge/c2a-core/pull/360): Update sksat/setup-rye action to v0.25.0
+- [#362](https://github.com/arkedge/c2a-core/pull/362): Update actions/setup-python action to v5.1.1
+- [#367](https://github.com/arkedge/c2a-core/pull/367): chore(deps): update sksat/setup-rye action to v0.26.0
+- [#368](https://github.com/arkedge/c2a-core/pull/368): chore(deps): update sksat/setup-rye action to v0.28.0
+- [#374](https://github.com/arkedge/c2a-core/pull/374): chore(deps): update actions/checkout action to v4.2.2
+- [#378](https://github.com/arkedge/c2a-core/pull/378): chore(deps): update actions/cache action to v4.1.2
+- [#372](https://github.com/arkedge/c2a-core/pull/372): chore(deps): update actions/setup-node action to v4.1.0
+- [#371](https://github.com/arkedge/c2a-core/pull/371): chore(deps): update actions/setup-python action to v5.3.0
+- [#375](https://github.com/arkedge/c2a-core/pull/375): chore(deps): update sksat/setup-rye action to v0.31.0
+- [#382](https://github.com/arkedge/c2a-core/pull/382): chore(deps): update sksat/action-clippy action to v1.1.0
+- [#377](https://github.com/arkedge/c2a-core/pull/377): chore(deps): update swatinem/rust-cache action to v2.7.5
+- [#379](https://github.com/arkedge/c2a-core/pull/379): chore(deps): update crazy-max/ghaction-github-labeler action to v5.1.0
+- [#381](https://github.com/arkedge/c2a-core/pull/381): chore(deps): update python docker tag to v3.13
+- [#376](https://github.com/arkedge/c2a-core/pull/376): chore(deps): update dependency ubuntu to v24
+- [#387](https://github.com/arkedge/c2a-core/pull/387): Use Renovate Shareable config presets
+- [#390](https://github.com/arkedge/c2a-core/pull/390): Renovate generic cargo install in shell script
+- [#391](https://github.com/arkedge/c2a-core/pull/391): chore(config): migrate renovate config
+- [#402](https://github.com/arkedge/c2a-core/pull/402): cargo build with --locked option on Actions
+- [#403](https://github.com/arkedge/c2a-core/pull/403): Specify Rust toolchain version in CI with rust-toolchain.toml
+- [#393](https://github.com/arkedge/c2a-core/pull/393): Update actions/cache action to v4.2.0
+- [#396](https://github.com/arkedge/c2a-core/pull/396): Update Swatinem/rust-cache action to v2.7.7
+- [#397](https://github.com/arkedge/c2a-core/pull/397): Update sksat/action-clippy action to v1.1.1
+- [#399](https://github.com/arkedge/c2a-core/pull/399): chore: add repository to bind-utils package metadata
+- [#410](https://github.com/arkedge/c2a-core/pull/410): chore(deps): update actions/setup-node action to v4.2.0
+- [#422](https://github.com/arkedge/c2a-core/pull/422): chore(deps): update actions/cache action to v4.2.2
+- [#423](https://github.com/arkedge/c2a-core/pull/423): fix(deps): update rust crate anyhow to v1.0.97
+- [#409](https://github.com/arkedge/c2a-core/pull/409): chore(deps): update rust crate semver to v1.0.26
+- [#427](https://github.com/arkedge/c2a-core/pull/427): chore(deps): update actions/setup-python action to v5.4.0
+- [#428](https://github.com/arkedge/c2a-core/pull/428): chore(deps): update crazy-max/ghaction-github-labeler action to v5.2.0
+- [#430](https://github.com/arkedge/c2a-core/pull/430): chore(deps): update pnpm/action-setup action to v4.1.0
+- [#434](https://github.com/arkedge/c2a-core/pull/434): chore(deps): update actions/setup-node action to v4.3.0
+- [#435](https://github.com/arkedge/c2a-core/pull/435): chore(deps): pin dependencies
+- [#437](https://github.com/arkedge/c2a-core/pull/437): chore(deps): update swatinem/rust-cache action to v2.7.8
+- [#436](https://github.com/arkedge/c2a-core/pull/436): chore(deps): update actions/cache action to v4.2.3
+- [#439](https://github.com/arkedge/c2a-core/pull/439): chore(deps): update crazy-max/ghaction-github-labeler action to v5.3.0
+- [#438](https://github.com/arkedge/c2a-core/pull/438): chore(deps): update actions/setup-python action to v5.5.0
+
+
+### Migration Guide
+
+- C2A Boom
+  - これまで `tools` という名前だった C2A Boom のツールのディレクトリを `boom-tools` に rename すること（MUST）: [#332](https://github.com/arkedge/c2a-core/pull/332)
+  - C2A Boom のツール群のインストールなどに使用していた `npm` を `pnpm` に移行すること（RECOMMENDED）
+    - これらは基本的に互換性のあるツールなので、どちらでも構わない
+  - C2A Boom のツール群のバイナリ配布を行うようにしたため、特段事情がなければビルド済みバイナリを使用すること（RECOMMENDED）: [#392](https://github.com/arkedge/c2a-core/pull/392)
+  - 各ツールのバージョンを更新すること（RECOMMENDED）: [#432](https://github.com/arkedge/c2a-core/pull/432), [#433](https://github.com/arkedge/c2a-core/pull/433)
+- Rust を 1.78.0 以上のバージョンに更新すること（MUST）: [#424](https://github.com/arkedge/c2a-core/pull/424), [#425](https://github.com/arkedge/c2a-core/pull/425)
+  - Rust の lockfile v4 移行に伴い、`c2a-core` crate の MSRV を 1.78 とした: [#425](https://github.com/arkedge/c2a-core/pull/425)
+  - もし C2A user プロジェクト／リポジトリで Rust バージョンが設定されていない場合は、`rust-toolchain.toml` を書いて Rust バージョンを固定すること（RECOMMENDED）
+- CMake
+  - example user を参考に `C2A_BUILD_AS_C99` option を明示的に追加すること（RECOMMENDED）: [#348](https://github.com/arkedge/c2a-core/pull/348)
+    - C99 に移行可能なプロジェクトは C99 への移行（default 値を `ON` にする）ことを推奨する（RECOMMENDED）
+- WDT 監視周期設定コマンドの追加: [#380](https://github.com/arkedge/c2a-core/pull/380)
+  - example 実装を参考に、`WDT_SET_TIMER` コマンドを実装すること（MUST）
+- AOS 用 SCID の 10bit 化: [#414](https://github.com/arkedge/c2a-core/pull/414)
+  - 8bit の SCID が枯渇したとのことなので、 CCSDS 732.0-P4.2 (DRAFT STANDARD) に則って AOS SCID を設定すること（RECOMMENDED）
+  - MOBC 向け CCSDS AOS Space Data Link Protocol ライブラリ（`tlm_cmd/ccsds/aos_space_data_link_protocol`）の SCID の型が `uint8_t` から `uint16_t` に変更されたので、`examples/mobc` のパッチを参考に修正すること（MUST）
 
 ## v4.4.0 (2024-05-13)
 
