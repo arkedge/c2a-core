@@ -68,6 +68,8 @@ https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e
 UART などで接続されたコンポーネント間の通信といった，軽微な通信ノイズの誤り検出のみ必要な場合に用いる．
 ネットワーク層として EB90 Packet や Common Packet などが標準的に使用される．
 
+- Rust 実装: [eb90-rs](https://github.com/arkedge/eb90-rs)
+
 https://github.com/arkedge/c2a-core/blob/45d78a05c339c285b5aa0c2fcbf57c1b105137e9/Drivers/Protocol/eb90_frame_for_driver_super.h#L1-L33
 
 #### 各フィールドの説明
