@@ -15,8 +15,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        ".github/workflows/*"
+      "managerFilePatterns": [
+        "/.github/workflows/*/"
       ],
       "matchStrings": [
         "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?_VERSION:\\s(?<currentValue>.*)\\s"
@@ -25,8 +25,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        ".*.sh"
+      "managerFilePatterns": [
+        "/.*.sh/"
       ],
       "matchStrings": [
         "cargo install\\s*(--\\S*\\s*)*(\\s*--root\\s\\S*\\s*)?(?<depName>\\S*?)\\s*(--\\S*\\s*)*(--version\\s*(?<currentValue>\\S*))\\s"
