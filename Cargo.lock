@@ -310,7 +310,7 @@ dependencies = [
  "axum",
  "c2a-core 4.4.0",
  "futures",
- "kble-socket 0.3.0",
+ "kble-socket 0.4.2",
  "once_cell",
  "tokio",
 ]
@@ -827,9 +827,9 @@ dependencies = [
 
 [[package]]
 name = "kble-socket"
-version = "0.3.0"
+version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da5e5abd4533ad45519cf91c3dcb25a8f1f4880dc7b3be6cea477b59393b2145"
+checksum = "127c5635f9c8e2e0ec9570d9f6014bb8e1986871e5f85af149d678ca8d2ace7d"
 dependencies = [
  "anyhow",
  "axum",
