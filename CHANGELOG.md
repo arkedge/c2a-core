@@ -2,6 +2,34 @@
 
 注意: これは既存の C2A core update の「リリースの間の Pull Request を眺めてなんとなく察する」という曖昧な操作を緩和していくための試みであり，C2A user に対するお知らせを行う場として使っていくことを意図しています．初めから c2a-core の全変更を取り扱うと不必要に煩雑になるだけになってしまうため，完全な変更内容の一覧についてはこれまで通り [GitHub Releases](https://github.com/arkedge/c2a-core/releases) などから参照してください．
 
+## v4.5.1 (2025-09-04)
+
+### Breaking Changes
+
+- [#460](https://github.com/c2a-core/pull/460): Update Rust version & MSRV to 1.81.0
+
+### Internal
+
+- [#449](https://github.com/c2a-core/pull/449): chore(config): migrate renovate config
+- [#448](https://github.com/c2a-core/pull/448): chore(deps): update swatinem/rust-cache action to v2.8.0
+- [#447](https://github.com/c2a-core/pull/447): chore(deps): update actions/setup-node action to v4.4.0
+- [#452](https://github.com/c2a-core/pull/452): chore(deps): update actions/checkout action to v5
+- [#453](https://github.com/c2a-core/pull/453): chore(deps): update reviewdog/action-actionlint action to v1.66.1
+- [#454](https://github.com/c2a-core/pull/454): chore(deps): update dependency pnpm to v10
+- [#450](https://github.com/c2a-core/pull/450): chore(deps): update actions/cache action to v4.2.4
+- [#451](https://github.com/c2a-core/pull/451): chore(deps): update actions/setup-python action to v5.6.0
+- [#455](https://github.com/c2a-core/pull/455): chore(deps): update reviewdog/action-actionlint action to v1.67.0
+- [#456](https://github.com/c2a-core/pull/456): chore(deps): update actions/setup-node action to v5
+- [#457](https://github.com/c2a-core/pull/457): chore(deps): update actions/setup-python action to v6
+- [#431](https://github.com/c2a-core/pull/431): fix(deps): update rust crate once_cell to v1.21.3
+- [#443](https://github.com/c2a-core/pull/443): fix(deps): update rust crate anyhow to v1.0.99
+- [#442](https://github.com/c2a-core/pull/442): chore(deps): update dependency windows to v2025
+
+### Migration Guide
+
+- Rust
+  - MSRV (minimum supported Rust version) を 1.81.0 に上げたため、rust-toolchain.toml などで 1.81.0 以上のバージョンの Rust を指定してビルドすること
+
 ## v4.5.0 (2025-04-09)
 
 ### Breaking Changes
