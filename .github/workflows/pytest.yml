@@ -114,12 +114,16 @@ jobs:
     - name: run mobc C2A
       if: matrix.c2a_user == 'mobc'
       working-directory: ./examples/mobc
+      env:
+        C2A_DEV_RUNTIME_SPEED: 10.0
       run: |
         pnpm run devtools:sils &
         sleep 3
     - name: run C2A (mobc & subobc)
       if: matrix.c2a_user == 'subobc'
       working-directory: ./examples/mobc
+      env:
+        C2A_DEV_RUNTIME_SPEED: 10.0
       run: |
         npm run devtools:sils-subobc &
         sleep 3
