@@ -32,7 +32,7 @@ c2a-uart-kble = { path = "./hal/uart-kble" }
 name = "c2a-core"
 version.workspace = true
 edition = "2021"
-rust-version = "1.78.0"
+rust-version = "1.81.0"
 
 description = "Core of Command Centric Architecture"
 readme = "README.md"
