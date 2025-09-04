@@ -9,7 +9,7 @@ void C2A_core_main(void);
 // 詳細: docs/general/release.md
 #define C2A_CORE_VER_MAJOR (4)
 #define C2A_CORE_VER_MINOR (5)
-#define C2A_CORE_VER_PATCH (0)
+#define C2A_CORE_VER_PATCH (1)
 #define C2A_CORE_VER_PRE   ("")
 
 #endif
