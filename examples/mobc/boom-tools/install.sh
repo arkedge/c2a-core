@@ -5,7 +5,7 @@ export JRSONNET_VERSION="v0.5.0-pre96-test"
 
 curl -L --proto '=https' --tlsv1.2 -sSf "https://raw.githubusercontent.com/cargo-bins/cargo-binstall/${BINSTALL_VERSION}/install-from-binstall-release.sh" | env BINSTALL_VERSION=${BINSTALL_VERSION} CARGO_HOME=$(pwd) bash
 
-./bin/cargo-binstall --root . tmtc-c2a               --version 1.1.1 --no-confirm
+./bin/cargo-binstall --root . tmtc-c2a               --version 1.2.0 --no-confirm
 
 ./bin/cargo-binstall --root . tlmcmddb-cli           --version 2.6.1 --no-confirm
 ./bin/cargo-binstall --root . kble                   --version 0.4.2 --no-confirm
@@ -17,7 +17,13 @@ curl -L --proto '=https' --tlsv1.2 -sSf "https://raw.githubusercontent.com/cargo
 arch=$(uname -m)
 if [ "$arch" = "x86_64" ]; then
   arch="amd64"
+elif [ "$arch" = "arm64" ]; then
+  arch="aarch64"
 fi
 os=$(uname -s | tr -s '[:upper:]' '[:lower:]')
-curl -L "https://github.com/CertainLach/jrsonnet/releases/download/${JRSONNET_VERSION}/jrsonnet-linux-${arch}" -o ./bin/jrsonnet
+if [ "$os" = "darwin" ]; then
+  curl -L "https://github.com/CertainLach/jrsonnet/releases/download/${JRSONNET_VERSION}/jrsonnet-darwin-${arch}" -o ./bin/jrsonnet
+else
+  curl -L "https://github.com/CertainLach/jrsonnet/releases/download/${JRSONNET_VERSION}/jrsonnet-linux-${arch}" -o ./bin/jrsonnet
+fi
 chmod +x ./bin/jrsonnet
