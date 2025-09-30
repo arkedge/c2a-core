@@ -6,6 +6,7 @@
 #include "packet_list.h"
 
 #include "../system/time_manager/time_manager.h"
+#include "../system/event_manager/event_logger.h"
 #include "./common_packet/common_tlm_cmd_packet.h"
 #include "./ccsds/space_packet_protocol/cmd_space_packet.h"     // FIXME: CSP 依存をなくすべき
 #include "block_command_executor.h"
@@ -372,6 +373,10 @@ PL_ACK PL_deploy_block_cmd(PacketList* pl, const bct_id_t block, cycle_t start_a
   {
     // リストをクリアし強制的に空き領域を確保する
     PL_clear_list(pl);
+    EL_record_event((EL_GROUP)EL_CORE_GROUP_TLCD_DEPLOY_BLOCK,
+                    (uint32_t)PL_BC_LIST_CLEARED,
+                    EL_ERROR_LEVEL_HIGH,
+                    (uint32_t)block);
     is_cleared = 1;
   }
 
