@@ -928,6 +928,7 @@ static RESULT TLM_MGR_check_same_cmd_(const TLM_MGR_CmdElem* cmd_elem,
     {
       return RESULT_OK;
     }
+    break;
   case TLM_MGR_CMD_TYPE_TG_FORWARD_AS_ST_TLM:
     if (cmd_elem->cmd_type == TLM_MGR_CMD_TYPE_TG_FORWARD_AS_ST_TLM &&
         cmd_elem->apid == apid &&
@@ -936,12 +937,14 @@ static RESULT TLM_MGR_check_same_cmd_(const TLM_MGR_CmdElem* cmd_elem,
     {
       return RESULT_OK;
     }
+    break;
   case TLM_MGR_CMD_TYPE_DR_REPLAY_TLM:
     if (cmd_elem->cmd_type == TLM_MGR_CMD_TYPE_DR_REPLAY_TLM &&
         cmd_elem->dr_partition == dr_partition)
     {
       return RESULT_OK;
     }
+    break;
   case TLM_MGR_CMD_TYPE_UNREGISTERED:   // FALLTHROUGH
   default:
     return RESULT_ERR;
