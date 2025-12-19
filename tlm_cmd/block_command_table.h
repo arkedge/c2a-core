@@ -37,6 +37,10 @@ typedef uint32_t bct_id_t;
 
 #include "./common_packet/common_cmd_packet.h" // bct_id_t の定義よりあとにinclude
 
+#if BCT_CMD_MAX_LENGTH > CCP_MAX_LEN
+#error BCT_CMD_MAX_LENGTH should be less than or equal to CCP_MAX_LEN
+#endif
+
 /*
 Block Command Table は
 BCT_MAX_BLOCKS x BCT_MAX_CMD_NUM
