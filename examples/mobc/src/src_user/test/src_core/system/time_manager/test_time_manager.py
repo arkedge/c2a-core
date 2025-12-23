@@ -177,7 +177,7 @@ def test_tmgr_utl_cmd():
     check_utl_cmd_with(TMGR_DEFAULT_UNIXTIME_EPOCH_FOR_UTL, set_value)
 
     # ===== epoch を変えた場合 =====
-    new_epoch = time.time() - 86400 * 30  # 例えば30日前に変更
+    new_epoch = TMGR_DEFAULT_UNIXTIME_EPOCH_FOR_UTL + 86400 * 30  # デフォルトのエポックに30日分加算
     check_utl_cmd_with(new_epoch, 1.0)
 
     # ===== epoch を変えて CYCLES_PER_SEC も補正した場合 =====
