@@ -122,14 +122,14 @@ fn main() {
 
     let c_cpp_properties_path = vscode_dir.join("c_cpp_properties.json");
     let c2a_core_path = format!("{}/**", c2a_core_dir.display());
-    let out_dir_path = format!("{}/**", out_dir);
+    let out_dir_glob = format!("{}/**", out_dir);
 
     // 既存の c_cpp_properties.json を読み込むか、デフォルトを作成
     let mut config: serde_json::Value = if c_cpp_properties_path.exists() {
         let content = std::fs::read_to_string(&c_cpp_properties_path).ok();
         content
             .and_then(|s| serde_json::from_str(&s).ok())
-            .unwrap_or_else(|| create_default_c_cpp_properties())
+            .unwrap_or_else(create_default_c_cpp_properties)
     } else {
         create_default_c_cpp_properties()
     };
@@ -160,8 +160,13 @@ fn main() {
                 {
                     include_path.push(serde_json::Value::String(c2a_core_path.clone()));
                 }
-                // 新しい out_dir_path を追加
-                include_path.push(serde_json::Value::String(out_dir_path.clone()));
+                // out_dir_glob が存在しない場合は追加
+                if !include_path
+                    .iter()
+                    .any(|p| p.as_str() == Some(&out_dir_glob))
+                {
+                    include_path.push(serde_json::Value::String(out_dir_glob.clone()));
+                }
             }
 
             // compileCommands が設定されていない場合は追加
