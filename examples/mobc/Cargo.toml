@@ -4,7 +4,8 @@ version.workspace = true
 edition = "2021"
 
 [dependencies]
-c2a-core.workspace = true
+# export-src は build.rs で source_dir() を使うため常に必要
+c2a-core = { workspace = true, features = ["export-src"] }
 
 # runtime
 c2a-dev-runtime.workspace = true
@@ -16,3 +17,11 @@ c2a-wdt-noop.workspace = true
 
 [build-dependencies]
 cmake = "0.1"
+# build.rs では source_dir() を呼ぶだけなので、no-c2a-link で C ライブラリをリンクしない
+c2a-core = { workspace = true, features = ["export-src", "no-c2a-link"] }
+
+[features]
+default = []
+# ローカル開発用: シンボリックリンク方式を使う
+# cargo build --features use-local-c2a-core
+use-local-c2a-core = []

@@ -33,6 +33,21 @@ option(C2A_USE_SIMPLE_LIBC          "Use C2A-core hosted simple libc (c2a-core/l
 
 set(C2A_CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
+# C2A user ディレクトリの検出
+# 優先順位: 1. CMake define 2. 環境変数 3. レガシーパス
+if(NOT DEFINED C2A_USER_DIR)
+  if(DEFINED ENV{C2A_USER_DIR})
+    set(C2A_USER_DIR $ENV{C2A_USER_DIR})
+    message(STATUS "C2A user directory from environment: ${C2A_USER_DIR}")
+  elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../src_user")
+    # レガシー git submodule 方式のフォールバック
+    set(C2A_USER_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../src_user")
+    message(STATUS "C2A user directory (legacy fallback): ${C2A_USER_DIR}")
+  else()
+    message(WARNING "C2A_USER_DIR not set. Build may fail if src_user includes are used.")
+  endif()
+endif()
+
 set(C2A_SRCS
   c2a_core_main.c
   component_driver/cdrv_common_tlm_cmd_packet.c
@@ -93,6 +108,14 @@ if(C2A_BUILD_AS_CXX)
 endif()
 
 add_library(${PROJECT_NAME} OBJECT ${C2A_SRCS})
+
+# C2A user の親ディレクトリをインクルードパスに追加
+# これにより <src_user/...> が解決可能になる
+if(DEFINED C2A_USER_DIR AND EXISTS "${C2A_USER_DIR}")
+  get_filename_component(C2A_USER_PARENT_DIR "${C2A_USER_DIR}" DIRECTORY)
+  target_include_directories(${PROJECT_NAME} PUBLIC "${C2A_USER_PARENT_DIR}")
+  message(STATUS "C2A user include path: ${C2A_USER_PARENT_DIR}")
+endif()
 
 if(C2A_USE_ALL_CORE_APPS)
   add_subdirectory(applications)
