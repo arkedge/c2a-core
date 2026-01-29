@@ -61,6 +61,14 @@ if(NOT "${C2A_CORE_PARENT_DIR}" STREQUAL "${C2A_USER_PARENT_DIR}")
   include_directories("${C2A_CORE_PARENT_DIR}")
 endif()
 
+# ビルドディレクトリ内の src_core と src_user シンボリックリンクを解決するため、
+# C2A_BUILD_OUT_DIR が指定されている場合は include path に追加
+# これにより実際のディレクトリ名を src_core/src_user に限定する必要がなくなる
+if(DEFINED C2A_BUILD_OUT_DIR)
+  include_directories("${C2A_BUILD_OUT_DIR}")
+  message(STATUS "C2A build output directory: ${C2A_BUILD_OUT_DIR}")
+endif()
+
 # Output debug print to SILS console window
 option(C2A_SHOW_DEBUG_PRINT_ON_SILS "Show debug print" ON)
 if(C2A_SHOW_DEBUG_PRINT_ON_SILS)
