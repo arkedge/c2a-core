@@ -111,7 +111,8 @@ fn main() {
 
         #[cfg(windows)]
         {
-            let _ = std::os::windows::fs::symlink_file(&compile_commands_src, &compile_commands_dst);
+            let _ =
+                std::os::windows::fs::symlink_file(&compile_commands_src, &compile_commands_dst);
         }
     }
 
@@ -134,9 +135,15 @@ fn main() {
     };
 
     // configurations[0].includePath に c2a_core と out_dir を追加（存在しない場合のみ）
-    if let Some(configurations) = config.get_mut("configurations").and_then(|c| c.as_array_mut()) {
+    if let Some(configurations) = config
+        .get_mut("configurations")
+        .and_then(|c| c.as_array_mut())
+    {
         if let Some(first_config) = configurations.get_mut(0) {
-            if let Some(include_path) = first_config.get_mut("includePath").and_then(|p| p.as_array_mut()) {
+            if let Some(include_path) = first_config
+                .get_mut("includePath")
+                .and_then(|p| p.as_array_mut())
+            {
                 // 古い out_dir パス（target/.../out/** パターン）を削除
                 include_path.retain(|p| {
                     if let Some(path_str) = p.as_str() {
@@ -147,7 +154,10 @@ fn main() {
                 });
 
                 // c2a_core_path が存在しない場合は追加
-                if !include_path.iter().any(|p| p.as_str() == Some(&c2a_core_path)) {
+                if !include_path
+                    .iter()
+                    .any(|p| p.as_str() == Some(&c2a_core_path))
+                {
                     include_path.push(serde_json::Value::String(c2a_core_path.clone()));
                 }
                 // 新しい out_dir_path を追加
@@ -156,7 +166,9 @@ fn main() {
 
             // compileCommands が設定されていない場合は追加
             if first_config.get("compileCommands").is_none() {
-                first_config["compileCommands"] = serde_json::Value::String("${workspaceFolder}/compile_commands.json".to_string());
+                first_config["compileCommands"] = serde_json::Value::String(
+                    "${workspaceFolder}/compile_commands.json".to_string(),
+                );
             }
         }
     }
