@@ -24,6 +24,9 @@ fn main() {
     println!("cargo:return-if-changed=tlm_cmd/");
 
     let ver = env!("CARGO_PKG_VERSION");
+    // crate version を依存 crate に export（git revision の代替として使用）
+    println!("cargo:VERSION={}", ver);
+
     let ver = Version::parse(ver).unwrap();
     dbg!(&ver);
 
