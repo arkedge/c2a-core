@@ -665,3 +665,209 @@ TEST_F(StreamRecBufferTest, LargeDataProcessing) {
   EXPECT_EQ(101, buffer_[1]);
   EXPECT_EQ(199, buffer_[99]);
 }
+
+// ================================================================
+// 境界値・ストレステスト
+// ================================================================
+
+// 1 バイトバッファ: 最小サイズでの動作確認
+TEST_F(StreamRecBufferTest, MinimalBufferSize) {
+  uint8_t tiny_buffer[1];
+  CDS_init_stream_rec_buffer(&rec_buffer_, tiny_buffer, sizeof(tiny_buffer));
+
+  uint8_t data = 0xAA;
+  EXPECT_EQ(CDS_ERR_CODE_OK, CDS_push_to_stream_rec_buffer_(&rec_buffer_, &data, 1));
+  EXPECT_EQ(1, rec_buffer_.size);
+  EXPECT_EQ(0xAA, tiny_buffer[0]);
+
+  // 追加は失敗
+  uint8_t data2 = 0xBB;
+  EXPECT_EQ(CDS_ERR_CODE_ERR, CDS_push_to_stream_rec_buffer_(&rec_buffer_, &data2, 1));
+
+  // 削除で空に
+  CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 1);
+  EXPECT_EQ(0, rec_buffer_.size);
+
+  // 再度追加可能
+  EXPECT_EQ(CDS_ERR_CODE_OK, CDS_push_to_stream_rec_buffer_(&rec_buffer_, &data2, 1));
+  EXPECT_EQ(0xBB, tiny_buffer[0]);
+}
+
+// 連続した 1 バイト push: 効率は悪いが正しく動作する
+TEST_F(StreamRecBufferTest, SingleBytePushes) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+
+  // 100 回 1 バイトずつ push
+  for (int i = 0; i < 100; i++) {
+    uint8_t byte = (uint8_t)i;
+    EXPECT_EQ(CDS_ERR_CODE_OK, CDS_push_to_stream_rec_buffer_(&rec_buffer_, &byte, 1));
+  }
+
+  EXPECT_EQ(100, rec_buffer_.size);
+
+  // データが正しい順序で格納されている
+  for (int i = 0; i < 100; i++) {
+    EXPECT_EQ((uint8_t)i, buffer_[i]);
+  }
+}
+
+// 連続した 1 バイト drop: 逐次削除の動作確認
+TEST_F(StreamRecBufferTest, SingleByteDrops) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+
+  uint8_t data[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+
+  // 1 バイトずつ削除
+  for (int i = 0; i < 10; i++) {
+    EXPECT_EQ(10 - i, rec_buffer_.size);
+    if (rec_buffer_.size > 0) {
+      EXPECT_EQ((uint8_t)i, buffer_[0]);  // 先頭は常に削除された次の値
+    }
+    CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 1);
+  }
+
+  EXPECT_EQ(0, rec_buffer_.size);
+}
+
+// フレーム候補位置の連続移動: ヘッダ探索のシミュレーション
+TEST_F(StreamRecBufferTest, ContinuousFrameHeadSearch) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+
+  // ノイズ + 有効フレーム
+  uint8_t data[] = {0xFF, 0xFF, 0xFF, 0xEB, 0x90, 0x00, 0x01, 0xAA};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+
+  // ヘッダ (0xEB) を探索するシミュレーション
+  // 位置 0, 1, 2 は不一致、位置 3 で発見
+  for (int i = 0; i < 3; i++) {
+    CDS_move_forward_frame_head_candidate_of_stream_rec_buffer_(&rec_buffer_, 1);
+  }
+
+  EXPECT_EQ(3, rec_buffer_.pos_of_frame_head_candidate);
+
+  // ヘッダ発見後、フレームを確定
+  CDS_confirm_stream_rec_buffer_(&rec_buffer_, 5);  // EB 90 00 01 AA
+  EXPECT_EQ(5, rec_buffer_.confirmed_frame_len);
+  EXPECT_EQ(0, CDS_get_unprocessed_size_from_stream_rec_buffer_(&rec_buffer_));
+}
+
+// バッファ内の特定パターン検索シミュレーション
+TEST_F(StreamRecBufferTest, PatternSearchSimulation) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+
+  // パターン: AA BB CC を探す
+  uint8_t data[] = {0x11, 0xAA, 0x22, 0xAA, 0xBB, 0x33, 0xAA, 0xBB, 0xCC, 0xDD};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+
+  // 手動でパターン検索（実際のフレーム解析では CDS_analyze_rx_buffer_* が行う）
+  int pattern_start = -1;
+  for (int i = 0; i <= rec_buffer_.size - 3; i++) {
+    if (buffer_[i] == 0xAA && buffer_[i+1] == 0xBB && buffer_[i+2] == 0xCC) {
+      pattern_start = i;
+      break;
+    }
+  }
+
+  EXPECT_EQ(6, pattern_start);  // 位置 6 で発見
+}
+
+// 複数回の init: 再初期化が正しく動作する
+TEST_F(StreamRecBufferTest, ReInitialization) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data[] = {0x01, 0x02, 0x03};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+  rec_buffer_.pos_of_frame_head_candidate = 1;
+  rec_buffer_.confirmed_frame_len = 2;
+
+  // 別のバッファで再初期化
+  uint8_t new_buffer[64];
+  CDS_init_stream_rec_buffer(&rec_buffer_, new_buffer, sizeof(new_buffer));
+
+  // 全てリセットされている
+  EXPECT_EQ(new_buffer, rec_buffer_.buffer);
+  EXPECT_EQ(64, rec_buffer_.capacity);
+  EXPECT_EQ(0, rec_buffer_.size);
+  EXPECT_EQ(0, rec_buffer_.pos_of_frame_head_candidate);
+  EXPECT_EQ(0, rec_buffer_.confirmed_frame_len);
+}
+
+// 交互の push と confirm: フレーム処理中の追加受信シミュレーション
+TEST_F(StreamRecBufferTest, InterleavedPushAndConfirm) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+
+  // フレーム前半を受信
+  uint8_t part1[] = {0xEB, 0x90};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, part1, sizeof(part1));
+  CDS_confirm_stream_rec_buffer_(&rec_buffer_, 2);  // ヘッダ部分を確定
+
+  // フレーム後半を受信
+  uint8_t part2[] = {0x00, 0x02, 0x11, 0x22};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, part2, sizeof(part2));
+
+  EXPECT_EQ(6, rec_buffer_.size);
+  EXPECT_EQ(4, CDS_get_unprocessed_size_from_stream_rec_buffer_(&rec_buffer_));  // 6 - 0 - 2 = 4
+
+  // フレーム全体を確定
+  CDS_confirm_stream_rec_buffer_(&rec_buffer_, 6);
+  EXPECT_EQ(0, CDS_get_unprocessed_size_from_stream_rec_buffer_(&rec_buffer_));
+}
+
+// drop 直後の push: メモリ再利用パターン
+TEST_F(StreamRecBufferTest, ImmediatePushAfterDrop) {
+  uint8_t small_buffer[8];
+  CDS_init_stream_rec_buffer(&rec_buffer_, small_buffer, sizeof(small_buffer));
+
+  // バッファを満杯に
+  uint8_t data1[8] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data1, sizeof(data1));
+
+  // 4 バイト削除して即座に 4 バイト追加
+  CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 4);
+  uint8_t data2[4] = {0xAA, 0xBB, 0xCC, 0xDD};
+  EXPECT_EQ(CDS_ERR_CODE_OK, CDS_push_to_stream_rec_buffer_(&rec_buffer_, data2, sizeof(data2)));
+
+  EXPECT_EQ(8, rec_buffer_.size);
+  // 0x55, 0x66, 0x77, 0x88, 0xAA, 0xBB, 0xCC, 0xDD
+  EXPECT_EQ(0x55, small_buffer[0]);
+  EXPECT_EQ(0xAA, small_buffer[4]);
+}
+
+// 確定長の上書き: 再確定が前の値を上書きする
+TEST_F(StreamRecBufferTest, ConfirmOverwrite) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+
+  CDS_confirm_stream_rec_buffer_(&rec_buffer_, 3);
+  EXPECT_EQ(3, rec_buffer_.confirmed_frame_len);
+
+  CDS_confirm_stream_rec_buffer_(&rec_buffer_, 5);
+  EXPECT_EQ(5, rec_buffer_.confirmed_frame_len);
+
+  CDS_confirm_stream_rec_buffer_(&rec_buffer_, 2);  // 小さい値に上書きも可能
+  EXPECT_EQ(2, rec_buffer_.confirmed_frame_len);
+}
+
+// バッファ容量ちょうどの連続フレーム: 余裕なしでの処理
+TEST_F(StreamRecBufferTest, ExactCapacityFrames) {
+  uint8_t small_buffer[12];
+  CDS_init_stream_rec_buffer(&rec_buffer_, small_buffer, sizeof(small_buffer));
+
+  // 12 バイト = 4 バイトフレーム x 3
+  uint8_t frames[] = {
+    0x01, 0x02, 0x03, 0x04,
+    0x11, 0x12, 0x13, 0x14,
+    0x21, 0x22, 0x23, 0x24
+  };
+  EXPECT_EQ(CDS_ERR_CODE_OK, CDS_push_to_stream_rec_buffer_(&rec_buffer_, frames, sizeof(frames)));
+
+  // フレーム 1 処理後、新しいデータは入らない（容量いっぱい）
+  CDS_confirm_stream_rec_buffer_(&rec_buffer_, 4);
+  uint8_t new_data[1] = {0xFF};
+  EXPECT_EQ(CDS_ERR_CODE_ERR, CDS_push_to_stream_rec_buffer_(&rec_buffer_, new_data, 1));
+
+  // フレーム 1 を削除すれば追加可能
+  CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 4);
+  EXPECT_EQ(CDS_ERR_CODE_OK, CDS_push_to_stream_rec_buffer_(&rec_buffer_, new_data, 1));
+}
