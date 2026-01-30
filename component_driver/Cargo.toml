@@ -1,0 +1,8 @@
+[package]
+name = "c2a-core-component-driver"
+description = "C2A Component Driver unit tests"
+version.workspace = true
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"

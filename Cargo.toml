@@ -18,6 +18,8 @@ members = [
 
   "./examples/mobc",
   "./examples/subobc",
+
+  "./component_driver",
 ]
 
 [workspace.dependencies]
