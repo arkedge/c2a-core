@@ -287,3 +287,194 @@ TEST_F(StreamRecBufferTest, MultipleFrameProcessing) {
   EXPECT_EQ(0, rec_buffer_.confirmed_frame_len);  // 確定長はリセットされる
   EXPECT_EQ(4, CDS_get_unprocessed_size_from_stream_rec_buffer_(&rec_buffer_));
 }
+
+// ================================================================
+// エッジケーステスト
+// ================================================================
+
+// バッファ容量ぴったりまで push: 容量いっぱいまでデータを追加しても正常動作
+TEST_F(StreamRecBufferTest, PushExactCapacity) {
+  uint8_t small_buffer[8];
+  CDS_init_stream_rec_buffer(&rec_buffer_, small_buffer, sizeof(small_buffer));
+  uint8_t data[8] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+  EXPECT_EQ(CDS_ERR_CODE_OK, CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data)));
+  EXPECT_EQ(8, rec_buffer_.size);
+  EXPECT_EQ(0, memcmp(small_buffer, data, sizeof(data)));
+}
+
+// 容量いっぱいの状態で追加 push はエラー
+TEST_F(StreamRecBufferTest, PushWhenFull) {
+  uint8_t small_buffer[4];
+  CDS_init_stream_rec_buffer(&rec_buffer_, small_buffer, sizeof(small_buffer));
+  uint8_t data1[4] = {0x01, 0x02, 0x03, 0x04};
+  uint8_t data2[1] = {0x05};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data1, sizeof(data1));
+  EXPECT_EQ(CDS_ERR_CODE_ERR, CDS_push_to_stream_rec_buffer_(&rec_buffer_, data2, sizeof(data2)));
+  EXPECT_EQ(4, rec_buffer_.size);  // 元のサイズを維持
+}
+
+// drop 後の pos_of_frame_head_candidate 調整: drop サイズより大きい場合は差分を保持
+TEST_F(StreamRecBufferTest, DropAdjustsFrameHeadCandidate) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+
+  // フレームヘッド候補を位置 4 に設定
+  CDS_move_forward_frame_head_candidate_of_stream_rec_buffer_(&rec_buffer_, 4);
+  EXPECT_EQ(4, rec_buffer_.pos_of_frame_head_candidate);
+
+  // 2 バイト drop すると、フレームヘッド候補は 4 - 2 = 2 に調整される
+  CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 2);
+  EXPECT_EQ(2, rec_buffer_.pos_of_frame_head_candidate);
+  EXPECT_EQ(6, rec_buffer_.size);
+}
+
+// drop サイズがフレームヘッド候補以上の場合は 0 にリセット
+TEST_F(StreamRecBufferTest, DropResetsFrameHeadCandidateToZero) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+
+  // フレームヘッド候補を位置 2 に設定
+  CDS_move_forward_frame_head_candidate_of_stream_rec_buffer_(&rec_buffer_, 2);
+
+  // 4 バイト drop（フレームヘッド候補 2 より大きい）
+  CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 4);
+  EXPECT_EQ(0, rec_buffer_.pos_of_frame_head_candidate);  // 0 にリセット
+  EXPECT_EQ(2, rec_buffer_.size);
+}
+
+// drop 後の pos_of_last_rec 調整
+TEST_F(StreamRecBufferTest, DropAdjustsPosOfLastRec) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data1[] = {0x01, 0x02, 0x03, 0x04};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data1, sizeof(data1));
+  rec_buffer_.pos_of_last_rec = 4;  // 最終受信位置を設定
+
+  // 2 バイト drop
+  CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 2);
+  EXPECT_EQ(2, rec_buffer_.pos_of_last_rec);  // 4 - 2 = 2
+}
+
+// drop サイズが pos_of_last_rec 以上の場合は 0 にリセット
+TEST_F(StreamRecBufferTest, DropResetsPosOfLastRecToZero) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data[] = {0x01, 0x02, 0x03, 0x04};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+  rec_buffer_.pos_of_last_rec = 2;
+
+  CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 3);  // pos_of_last_rec(2) より大きい
+  EXPECT_EQ(0, rec_buffer_.pos_of_last_rec);
+}
+
+// 空バッファへの drop は何も起きない
+TEST_F(StreamRecBufferTest, DropFromEmptyBuffer) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 10);
+  EXPECT_EQ(0, rec_buffer_.size);
+  EXPECT_EQ(0, rec_buffer_.pos_of_frame_head_candidate);
+}
+
+// サイズ 0 の drop は何も起きない
+TEST_F(StreamRecBufferTest, DropZeroSize) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data[] = {0x01, 0x02, 0x03};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+  CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 0);
+  EXPECT_EQ(3, rec_buffer_.size);
+}
+
+// サイズを超える drop は clear と同等
+TEST_F(StreamRecBufferTest, DropMoreThanSize) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data[] = {0x01, 0x02, 0x03};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+  rec_buffer_.pos_of_frame_head_candidate = 1;
+  rec_buffer_.confirmed_frame_len = 2;
+
+  CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 100);  // サイズより大きい
+  EXPECT_EQ(0, rec_buffer_.size);
+  EXPECT_EQ(0, rec_buffer_.pos_of_frame_head_candidate);
+  EXPECT_EQ(0, rec_buffer_.confirmed_frame_len);
+}
+
+// move_forward がバッファサイズを超えた場合はサイズでクランプ
+TEST_F(StreamRecBufferTest, MoveForwardBeyondSize) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data[] = {0x01, 0x02, 0x03, 0x04};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+
+  CDS_move_forward_frame_head_candidate_of_stream_rec_buffer_(&rec_buffer_, 100);  // サイズ 4 を超える
+  EXPECT_EQ(4, rec_buffer_.pos_of_frame_head_candidate);  // サイズでクランプ
+  EXPECT_EQ(0, rec_buffer_.confirmed_frame_len);  // リセット
+}
+
+// move_forward で confirmed_frame_len がリセットされることを確認
+TEST_F(StreamRecBufferTest, MoveForwardResetsConfirmedFrameLen) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+
+  CDS_confirm_stream_rec_buffer_(&rec_buffer_, 3);
+  EXPECT_EQ(3, rec_buffer_.confirmed_frame_len);
+
+  CDS_move_forward_frame_head_candidate_of_stream_rec_buffer_(&rec_buffer_, 3);
+  EXPECT_EQ(0, rec_buffer_.confirmed_frame_len);  // リセットされる
+}
+
+// 連続した push と drop の組み合わせ: バッファが正しく管理される
+TEST_F(StreamRecBufferTest, SequentialPushAndDrop) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+
+  // 最初の push
+  uint8_t data1[] = {0x01, 0x02, 0x03, 0x04};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data1, sizeof(data1));
+  EXPECT_EQ(4, rec_buffer_.size);
+
+  // 部分 drop
+  CDS_drop_from_stream_rec_buffer_(&rec_buffer_, 2);
+  EXPECT_EQ(2, rec_buffer_.size);
+  EXPECT_EQ(0x03, buffer_[0]);  // データが前詰めされている
+
+  // 追加 push
+  uint8_t data2[] = {0x05, 0x06};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data2, sizeof(data2));
+  EXPECT_EQ(4, rec_buffer_.size);
+  EXPECT_EQ(0x03, buffer_[0]);
+  EXPECT_EQ(0x04, buffer_[1]);
+  EXPECT_EQ(0x05, buffer_[2]);
+  EXPECT_EQ(0x06, buffer_[3]);
+}
+
+// 未処理サイズが 0 になるケース: 全データが確定済み
+TEST_F(StreamRecBufferTest, UnprocessedSizeZeroWhenFullyProcessed) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data[] = {0x01, 0x02, 0x03, 0x04, 0x05};
+  CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, sizeof(data));
+
+  // pos_of_frame_head_candidate + confirmed_frame_len >= size の場合
+  rec_buffer_.pos_of_frame_head_candidate = 2;
+  CDS_confirm_stream_rec_buffer_(&rec_buffer_, 3);
+  // 2 + 3 = 5 >= 5 なので未処理は 0
+  EXPECT_EQ(0, CDS_get_unprocessed_size_from_stream_rec_buffer_(&rec_buffer_));
+}
+
+// NULL ポインタへの操作は安全にスキップ
+TEST_F(StreamRecBufferTest, NullPointerSafety) {
+  // これらの関数は NULL チェックで早期リターンする
+  CDS_clear_stream_rec_buffer_(nullptr);
+  CDS_drop_from_stream_rec_buffer_(nullptr, 10);
+  CDS_confirm_stream_rec_buffer_(nullptr, 10);
+  CDS_move_forward_frame_head_candidate_of_stream_rec_buffer_(nullptr, 10);
+  EXPECT_EQ(0, CDS_get_unprocessed_size_from_stream_rec_buffer_(nullptr));
+  EXPECT_EQ(CDS_ERR_CODE_ERR, CDS_push_to_stream_rec_buffer_(nullptr, buffer_, 10));
+  EXPECT_EQ(CDS_ERR_CODE_ERR, CDS_push_to_stream_rec_buffer_(&rec_buffer_, nullptr, 10));
+}
+
+// サイズ 0 の push は OK を返すが何も追加しない
+TEST_F(StreamRecBufferTest, PushZeroSize) {
+  CDS_init_stream_rec_buffer(&rec_buffer_, buffer_, BUFFER_SIZE);
+  uint8_t data[] = {0x01};
+  EXPECT_EQ(CDS_ERR_CODE_OK, CDS_push_to_stream_rec_buffer_(&rec_buffer_, data, 0));
+  EXPECT_EQ(0, rec_buffer_.size);
+}
