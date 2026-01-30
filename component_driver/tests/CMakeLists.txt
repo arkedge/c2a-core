@@ -34,3 +34,22 @@ target_link_libraries(test_stream_rec_buffer
 
 include(GoogleTest)
 gtest_discover_tests(test_stream_rec_buffer)
+
+# FrameAnalysis のテスト
+add_executable(test_frame_analysis
+  test_frame_analysis.cpp
+  mocks/mock_hal_handler_registry.c
+  mocks/mock_time_manager.c
+)
+
+target_include_directories(test_frame_analysis PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/..
+  ${CMAKE_CURRENT_SOURCE_DIR}/../..
+)
+
+target_link_libraries(test_frame_analysis
+  GTest::gtest_main
+)
+
+gtest_discover_tests(test_frame_analysis)
