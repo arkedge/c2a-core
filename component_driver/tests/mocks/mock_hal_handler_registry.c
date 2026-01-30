@@ -8,6 +8,7 @@
 static uint8_t mock_rx_buffer[4096];
 static int mock_rx_len = 0;
 static int mock_rx_pos = 0;
+static int mock_rx_chunk_size = 0;  // 0 = unlimited
 
 static uint8_t mock_tx_buffer[4096];
 static int mock_tx_count = 0;
@@ -26,6 +27,12 @@ static int mock_hal_rx(void* config, void* buffer, int buffer_size)
 
   int remaining = mock_rx_len - mock_rx_pos;
   int copy_len = (remaining < buffer_size) ? remaining : buffer_size;
+
+  // Apply chunk size limit if set
+  if (mock_rx_chunk_size > 0 && copy_len > mock_rx_chunk_size) {
+    copy_len = mock_rx_chunk_size;
+  }
+
   memcpy(buffer, mock_rx_buffer + mock_rx_pos, copy_len);
   mock_rx_pos += copy_len;
   return copy_len;
@@ -58,6 +65,7 @@ void mock_hal_reset(void)
 {
   mock_rx_len = 0;
   mock_rx_pos = 0;
+  mock_rx_chunk_size = 0;
   mock_tx_count = 0;
   mock_last_tx_size = 0;
   memset(mock_rx_buffer, 0, sizeof(mock_rx_buffer));
@@ -70,6 +78,19 @@ void mock_hal_set_rx_data(const uint8_t* data, int len)
   memcpy(mock_rx_buffer, data, len);
   mock_rx_len = len;
   mock_rx_pos = 0;
+}
+
+void mock_hal_append_rx_data(const uint8_t* data, int len)
+{
+  int available = (int)sizeof(mock_rx_buffer) - mock_rx_len;
+  if (len > available) len = available;
+  memcpy(mock_rx_buffer + mock_rx_len, data, len);
+  mock_rx_len += len;
+}
+
+void mock_hal_set_rx_chunk_size(int chunk_size)
+{
+  mock_rx_chunk_size = chunk_size;
 }
 
 int mock_hal_get_tx_count(void) { return mock_tx_count; }
