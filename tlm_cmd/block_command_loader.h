@@ -37,9 +37,9 @@ void BCL_load_sl(bct_id_t pos, void (*func)(void));
  * @note   ブロックコマンドの定義時に使用する
  * @param  ti         コマンドを実行する相対TI
  * @param  cmd_id     実行するコマンドID
- * @return void
+ * @return BCT_ACK
  */
-void BCL_tool_register_cmd(cycle_t ti, CMD_CODE cmd_id);
+BCT_ACK BCL_tool_register_cmd(cycle_t ti, CMD_CODE cmd_id);
 
 /**
  * @brief  ブロックコマンドの最後に他の OBC のコマンドを追加する
@@ -47,27 +47,27 @@ void BCL_tool_register_cmd(cycle_t ti, CMD_CODE cmd_id);
  * @param  ti         コマンドを実行する相対TI
  * @param  apid       sub OBC を識別する APID
  * @param  cmd_id     実行する sub OBC のコマンドID
- * @return void
+ * @return BCT_ACK
  */
-void BCL_tool_register_cmd_to_other_obc(cycle_t ti, APID apid, CMD_CODE cmd_id);
+BCT_ACK BCL_tool_register_cmd_to_other_obc(cycle_t ti, APID apid, CMD_CODE cmd_id);
 
 /**
  * @brief  ブロックコマンドの最後にローテーターの実行コマンドを追加する
  * @note   ブロックコマンドの定義時に使用する
  * @param  ti         コマンドを実行する相対TI
  * @param  bct_id     ローテートするブロックコマンドID
- * @return void
+ * @return BCT_ACK
  */
-void BCL_tool_register_rotate(cycle_t ti, bct_id_t bct_id);
+BCT_ACK BCL_tool_register_rotate(cycle_t ti, bct_id_t bct_id);
 
 /**
  * @brief  ブロックコマンドの最後にコンバイナーの実行コマンドを追加する
  * @note   ブロックコマンドの定義時に使用する
  * @param  ti         コマンドを実行する相対TI
  * @param  bct_id     コンバインするブロックコマンドID
- * @return void
+ * @return BCT_ACK
  */
-void BCL_tool_register_combine(cycle_t ti, bct_id_t bct_id);
+BCT_ACK BCL_tool_register_combine(cycle_t ti, bct_id_t bct_id);
 
 /**
  * @brief  ブロックコマンドの最後にタイムリミットコンバイナーの実行コマンドを追加する
@@ -75,9 +75,9 @@ void BCL_tool_register_combine(cycle_t ti, bct_id_t bct_id);
  * @param  ti         コマンドを実行する相対TI
  * @param  bct_id     タイムリミットコンバインするブロックコマンドID
  * @param  limit_step 超過すると実行を打ち切るステップ数
- * @return void
+ * @return BCT_ACK
  */
-void BCL_tool_register_limit_combine(cycle_t ti, bct_id_t bct_id, step_t limit_step);
+BCT_ACK BCL_tool_register_limit_combine(cycle_t ti, bct_id_t bct_id, step_t limit_step);
 
 /**
  * @brief  ブロックコマンドの最後にブロックコマンドの展開コマンドを追加する
@@ -85,18 +85,18 @@ void BCL_tool_register_limit_combine(cycle_t ti, bct_id_t bct_id, step_t limit_s
  * @param  ti         コマンドを実行する相対TI
  * @param  bct_id     展開するブロックコマンドID
  * @param  tlcd_id      展開先のタイムラインID
- * @return void
+ * @return BCT_ACK
  */
-void BCL_tool_register_deploy(cycle_t ti, bct_id_t bct_id, TLCD_ID tlcd_id);
+BCT_ACK BCL_tool_register_deploy(cycle_t ti, bct_id_t bct_id, TLCD_ID tlcd_id);
 
 /**
  * @brief  ブロックコマンドの最後にアプリの実行コマンドを追加する
  * @note   BlockCommandDefinitions.cで呼ばれることを想定している
  * @param  ti         コマンドを実行する相対TI
  * @param  app_id     実行するアプリID
- * @return void
+ * @return BCT_ACK
  */
-void BCL_tool_register_app(cycle_t ti, AR_APP_ID app_id);
+BCT_ACK BCL_tool_register_app(cycle_t ti, AR_APP_ID app_id);
 
 
 // add cmd param系列
