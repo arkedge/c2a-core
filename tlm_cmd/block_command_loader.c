@@ -85,6 +85,7 @@ BCT_ACK BCL_tool_register_cmd_to_other_obc(cycle_t ti, APID apid, CMD_CODE cmd_i
 
 BCT_ACK BCL_tool_register_rotate(cycle_t ti, bct_id_t bct_id)
 {
+  BCT_ACK ack;
 #if SIZE_OF_BCT_ID_T == 1
   BCL_tool_prepare_param_uint8(bct_id);
 #elif SIZE_OF_BCT_ID_T == 2
@@ -95,13 +96,14 @@ BCT_ACK BCL_tool_register_rotate(cycle_t ti, bct_id_t bct_id)
 #error Illegal value for SIZE_OF_BCT_ID_T
 #endif
 
-  BCT_ACK ack = BCL_register_cmd_(ti, Cmd_CODE_BCE_ROTATE_BLOCK);
+  ack = BCL_register_cmd_(ti, Cmd_CODE_BCE_ROTATE_BLOCK);
   BCL_clear_info_();
   return ack;
 }
 
 BCT_ACK BCL_tool_register_combine(cycle_t ti, bct_id_t bct_id)
 {
+  BCT_ACK ack;
 #if SIZE_OF_BCT_ID_T == 1
   BCL_tool_prepare_param_uint8(bct_id);
 #elif SIZE_OF_BCT_ID_T == 2
@@ -112,13 +114,14 @@ BCT_ACK BCL_tool_register_combine(cycle_t ti, bct_id_t bct_id)
 #error Illegal value for SIZE_OF_BCT_ID_T
 #endif
 
-  BCT_ACK ack = BCL_register_cmd_(ti, Cmd_CODE_BCE_COMBINE_BLOCK);
+  ack = BCL_register_cmd_(ti, Cmd_CODE_BCE_COMBINE_BLOCK);
   BCL_clear_info_();
   return ack;
 }
 
 BCT_ACK BCL_tool_register_limit_combine(cycle_t ti, bct_id_t bct_id, step_t limit_step)
 {
+  BCT_ACK ack;
 #if SIZE_OF_BCT_ID_T == 1
   BCL_tool_prepare_param_uint8(bct_id);
 #elif SIZE_OF_BCT_ID_T == 2
@@ -131,13 +134,14 @@ BCT_ACK BCL_tool_register_limit_combine(cycle_t ti, bct_id_t bct_id, step_t limi
 
   BCL_tool_prepare_param_uint8((uint8_t)limit_step);
 
-  BCT_ACK ack = BCL_register_cmd_(ti, Cmd_CODE_BCE_TIMELIMIT_COMBINE_BLOCK);
+  ack = BCL_register_cmd_(ti, Cmd_CODE_BCE_TIMELIMIT_COMBINE_BLOCK);
   BCL_clear_info_();
   return ack;
 }
 
 BCT_ACK BCL_tool_register_deploy(cycle_t ti, bct_id_t bct_id, TLCD_ID tlcd_id)
 {
+  BCT_ACK ack;
   BCL_tool_prepare_param_uint8((uint8_t)tlcd_id);
 
 #if SIZE_OF_BCT_ID_T == 1
@@ -150,7 +154,7 @@ BCT_ACK BCL_tool_register_deploy(cycle_t ti, bct_id_t bct_id, TLCD_ID tlcd_id)
 #error Illegal value for SIZE_OF_BCT_ID_T
 #endif
 
-  BCT_ACK ack = BCL_register_cmd_(ti, Cmd_CODE_TLCD_DEPLOY_BLOCK);
+  ack = BCL_register_cmd_(ti, Cmd_CODE_TLCD_DEPLOY_BLOCK);
   BCL_clear_info_();
   return ack;
 }
