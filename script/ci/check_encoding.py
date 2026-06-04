@@ -80,17 +80,20 @@ def check_encoding(path, encoding):
         ret = chardet.detect(f.read())
         enc = ret["encoding"]
     # print(enc)
+    # chardet のバージョンにより返り値の大文字/小文字表記が異なるため正規化して比較する
+    # (例: chardet 6.x は "SHIFT_JIS", 7.x は "cp932" を返す)
+    enc = enc.upper() if enc is not None else None
     if encoding == "utf-8":
-        if enc == "utf-8" or enc == "ascii":
+        if enc == "UTF-8" or enc == "ASCII":
             return True
         # なぜか以下のような誤認もあるので
-        if enc == "Windows-1252" or enc == "ISO-8859-1" or enc is None:
+        if enc == "WINDOWS-1252" or enc == "ISO-8859-1" or enc is None:
             return True
     elif encoding == "shift_jis":
-        if enc == "SHIFT_JIS" or enc == "CP932" or enc == "ascii":
+        if enc == "SHIFT_JIS" or enc == "CP932" or enc == "ASCII":
             return True
         # なぜか以下のような誤認もあるので
-        if enc == "Windows-1252" or enc == "Windows-1254" or enc is None:
+        if enc == "WINDOWS-1252" or enc == "WINDOWS-1254" or enc is None:
             return True
     else:
         print("Invalid encoding in setting file!")
