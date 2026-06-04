@@ -22,6 +22,8 @@ ope = wings_utils.get_wings_operation()
 OBCT_STEP_IN_MSEC = 1  # 1 step で何 ms か
 OBCT_STEPS_PER_CYCLE = 100  # 何 step で 1 cycle か
 OBCT_CYCLES_PER_SEC = 1000 // OBCT_STEP_IN_MSEC // OBCT_STEPS_PER_CYCLE  # 1 s で何 cycle か
+# NOTE: テスト内でこの値に +30日 などを加算して検証するケースがあるため、
+#       現在時刻に対して十分過去（少なくとも30日以上前）の日時である必要がある
 TMGR_DEFAULT_UNIXTIME_EPOCH_FOR_UTL = 1577836800.0
 
 
@@ -177,7 +179,7 @@ def test_tmgr_utl_cmd():
     check_utl_cmd_with(TMGR_DEFAULT_UNIXTIME_EPOCH_FOR_UTL, set_value)
 
     # ===== epoch を変えた場合 =====
-    new_epoch = time.time() - 86400 * 30  # 例えば30日前に変更
+    new_epoch = TMGR_DEFAULT_UNIXTIME_EPOCH_FOR_UTL + 86400 * 30  # デフォルトのエポックに30日分加算
     check_utl_cmd_with(new_epoch, 1.0)
 
     # ===== epoch を変えて CYCLES_PER_SEC も補正した場合 =====
@@ -207,6 +209,10 @@ def test_tmgr_final_check():
 
 def check_utl_cmd_with(utl_unixtime_epoch, cycle_correction):
     # utl_unixtime_epoch, cycle_correction を設定する
+
+    # new_epoch が未来になっていないかチェックし、失敗したらメッセージを出す
+    assert utl_unixtime_epoch < time.time(), "設定された Epoch が未来時刻になっている"
+
     assert "SUC" == wings.util.send_rt_cmd_and_confirm(
         ope,
         c2a_enum.Cmd_CODE_TMGR_SET_UTL_UNIXTIME_EPOCH,
