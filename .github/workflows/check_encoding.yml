@@ -16,7 +16,10 @@ jobs:
         with:
           python-version-file: .github/workflows/.python-version
           architecture: 'x64'
-      - run: pip install chardet
+      # major.minor を固定し patch のみ許容する: 検出結果(encoding 名など)の変化は
+      # patch 以外の更新で入りうるため(過去に 6.x->7.x で encoding 名が変わり, コード
+      # 無変更のまま CI が突然落ちた). バグ修正の patch は受け取りつつ minor/major は止める.
+      - run: pip install 'chardet==7.4.*'
       - name: check_encoding
         run: python ./check_encoding.py ./check_encoding.json
         working-directory: ./script/ci
