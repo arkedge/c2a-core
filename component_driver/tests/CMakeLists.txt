@@ -14,65 +14,48 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 enable_testing()
+include(GoogleTest)
 
 set(MOCK_PRELUDE_FLAG "-include ${CMAKE_CURRENT_SOURCE_DIR}/mocks/driver_super_mock_prelude.h")
 
-# StreamRecBuffer のテスト
-add_executable(test_stream_rec_buffer
-  test_stream_rec_buffer.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/../driver_super.c
+# テスト対象本体
+set(DRIVER_SUPER_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../driver_super.c)
+# 実コア実装: 時刻演算は手書きモックではなく実物をリンクして実挙動を検証する
+set(REAL_CORE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../../system/time_manager/obc_time.c)
+# 真の境界 (HAL / グローバル時刻 / print) のみスタブ化する
+set(MOCK_SRC
   mocks/mock_hal_handler_registry.c
   mocks/mock_time_manager.c
+  mocks/mock_print.c
 )
 
-# driver_super.c にモック prelude を適用（test_stream_rec_buffer 用）
-set_source_files_properties(
-  ${CMAKE_CURRENT_SOURCE_DIR}/../driver_super.c
-  TARGET_DIRECTORY test_stream_rec_buffer
-  PROPERTIES COMPILE_FLAGS "${MOCK_PRELUDE_FLAG}"
-)
-
-target_include_directories(test_stream_rec_buffer PRIVATE
-  ${CMAKE_CURRENT_SOURCE_DIR}/mocks           # モックが実際のヘッダより優先される
-  ${CMAKE_CURRENT_SOURCE_DIR}/mocks/src_user  # <src_user/...> インクルード用
+set(TEST_INCLUDE_DIRS
+  ${CMAKE_CURRENT_SOURCE_DIR}/mocks            # 各種スタブ
+  ${CMAKE_CURRENT_SOURCE_DIR}/mocks/src_user   # <src_user/...> (テスト用 config)
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/..
-  ${CMAKE_CURRENT_SOURCE_DIR}/../..
+  ${CMAKE_CURRENT_SOURCE_DIR}/../..            # <system/...> <library/...> (実コア)
 )
 
-target_link_libraries(test_stream_rec_buffer
-  GTest::gtest_main
-)
+# prelude は driver_super.c とテスト本体にのみ適用する
+# (実コア obc_time.c / スタブ .c には適用しない)。
+function(add_cds_test target test_src)
+  add_executable(${target}
+    ${test_src}
+    ${DRIVER_SUPER_SRC}
+    ${REAL_CORE_SRC}
+    ${MOCK_SRC}
+  )
+  set_source_files_properties(
+    ${DRIVER_SUPER_SRC}
+    ${CMAKE_CURRENT_SOURCE_DIR}/${test_src}
+    TARGET_DIRECTORY ${target}
+    PROPERTIES COMPILE_FLAGS "${MOCK_PRELUDE_FLAG}"
+  )
+  target_include_directories(${target} PRIVATE ${TEST_INCLUDE_DIRS})
+  target_link_libraries(${target} GTest::gtest_main)
+  gtest_discover_tests(${target})
+endfunction()
 
-include(GoogleTest)
-gtest_discover_tests(test_stream_rec_buffer)
-
-# FrameAnalysis のテスト
-add_executable(test_frame_analysis
-  test_frame_analysis.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/../driver_super.c
-  mocks/mock_hal_handler_registry.c
-  mocks/mock_time_manager.c
-)
-
-# driver_super.c と test_frame_analysis.cpp にモック prelude を適用
-set_source_files_properties(
-  ${CMAKE_CURRENT_SOURCE_DIR}/../driver_super.c
-  ${CMAKE_CURRENT_SOURCE_DIR}/test_frame_analysis.cpp
-  TARGET_DIRECTORY test_frame_analysis
-  PROPERTIES COMPILE_FLAGS "${MOCK_PRELUDE_FLAG}"
-)
-
-target_include_directories(test_frame_analysis PRIVATE
-  ${CMAKE_CURRENT_SOURCE_DIR}/mocks           # モックが実際のヘッダより優先される
-  ${CMAKE_CURRENT_SOURCE_DIR}/mocks/src_user  # <src_user/...> インクルード用
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/..
-  ${CMAKE_CURRENT_SOURCE_DIR}/../..
-)
-
-target_link_libraries(test_frame_analysis
-  GTest::gtest_main
-)
-
-gtest_discover_tests(test_frame_analysis)
+add_cds_test(test_stream_rec_buffer test_stream_rec_buffer.cpp)
+add_cds_test(test_frame_analysis test_frame_analysis.cpp)

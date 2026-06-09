@@ -7,40 +7,12 @@
 
 extern "C" {
 
-#include "mocks/mock_hal_handler_registry.h"
-#include "mocks/mock_time_manager.h"
-#include "mocks/mock_ccp.h"
+// prelude が重い依存を遮断するので、実 driver_super.h をそのまま include する。
+// これにより CDS_StreamRecBuffer / CDS_ERR_CODE / ENDIAN_TYPE / ObcTime は実型を使い、
+// テスト独自の再宣言による実装との乖離を防ぐ。
+#include "driver_super.h"
 
-typedef enum {
-  ENDIAN_TYPE_BIG,
-  ENDIAN_TYPE_LITTLE,
-  ENDIAN_TYPE_UNKNOWN
-} ENDIAN_TYPE;
-
-#define CDS_STREAM_MAX         (3)
-#define CDS_HAL_RX_BUFFER_SIZE (256)
-
-typedef struct
-{
-  uint8_t* buffer;
-  uint16_t capacity;
-  uint16_t size;
-  uint16_t pos_of_frame_head_candidate;
-  uint16_t confirmed_frame_len;
-  uint8_t  is_frame_fixed;
-  uint16_t pos_of_last_rec;
-} CDS_StreamRecBuffer;
-
-typedef enum
-{
-  CDS_ERR_CODE_OK   = 0,
-  CDS_ERR_CODE_ERR  = 1
-} CDS_ERR_CODE;
-
-// 関数プロトタイプ（driver_super.c で実装）
-CDS_ERR_CODE CDS_init_stream_rec_buffer(CDS_StreamRecBuffer* stream_rec_buffer,
-                                        uint8_t* buffer,
-                                        const uint16_t buffer_capacity);
+// 内部 (_ サフィックス) 関数は driver_super.h に宣言が無いため、ここで宣言する。
 void CDS_clear_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer);
 void CDS_drop_from_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer, uint16_t size);
 CDS_ERR_CODE CDS_push_to_stream_rec_buffer_(CDS_StreamRecBuffer* stream_rec_buffer,
