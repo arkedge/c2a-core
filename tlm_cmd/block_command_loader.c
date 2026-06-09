@@ -17,9 +17,9 @@
 
 #define BCL_PARAM_MAX_LENGTH BCT_CMD_MAX_LENGTH
 
-static void BCL_register_cmd_(cycle_t ti, CMD_CODE cmd_id);
-static void BCL_register_cmd_to_other_obc_(cycle_t ti, APID apid, CMD_CODE cmd_id);
-static void BCL_register_app_(cycle_t ti, AR_APP_ID app_id);
+static BCT_ACK BCL_register_cmd_(cycle_t ti, CMD_CODE cmd_id);
+static BCT_ACK BCL_register_cmd_to_other_obc_(cycle_t ti, APID apid, CMD_CODE cmd_id);
+static BCT_ACK BCL_register_app_(cycle_t ti, AR_APP_ID app_id);
 static void BCL_clear_info_(void);
 
 
@@ -69,20 +69,23 @@ void BCL_safe_load_sl(bct_id_t pos, void (*BCL_load_func)(void))
 }
 #endif
 
-void BCL_tool_register_cmd(cycle_t ti, CMD_CODE cmd_id)
+BCT_ACK BCL_tool_register_cmd(cycle_t ti, CMD_CODE cmd_id)
 {
-  BCL_register_cmd_(ti, cmd_id);
+  BCT_ACK ack = BCL_register_cmd_(ti, cmd_id);
   BCL_clear_info_();
+  return ack;
 }
 
-void BCL_tool_register_cmd_to_other_obc(cycle_t ti, APID apid, CMD_CODE cmd_id)
+BCT_ACK BCL_tool_register_cmd_to_other_obc(cycle_t ti, APID apid, CMD_CODE cmd_id)
 {
-  BCL_register_cmd_to_other_obc_(ti, apid, cmd_id);
+  BCT_ACK ack = BCL_register_cmd_to_other_obc_(ti, apid, cmd_id);
   BCL_clear_info_();
+  return ack;
 }
 
-void BCL_tool_register_rotate(cycle_t ti, bct_id_t bct_id)
+BCT_ACK BCL_tool_register_rotate(cycle_t ti, bct_id_t bct_id)
 {
+  BCT_ACK ack;
 #if SIZE_OF_BCT_ID_T == 1
   BCL_tool_prepare_param_uint8(bct_id);
 #elif SIZE_OF_BCT_ID_T == 2
@@ -93,12 +96,14 @@ void BCL_tool_register_rotate(cycle_t ti, bct_id_t bct_id)
 #error Illegal value for SIZE_OF_BCT_ID_T
 #endif
 
-  BCL_register_cmd_(ti, Cmd_CODE_BCE_ROTATE_BLOCK);
+  ack = BCL_register_cmd_(ti, Cmd_CODE_BCE_ROTATE_BLOCK);
   BCL_clear_info_();
+  return ack;
 }
 
-void BCL_tool_register_combine(cycle_t ti, bct_id_t bct_id)
+BCT_ACK BCL_tool_register_combine(cycle_t ti, bct_id_t bct_id)
 {
+  BCT_ACK ack;
 #if SIZE_OF_BCT_ID_T == 1
   BCL_tool_prepare_param_uint8(bct_id);
 #elif SIZE_OF_BCT_ID_T == 2
@@ -109,12 +114,14 @@ void BCL_tool_register_combine(cycle_t ti, bct_id_t bct_id)
 #error Illegal value for SIZE_OF_BCT_ID_T
 #endif
 
-  BCL_register_cmd_(ti, Cmd_CODE_BCE_COMBINE_BLOCK);
+  ack = BCL_register_cmd_(ti, Cmd_CODE_BCE_COMBINE_BLOCK);
   BCL_clear_info_();
+  return ack;
 }
 
-void BCL_tool_register_limit_combine(cycle_t ti, bct_id_t bct_id, step_t limit_step)
+BCT_ACK BCL_tool_register_limit_combine(cycle_t ti, bct_id_t bct_id, step_t limit_step)
 {
+  BCT_ACK ack;
 #if SIZE_OF_BCT_ID_T == 1
   BCL_tool_prepare_param_uint8(bct_id);
 #elif SIZE_OF_BCT_ID_T == 2
@@ -127,12 +134,14 @@ void BCL_tool_register_limit_combine(cycle_t ti, bct_id_t bct_id, step_t limit_s
 
   BCL_tool_prepare_param_uint8((uint8_t)limit_step);
 
-  BCL_register_cmd_(ti, Cmd_CODE_BCE_TIMELIMIT_COMBINE_BLOCK);
+  ack = BCL_register_cmd_(ti, Cmd_CODE_BCE_TIMELIMIT_COMBINE_BLOCK);
   BCL_clear_info_();
+  return ack;
 }
 
-void BCL_tool_register_deploy(cycle_t ti, bct_id_t bct_id, TLCD_ID tlcd_id)
+BCT_ACK BCL_tool_register_deploy(cycle_t ti, bct_id_t bct_id, TLCD_ID tlcd_id)
 {
+  BCT_ACK ack;
   BCL_tool_prepare_param_uint8((uint8_t)tlcd_id);
 
 #if SIZE_OF_BCT_ID_T == 1
@@ -145,14 +154,16 @@ void BCL_tool_register_deploy(cycle_t ti, bct_id_t bct_id, TLCD_ID tlcd_id)
 #error Illegal value for SIZE_OF_BCT_ID_T
 #endif
 
-  BCL_register_cmd_(ti, Cmd_CODE_TLCD_DEPLOY_BLOCK);
+  ack = BCL_register_cmd_(ti, Cmd_CODE_TLCD_DEPLOY_BLOCK);
   BCL_clear_info_();
+  return ack;
 }
 
-void BCL_tool_register_app(cycle_t ti, AR_APP_ID app_id)
+BCT_ACK BCL_tool_register_app(cycle_t ti, AR_APP_ID app_id)
 {
-  BCL_register_app_(ti, app_id);
+  BCT_ACK ack = BCL_register_app_(ti, app_id);
   BCL_clear_info_();
+  return ack;
 }
 
 // TODO: prepare_param系の関数にidx超過のassertionを入れる
@@ -217,17 +228,17 @@ void BCL_tool_prepare_param_double(double val)
 }
 
 
-void BCL_register_cmd_(cycle_t ti, CMD_CODE cmd_id)
+static BCT_ACK BCL_register_cmd_(cycle_t ti, CMD_CODE cmd_id)
 {
   CCP_form_tlc(&block_command_loader_.packet,
                ti,
                cmd_id,
                &block_command_loader_.params[0],
                (uint16_t)block_command_loader_.param_idx);
-  BCT_register_cmd(&block_command_loader_.packet);
+  return BCT_register_cmd(&block_command_loader_.packet);
 }
 
-void BCL_register_cmd_to_other_obc_(cycle_t ti, APID apid, CMD_CODE cmd_id)
+static BCT_ACK BCL_register_cmd_to_other_obc_(cycle_t ti, APID apid, CMD_CODE cmd_id)
 {
   CCP_form_tlc_to_other_obc(&block_command_loader_.packet,
                             ti,
@@ -235,13 +246,13 @@ void BCL_register_cmd_to_other_obc_(cycle_t ti, APID apid, CMD_CODE cmd_id)
                             cmd_id,
                             &block_command_loader_.params[0],
                             (uint16_t)block_command_loader_.param_idx);
-  BCT_register_cmd(&block_command_loader_.packet);
+  return BCT_register_cmd(&block_command_loader_.packet);
 }
 
-void BCL_register_app_(cycle_t ti, AR_APP_ID app_id)
+static BCT_ACK BCL_register_app_(cycle_t ti, AR_APP_ID app_id)
 {
   CCP_form_app_cmd(&block_command_loader_.packet, ti, app_id);
-  BCT_register_cmd(&block_command_loader_.packet);
+  return BCT_register_cmd(&block_command_loader_.packet);
 }
 
 static void BCL_clear_info_(void)
