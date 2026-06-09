@@ -74,8 +74,16 @@ void mock_hal_reset(void)
 
 void mock_hal_set_rx_data(const uint8_t* data, int len)
 {
-  if (len > (int)sizeof(mock_rx_buffer)) len = sizeof(mock_rx_buffer);
-  memcpy(mock_rx_buffer, data, len);
+  // データなし (NULL / 非正の長さ) は「受信バッファを空にする」扱いにする。
+  // NULL を memcpy に渡すと長さ 0 でも未定義動作になるためガードする。
+  if (data == NULL || len <= 0)
+  {
+    mock_rx_len = 0;
+    mock_rx_pos = 0;
+    return;
+  }
+  if (len > (int)sizeof(mock_rx_buffer)) len = (int)sizeof(mock_rx_buffer);
+  memcpy(mock_rx_buffer, data, (size_t)len);
   mock_rx_len = len;
   mock_rx_pos = 0;
 }
@@ -83,8 +91,10 @@ void mock_hal_set_rx_data(const uint8_t* data, int len)
 void mock_hal_append_rx_data(const uint8_t* data, int len)
 {
   int available = (int)sizeof(mock_rx_buffer) - mock_rx_len;
+  // NULL / 非正の長さ / 空き容量なし は no-op (memcpy への NULL 渡し・巨大コピーを回避)。
+  if (data == NULL || len <= 0 || available <= 0) return;
   if (len > available) len = available;
-  memcpy(mock_rx_buffer + mock_rx_len, data, len);
+  memcpy(mock_rx_buffer + mock_rx_len, data, (size_t)len);
   mock_rx_len += len;
 }
 
