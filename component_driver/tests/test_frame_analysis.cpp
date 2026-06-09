@@ -596,17 +596,21 @@ TEST_F(FrameAnalysisTest, HeaderAtBufferEnd) {
   EXPECT_EQ(CDS_STREAM_REC_STATUS_FIXED_FRAME, GetRecStatusCode());
 }
 
-// 空データ受信: 何も起きない
+// 空データ受信: 状態は変化せず、フレームも確定しない
 TEST_F(FrameAnalysisTest, EmptyDataReception) {
   const uint8_t header[] = {0xEB, 0x90};
   SetupFixedFrame(header, 2, nullptr, 0, 6);
 
-  // 空データ
+  // 受信前のステータスを記録
+  const CDS_STREAM_REC_STATUS_CODE before = GetRecStatusCode();
+
+  // 空データを受信
   mock_hal_set_rx_data(nullptr, 0);
   CDS_receive(&super_);
 
-  // 何も受信していないのでステータスは変わらない
-  // 初期状態は FINDING_HEADER（または DISABLE でなければ OK）
+  // 何も受信していないので状態は変わらず、フレーム確定もしない
+  EXPECT_EQ(before, GetRecStatusCode());
+  EXPECT_NE(CDS_STREAM_REC_STATUS_FIXED_FRAME, GetRecStatusCode());
 }
 
 // rx_frame_size_ = 0 の場合: stream は無効
