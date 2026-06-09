@@ -80,9 +80,12 @@ fn main() {
 
     // 各 C++ テストを個別の Rust テストとして公開する。
     // 実行は ctest に委譲するので、バイナリ名や gtest フィルタの再構築は不要。
-    let mut generated = String::from(
-        "// Auto-generated test wrappers for C++ GoogleTest tests (run via ctest)\n\n",
-    );
+    let mut generated = String::new();
+    generated
+        .push_str("// Auto-generated test wrappers for C++ GoogleTest tests (run via ctest)\n");
+    // cargo test はテストを並列実行するため、同一 CMake build ツリーへ複数の ctest が
+    // 同時アクセスしてフレークしないよう、ctest 実行を直列化する。
+    generated.push_str("static CTEST_MUTEX: std::sync::Mutex<()> = std::sync::Mutex::new(());\n\n");
     for t in tests {
         let name = t["name"]
             .as_str()
@@ -105,6 +108,8 @@ fn main() {
         generated.push_str(&format!(
             r#"{ignore_attr}#[test]
 fn {ident}() {{
+    // 同一 build ツリーへの ctest 同時実行を直列化する (poison は無視して継続)。
+    let _guard = CTEST_MUTEX.lock().unwrap_or_else(|e| e.into_inner());
     let build_dir = env!("CPP_TEST_BUILD_DIR");
     let output = std::process::Command::new("ctest")
         .args(["--test-dir", build_dir, "-R", r"{regex}", "--output-on-failure"])
@@ -132,4 +137,8 @@ fn {ident}() {{
     // テスト対象本体が変わったら再生成・再ビルドする。
     println!("cargo:rerun-if-changed=driver_super.c");
     println!("cargo:rerun-if-changed=driver_super.h");
+    // テストにリンクしている実コア (obc_time) の変更も拾う。
+    println!("cargo:rerun-if-changed=../system/time_manager/obc_time.c");
+    println!("cargo:rerun-if-changed=../system/time_manager/obc_time.h");
+    println!("cargo:rerun-if-changed=../system/time_manager/obc_time_config.h");
 }
