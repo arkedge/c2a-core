@@ -37,7 +37,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/**/CMakeLists.txt/"
+        "/CMakeLists\\.txt$/"
       ],
       "matchStrings": [
         "FetchContent_Declare\\(\\s*\\w+\\s+GIT_REPOSITORY\\s+https://github\\.com/(?<depName>[\\w-]+/[\\w-]+)\\.git\\s+GIT_TAG\\s+(?<currentValue>[\\w\\.\\-]+)"
