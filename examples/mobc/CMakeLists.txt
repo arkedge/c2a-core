@@ -35,10 +35,39 @@ if(C2A_BUILD_AS_CXX)
   message("Build C2A as C++!")
 endif()
 
-set(C2A_CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/src_core)
-set(C2A_USER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/src_user)
+# C2A_CORE_DIR と C2A_USER_DIR の設定
+# 優先順位: 1. CMake define (-D で指定) 2. レガシーパス（シンボリックリンク）
+if(NOT DEFINED C2A_CORE_DIR)
+  set(C2A_CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/src_core)
+  message(STATUS "C2A_CORE_DIR (legacy): ${C2A_CORE_DIR}")
+else()
+  message(STATUS "C2A_CORE_DIR (defined): ${C2A_CORE_DIR}")
+endif()
 
-include_directories(src)
+if(NOT DEFINED C2A_USER_DIR)
+  set(C2A_USER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/src_user)
+  message(STATUS "C2A_USER_DIR (legacy): ${C2A_USER_DIR}")
+else()
+  message(STATUS "C2A_USER_DIR (defined): ${C2A_USER_DIR}")
+endif()
+
+# C2A user の親ディレクトリをインクルードパスに追加
+get_filename_component(C2A_USER_PARENT_DIR "${C2A_USER_DIR}" DIRECTORY)
+include_directories("${C2A_USER_PARENT_DIR}")
+
+# C2A core の親ディレクトリもインクルードパスに追加（<src_core/...> 用）
+get_filename_component(C2A_CORE_PARENT_DIR "${C2A_CORE_DIR}" DIRECTORY)
+if(NOT "${C2A_CORE_PARENT_DIR}" STREQUAL "${C2A_USER_PARENT_DIR}")
+  include_directories("${C2A_CORE_PARENT_DIR}")
+endif()
+
+# ビルドディレクトリ内の src_core と src_user シンボリックリンクを解決するため、
+# C2A_BUILD_OUT_DIR が指定されている場合は include path に追加
+# これにより実際のディレクトリ名を src_core/src_user に限定する必要がなくなる
+if(DEFINED C2A_BUILD_OUT_DIR)
+  include_directories("${C2A_BUILD_OUT_DIR}")
+  message(STATUS "C2A build output directory: ${C2A_BUILD_OUT_DIR}")
+endif()
 
 # Output debug print to SILS console window
 option(C2A_SHOW_DEBUG_PRINT_ON_SILS "Show debug print" ON)
@@ -62,7 +91,8 @@ execute_process(
 add_definitions("-DGIT_REVISION_C2A_USER=\"${GIT_REVISION_C2A_USER}\"")
 add_definitions("-DGIT_REVISION_C2A_USER_SHORT=0x${GIT_REVISION_C2A_USER_SHORT}")
 
-add_subdirectory(${C2A_CORE_DIR})
+# out-of-tree source の場合、binary directory を明示的に指定
+add_subdirectory(${C2A_CORE_DIR} ${CMAKE_BINARY_DIR}/c2a_core)
 
 add_subdirectory(${C2A_USER_DIR}/applications)
 add_subdirectory(${C2A_USER_DIR}/component_driver)

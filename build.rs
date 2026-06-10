@@ -24,6 +24,9 @@ fn main() {
     println!("cargo:return-if-changed=tlm_cmd/");
 
     let ver = env!("CARGO_PKG_VERSION");
+    // crate version を依存 crate に export（git revision の代替として使用）
+    println!("cargo:VERSION={ver}");
+
     let ver = Version::parse(ver).unwrap();
     dbg!(&ver);
 
@@ -112,51 +115,48 @@ fn get_definitions(src_file: &str) -> HashMap<String, Option<String>> {
     let childlen = entity.get_children().into_iter();
 
     for cursor in childlen {
-        match cursor.get_kind() {
-            clang::EntityKind::MacroDefinition => {
-                let location = cursor.get_location().unwrap().get_file_location();
-                if let Some(file) = location.file {
-                    let file = file.get_path();
-                    let _f = file.to_str().unwrap();
-                } else {
-                    continue;
-                }
-
-                let name = cursor.get_display_name().unwrap();
-                let mut token = cursor.get_range().unwrap().tokenize();
-                token.remove(0); // remove macro Identifier token
-                if token.is_empty() {
-                    macros.insert(name, None);
-                    continue; // remove define only
-                }
-
-                let first = token.first().unwrap();
-                let last = token.last().unwrap();
-                if first.get_kind() == Punctuation
-                    && last.get_kind() == Punctuation
-                    && first.get_spelling() == "("
-                    && last.get_spelling() == ")"
-                {
-                    token.remove(0);
-                    token.remove(token.len() - 1);
-                }
-
-                if token.len() == 1 {
-                    let value = token[0].get_spelling();
-
-                    let value = if value.starts_with('\"') && value.ends_with('\"') {
-                        let value = value.strip_prefix('\"').unwrap();
-                        value.strip_suffix('\"').unwrap().to_string()
-                    } else {
-                        value
-                    };
-                    macros.insert(name, Some(value));
-                } else {
-                    // 単純な値ではなかった(ex: 関数マクロ)
-                    dbg!(token);
-                }
+        if cursor.get_kind() == clang::EntityKind::MacroDefinition {
+            let location = cursor.get_location().unwrap().get_file_location();
+            if let Some(file) = location.file {
+                let file = file.get_path();
+                let _f = file.to_str().unwrap();
+            } else {
+                continue;
             }
-            _ => {}
+
+            let name = cursor.get_display_name().unwrap();
+            let mut token = cursor.get_range().unwrap().tokenize();
+            token.remove(0); // remove macro Identifier token
+            if token.is_empty() {
+                macros.insert(name, None);
+                continue; // remove define only
+            }
+
+            let first = token.first().unwrap();
+            let last = token.last().unwrap();
+            if first.get_kind() == Punctuation
+                && last.get_kind() == Punctuation
+                && first.get_spelling() == "("
+                && last.get_spelling() == ")"
+            {
+                token.remove(0);
+                token.remove(token.len() - 1);
+            }
+
+            if token.len() == 1 {
+                let value = token[0].get_spelling();
+
+                let value = if value.starts_with('\"') && value.ends_with('\"') {
+                    let value = value.strip_prefix('\"').unwrap();
+                    value.strip_suffix('\"').unwrap().to_string()
+                } else {
+                    value
+                };
+                macros.insert(name, Some(value));
+            } else {
+                // 単純な値ではなかった(ex: 関数マクロ)
+                dbg!(token);
+            }
         }
     }
 
