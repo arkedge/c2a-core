@@ -3,7 +3,8 @@ project(C2A)
 
 # options
 # C2A 全体を C99 としてビルドするかどうか
-option(C2A_BUILD_AS_C99 "Build C2A as C99" OFF)
+# c2a-core はまだ引き続き（限定的に）C89 のサポートは行うが、特に事情が無い限り C99 でのビルドを強く推奨する
+option(C2A_BUILD_AS_C99 "Build C2A as C99" ON)
 
 # SCI COM for connection to WINGS TMTC IF
 # ！！！注意！！！
