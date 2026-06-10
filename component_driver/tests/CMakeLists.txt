@@ -60,3 +60,4 @@ endfunction()
 
 add_cds_test(test_stream_rec_buffer test_stream_rec_buffer.cpp)
 add_cds_test(test_frame_analysis test_frame_analysis.cpp)
+add_cds_test(test_send test_send.cpp)

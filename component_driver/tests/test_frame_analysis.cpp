@@ -30,6 +30,8 @@ void mock_hal_set_rx_chunk_size(int chunk_size);
 
 // モック制御用関数の宣言（mock_time_manager.c で定義）
 void mock_time_reset(void);
+void mock_time_set_current(cycle_t total_cycle);
+void mock_time_advance(cycle_t cycles);
 
 }  // extern "C"
 
@@ -56,6 +58,7 @@ protected:
   static uint16_t current_framelength_type_size_;
   static uint16_t current_framelength_offset_;
   static ENDIAN_TYPE current_framelength_endian_;
+  static bool current_strict_frame_search_;
 
   void SetUp() override {
     // モックをリセット
@@ -73,6 +76,7 @@ protected:
     current_framelength_type_size_ = 0;
     current_framelength_offset_ = 0;
     current_framelength_endian_ = ENDIAN_TYPE_BIG;
+    current_strict_frame_search_ = false;
 
     // 受信バッファ初期化
     memset(rx_buffer_mem_, 0, sizeof(rx_buffer_mem_));
@@ -108,6 +112,10 @@ protected:
       CDSSC_set_rx_framelength_type_size(p_stream, current_framelength_type_size_);
       CDSSC_set_rx_framelength_offset(p_stream, current_framelength_offset_);
       CDSSC_set_rx_framelength_endian(p_stream, current_framelength_endian_);
+    }
+
+    if (current_strict_frame_search_) {
+      CDSSC_enable_strict_frame_search(p_stream);
     }
 
     return CDS_ERR_CODE_OK;
@@ -206,6 +214,7 @@ int16_t FrameAnalysisTest::current_framelength_pos_ = -1;
 uint16_t FrameAnalysisTest::current_framelength_type_size_ = 0;
 uint16_t FrameAnalysisTest::current_framelength_offset_ = 0;
 ENDIAN_TYPE FrameAnalysisTest::current_framelength_endian_ = ENDIAN_TYPE_BIG;
+bool FrameAnalysisTest::current_strict_frame_search_ = false;
 
 // ================================================================
 // 固定長フレームテスト
@@ -737,4 +746,150 @@ TEST_F(FrameAnalysisTest, VerifyReceivedFrameContent) {
   EXPECT_EQ(0x22, rx_frame[3]);
   EXPECT_EQ(0x33, rx_frame[4]);
   EXPECT_EQ(0x44, rx_frame[5]);
+}
+
+// ================================================================
+// 厳格なフレーム探索モード (strict frame search)
+// ================================================================
+
+// strict モードはヘッダの存在が前提（validation で弾かれる）
+TEST_F(FrameAnalysisTest, StrictFrameSearchRequiresHeader) {
+  current_strict_frame_search_ = true;
+  current_rx_frame_size_ = 6;  // ヘッダなし固定長
+
+  CDS_ERR_CODE ret = CDS_init(&super_, &dummy_hal_config_, &rx_buffer_, LoadInitSetting);
+  EXPECT_EQ(CDS_ERR_CODE_ERR, ret);
+}
+
+// strict モード: フレーム確定後 1 バイトだけ落とすため、
+// 前フレームの内部に重なったヘッダ候補からのフレームも漏らさず確定する
+TEST_F(FrameAnalysisTest, StrictFrameSearchFindsOverlappedHeader) {
+  const uint8_t header[] = {0xEB, 0x90};
+  current_strict_frame_search_ = true;
+  SetupFixedFrame(header, 2, nullptr, 0, 6);
+
+  // フレーム 1 (EB 90 EB 90 AA BB) の内部 offset 2 に次のヘッダ候補が重なっている
+  uint8_t data[] = {0xEB, 0x90, 0xEB, 0x90, 0xAA, 0xBB, 0xCC, 0xDD};
+  ReceiveData(data, sizeof(data));
+  ASSERT_EQ(CDS_STREAM_REC_STATUS_FIXED_FRAME, GetRecStatusCode());
+
+  // 新規データなしで再受信 → 重なったヘッダ候補からフレーム 2 が確定する
+  mock_hal_set_rx_data(nullptr, 0);
+  CDS_receive(&super_);
+  ASSERT_EQ(CDS_STREAM_REC_STATUS_FIXED_FRAME, GetRecStatusCode());
+
+  const uint8_t* rx_frame = GetRxFrame();
+  ASSERT_NE(nullptr, rx_frame);
+  const uint8_t expected[] = {0xEB, 0x90, 0xAA, 0xBB, 0xCC, 0xDD};
+  EXPECT_EQ(0, memcmp(expected, rx_frame, sizeof(expected)));
+}
+
+// 通常モード: フレーム確定後は確定フレーム全体を落とすため、
+// 前フレーム内部に重なったヘッダ候補は探索されない
+TEST_F(FrameAnalysisTest, NormalSearchSkipsOverlappedHeader) {
+  const uint8_t header[] = {0xEB, 0x90};
+  SetupFixedFrame(header, 2, nullptr, 0, 6);
+
+  uint8_t data[] = {0xEB, 0x90, 0xEB, 0x90, 0xAA, 0xBB, 0xCC, 0xDD};
+  ReceiveData(data, sizeof(data));
+  ASSERT_EQ(CDS_STREAM_REC_STATUS_FIXED_FRAME, GetRecStatusCode());
+
+  // 残りは CC DD のみ（ヘッダなし）→ フレームは確定しない
+  mock_hal_set_rx_data(nullptr, 0);
+  CDS_receive(&super_);
+  EXPECT_NE(CDS_STREAM_REC_STATUS_FIXED_FRAME, GetRecStatusCode());
+}
+
+// ================================================================
+// 受信途絶判定 (rx disruption)
+// ================================================================
+// mock の時刻は OBCT_CYCLES_PER_SEC = 10 なので 1 cycle = 100 ms
+
+// 閾値を超えて受信がないと LOST になる
+TEST_F(FrameAnalysisTest, RxDisruptionDetectedAfterThreshold) {
+  const uint8_t header[] = {0xEB, 0x90};
+  SetupFixedFrame(header, 2, nullptr, 0, 6);
+  CDSC_enable_monitor_for_rx_disruption(&super_);
+  CDSC_set_time_threshold_for_rx_disruption(&super_, 500);
+
+  uint8_t data[] = {0xEB, 0x90, 0x01, 0x02, 0x03, 0x04};
+  ReceiveData(data, sizeof(data));  // rx_time = now (0)
+  EXPECT_EQ(CDS_RX_DISRUPTION_STATUS_OK, CDSC_get_rx_disruption_status(&super_));
+
+  mock_time_advance(6);  // 600 ms > 500 ms
+  mock_hal_set_rx_data(nullptr, 0);
+  CDS_receive(&super_);
+  EXPECT_EQ(CDS_RX_DISRUPTION_STATUS_LOST, CDSC_get_rx_disruption_status(&super_));
+}
+
+// 閾値以内なら OK のまま
+TEST_F(FrameAnalysisTest, RxDisruptionOkWithinThreshold) {
+  const uint8_t header[] = {0xEB, 0x90};
+  SetupFixedFrame(header, 2, nullptr, 0, 6);
+  CDSC_enable_monitor_for_rx_disruption(&super_);
+  CDSC_set_time_threshold_for_rx_disruption(&super_, 500);
+
+  uint8_t data[] = {0xEB, 0x90, 0x01, 0x02, 0x03, 0x04};
+  ReceiveData(data, sizeof(data));
+
+  mock_time_advance(4);  // 400 ms < 500 ms
+  mock_hal_set_rx_data(nullptr, 0);
+  CDS_receive(&super_);
+  EXPECT_EQ(CDS_RX_DISRUPTION_STATUS_OK, CDSC_get_rx_disruption_status(&super_));
+}
+
+// 監視無効なら、どれだけ経過しても OK のまま（テレメのノイズ防止仕様）
+TEST_F(FrameAnalysisTest, RxDisruptionNotMonitoredStaysOk) {
+  const uint8_t header[] = {0xEB, 0x90};
+  SetupFixedFrame(header, 2, nullptr, 0, 6);
+  // 監視は有効化しない
+
+  mock_time_advance(1000);  // 100 秒経過
+  mock_hal_set_rx_data(nullptr, 0);
+  CDS_receive(&super_);
+  EXPECT_EQ(CDS_RX_DISRUPTION_STATUS_OK, CDSC_get_rx_disruption_status(&super_));
+}
+
+// ================================================================
+// テレメ途絶判定 (stream ごとの tlm disruption)
+// ================================================================
+
+// 閾値を超えてフレーム確定がないと LOST になる
+TEST_F(FrameAnalysisTest, TlmDisruptionDetectedAfterThreshold) {
+  const uint8_t header[] = {0xEB, 0x90};
+  SetupFixedFrame(header, 2, nullptr, 0, 6);
+  CDSSC_enable_monitor_for_tlm_disruption(&super_.stream_config[0]);
+  CDSSC_set_time_threshold_for_tlm_disruption(&super_.stream_config[0], 500);
+
+  // フレーム確定 (rx_frame_fix_time = now)
+  uint8_t data[] = {0xEB, 0x90, 0x01, 0x02, 0x03, 0x04};
+  ReceiveData(data, sizeof(data));
+  ASSERT_EQ(CDS_STREAM_REC_STATUS_FIXED_FRAME, GetRecStatusCode());
+  EXPECT_EQ(CDS_STREAM_TLM_DISRUPTION_STATUS_OK,
+            CDSSC_get_tlm_disruption_status(&super_.stream_config[0]));
+
+  mock_time_advance(6);  // 600 ms > 500 ms
+  mock_hal_set_rx_data(nullptr, 0);
+  CDS_receive(&super_);
+  EXPECT_EQ(CDS_STREAM_TLM_DISRUPTION_STATUS_LOST,
+            CDSSC_get_tlm_disruption_status(&super_.stream_config[0]));
+}
+
+// 閾値以内にフレーム確定があれば OK のまま
+TEST_F(FrameAnalysisTest, TlmDisruptionOkWithRecentFrameFix) {
+  const uint8_t header[] = {0xEB, 0x90};
+  SetupFixedFrame(header, 2, nullptr, 0, 6);
+  CDSSC_enable_monitor_for_tlm_disruption(&super_.stream_config[0]);
+  CDSSC_set_time_threshold_for_tlm_disruption(&super_.stream_config[0], 500);
+
+  mock_time_advance(4);  // 400 ms 経過後にフレーム確定
+  uint8_t data[] = {0xEB, 0x90, 0x01, 0x02, 0x03, 0x04};
+  ReceiveData(data, sizeof(data));
+  ASSERT_EQ(CDS_STREAM_REC_STATUS_FIXED_FRAME, GetRecStatusCode());
+
+  mock_time_advance(4);  // 確定から 400 ms < 500 ms
+  mock_hal_set_rx_data(nullptr, 0);
+  CDS_receive(&super_);
+  EXPECT_EQ(CDS_STREAM_TLM_DISRUPTION_STATUS_OK,
+            CDSSC_get_tlm_disruption_status(&super_.stream_config[0]));
 }
