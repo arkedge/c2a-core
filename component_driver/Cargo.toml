@@ -6,7 +6,3 @@ edition = "2021"
 
 [lib]
 path = "src/lib.rs"
-
-# build.rs が ctest --show-only=json-v1 の出力をパースするために使用
-[build-dependencies]
-serde_json = "1"

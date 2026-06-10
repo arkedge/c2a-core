@@ -1,11 +1,6 @@
 //! C2A Component Driver unit tests
 //!
-//! This crate wraps C++ GoogleTest tests for the component_driver module.
-//! Run with `cargo test` to execute all C++ unit tests.
-//!
-//! Each C++ test case is exposed as an individual Rust test.
-
-#[cfg(test)]
-mod tests {
-    include!(concat!(env!("OUT_DIR"), "/generated_tests.rs"));
-}
+//! テスト本体は C++ (GoogleTest) で `tests/` 以下にあり、
+//! `tests/run_cpp_tests.rs` のラッパが CMake + ctest で実行する。
+//! `cargo test -p c2a-core-component-driver` または
+//! `cargo test --workspace` で実行できる。
