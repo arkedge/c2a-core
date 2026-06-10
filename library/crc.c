@@ -202,7 +202,7 @@ void CRC_make_crc_32_table(uint32_t* table, uint32_t crc_poly, uint8_t shift)
 {
   int i, j;
 
-  for (i = 0; i < 255; ++i)
+  for (i = 0; i < 256; ++i)
   {
     uint32_t c = (uint32_t)i;
     if (!shift) c <<= 24;
