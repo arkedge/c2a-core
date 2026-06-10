@@ -26,12 +26,12 @@ void ENDIAN_conv(void* after, const void* before, size_t size)
   uint8_t* aft = (uint8_t*)after;
   size_t i;
 
-  if (size < 0) return;
-
-  size--;
-  for (i = 0; i <= size; i++)
+  // size == 0 は memcpy(dst, src, 0) と同様に no-op（反転すべきデータが無い）。
+  // i < size のループにすることで size == 0 が自然に no-op になり，
+  // 符号なし size_t に対する size-- アンダーフローも構造的に起こり得ない。
+  for (i = 0; i < size; i++)
   {
-    *(aft + (size - i)) = *(bef + i);
+    aft[size - 1 - i] = bef[i];
   }
 
   return;
