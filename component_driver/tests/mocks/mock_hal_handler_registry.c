@@ -13,6 +13,7 @@ static int mock_rx_chunk_size = 0;  // 0 = unlimited
 static uint8_t mock_tx_buffer[4096];
 static int mock_tx_count = 0;
 static int mock_last_tx_size = 0;
+static int mock_tx_result = 0;  // 0 = 成功。エラー注入用
 
 static int mock_hal_init(void* config)
 {
@@ -41,6 +42,7 @@ static int mock_hal_rx(void* config, void* buffer, int buffer_size)
 static int mock_hal_tx(void* config, void* data, int data_size)
 {
   (void)config;
+  if (mock_tx_result != 0) return mock_tx_result;
   if (data_size > (int)sizeof(mock_tx_buffer)) return -1;
 
   memcpy(mock_tx_buffer, data, data_size);
@@ -68,6 +70,7 @@ void mock_hal_reset(void)
   mock_rx_chunk_size = 0;
   mock_tx_count = 0;
   mock_last_tx_size = 0;
+  mock_tx_result = 0;
   memset(mock_rx_buffer, 0, sizeof(mock_rx_buffer));
   memset(mock_tx_buffer, 0, sizeof(mock_tx_buffer));
 }
@@ -101,6 +104,11 @@ void mock_hal_append_rx_data(const uint8_t* data, int len)
 void mock_hal_set_rx_chunk_size(int chunk_size)
 {
   mock_rx_chunk_size = chunk_size;
+}
+
+void mock_hal_set_tx_result(int result)
+{
+  mock_tx_result = result;
 }
 
 int mock_hal_get_tx_count(void) { return mock_tx_count; }
