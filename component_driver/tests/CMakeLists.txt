@@ -46,10 +46,11 @@ function(add_cds_test target test_src)
     ${REAL_CORE_SRC}
     ${MOCK_SRC}
   )
+  # 両ターゲットとも同じ prelude を使うため per-target 指定 (TARGET_DIRECTORY,
+  # CMake 3.18+) は不要。ディレクトリスコープで設定し 3.14 互換を保つ。
   set_source_files_properties(
     ${DRIVER_SUPER_SRC}
     ${CMAKE_CURRENT_SOURCE_DIR}/${test_src}
-    TARGET_DIRECTORY ${target}
     PROPERTIES COMPILE_FLAGS "${MOCK_PRELUDE_FLAG}"
   )
   target_include_directories(${target} PRIVATE ${TEST_INCLUDE_DIRS})
