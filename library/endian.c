@@ -26,7 +26,7 @@ void ENDIAN_conv(void* after, const void* before, size_t size)
   uint8_t* aft = (uint8_t*)after;
   size_t i;
 
-  if (size < 0) return;
+  if (size == 0) return;
 
   size--;
   for (i = 0; i <= size; i++)
