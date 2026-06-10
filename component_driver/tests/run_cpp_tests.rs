@@ -32,8 +32,9 @@ fn run_cpp_tests() {
     let build_dir = target_dir.join("component_driver_cpp_tests");
     std::fs::create_dir_all(&build_dir).expect("failed to create build dir");
 
-    // 追加のコンパイルフラグ (C2A_CPP_TEST_CFLAGS で指定可能)
-    let flags = std::env::var("C2A_CPP_TEST_CFLAGS").unwrap_or_default();
+    // flight 環境 (workspace の i686 target) に合わせ 32bit でビルドする。
+    // multilib が無い環境では C2A_CPP_TEST_CFLAGS で上書きできる (例: 空文字)。
+    let flags = std::env::var("C2A_CPP_TEST_CFLAGS").unwrap_or_else(|_| "-m32".to_string());
 
     run(
         Command::new("cmake")
