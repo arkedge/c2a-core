@@ -5,22 +5,22 @@ description = ""
 authors = []
 readme = "README.md"
 
-requires-python = ">= 3.7"
+requires-python = ">= 3.9"
 dependencies = [
-  "c2aenum @ file:///${PROJECT_ROOT}/../../src_core/enum-loader",
+  "c2aenum",
   "isslwings @ git+https://github.com/ut-issl/python-wings-interface@v1.5.1",
   "c2a-pytest-gaia @ git+https://github.com/arkedge/c2a-pytest-gaia@v0.1.0",
 ]
 
-[build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
-
-[tool.rye]
-managed = true
-dev-dependencies = [
+[dependency-groups]
+dev = [
   "black~=23.1.0",
   "pytest~=7.2.2",
 ]
-[tool.hatch.metadata]
-allow-direct-references = true
+
+[tool.uv.sources]
+c2aenum = { path = "../../src_core/enum-loader" }
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"

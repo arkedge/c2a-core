@@ -88,12 +88,12 @@ jobs:
         version: '3.x'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-    - uses: sksat/setup-rye@3ddf6b29fd0076bcb0ad0700fe2ba12e0363b596 # v0.31.0
+    - uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
 
     - name: install pytest deps
       working-directory: examples/${{ matrix.c2a_user }}/src/src_user/test
       run: |
-        rye sync
+        uv sync --locked
 
     - name: the heaviest objects in universe
       working-directory: ./examples/mobc
@@ -127,4 +127,4 @@ jobs:
     - name: run pytest
       working-directory: ./examples/${{ matrix.c2a_user }}/src/src_user/test
       run: |
-        rye run pytest -m sils -v ./${{ matrix.test_dir }}
+        uv run pytest -m sils -v ./${{ matrix.test_dir }}
