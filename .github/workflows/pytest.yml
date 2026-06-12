@@ -58,15 +58,11 @@ jobs:
         cache: pnpm
         cache-dependency-path: examples/${{ matrix.c2a_user }}/pnpm-lock.yaml
 
-    - name: Cache C2A devtools
-      id: cache-c2a-devtools
+    - name: Cache C2A Boom tools
       uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
       with:
-        path: |
-          ./examples/mobc/tools/bin
-          ./examples/mobc/tools/.crates.toml
-          ./examples/mobc/tools/.crates2.json
-        key: ${{ matrix.c2a_user }}-${{ runner.os }}-tools-${{ hashFiles('${{ matrix.c2a_user }}/tools/install.sh', '${{ matrix.c2a_user }}/tools/package.json') }}
+        path: ${{ runner.temp }}/c2a-boom-tools
+        key: ${{ runner.os }}-boom-tools-${{ hashFiles('examples/mobc/boom-tools/install.sh') }}
 
     - name: Get Rust toolchain
       id: toolchain
@@ -97,6 +93,8 @@ jobs:
 
     - name: the heaviest objects in universe
       working-directory: ./examples/mobc
+      env:
+        C2A_BOOM_TOOLS_CACHE_DIR: ${{ runner.temp }}/c2a-boom-tools
       run: |
         pnpm install --frozen-lockfile
 
