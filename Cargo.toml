@@ -20,8 +20,12 @@ members = [
   "./examples/subobc",
 ]
 
+exclude = [
+  "./examples/tmp",  # テスト用
+]
+
 [workspace.dependencies]
-c2a-core = { path = "." }
+c2a-core = { path = ".", version = "4.5.1" }
 c2a-bind-utils = { path = "./library/bind-utils" }
 
 c2a-dev-runtime = { path = "./dev-runtime" }
@@ -58,4 +62,4 @@ c2a-bind-utils = "4.0.0-beta.0"
 
 [dev-dependencies]
 # unit test 時に libC2A.a を要求しないようにする
-c2a-core = { path = ".", features = ["no-c2a-link"] }
+c2a-core = { path = ".", version = "4.5.1", features = ["no-c2a-link"] }

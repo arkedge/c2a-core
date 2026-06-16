@@ -1,6 +1,17 @@
 cmake_minimum_required(VERSION 3.13)
 
+# Save C2A_CORE_VERSION before project() command (project() can reset cache variables)
+if(DEFINED C2A_CORE_VERSION)
+  set(_C2A_CORE_VERSION_SAVED "${C2A_CORE_VERSION}")
+endif()
+
 project(C2A_CORE)
+
+# Restore C2A_CORE_VERSION after project()
+if(DEFINED _C2A_CORE_VERSION_SAVED)
+  set(C2A_CORE_VERSION "${_C2A_CORE_VERSION_SAVED}" CACHE STRING "C2A Core version" FORCE)
+  unset(_C2A_CORE_VERSION_SAVED)
+endif()
 
 # Build option
 ## C2A compile config
@@ -32,6 +43,21 @@ option(C2A_USE_CORE_CCSDS_TC_SPACE_DATA_LINK_PROTOCOL   "Use C2A-core CCSDS TC S
 option(C2A_USE_SIMPLE_LIBC          "Use C2A-core hosted simple libc (c2a-core/library/libc) implementation" OFF)
 
 set(C2A_CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
+# C2A user ディレクトリの検出
+# 優先順位: 1. CMake define 2. 環境変数 3. レガシーパス
+if(NOT DEFINED C2A_USER_DIR)
+  if(DEFINED ENV{C2A_USER_DIR})
+    set(C2A_USER_DIR $ENV{C2A_USER_DIR})
+    message(STATUS "C2A user directory from environment: ${C2A_USER_DIR}")
+  elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../src_user")
+    # レガシー git submodule 方式のフォールバック
+    set(C2A_USER_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../src_user")
+    message(STATUS "C2A user directory (legacy fallback): ${C2A_USER_DIR}")
+  else()
+    message(WARNING "C2A_USER_DIR not set. Build may fail if src_user includes are used.")
+  endif()
+endif()
 
 set(C2A_SRCS
   c2a_core_main.c
@@ -78,13 +104,51 @@ execute_process(
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   OUTPUT_VARIABLE GIT_REVISION_C2A_CORE
   OUTPUT_STRIP_TRAILING_WHITESPACE
+  ERROR_QUIET
 )
 execute_process(
   COMMAND git log -1 --format=%h
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   OUTPUT_VARIABLE GIT_REVISION_C2A_CORE_SHORT
   OUTPUT_STRIP_TRAILING_WHITESPACE
+  ERROR_QUIET
 )
+
+# Git revision が取得できない場合のフォールバック（crates.io からのダウンロード時など）
+if(NOT GIT_REVISION_C2A_CORE)
+  # C2A_CORE_VERSION が指定されている場合は crate version を使用
+  if(DEFINED C2A_CORE_VERSION)
+    set(GIT_REVISION_C2A_CORE "v${C2A_CORE_VERSION}")
+    message(STATUS "Using crate version as revision: v${C2A_CORE_VERSION}")
+  else()
+    set(GIT_REVISION_C2A_CORE "unknown")
+    message(WARNING "Git revision not available (not a git repository)")
+  endif()
+endif()
+if(NOT GIT_REVISION_C2A_CORE_SHORT)
+  # C2A_CORE_VERSION が指定されている場合は version から数値を生成
+  if(DEFINED C2A_CORE_VERSION)
+    # バージョンを 0xMMmmpp 形式に変換 (例: 4.5.1 -> 0x00040501)
+    string(REPLACE "." ";" VERSION_LIST ${C2A_CORE_VERSION})
+    list(GET VERSION_LIST 0 VERSION_MAJOR)
+    list(GET VERSION_LIST 1 VERSION_MINOR)
+    list(LENGTH VERSION_LIST VERSION_LIST_LEN)
+    if(VERSION_LIST_LEN GREATER 2)
+      list(GET VERSION_LIST 2 VERSION_PATCH)
+    else()
+      set(VERSION_PATCH 0)
+    endif()
+    math(EXPR VERSION_HEX "(${VERSION_MAJOR} << 16) + (${VERSION_MINOR} << 8) + ${VERSION_PATCH}" OUTPUT_FORMAT HEXADECIMAL)
+    # Remove 0x prefix since add_definitions will add it
+    string(SUBSTRING "${VERSION_HEX}" 2 -1 VERSION_HEX_NO_PREFIX)
+    set(GIT_REVISION_C2A_CORE_SHORT "${VERSION_HEX_NO_PREFIX}")
+    message(STATUS "Using crate version as short revision: 0x${VERSION_HEX_NO_PREFIX}")
+  else()
+    set(GIT_REVISION_C2A_CORE_SHORT "00000000")
+    message(WARNING "Git short revision not available (not a git repository)")
+  endif()
+endif()
+
 add_definitions("-DGIT_REVISION_C2A_CORE=\"${GIT_REVISION_C2A_CORE}\"")
 add_definitions("-DGIT_REVISION_C2A_CORE_SHORT=0x${GIT_REVISION_C2A_CORE_SHORT}")
 
@@ -93,6 +157,22 @@ if(C2A_BUILD_AS_CXX)
 endif()
 
 add_library(${PROJECT_NAME} OBJECT ${C2A_SRCS})
+
+# C2A user の親ディレクトリをインクルードパスに追加
+# これにより <src_user/...> が解決可能になる（レガシー方式用）
+if(DEFINED C2A_USER_DIR AND EXISTS "${C2A_USER_DIR}")
+  get_filename_component(C2A_USER_PARENT_DIR "${C2A_USER_DIR}" DIRECTORY)
+  target_include_directories(${PROJECT_NAME} PUBLIC "${C2A_USER_PARENT_DIR}")
+  message(STATUS "C2A user include path: ${C2A_USER_PARENT_DIR}")
+endif()
+
+# ビルドディレクトリ内の src_user シンボリックリンクを解決するため、
+# C2A_BUILD_OUT_DIR が指定されている場合は include path に追加
+# これにより実際のディレクトリ名を src_user に限定する必要がなくなる
+if(DEFINED C2A_BUILD_OUT_DIR)
+  target_include_directories(${PROJECT_NAME} PUBLIC "${C2A_BUILD_OUT_DIR}")
+  message(STATUS "C2A build output directory: ${C2A_BUILD_OUT_DIR}")
+endif()
 
 if(C2A_USE_ALL_CORE_APPS)
   add_subdirectory(applications)
