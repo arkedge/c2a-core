@@ -7,7 +7,8 @@
   "ignore_dirs" : [
     "src/src_core/examples",
     "src/src_core/docs",
-    "src/src_core/script"
+    "src/src_core/script",
+    "src/src_core/component_driver/tests"
   ],
   "ignore_files" : [
     "src/src_user/tlm_cmd/telemetry_definitions.c"

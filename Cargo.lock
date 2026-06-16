@@ -245,6 +245,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "c2a-core-component-driver"
+version = "4.5.1"
+
+[[package]]
 name = "c2a-dev-runtime"
 version = "4.5.1"
 dependencies = [
