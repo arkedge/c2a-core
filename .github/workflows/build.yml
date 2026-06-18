@@ -16,7 +16,7 @@ jobs:
           - mobc
           - subobc
 
-    uses: arkedge/workflows-c2a/.github/workflows/build.yml@092c8dff10cf5eb6d3af4c3b47bc5b57fe07e633 # v5.4.0
+    uses: arkedge/workflows-c2a/.github/workflows/build.yml@cb46d1d34f43244e40506eb551204ea55357d661 # v6.0.2
     with:
       c2a_dir: examples/${{ matrix.user }}
       c2a_custom_setup: |
