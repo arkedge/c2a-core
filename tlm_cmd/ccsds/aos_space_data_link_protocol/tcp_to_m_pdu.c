@@ -20,6 +20,8 @@ void T2M_initialize(TcpToMPdu* tcp_to_m_pdu)
   tcp_to_m_pdu->flush_interval = OBCT_sec2cycle(10);
   // 最終更新時刻は現在時刻に設定
   tcp_to_m_pdu->last_updated = TMGR_get_master_total_cycle();
+  // 既定では形式フィルタ無効 (従来動作)
+  tcp_to_m_pdu->c2a_tsp_only = 0;
 
   return;
 }
@@ -71,6 +73,22 @@ T2M_ACK T2M_form_m_pdu(TcpToMPdu* tcp_to_m_pdu, PacketList* pl, MultiplexingProt
     // Queue先頭のTC Packetを取得
     // 有効パケットまたはFillパケットが必ず入っている。
     packet = (const TlmSpacePacket*)(PL_get_head(pl)->packet);   // FIXME: Space Packet 実装でなおす
+
+    // [防御] c2a_tsp_only が有効な経路 (GS ダウンリンク等) には C2A TSP 形式のみを載せる。
+    // パケット先頭から書き始める前 (tcp_rp == 0) に判定し、Fill 以外で 2nd ヘッダ版数が
+    // TSP_2ND_HDR_VER_1 でないもの (PUS パケット等) は破棄する。
+    // Fill パケットは 2nd ヘッダ版数が未設定(0)だが APID_FILL_PKT で除外する
+    // (これを破棄すると M_PDU が埋まらず無限ループになるため)。
+    // 狙い: GS SW (tmtc-c2a) 側で未知 APID 由来の M_PDU 再構成リセット
+    //       (同一バッファ内の後続パケット巻き添え欠落) を未然に防ぐ。
+    if (tcp_to_m_pdu->c2a_tsp_only &&
+        tcp_to_m_pdu->tcp_rp == 0 &&
+        TSP_get_apid(packet) != APID_FILL_PKT &&
+        TSP_get_2nd_hdr_ver(packet) != TSP_2ND_HDR_VER_1)
+    {
+      PL_drop_executed(pl);
+      continue;
+    }
 
     // 書き込むデータ長を計算
     tcp_len = TSP_get_packet_len(packet);

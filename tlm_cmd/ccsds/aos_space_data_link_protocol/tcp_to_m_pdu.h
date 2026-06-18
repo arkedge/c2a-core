@@ -37,6 +37,7 @@ typedef struct
   uint8_t fhp_valid;
   cycle_t flush_interval;
   cycle_t last_updated;
+  uint8_t c2a_tsp_only;   //!< 1 のとき C2A TSP 形式と Fill 以外 (PUS 等) のパケットを破棄する
 } TcpToMPdu;
 
 /**
