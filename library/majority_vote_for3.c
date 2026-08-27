@@ -109,6 +109,10 @@ MAJORITY_VOTE_FOR3_STATUS majority_vote_for3_sync(void* array1_arg,
         return MAJORITY_VOTE_ERROR; // 全不一致は即return
       }
     }
+
+    array1 += type_len;
+    array2 += type_len;
+    array3 += type_len;
   }
 
   return ret;
