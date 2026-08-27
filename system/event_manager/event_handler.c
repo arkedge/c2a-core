@@ -874,16 +874,14 @@ static EH_RULE_SORTED_INDEX_ACK EH_search_rule_table_index_by_event_group_(EL_GR
   *least_found_sorted_idx = found_idx;
 
   // ひとまず見つかったので，最も若いものを探す
-  for (i = found_idx; i >= 0; --i)
+  // 注意: i は uint16_t なので， i >= 0 を継続条件にすると i == 0 のときに 65535 へラップし，範囲外参照となる
+  for (i = found_idx; i > 0; --i)
   {
-    if (event_handler_.sorted_idxes[i].group == group)
-    {
-      *least_found_sorted_idx = i;
-    }
-    else
+    if (event_handler_.sorted_idxes[i - 1].group != group)
     {
       break;
     }
+    *least_found_sorted_idx = i - 1;
   }
 
   // 最も後ろのものを探す
