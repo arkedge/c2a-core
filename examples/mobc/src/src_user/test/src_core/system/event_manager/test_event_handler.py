@@ -1757,7 +1757,250 @@ def test_event_handler_by_event_group_func():
     # Cmd_EH_INIT_RULE_BY_EVENT_GROUP_FOR_MULTI_LEVEL
     # Cmd_EH_INACTIVATE_RULE_BY_EVENT_GROUP_FOR_MULTI_LEVEL
     # Cmd_EH_ACTIVATE_RULE_BY_EVENT_GROUP_FOR_MULTI_LEVEL
-    # この３つは結局 group が EL_CORE_GROUP_EH_MATCH_RULE になってしまい，意味がない？
+    # この３つは，group が sorted_idxes[0] を持つ group (EL_CORE_GROUP_EH_MATCH_RULE) の場合を
+    # test_event_handler_by_event_group_func_for_eh_match_rule で確認する
+
+
+@pytest.mark.real
+@pytest.mark.sils
+def test_event_handler_by_event_group_func_for_eh_match_rule():
+    # 登録済みルール中で最も小さい EL_GROUP 値を持つ group
+    # (= sorted_idxes[0] を占める group) に対する by_event_group 系コマンドの回帰テスト
+    # https://github.com/arkedge/c2a-core/issues/495
+    print("")
+    print("test_event_handler_by_event_group_func_for_eh_match_rule")
+
+    # 初期化
+    init_el_and_eh()
+
+    # 前提: EL_CORE_GROUP_EH_MATCH_RULE (=9) が EL_GROUP_TEST_EH (=0xf2) より小さく，
+    #       sorted_idxes[0], [1] が group = EL_CORE_GROUP_EH_MATCH_RULE のルール
+    #       (TEST5, TEST6) であること
+    check_default_rule_indexes()
+
+    # 準備: TEST5, TEST6 を INACTIVE に，TEST0 を ACTIVE にしておく
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_INACTIVATE_RULE, (EH_RULE_TEST5,))
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_INACTIVATE_RULE, (EH_RULE_TEST6,))
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_ACTIVATE_RULE, (EH_RULE_TEST0,))
+
+    # Cmd_EH_ACTIVATE_RULE_BY_EVENT_GROUP
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_EH_ACTIVATE_RULE_BY_EVENT_GROUP,
+        (c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    check_rule(
+        "TEST5",
+        EH_RULE_TEST5,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST0,
+            "is_active": "ACTIVE",
+        },
+    )
+    check_rule(
+        "TEST6",
+        EH_RULE_TEST6,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST5,
+            "is_active": "ACTIVE",
+        },
+    )
+    # 対象外 group のルールは触られない
+    check_rule(
+        "TEST0", EH_RULE_TEST0, {"group": EL_GROUP_TEST_EH, "local": 0, "is_active": "ACTIVE"}
+    )
+
+    # Cmd_EH_INACTIVATE_RULE_BY_EVENT_GROUP
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_EH_INACTIVATE_RULE_BY_EVENT_GROUP,
+        (c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    check_rule(
+        "TEST5",
+        EH_RULE_TEST5,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST0,
+            "is_active": "INACTIVE",
+        },
+    )
+    check_rule(
+        "TEST6",
+        EH_RULE_TEST6,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST5,
+            "is_active": "INACTIVE",
+        },
+    )
+    # 対象外 group のルールは触られない
+    check_rule(
+        "TEST0", EH_RULE_TEST0, {"group": EL_GROUP_TEST_EH, "local": 0, "is_active": "ACTIVE"}
+    )
+
+    # Cmd_EH_INIT_RULE_BY_EVENT_GROUP: わざと状態を崩してから初期化させる
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_RULE_COUNTER, (EH_RULE_TEST5, 1))
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_RULE_COUNTER, (EH_RULE_TEST6, 2))
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_RULE_COUNTER, (EH_RULE_TEST0, 5))
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_EH_INIT_RULE_BY_EVENT_GROUP,
+        (c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    check_rule(
+        "TEST5",
+        EH_RULE_TEST5,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST0,
+            "is_active": "ACTIVE",
+        },
+    )
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_TARGET_ID_OF_RULE_TABLE_FOR_TLM, (EH_RULE_TEST5,))
+    tlm_EH = download_eh_tlm()
+    assert tlm_EH["EH.TARTGET_RULE.COUNTER"] == 0
+    check_rule(
+        "TEST6",
+        EH_RULE_TEST6,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST5,
+            "is_active": "ACTIVE",
+        },
+    )
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_TARGET_ID_OF_RULE_TABLE_FOR_TLM, (EH_RULE_TEST6,))
+    tlm_EH = download_eh_tlm()
+    assert tlm_EH["EH.TARTGET_RULE.COUNTER"] == 0
+    # 対象外 group のルールは触られない (counter も含めて)
+    check_rule(
+        "TEST0", EH_RULE_TEST0, {"group": EL_GROUP_TEST_EH, "local": 0, "is_active": "ACTIVE"}
+    )
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_TARGET_ID_OF_RULE_TABLE_FOR_TLM, (EH_RULE_TEST0,))
+    tlm_EH = download_eh_tlm()
+    assert tlm_EH["EH.TARTGET_RULE.COUNTER"] == 5
+
+    # ここまでで通常版 3 コマンドを確認．以下 _FOR_MULTI_LEVEL 版は，多段ルールのチェーンを
+    # TEST6 -> TEST5 -> TEST0 と辿って，group = EL_GROUP_TEST_EH の TEST0 まで操作が及ぶことを
+    # 確認する
+
+    # Cmd_EH_INACTIVATE_RULE_BY_EVENT_GROUP_FOR_MULTI_LEVEL
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_EH_INACTIVATE_RULE_BY_EVENT_GROUP_FOR_MULTI_LEVEL,
+        (c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    check_rule(
+        "TEST6",
+        EH_RULE_TEST6,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST5,
+            "is_active": "INACTIVE",
+        },
+    )
+    check_rule(
+        "TEST5",
+        EH_RULE_TEST5,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST0,
+            "is_active": "INACTIVE",
+        },
+    )
+    # カスケードして TEST0 まで及ぶ (通常版との違い)
+    check_rule(
+        "TEST0", EH_RULE_TEST0, {"group": EL_GROUP_TEST_EH, "local": 0, "is_active": "INACTIVE"}
+    )
+    # カスケード先以外の group = EL_GROUP_TEST_EH のルールには及ばない
+    check_rule(
+        "TEST1", EH_RULE_TEST1, {"group": EL_GROUP_TEST_EH, "local": 1, "is_active": "ACTIVE"}
+    )
+
+    # Cmd_EH_ACTIVATE_RULE_BY_EVENT_GROUP_FOR_MULTI_LEVEL
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_EH_ACTIVATE_RULE_BY_EVENT_GROUP_FOR_MULTI_LEVEL,
+        (c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    check_rule(
+        "TEST6",
+        EH_RULE_TEST6,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST5,
+            "is_active": "ACTIVE",
+        },
+    )
+    check_rule(
+        "TEST5",
+        EH_RULE_TEST5,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST0,
+            "is_active": "ACTIVE",
+        },
+    )
+    check_rule(
+        "TEST0", EH_RULE_TEST0, {"group": EL_GROUP_TEST_EH, "local": 0, "is_active": "ACTIVE"}
+    )
+
+    # Cmd_EH_INIT_RULE_BY_EVENT_GROUP_FOR_MULTI_LEVEL: わざと状態を崩してから初期化させる
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_INACTIVATE_RULE, (EH_RULE_TEST5,))
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_INACTIVATE_RULE, (EH_RULE_TEST6,))
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_INACTIVATE_RULE, (EH_RULE_TEST0,))
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_RULE_COUNTER, (EH_RULE_TEST5, 10))
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_RULE_COUNTER, (EH_RULE_TEST6, 20))
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_RULE_COUNTER, (EH_RULE_TEST0, 30))
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_RULE_COUNTER, (EH_RULE_TEST1, 7))
+    assert "SUC" == wings.util.send_rt_cmd_and_confirm(
+        ope,
+        c2a_enum.Cmd_CODE_EH_INIT_RULE_BY_EVENT_GROUP_FOR_MULTI_LEVEL,
+        (c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,),
+        c2a_enum.Tlm_CODE_HK,
+    )
+    check_rule(
+        "TEST6",
+        EH_RULE_TEST6,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST5,
+            "is_active": "ACTIVE",
+        },
+    )
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_TARGET_ID_OF_RULE_TABLE_FOR_TLM, (EH_RULE_TEST6,))
+    tlm_EH = download_eh_tlm()
+    assert tlm_EH["EH.TARTGET_RULE.COUNTER"] == 0
+    check_rule(
+        "TEST5",
+        EH_RULE_TEST5,
+        {
+            "group": c2a_enum.EL_CORE_GROUP_EH_MATCH_RULE,
+            "local": EH_RULE_TEST0,
+            "is_active": "ACTIVE",
+        },
+    )
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_TARGET_ID_OF_RULE_TABLE_FOR_TLM, (EH_RULE_TEST5,))
+    tlm_EH = download_eh_tlm()
+    assert tlm_EH["EH.TARTGET_RULE.COUNTER"] == 0
+    # カスケードして TEST0 まで counter クリアも及ぶ
+    check_rule(
+        "TEST0", EH_RULE_TEST0, {"group": EL_GROUP_TEST_EH, "local": 0, "is_active": "ACTIVE"}
+    )
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_TARGET_ID_OF_RULE_TABLE_FOR_TLM, (EH_RULE_TEST0,))
+    tlm_EH = download_eh_tlm()
+    assert tlm_EH["EH.TARTGET_RULE.COUNTER"] == 0
+    # カスケード先以外の group = EL_GROUP_TEST_EH のルールには及ばない
+    ope.send_rt_cmd(c2a_enum.Cmd_CODE_EH_SET_TARGET_ID_OF_RULE_TABLE_FOR_TLM, (EH_RULE_TEST1,))
+    tlm_EH = download_eh_tlm()
+    assert tlm_EH["EH.TARTGET_RULE.COUNTER"] == 7
 
 
 # 最後のお掃除
