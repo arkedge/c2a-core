@@ -28,15 +28,12 @@ impl Socket {
             let (mut sink, mut stream) = kble_socket::from_tungstenite(wss);
             let uplink = async {
                 loop {
-                    let tlm_bytes = self
-                        .tlm_rx
-                        .recv()
-                        .await
-                        .ok_or_else(|| anyhow!("telemetry producer has gone"))?;
+                    let Some(tlm_bytes) = self.tlm_rx.recv().await else {
+                        break;
+                    };
                     sink.send(tlm_bytes.into()).await?;
                 }
-                #[allow(unreachable_code)]
-                anyhow::Ok(())
+                Err::<(), _>(anyhow!("telemetry producer has gone"))
             };
             let downlink = async {
                 loop {
