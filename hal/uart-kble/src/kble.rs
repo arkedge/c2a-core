@@ -1,4 +1,4 @@
-use std::{net::SocketAddr, sync::Arc, thread};
+use std::{net::SocketAddr, pin::pin, sync::Arc, thread};
 
 use anyhow::Result;
 use axum::{
@@ -81,5 +81,10 @@ async fn handle_ws(ws: WebSocket, channel: OwnedMutexGuard<OuterChannel>) {
         }
         anyhow::Ok(())
     };
-    futures::future::try_join(tx_fut, rx_fut).await.ok();
+    // どちらか一方が終了したら channel guard を解放して戻る。try_join だと
+    // クライアント切断で rx 側が正常終了しても、tx 側が次の下り送出を待って
+    // 永久に完了せず guard を掴み続け、再接続が 409 Conflict になり続ける。
+    let tx_fut = pin!(tx_fut);
+    let rx_fut = pin!(rx_fut);
+    futures::future::select(tx_fut, rx_fut).await;
 }
