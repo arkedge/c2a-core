@@ -1,4 +1,4 @@
-use std::thread;
+use std::{pin::pin, thread};
 
 use anyhow::{anyhow, Result};
 use futures::{future, SinkExt, TryStreamExt};
@@ -35,6 +35,8 @@ impl Socket {
                         .ok_or_else(|| anyhow!("telemetry producer has gone"))?;
                     sink.send(tlm_bytes.into()).await?;
                 }
+                #[allow(unreachable_code)]
+                anyhow::Ok(())
             };
             let downlink = async {
                 loop {
@@ -45,7 +47,12 @@ impl Socket {
                 }
                 anyhow::Ok(())
             };
-            let _: Option<((), ())> = future::try_join(uplink, downlink).await.ok();
+            // どちらか一方が終了したら次の接続の待ち受けに戻る。try_join だと
+            // クライアント切断で downlink 側が正常終了しても、uplink 側が次の
+            // テレメトリ送出を待って永久に完了せず、accept ループに戻れなくなる。
+            let uplink = pin!(uplink);
+            let downlink = pin!(downlink);
+            future::select(uplink, downlink).await;
         }
     }
 
