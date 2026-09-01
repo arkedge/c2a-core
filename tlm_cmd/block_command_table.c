@@ -226,17 +226,21 @@ static BCT_ACK BCT_save_cmd_(const BCT_Pos* pos, const CommonCmdPacket* packet)
 {
   // FIXME: TCPに依存しない，つまりCTCPに依存するコードにする
   BCT_ACK ack = BCT_check_position(pos);
+  BCT_CmdData cmd_data;
+
   if (ack != BCT_SUCCESS) return ack;
 
   // パケット全長が想定最大長を超えている場合は異常判定
   if (CCP_get_packet_len(packet) > BCT_CMD_MAX_LENGTH) return BCT_CMD_TOO_LONG;
 
-  // 格納可能なパケットなら内容をコピーし保存
-  BCT_set_bc_cmd_data_(pos, (BCT_CmdData*)packet->packet); // const_cast
-
-  // BCT に保存される Cmd の Sequence Count は 0 とする (BCT Digset のため)
+  // 格納可能なパケットなら Sequence Count を 0 にしたうえで保存する
+  // (BCT に保存される Cmd の Sequence Count は BCT Digest のため 0 とする)
+  // setter で保存した後に getter の生ポインタへ書き込むと, setter が write-through を担う実装で
+  // Sequence Count のクリアが永続側に反映されないため, 保存前にローカルコピー上で行う
+  memcpy(&cmd_data, packet->packet, sizeof(BCT_CmdData));
   // FIXME: CSP 依存を CCP 依存にする
-  CSP_set_seq_count((CmdSpacePacket*)(CommonCmdPacket*)BCT_get_bc_cmd_data_(pos), 0); // const_cast
+  CSP_set_seq_count((CmdSpacePacket*)(CommonCmdPacket*)&cmd_data, 0); // const_cast
+  BCT_set_bc_cmd_data_(pos, &cmd_data);
 
   return BCT_SUCCESS;
 }

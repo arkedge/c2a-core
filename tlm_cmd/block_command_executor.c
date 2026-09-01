@@ -242,11 +242,13 @@ static CCP_CmdRet BCE_rotate_block_cmd_(bct_id_t block)
 
   bc_exe_params->rotate.counter = 0;
 
-  BCE_set_bc_exe_params_(block, bc_exe_params);
   BCT_make_pos(&pos, block, bc_exe_params->rotate.next_cmd);
 
   ++bc_exe_params->rotate.next_cmd;
   bc_exe_params->rotate.next_cmd %= BCT_get_bc_length(block);
+
+  // next_cmd の更新も含めた全変更後に保存する (setter が write-through を担う実装でも next_cmd が永続化されるように)
+  BCE_set_bc_exe_params_(block, bc_exe_params);
 
   BCT_load_cmd(&pos, &ccp);
   return PH_dispatch_command(&ccp);
