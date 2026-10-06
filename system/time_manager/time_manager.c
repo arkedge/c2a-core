@@ -6,7 +6,6 @@
 #include "time_manager.h"
 #include "obc_time_config.h"
 #include <string.h>
-#include "../../library/c2a_round.h"
 #include "../task_manager/task_dispatcher.h"
 #include "../../tlm_cmd/common_packet/common_cmd_packet_util.h"
 
@@ -223,7 +222,8 @@ cycle_t TMGR_get_ti_from_utl_unixtime(const cycle_t utl_unixtime)
   double unixtime = TMGR_get_unixtime_from_utl_unixtime(utl_unixtime);
   double ti = TMGR_get_precise_ti_from_unixtime(unixtime);
 
-  return (cycle_t)c2a_round(ti);
+  // c2a_round は int を返すため，INT_MAX を超える cycle_t を扱えない
+  return (cycle_t)(ti + 0.5);
 }
 
 static TMGR_ACK TMGR_set_utl_unixtime_epoch_(double utl_unixtime_epoch)
