@@ -3,9 +3,12 @@
 
 /**
  * @file
- * @brief 四捨五入．C89にroundはないので
+ * @brief C89 向けの丸め関数（C99 の round 相当）．
  */
 
-int c2a_round(double input);
+/**
+ * @brief 最も近い整数値を double で返す．中間値はゼロから遠ざかる方向に丸める．
+ */
+double c2a_round(double input);
 
 #endif

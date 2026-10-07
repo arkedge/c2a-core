@@ -2,13 +2,19 @@
 
 /**
  * @file
- * @brief 四捨五入．C89にroundはないので
+ * @brief C89 向けの丸め関数（C99 の round 相当）．
  */
 #include "c2a_round.h"
+#include <math.h>
 
-int c2a_round(double input)
+double c2a_round(double input)
 {
-  return (int)(input + 0.5);
+  double integral;
+  double fraction = modf(input, &integral);
+
+  if (fraction >= 0.5) return integral + 1.0;
+  if (fraction <= -0.5) return integral - 1.0;
+  return integral;
 }
 
 #pragma section
