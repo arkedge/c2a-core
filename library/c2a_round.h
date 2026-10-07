@@ -6,6 +6,9 @@
  * @brief 四捨五入．C89にroundはないので
  */
 
-int c2a_round(double input);
+/**
+ * @brief 最も近い整数値を double で返す．中間値はゼロから遠ざかる方向に丸める．
+ */
+double c2a_round(double input);
 
 #endif
