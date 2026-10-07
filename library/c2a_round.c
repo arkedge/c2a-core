@@ -2,7 +2,7 @@
 
 /**
  * @file
- * @brief 四捨五入．C89にroundはないので
+ * @brief C89 向けの丸め関数（C99 の round 相当）．
  */
 #include "c2a_round.h"
 #include <math.h>
